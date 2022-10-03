@@ -1,0 +1,32 @@
+// /* You can add global styles to this file, and also import other style files */
+// @import "/src/assets/scss/tour1.0/functions";
+// @import "/src/assets/scss/tour1.0/variables";
+// @import "/src/assets/scss/tour1.0/mixins";
+
+// $primary: #1A374D;
+// $secondary: #6998AB;
+// $black: #000000;
+// $white: #ffffff;
+// $grey: #5b5656;
+// $heading_color: #000;
+// $text_light_color: #a0a4ab;
+
+
+// $font-family: 'Source Serif Pro', serif;
+// $font-family-sans-serif: 'Inter', sans-serif;
+
+// @import '/src/assets/scss/tour1.0/site-base';
+// @import '/src/assets/scss/tour1.0/site-navbar';
+// @import '/src/assets/scss/tour1.0/site-blocks';
+// @import '/src/assets/scss/tour1.0/site-elements';
+// @import '/src/assets/scss/tour1.0/site-footer';
+
+@import '../src/assets/css/tour1.0/bootstrap.min.css';
+@import '../src/assets/css/tour1.0/owl.carousel.min.css';
+@import '../src/assets/css/tour1.0/owl.theme.default.min.css';
+@import '../src/assets/css/tour1.0/jquery.fancybox.min.css';
+@import '../src/assets/fonts/icomoon/style.css';
+@import '../src/assets/fonts/flaticon/font/flaticon.css';
+@import '../src/assets/css/tour1.0/daterangepicker.css';
+@import '../src/assets/css/tour1.0/aos.css';
+@import '../src/assets/css/tour1.0/style.css';
