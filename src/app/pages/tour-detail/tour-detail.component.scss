@@ -7,3 +7,19 @@
 @import '../../../../src/assets/css/virtual/virtual.css';
 @import '../../../../src/assets/css/virtual/topbar.virtual.css';
 
+.s_buttons button{
+  width:40px;
+  height:40px;
+  border-radius: 50%;
+  border:1px solid #2d4271;
+  color: #2d4271;
+  transition: 0.5s;
+  font-size: 20px;
+  background-color: transparent;
+}
+
+.s_buttons{
+  position: absolute;
+  top: 20px;
+  left: 170px
+}

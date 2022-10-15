@@ -15,6 +15,7 @@ import { InforComponent } from '../../pages/infor/infor.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxTypedJsModule} from 'ngx-typed-js';
 // import { ToastrModule } from 'ngx-toastr';
+import { TourDetailComponent } from '../../pages/tour-detail/tour-detail.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {NgxTypedJsModule} from 'ngx-typed-js';
     ContactComponent,
     ElementsComponent,
     ServicesComponent,
-    InforComponent
+    InforComponent,
+    TourDetailComponent
   ]
 })
 

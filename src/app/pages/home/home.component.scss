@@ -1,24 +1,108 @@
-// .typewriter .typing {
-//   width: fit-content;
-//   overflow: hidden; /* Ensures the content is not revealed until the animation */
-//   border-right: .1em solid white; /* The typwriter cursor */
-//   white-space: nowrap; /* Keeps the content on a single line */
-//   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-//   letter-spacing: .15em; /* Adjust as needed */
-//   animation:
-//     typing 3.5s steps(40, end),
-//     blink-caret .75s step-end infinite;
-// }
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+h1{
+    font-family: 'Anton', sans-serif;
+}
 
-// /* The typing effect */
-// @keyframes typing {
-//   from { width: 0 }
-//   to { width: 80% }
-// }
+.s_container{
+    position: absolute;
+    top: 500%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width:1000px;
+    height:1000px;
+    padding:50px;
+    z-index: 999;
+}
+#slide{
+    width:max-content;
+    margin-top:50px;
+}
+.s_item{
+  border-radius: 10px;
+    width:400px;
+    height:540px;
+    background-position: 50% 50%;
+    display: inline-block;
+    transition: 1s;
+    background-size: 100%;
+    position: absolute;
+    z-index: 1;
+}
+.s_item:nth-child(1){
+    transform: translate(-150%);
+    background-position: 0% 50%;
+    opacity: 0;
+}
+.s_item:nth-child(2){
+    transform: translate(-40%);
+    background-position: 20% 50%;
+}
+.s_item:nth-child(3){
+    transform: translate(70%);
+    background-position: 50% 50%;
+}
+.s_item:nth-child(4){
+    transform: translate(180%);
+    background-position: 80% 50%;
+}
+.s_item:nth-child(n+5){
+    transform: translate(290%);
+    background-position: 100% 50%;
+    opacity: 0;
+}
+.s_item .s_content{
+    position: absolute;
+    top:89%;
+    background-color: #fff;
+    width:100%;
+    padding:0 10%;
+    font-family: system-ui;
+    text-align: center;
+    box-shadow: 0 30px 50px #b9b9b9;
+    transition: 0.5s ;
+    overflow: hidden;
+    max-height: 0;
+}
+.s_item .s_content .s_name{
+    font-family: 'Anton', sans-serif;
+}
+.s_item:hover .s_content{
+  border-bottom-left-radius:10px;
+  border-bottom-right-radius:10px;
+  max-height: 100px;
+}
+.s_item:hover{
+    background-size: 120%;
+}
+.s_buttons{
+    text-align: center;
+    width:100%;
+}
+.s_buttons button{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    border:1px solid #555;
+    transition: 0.5s;
+}
+.s_buttons button:hover{
+    background-color: #bac383;
+}
 
-// /* The typewriter cursor effect */
-// @keyframes blink-caret {
-//   from, to { border-color: transparent }
-//   50% { border-color: white; }
-// }
+.s_buttons #prev{
+  position: absolute;
+    top: 350px;
+    left: -200px;
+    z-index: 1
+}
+
+.s_buttons #next{
+  position: absolute;
+  top: 350px;
+  right: -260px;
+  z-index: 1;
+}
+
+
+
 

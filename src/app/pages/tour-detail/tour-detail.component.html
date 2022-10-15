@@ -1,0 +1,343 @@
+<div class="hero hero-inner">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mx-auto text-center">
+        <div class="intro-wrap">
+          <h1 class="mb-0">About Us</h1>
+          <p class="text-white">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="untree_co-section  container">
+  <div class="row">
+    <div class="row">
+
+      <div class="container col-7" >
+      <div class="mb-5">
+      <h1 style="margin-bottom: 70px; font-weight: bold; color: #2d4271">Nhập thông tin</h1>
+      <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Thông tin liên lạc</h4>
+      <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
+        <div class="row">
+         <div class="mb-3 col-6">
+           <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+           <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameContact" placeholder="Nhập họ và tên...">
+         </div>
+         <div class="mb-3 col-6">
+           <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+           <input type="email" class="form-control" name="email" id="email" [(ngModel)]="resTourBooking.email" placeholder="Nhập email...">
+         </div>
+        </div>
+        <div class="row">
+         <div class="mb-3 col-6">
+           <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+           <input type="text" class="form-control" name="phone" id="phone" [(ngModel)]="resTourBooking.phone" placeholder="Nhập số điện thoại...">
+         </div>
+         <div class="mb-3 col-6">
+           <label for="address" class="form-label">Địa chỉ</label>
+           <input type="text" class="form-control" name="address" id="address" [(ngModel)]="resTourBooking.address" placeholder="Nhập địa chỉ...">
+         </div>
+        </div>
+      </div>
+
+      <ng-container *ngIf="isCheck">
+        <h4  style="margin-top: 20px; color: #2d4271; font-weight: 600;">Thông tin người đi</h4>
+      <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
+        <div class="row">
+         <div class="mb-3 col">
+           <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+           <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameCustomer" placeholder="Nhập họ và tên...">
+         </div>
+        </div>
+      </div>
+      </ng-container>
+
+      <div class="row" style="margin: 20px 5px;">
+      </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="flexCheckDefault" (change)="isCheck ? isCheck = false : isCheck = true">
+          <label class="form-check-label" for="flexCheckDefault">
+            <h5 class="fg-dark">Tôi không đi khách sạn này, tôi đặt giúp cho người khác</h5>
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <h4 style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Hành khách</h4>
+        <div class="container" style="padding: 20px 20px 20px 20px;">
+          <div class="row">
+           <div class="mb-3 col-6">
+             <label for="exampleFormControlInput1" class="form-control" style="color: #2d4271; font-weight: 600;">Người lớn
+              <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">> 12 tuổi</h6>
+              <div class="s_buttons">
+                <button (click)="countAdult('-')">-</button>
+                <span style="font-size: 20px; margin: 5px;">{{resTourBooking.adult}}</span>
+               <button (click)="countAdult('+')">+</button>
+              </div>
+            </label>
+
+           </div>
+           <div class="mb-3 col-6">
+            <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ em
+              <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 5 - 11 tuổi</h6>
+              <div class="s_buttons">
+                <button (click)="countChild('-')">-</button>
+                <span style="font-size: 20px; margin: 5px;">{{resTourBooking.child}}</span>
+               <button (click)="countChild('+')">+</button>
+              </div>
+            </label>
+          </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-6">
+              <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ nhỏ
+                <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 2 - 4 tuổi</h6>
+                <div class="s_buttons">
+                  <button (click)="countBaby('-')">-</button>
+                  <span style="font-size: 20px; margin: 5px;">{{resTourBooking.baby}}</span>
+                 <button (click)="countBaby('+')">+</button>
+                </div>
+              </label>
+            </div>
+            <!-- <div class="mb-3 col-6">
+              <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Em bé
+                <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 0 - 2 tuổi</h6>
+                <div class="s_buttons">
+                  <button>-</button>
+                   <span style="font-size: 20px; margin: 5px;">0</span>
+                  <button>+</button>
+                </div>
+              </label>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container col-5" style="margin-top: 100px;">
+      <div class="row">
+        <div class="card mr-5 mb-5" style=" padding: 0;">
+          <div class="card-body">
+            <div class="col-md-12 wow fadeInRight">
+              <h4  style="color: #2d4271; font-weight: 600;">Tóm tắt đặt chỗ</h4>
+              <ul class="timeline mt-4 pr-md-5">
+                <li>
+                  <div class="title">Khởi hành - T4, 19 Tháng 10, 2022</div>
+                  <div class="details">
+                    <h5 style="color: #2d4271; font-weight: bold;">07:10 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 08:15</h5>
+                    <small style="color: #2d4271;" class="fg-theme">Vietravel Airlines</small>
+                  </div>
+                </li>
+                <li>
+                  <div class="title">Khởi hành - T6, 21 Tháng 10, 2022</div>
+                  <div class="details">
+                    <h5 style="color: #2d4271; font-weight: bold;">10:15 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 11:20</h5>
+                    <small style="color: #2d4271;" class="fg-theme">Vietravel Airlines</small>
+                  </div>
+                </li>
+              </ul>
+              <hr color="black">
+              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{resTour.tourName}}</h5>
+              <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{resTour.idTour}}</p>
+              <h6 class="card-subtitle mb-2 text-muted">{{resTour.tourDetail.description}}</h6>
+              <hr color="black">
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 100px;">Hành khách: {{totalPeople()}}</h5>
+                <div class=" text-muted" style="position: absolute;top: 0; right: 0;">
+                  {{resTourBooking.adult}} người lớn
+                  <br>
+                  {{resTourBooking.child}} trẻ em
+                  <br>
+                  {{resTourBooking.baby}} trẻ nhỏ
+                  <!-- <br>
+                  0 em bé -->
+                </div>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{formatPrice(resTour.priceAdultPromotion)}}₫</h5>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(priceAdult) + '₫':'0₫'}}</h5>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + 'x 0₫':'0₫'}}</h5>
+              </div>
+              <!-- <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">0₫</h5>
+              </div> -->
+              <hr color="black">
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{formatPrice(totalPrice())}}₫</h5>
+              </div>
+
+              <button class="btn btn-danger font-weight: bold; mt-5" style=" width: 400px;" (click)="booking()">ĐẶT NGAY</button>
+           </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="untree_co-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-6 text-center">
+        <h2 class="section-title mb-3 text-center">Team</h2>
+        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3 mb-4">
+        <div class="team">
+          <img src="assets/images/person_1.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+          <div class="px-3">
+            <h3 class="mb-0">James Watson</h3>
+            <p>Co-Founder &amp; CEO</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 mb-4">
+        <div class="team">
+          <img src="assets/images/person_2.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+          <div class="px-3">
+            <h3 class="mb-0">Carl Anderson</h3>
+            <p>Co-Founder &amp; CEO</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 mb-4">
+        <div class="team">
+          <img src="assets/images/person_4.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+          <div class="px-3">
+            <h3 class="mb-0">Michelle Allison</h3>
+            <p>Co-Founder &amp; CEO</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 mb-4">
+        <div class="team">
+          <img src="assets/images/person_3.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+          <div class="px-3">
+            <h3 class="mb-0">Drew Wood</h3>
+            <p>Co-Founder &amp; CEO</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div class="untree_co-section testimonial-section mt-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 text-center">
+        <h2 class="section-title text-center mb-5">Testimonials</h2>
+
+        <div class="owl-single owl-carousel no-nav">
+          <div class="testimonial mx-auto">
+            <figure class="img-wrap">
+              <img src="assets/images/person_2.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <h3 class="name">Adam Aderson</h3>
+            <blockquote>
+              <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+            </blockquote>
+          </div>
+
+          <div class="testimonial mx-auto">
+            <figure class="img-wrap">
+              <img src="assets/images/person_3.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <h3 class="name">Lukas Devlin</h3>
+            <blockquote>
+              <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+            </blockquote>
+          </div>
+
+          <div class="testimonial mx-auto">
+            <figure class="img-wrap">
+              <img src="assets/images/person_4.jpg" alt="Image" class="img-fluid">
+            </figure>
+            <h3 class="name">Kayla Bryant</h3>
+            <blockquote>
+              <p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
+            </blockquote>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="untree_co-section">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+
+      <div class="col-lg-6">
+        <figure class="img-play-video">
+          <a id="play-video" class="video-play-button" href="https://www.youtube.com/watch?v=mwtbEGNABWU" data-fancybox>
+            <span></span>
+          </a>
+          <img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-fluid rounded-20">
+        </figure>
+      </div>
+
+      <div class="col-lg-5">
+        <h2 class="section-title text-left mb-4">Take a look at Tour Video</h2>
+        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+        <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+
+        <ul class="list-unstyled two-col clearfix">
+          <li>Outdoor recreation activities</li>
+          <li>Airlines</li>
+          <li>Car Rentals</li>
+          <li>Cruise Lines</li>
+          <li>Hotels</li>
+          <li>Railways</li>
+          <li>Travel Insurance</li>
+          <li>Package Tours</li>
+          <li>Insurance</li>
+          <li>Guide Books</li>
+        </ul>
+
+        <p><a href="#" class="btn btn-primary">Get Started</a></p>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="py-5 cta-section">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h2 class="mb-2 text-white">Lets you Explore the Best. Contact Us Now</h2>
+        <p class="mb-4 lead text-white text-white-opacity">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, fugit?</p>
+        <p class="mb-0"><a href="booking.html" class="btn btn-outline-white text-white btn-md font-weight-bold">Get in touch</a></p>
+      </div>
+    </div>
+  </div>
+</div>

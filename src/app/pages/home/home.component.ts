@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { findIndex } from 'rxjs';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { TourService } from "../../services_API/tour.service";
+import { TourModel } from "../../models/tour.model";
+import { ResponseModel } from "../../models/responsiveModels/response.model";
+import { NotificationService } from "../../services_API/notification.service";
+import { ConfigService } from "../../services_API/config.service";
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 
 
 @Component({
@@ -8,8 +13,10 @@ import { findIndex } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  constructor(private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  resTour: TourModel[]
+  response: ResponseModel
+  @ViewChild('slide') slide: ElementRef;
   list = [
     { img: "assets/images/hero-slider-1.jpg", location: "San Francisco."},
     { img: "assets/images/hero-slider-2.jpg", location: "Paris."},
@@ -21,6 +28,11 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    setInterval(() =>{
+      this.prev()
+    }, 4000)
+
+    this.initTour()
   }
 
   doSmth(){
@@ -31,6 +43,46 @@ export class HomeComponent implements OnInit {
         this.img = element.img
       }
      });
+  }
+
+  next(){
+    let lists = document.querySelectorAll('.s_item');
+    console.log(lists);
+
+    this.slide.nativeElement.appendChild(lists[0]);
+  }
+
+  prev(){
+    let lists = document.querySelectorAll('.s_item');
+    this.slide.nativeElement.prepend(lists[lists.length - 1]);
+  }
+
+  initTour(){
+    this.tourService.gets().subscribe(res => {
+      this.response = res
+      if(!this.response.notification.type)
+      {
+        this.resTour = this.response.content
+        console.log(this.resTour);
+
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+
+  formatPrice(price: any){
+    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+  }
+
+  formatDate(date: any){
+    return this.configService.formatFromUnixTimestampToFullDateView(date)
+  }
+
+
+  passData(data: any){
+    sessionStorage.setItem("resTour", JSON.stringify(data))
   }
 }
 
