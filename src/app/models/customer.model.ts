@@ -1,11 +1,12 @@
 export class CustomerModel{
-  id: string
-  name: string
+  idCustomer: string
+  nameCustomer: string
   phone: string
   email: string
   address: string
+  gender: boolean
   password: string
-  birthday: number
+  birthday: string
   createDate: number
   accessToken: string
   point: number
