@@ -13,33 +13,50 @@ export class RegisterComponent implements OnInit {
 
   response: ResponseModel
   resCustomer: CustomerModel
+  listGender = this.configService.listGender()
   formData: any
   birthday: string
+  confirmPassword: string
   constructor(private customerService: CustomerService, private notificationService: NotificationService, private configService: ConfigService) { }
 
   ngOnInit(): void {
     this.resCustomer = new CustomerModel()
+    console.log(this.listGender);
     if(this.resCustomer){
       this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
     }
   }
 
+  ngOnChanges(): void {
+
+  }
+
+
+
   save(){
 
-      var file = new FormData();
-      file.append('data', JSON.stringify(this.resCustomer))
+    var valid =  this.configService.validateCustomer(this.resCustomer)
+    valid.forEach(element => {
+        this.notificationService.handleAlert(element, "Error")
+    });
+    if (valid.length == 0) {
+      if(this.resCustomer.password === this.resCustomer.confirmPassword){
+        var file = new FormData();
+        file.append('data', JSON.stringify(this.resCustomer))
 
-      if (this.formData) {
-        file.append('file', this.formData.path[0].files[0])
+        if (this.formData) {
+          file.append('file', this.formData.path[0].files[0])
+        }
+          this.customerService.create(file).subscribe(res =>{
+            this.response = res
+           this.notificationService.handleAlertObj(res.notification)
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, "Error")
+          })
       }
-        this.customerService.create(file).subscribe(res =>{
-          this.response = res
-         this.notificationService.handleAlertObj(res.notification)
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
-        })
     }
+  }
 
 
 }
