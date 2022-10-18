@@ -16,7 +16,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxTypedJsModule} from 'ngx-typed-js';
 // import { ToastrModule } from 'ngx-toastr';
 import { TourDetailComponent } from '../../pages/tour-detail/tour-detail.component';
-
+import { NavModule, TabsModule } from '@coreui/angular';
+import { NgSelectModule }           from '@ng-select/ng-select';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +25,10 @@ import { TourDetailComponent } from '../../pages/tour-detail/tour-detail.compone
     FormsModule,
     HttpClientModule,
     NgbModule,
-    NgxTypedJsModule
+    NgxTypedJsModule,
+    NavModule,
+    TabsModule,
+    NgSelectModule
   ],
   declarations: [
     HomeComponent,

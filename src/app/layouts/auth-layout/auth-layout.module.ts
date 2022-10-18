@@ -8,13 +8,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from '../../pages/auth/login/login.component';
 import { RegisterComponent } from '../../pages/auth/register/register.component';
+
+import { NgSelectModule }           from '@ng-select/ng-select';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
     NgbModule,
-
+    NgSelectModule
   ],
   declarations: [
     LoginComponent,
