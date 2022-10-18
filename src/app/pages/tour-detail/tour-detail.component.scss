@@ -20,6 +20,24 @@
 
 .s_buttons{
   position: absolute;
-  top: 20px;
-  left: 170px
+    top: 20px;
+    left: 160px;
 }
+
+.t_buttons{
+  position: absolute;
+    top: 15px;
+    right: 30px;
+}
+
+.paymentform{
+  color: #2d4271;
+  font-weight: 600;
+}
+.t_buttons input[type=radio]{
+  accent-color: #4d4aef;
+}
+
+
+
+

@@ -18,104 +18,154 @@
     <div class="row">
 
       <div class="container col-7" >
-      <div class="mb-5">
-      <h1 style="margin-bottom: 70px; font-weight: bold; color: #2d4271">Nhập thông tin</h1>
-      <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Thông tin liên lạc</h4>
-      <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
-        <div class="row">
-         <div class="mb-3 col-6">
-           <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
-           <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameContact" placeholder="Nhập họ và tên...">
-         </div>
-         <div class="mb-3 col-6">
-           <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-           <input type="email" class="form-control" name="email" id="email" [(ngModel)]="resTourBooking.email" placeholder="Nhập email...">
-         </div>
-        </div>
-        <div class="row">
-         <div class="mb-3 col-6">
-           <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-           <input type="text" class="form-control" name="phone" id="phone" [(ngModel)]="resTourBooking.phone" placeholder="Nhập số điện thoại...">
-         </div>
-         <div class="mb-3 col-6">
-           <label for="address" class="form-label">Địa chỉ</label>
-           <input type="text" class="form-control" name="address" id="address" [(ngModel)]="resTourBooking.address" placeholder="Nhập địa chỉ...">
-         </div>
-        </div>
-      </div>
+        <c-nav variant="tabs">
+          <c-nav-item>
+            <ng-container *ngIf="activePane == 0; else elseOne">
+              <a style="color: #4d4aef; font-weight: 600;"  [active]="true"  cNavLink>
+                1. Nhập thông tin
+              </a>
+             </ng-container>
+             <ng-template #elseOne>
+              <a style="color: #2d4271; font-weight: 600;"  [cTabContent]="tabContent" [routerLink] [tabPaneIdx]="0" cNavLink>
+                1. Nhập thông tin
+              </a>
+             </ng-template>
+          </c-nav-item>
+          <c-nav-item>
+           <ng-container *ngIf="activePane == 1; else elseTwo">
+            <a style="color: #4d4aef; font-weight: 600;"  [active]="true" cNavLink>
+              2. Thanh toán
+            </a>
+           </ng-container>
+           <ng-template #elseTwo>
+            <a style="color: #2d4271; font-weight: 600;"  cNavLink>
+              2. Thanh toán
+            </a>
+           </ng-template>
 
-      <ng-container *ngIf="isCheck">
-        <h4  style="margin-top: 20px; color: #2d4271; font-weight: 600;">Thông tin người đi</h4>
-      <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
-        <div class="row">
-         <div class="mb-3 col">
-           <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
-           <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameCustomer" placeholder="Nhập họ và tên...">
-         </div>
-        </div>
-      </div>
-      </ng-container>
+          </c-nav-item>
 
-      <div class="row" style="margin: 20px 5px;">
-      </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="flexCheckDefault" (change)="isCheck ? isCheck = false : isCheck = true">
-          <label class="form-check-label" for="flexCheckDefault">
-            <h5 class="fg-dark">Tôi không đi khách sạn này, tôi đặt giúp cho người khác</h5>
-          </label>
-        </div>
-      </div>
-
-      <div>
-        <h4 style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Hành khách</h4>
-        <div class="container" style="padding: 20px 20px 20px 20px;">
-          <div class="row">
-           <div class="mb-3 col-6">
-             <label for="exampleFormControlInput1" class="form-control" style="color: #2d4271; font-weight: 600;">Người lớn
-              <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">> 12 tuổi</h6>
-              <div class="s_buttons">
-                <button (click)="countAdult('-')">-</button>
-                <span style="font-size: 20px; margin: 5px;">{{resTourBooking.adult}}</span>
-               <button (click)="countAdult('+')">+</button>
-              </div>
-            </label>
-
-           </div>
-           <div class="mb-3 col-6">
-            <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ em
-              <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 5 - 11 tuổi</h6>
-              <div class="s_buttons">
-                <button (click)="countChild('-')">-</button>
-                <span style="font-size: 20px; margin: 5px;">{{resTourBooking.child}}</span>
-               <button (click)="countChild('+')">+</button>
-              </div>
-            </label>
-          </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-6">
-              <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ nhỏ
-                <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 2 - 4 tuổi</h6>
-                <div class="s_buttons">
-                  <button (click)="countBaby('-')">-</button>
-                  <span style="font-size: 20px; margin: 5px;">{{resTourBooking.baby}}</span>
-                 <button (click)="countBaby('+')">+</button>
+        </c-nav>
+        <c-tab-content #tabContent="cTabContent"
+                       (activeTabPaneIdxChange)="onTabChange($event)"
+                       [activeTabPaneIdx]="activePane">
+          <c-tab-pane class="p-3">
+            <div class="mb-5">
+              <h1 style="margin-bottom: 70px; font-weight: bold; color: #2d4271">Nhập thông tin</h1>
+              <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Thông tin liên lạc</h4>
+              <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
+                <div class="row">
+                 <div class="mb-3 col-6">
+                   <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameContact" placeholder="Nhập họ và tên...">
+                 </div>
+                 <div class="mb-3 col-6">
+                   <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                   <input type="email" class="form-control" name="email" id="email" [(ngModel)]="resTourBooking.email" placeholder="Nhập email...">
+                 </div>
                 </div>
-              </label>
+                <div class="row">
+                 <div class="mb-3 col-6">
+                   <label for="phone" class="form-label">Số điện thoại <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" (input)="formatInput($any($event).target)" name="phone" id="phone" [(ngModel)]="resTourBooking.phone" placeholder="Nhập số điện thoại...">
+                 </div>
+                 <div class="mb-3 col-6">
+                   <label for="address" class="form-label">Địa chỉ</label>
+                   <input type="text" class="form-control" name="address" id="address" [(ngModel)]="resTourBooking.address" placeholder="Nhập địa chỉ...">
+                 </div>
+                </div>
+              </div>
+
+              <ng-container *ngIf="isCheck">
+                <h4  style="margin-top: 20px; color: #2d4271; font-weight: 600;">Thông tin người đi</h4>
+              <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
+                <div class="row">
+                 <div class="mb-3 col">
+                   <label for="name" class="form-label">Họ và tên <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" name="name" id="name" [(ngModel)]="resTourBooking.nameCustomer" placeholder="Nhập họ và tên...">
+                 </div>
+                </div>
+              </div>
+              </ng-container>
+
+              <div class="row" style="margin: 20px 5px;">
+              </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="flexCheckDefault" (change)="isCheck ? isCheck = false : isCheck = true">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    <h5 class="fg-dark">Tôi không đi khách sạn này, tôi đặt giúp cho người khác</h5>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <h4 style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Hành khách</h4>
+                <div class="container" style="padding: 20px 20px 20px 20px;">
+                  <div class="row">
+                   <div class="mb-3 col-6">
+                     <label for="exampleFormControlInput1" class="form-control" style="color: #2d4271; font-weight: 600;">Người lớn
+                      <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">> 12 tuổi</h6>
+                      <div class="s_buttons">
+                        <button (click)="countAdult('-')">-</button>
+                        <span style="font-size: 20px; margin: 5px;">{{resTourBooking.adult}}</span>
+                       <button (click)="countAdult('+')">+</button>
+                      </div>
+                    </label>
+
+                   </div>
+                   <div class="mb-3 col-6">
+                    <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ em
+                      <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 5 - 11 tuổi</h6>
+                      <div class="s_buttons">
+                        <button (click)="countChild('-')">-</button>
+                        <span style="font-size: 20px; margin: 5px;">{{resTourBooking.child}}</span>
+                       <button (click)="countChild('+')">+</button>
+                      </div>
+                    </label>
+                  </div>
+                  </div>
+                  <div class="row">
+                    <div class="mb-3 col-6">
+                      <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Trẻ nhỏ
+                        <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 2 - 4 tuổi</h6>
+                        <div class="s_buttons">
+                          <button (click)="countBaby('-')">-</button>
+                          <span style="font-size: 20px; margin: 5px;">{{resTourBooking.baby}}</span>
+                         <button (click)="countBaby('+')">+</button>
+                        </div>
+                      </label>
+                    </div>
+                    <!-- <div class="mb-3 col-6">
+                      <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Em bé
+                        <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 0 - 2 tuổi</h6>
+                        <div class="s_buttons">
+                          <button>-</button>
+                           <span style="font-size: 20px; margin: 5px;">0</span>
+                          <button>+</button>
+                        </div>
+                      </label>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+          </c-tab-pane>
+          <c-tab-pane  class="p-3 ">
+            <div class="">
+              <h1 style="margin-bottom: 70px; font-weight: bold; color: #2d4271">Thanh toán</h1>
+            <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Các hình thức thanh toán</h4>
+            <div class="row">
+              <div class="mb-3 col-6" *ngFor="let payment of resPayment">
+                <label  [for]="payment.type" (change)="changePayment(payment.type)" [style]="isMethodPayment == payment.type ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                  <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 20px">Quý khách vui lòng thanh toán tại bất kỳ văn phòng Vietravel trên toàn quốc và các chi nhánh tại nước ngoài. Xem chi tiết.</h6>
+                  <div class="t_buttons">
+                    <input type="radio" [name]="payment.type" [id]="payment.type" [checked]="isMethodPayment == payment.type" id="">
+                  </div>
+                </label>
+              </div>
             </div>
-            <!-- <div class="mb-3 col-6">
-              <label for="exampleFormControlInput1" class="form-control"  style="color: #2d4271; font-weight: 600;">Em bé
-                <h6 class="card-subtitle mb-2 text-muted" style="margin-top: 5px">Từ 0 - 2 tuổi</h6>
-                <div class="s_buttons">
-                  <button>-</button>
-                   <span style="font-size: 20px; margin: 5px;">0</span>
-                  <button>+</button>
-                </div>
-              </label>
-            </div> -->
-          </div>
-        </div>
-      </div>
+            </div>
+          </c-tab-pane>
+        </c-tab-content>
     </div>
 
     <div class="container col-5" style="margin-top: 100px;">
@@ -179,7 +229,7 @@
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{formatPrice(totalPrice())}}₫</h5>
               </div>
 
-              <button class="btn btn-danger font-weight: bold; mt-5" style=" width: 400px;" (click)="booking()">ĐẶT NGAY</button>
+              <button class="btn btn-danger font-weight: bold; mt-5" style=" width: 400px;" (click)="booking()">{{this.isPayment ? 'ĐẶT NGAY':'THANH TOÁN'}}</button>
            </div>
         </div>
       </div>
@@ -289,6 +339,9 @@
     </div>
   </div>
 </div>
+
+
+
 
 <div class="untree_co-section">
   <div class="container">

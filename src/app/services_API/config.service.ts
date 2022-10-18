@@ -134,6 +134,50 @@ export class ConfigService{
 
    }
 
+   validateInfoCustomer(data: any, isCheck: boolean){
+    var err = []
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    //nameCustomer
+    if (isCheck) {
+      if(data.nameCustomer == null || data.nameCustomer == ""){
+        err.push("[Tên người đi] không được để trống !")
+     }
+     else if (data.nameCustomer > 30) {
+        err.push("[Tên người đi] quá dài !")
+     }else if (data.nameCustomer < 3) {
+       err.push("[Tên người đi] quá ngắn !")
+     }
+    }
+
+    //nameContact
+    if(data.nameContact == null || data.nameContact == ""){
+       err.push("[Tên người liên lạc] không được để trống !")
+    }
+    else if (data.nameContact > 30) {
+       err.push("[Tên người liên lạc] quá dài !")
+    }else if (data.nameContact < 3) {
+      err.push("[Tên người liên lạc] quá ngắn !")
+    }
+
+    //Phone
+    if (data.phone == null || data.phone == "") {
+      err.push("[Số điện thoại] không được để trống !")
+   }else if (data.phone.length > 10) {
+      err.push("[Số điện thoại] vượt quá 10 số !")
+   }else if (!data.phone.startsWith("0")) {
+      err.push("[Số điện thoại] không hợp lệ !")
+   }
+
+    //email
+    if (data.email == null || data.email == "") {
+      err.push("[Email] không được để trống !")
+   }else if (!filter.test(data.email)) {
+      err.push("[Email] không hợp lệ !")
+   }
+    return err
+
+   }
+
    validateDistrict(data: any){
     var err = []
     //name
