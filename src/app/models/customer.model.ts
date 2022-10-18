@@ -6,6 +6,7 @@ export class CustomerModel{
   address: string
   gender: boolean
   password: string
+  confirmPassword: string
   birthday: string
   createDate: number
   accessToken: string
