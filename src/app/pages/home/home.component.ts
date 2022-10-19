@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { TourService } from "../../services_API/tour.service";
-import { TourModel } from "../../models/tour.model";
+import { ScheduleService } from "../../services_API/schedule.service";
+import { ScheduleModel } from "../../models/schedule.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { NotificationService } from "../../services_API/notification.service";
 import { ConfigService } from "../../services_API/config.service";
@@ -13,8 +14,8 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
-  resTour: TourModel[]
+  constructor(private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  resSchedule: ScheduleModel[]
   response: ResponseModel
   @ViewChild('slide') slide: ElementRef;
   list = [
@@ -47,8 +48,6 @@ export class HomeComponent implements OnInit {
 
   next(){
     let lists = document.querySelectorAll('.s_item');
-    console.log(lists);
-
     this.slide.nativeElement.appendChild(lists[0]);
   }
 
@@ -58,13 +57,12 @@ export class HomeComponent implements OnInit {
   }
 
   initTour(){
-    this.tourService.gets().subscribe(res => {
+    this.scheduleService.gets().subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
       {
-        this.resTour = this.response.content
-        console.log(this.resTour);
-
+        this.resSchedule = this.response.content
+        console.log(this.resSchedule);
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -82,7 +80,7 @@ export class HomeComponent implements OnInit {
 
 
   passData(data: any){
-    sessionStorage.setItem("resTour", JSON.stringify(data))
+    sessionStorage.setItem("resShedule", JSON.stringify(data))
   }
 }
 

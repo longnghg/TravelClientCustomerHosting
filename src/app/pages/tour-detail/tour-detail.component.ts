@@ -1,6 +1,6 @@
 import { Component, OnInit,  } from '@angular/core';
 import { TourService } from "../../services_API/tour.service";
-import { TourModel } from "../../models/tour.model";
+import { ScheduleModel } from "../../models/schedule.model";
 import { TourBookingModel } from "../../models/tourBooking.model";
 import { PaymentModel } from "../../models/payment.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
@@ -25,7 +25,7 @@ export class TourDetailComponent implements OnInit {
   isMethodPayment: any = '1'
   isWallet: boolean
   isCard: boolean
-  resTour: TourModel
+  resSchedule: ScheduleModel
   response: ResponseModel
   activePane = 0;
 
@@ -35,19 +35,15 @@ export class TourDetailComponent implements OnInit {
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    this.resTour = JSON.parse(sessionStorage.getItem("resTour")!)
-    this.priceAdult =  this.resTour.priceAdultPromotion - (this.resTour.priceAdultPromotion * this.discountChild / 100)
+    this.resSchedule = JSON.parse(sessionStorage.getItem("resShedule")!)
+    this.priceAdult =  this.resSchedule.tour.priceAdultPromotion - (this.resSchedule.tour.priceAdultPromotion * this.discountChild / 100)
   }
 
   onTabChange($event: number) {
     this.activePane = $event;
     if (this.activePane == 1) {
       this.paymentService.views().then(response => {
-        console.log(response);
-
         this.resPayment = response
-        console.log(this.resPayment);
-
       })
     }
     console.log('onTabChange', $event);
@@ -65,8 +61,8 @@ export class TourDetailComponent implements OnInit {
 
   countBaby(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity) {
-        this.notificationService.handleAlert("Số khách tối đa " + this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity + " !", "Warning")
+      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+        this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
         this.resTourBooking.baby += 1
@@ -81,8 +77,8 @@ export class TourDetailComponent implements OnInit {
 
   countAdult(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity) {
-        this.notificationService.handleAlert("Số khách tối đa " + this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity + " !", "Warning")
+      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+        this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
         this.resTourBooking.adult += 1
@@ -101,8 +97,8 @@ export class TourDetailComponent implements OnInit {
 
   countChild(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity) {
-        this.notificationService.handleAlert("Số khách tối đa " + this.resTour.schedules[this.resTour.schedules.length-1].maxCapacity + " !", "Warning")
+      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+        this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
         this.resTourBooking.child += 1
@@ -120,7 +116,7 @@ export class TourDetailComponent implements OnInit {
   }
 
   totalPrice(){
-    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resTour.priceAdultPromotion) + (this.resTourBooking.child * this.priceAdult) + (this.resTourBooking.baby * 0)
+    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.priceAdultPromotion) + (this.resTourBooking.child * this.priceAdult) + (this.resTourBooking.baby * 0)
     return this.resTourBooking.totalPrice
   }
   changePayment(type: any){
@@ -137,14 +133,12 @@ export class TourDetailComponent implements OnInit {
     if (valid.length == 0) {
       if (this.isPayment) {
 
-        this.resTourBooking.scheduleId = this.resTour.schedules[this.resTour.schedules.length-1].idSchedule
+        this.resTourBooking.scheduleId = this.resSchedule.idSchedule
         this.resTourBooking.paymentId = 1,
         this.resTourBooking.pincode = "NDV",
         this.resTourBooking.hotelId = "34E417CF-CD67-4549-A84C-892CB1F28E0A"
         this.resTourBooking.restaurantId = "966E0B0E-AC69-4F35-95A1-BD4E8FF181D8"
         this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
-        console.log(this.resTourBooking);
-
         this.tourookingService.create(this.resTourBooking).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
@@ -164,4 +158,8 @@ export class TourDetailComponent implements OnInit {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     this.resTourBooking.phone = input.value
   }
+
+
+
+  //Làm điều khoản
 }

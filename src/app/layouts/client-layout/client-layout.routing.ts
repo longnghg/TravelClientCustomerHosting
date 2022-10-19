@@ -14,7 +14,7 @@ export const ClientLayoutRoutes: Routes = [
     { path: 'elements',          component: ElementsComponent },
     { path: 'services',          component: ServicesComponent },
     { path: 'infor',             component: InforComponent },
-    { path: ':id',              component: TourDetailComponent },
+    { path: 'tourDetail/:id',              component: TourDetailComponent },
 ];
 
 
@@ -30,5 +30,5 @@ export const ROUTES: RouteInfo[] = [
   { path: '/contact',   title: 'Contact',   icon: '',     class: '' },
   { path: '/elements',  title: 'Elements',  icon: '',     class: '' },
   { path: '/services',  title: 'Services',  icon: '',     class: '' },
-  { path: '/:id',       title: 'Tour Detail',  icon: '',     class: '' },
+  { path: '/tourDetail/:id',       title: 'Tour Detail',  icon: '',     class: '' },
 ];

@@ -1,28 +1,35 @@
 
 import { PromotionModel } from "./promotion.model";
 import { TimeLineModel } from "./timeLine.model";
+import { TourModel } from "./tour.model";
 export class ScheduleModel{
-  idSchedule: string
-  departureDate: string
-  beginDate: number
-  endDate: number
-  timePromotion: number
-  status: number
-  finalPrice: number
-  quantityAdult: number
-  quantityBaby: number
-  minCapacity: number
-  maxCapacity: number
-  quantityChild: number
-  tourId: string
-  nameTour: string
-  carId: string
-  liscensePlate: string
-  nameDriver:string
-  employeeId: string
-  nameEmployee:string
-  promotionId: string
-  valuePromotion: number
-  promotion: PromotionModel
-  timeLine: TimeLineModel
+  idSchedule: string = ""
+  departureDate: string = ""
+  beginDate: number = 0
+  endDate: number = 0
+  timePromotion: number = 0
+
+  status: number = 0
+  finalPrice: number = 0
+  quantityAdult: number = 0
+  quantityBaby: number = 0
+  minCapacity: number = 0
+  maxCapacity: number = 0
+  quantityChild: number = 0
+
+  tourId: string = ""
+  nameTour: string = ""
+
+  carId: string = ""
+  liscensePlate: string = ""
+  nameDriver:string = ""
+
+  employeeId: string = ""
+  nameEmployee:string = ""
+
+  promotionId: string = ""
+  valuePromotion: number = 0
+
+  tour: TourModel = new TourModel
+  timeLine: TimeLineModel[]
 }

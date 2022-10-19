@@ -288,8 +288,6 @@ export class ConfigService{
 
    formatFromUnixTimestampToFullDateView(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
-    console.log(date);
-
     var split = date.split("/")
     var day = split[1];
     var month = split[0];
