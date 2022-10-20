@@ -383,7 +383,7 @@
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(priceAdult) + '₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(priceChild) + '₫':'0₫'}}</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
@@ -398,8 +398,14 @@
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{formatPrice(totalPrice())}}₫</h5>
               </div>
+              <ng-container *ngIf="!this.isPayment && activePane == 1; else elseTemplate">
+                <button class="btn btn-danger mt-5" style="font-weight: bold; width: 400px;" placement="top"
+                ngbPopover="Quý khách cần chọn Điều khoản đăng ký online !" >ĐẶT NGAY</button>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <button class="btn btn-danger mt-5" style="font-weight: bold; width: 400px;" (click)="booking()">ĐẶT NGAY</button>
+              </ng-template>
 
-              <button class="btn btn-danger mt-5" style="font-weight: bold; width: 400px;" [disabled]="!this.isPayment && activePane == 1" (click)="booking()">{{this.isPayment ? 'THANH TOÁN':'ĐẶT NGAY'}}</button>
            </div>
         </div>
       </div>

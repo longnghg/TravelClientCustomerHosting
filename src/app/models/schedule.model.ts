@@ -5,6 +5,7 @@ import { TourModel } from "./tour.model";
 export class ScheduleModel{
   idSchedule: string = ""
   departureDate: string = ""
+  departureDateDisplay: string = ""
   beginDate: number = 0
   endDate: number = 0
   timePromotion: number = 0

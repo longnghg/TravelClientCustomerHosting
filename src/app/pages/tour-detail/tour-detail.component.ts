@@ -18,7 +18,7 @@ export class TourDetailComponent implements OnInit {
   resTourBooking: TourBookingModel = new TourBookingModel
   resPayment: PaymentModel[]
   discountChild = 50
-  priceAdult: number = 0
+  priceChild: number = 0
   isCheck: boolean
   isPayment: boolean
   isCash: boolean = true
@@ -28,7 +28,7 @@ export class TourDetailComponent implements OnInit {
   resSchedule: ScheduleModel
   response: ResponseModel
   activePane = 0;
-
+  isSuccess: boolean
   constructor(private tourService: TourService, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourookingService: TourookingService) {
 
   }
@@ -36,7 +36,7 @@ export class TourDetailComponent implements OnInit {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.resSchedule = JSON.parse(sessionStorage.getItem("resShedule")!)
-    this.priceAdult =  this.resSchedule.tour.priceAdultPromotion - (this.resSchedule.tour.priceAdultPromotion * this.discountChild / 100)
+    this.priceChild =  this.resSchedule.tour.priceAdultPromotion - (this.resSchedule.tour.priceAdultPromotion * this.discountChild / 100)
   }
 
   onTabChange($event: number) {
@@ -46,7 +46,7 @@ export class TourDetailComponent implements OnInit {
         this.resPayment = response
       })
     }
-    console.log('onTabChange', $event);
+    // console.log('onTabChange', $event);
   }
 
   formatPrice(price: any){
@@ -116,7 +116,7 @@ export class TourDetailComponent implements OnInit {
   }
 
   totalPrice(){
-    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.priceAdultPromotion) + (this.resTourBooking.child * this.priceAdult) + (this.resTourBooking.baby * 0)
+    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.priceAdultPromotion) + (this.resTourBooking.child * this.priceChild) + (this.resTourBooking.baby * 0)
     return this.resTourBooking.totalPrice
   }
   changePayment(type: any){
@@ -132,7 +132,7 @@ export class TourDetailComponent implements OnInit {
     });
     if (valid.length == 0) {
       if (this.isPayment) {
-
+       if (!this.isSuccess) {
         this.resTourBooking.scheduleId = this.resSchedule.idSchedule
         this.resTourBooking.paymentId = 1,
         this.resTourBooking.pincode = "NDV",
@@ -142,10 +142,17 @@ export class TourDetailComponent implements OnInit {
         this.tourookingService.create(this.resTourBooking).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
+          if (this.response.notification.type == "Success") {
+            this.isSuccess = true
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, "Error")
         })
+       }
+       else{
+        ///
+       }
       }
       else{
         document.body.scrollTop = 100;

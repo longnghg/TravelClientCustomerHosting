@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef  } from '@angular/core';
 import { TourService } from "../../services_API/tour.service";
 import { ScheduleService } from "../../services_API/schedule.service";
 import { ScheduleModel } from "../../models/schedule.model";
@@ -11,10 +11,11 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-  constructor(private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private cd: ChangeDetectorRef, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
   resSchedule: ScheduleModel[]
   response: ResponseModel
   @ViewChild('slide') slide: ElementRef;
@@ -63,6 +64,10 @@ export class HomeComponent implements OnInit {
       {
         this.resSchedule = this.response.content
         console.log(this.resSchedule);
+        this.cd.markForCheck()
+        setTimeout(() => {
+          this.cd.detach()
+        }, 100);
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -75,6 +80,8 @@ export class HomeComponent implements OnInit {
   }
 
   formatDate(date: any){
+    console.log(date);
+
     return this.configService.formatFromUnixTimestampToFullDateView(date)
   }
 
