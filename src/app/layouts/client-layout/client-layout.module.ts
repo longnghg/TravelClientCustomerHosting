@@ -15,9 +15,11 @@ import { InforComponent } from '../../pages/infor/infor.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxTypedJsModule} from 'ngx-typed-js';
 // import { ToastrModule } from 'ngx-toastr';
-import { TourDetailComponent } from '../../pages/tour-detail/tour-detail.component';
+import { TourBookingComponent } from '../../pages/tourBooking/tour-booking.component';
 import { NavModule, TabsModule } from '@coreui/angular';
 import { NgSelectModule }           from '@ng-select/ng-select';
+
+import { BillComponent } from '../../pages/bill/bill.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { NgSelectModule }           from '@ng-select/ng-select';
     ElementsComponent,
     ServicesComponent,
     InforComponent,
-    TourDetailComponent
+    TourBookingComponent,
+    BillComponent
   ]
 })
 

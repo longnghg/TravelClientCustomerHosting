@@ -1,0 +1,123 @@
+<div class="hero hero-inner">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mx-auto text-center">
+        <div class="intro-wrap">
+          <h1 class="mb-0">About Us</h1>
+          <p class="text-white">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="untree_co-section  container">
+  <div class="row">
+    <div class="row">
+      <div class="container col-7" >
+        <div style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+          <h4  style="color: #2d4271; font-weight: 600;">THÔNG TIN LIÊN LẠC</h4>
+          <div class="container" style="border-top: 1px solid #2d4271;">
+            <div class="row">
+             <div class="mb-3 col-6 mt-3">
+               <label for="name" class="form-label">Họ và tên</label>
+               <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.nameContact}}</p>
+             </div>
+             <div class="mb-3 col-6 mt-3">
+               <label for="email" class="form-label">Email</label>
+               <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.email}}</p>
+             </div>
+            </div>
+            <div class="row">
+             <div class="col-6">
+               <label for="phone" class="form-label">Số điện thoại</label>
+               <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.phone}}</p>
+             </div>
+             <div class="col-6">
+               <label for="address" class="form-label">Địa chỉ</label>
+               <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.address}}</p>
+             </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5" style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+          <h4  style="color: #2d4271; font-weight: 600;">CHI TIẾT BOOKING</h4>
+          <div class="container" style="border-top: 1px solid #2d4271;">
+            <div class="row mb-3 mt-3">
+              <label class="form-label col-4" style="font-weight: 600;">Số booking</label>
+              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.bookingNo}}</span> (Quý khách vui lòng nhớ số booking để thuận tiện cho các giao dịch sau này)</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Trị giá booking</label>
+               <p class="col-8" style="color: #2d4271;">{{formatPrice(resTourBooking.totalPrice)}}₫</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Số tiền đã thanh toán</label>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.deposit}}</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Số tiền còn lại</label>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.remainPrice}}</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Ngày đăng ký</label>
+               <p class="col-8" style="color: #2d4271;">{{formatDate(resTourBooking.dateBooking)}}</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
+               <p class="col-8" style="color: #2d4271;">Trác Phương Kiệt</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Tình trạng</label>
+               <p class="col-8" style="color: #2d4271;">Trác Phương Kiệt</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Thời hạn thanh toán</label>
+               <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{formatDate(resTourBooking.lastDate)}}</span> (Theo giờ Việt Nam, Booking sẽ tự động hủy nếu quá thời hạn thanh toán trên)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container col-5">
+        <div class="row">
+          <div style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
+            <h4  style="color: #2d4271; font-weight: 600;">PHIẾU XÁC NHẬN BOOKING</h4>
+            <div class="container" style="border-top: 1px solid #2d4271;">
+              <div class="row">
+               <div class="mb-3 mt-3">
+                 <p style="color: #2d4271; font-weight: 600;">{{resSchedule.nameTour}}</p>
+                 <P style="color: #2d4271">Số booking: <span class="text-danger">{{resTourBooking.bookingNo}}</span></P>
+               </div>
+              </div>
+              <div class="container" style="border-top: 1px solid #2d4271;">
+                <div class="row mb-3 mt-3">
+                  <label class="form-label col-4" style="font-weight: 600;">Mã tour</label>
+                  <p class="col-8" style="color: #2d4271;">{{resSchedule.idSchedule}}</p>
+                </div>
+                <div class="row">
+                  <label class="form-label col-4" style="font-weight: 600;">Hành trình</label>
+                   <p class="col-8" style="color: #2d4271;">{{resSchedule.tour.fromPlace + ' đến ' + resSchedule.tour.toPlace}}</p>
+                </div>
+                <div class="row">
+                  <label class="form-label col-4" style="font-weight: 600;">Ngày đi</label>
+                   <p class="col-8" style="color: #2d4271;">{{formatDate(resSchedule.departureDate)}}</p>
+                </div>
+                <div class="row">
+                  <label class="form-label col-4" style="font-weight: 600;">Ngày về</label>
+                   <p class="col-8" style="color: #2d4271;">{{formatDate(resSchedule.endDate)}}</p>
+                </div>
+                <div class="row">
+                  <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
+                   <p class="col-8" style="color: #2d4271;">{{resSchedule.tour.fromPlace}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

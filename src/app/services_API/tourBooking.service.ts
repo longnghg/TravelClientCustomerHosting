@@ -7,7 +7,7 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
   providedIn: 'root'
 })
 
-export class TourookingService{
+export class TourBookingService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
   gets()

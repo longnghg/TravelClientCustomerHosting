@@ -1,20 +1,20 @@
 import { Component, OnInit,  } from '@angular/core';
-import { TourService } from "../../services_API/tour.service";
 import { ScheduleModel } from "../../models/schedule.model";
 import { TourBookingModel } from "../../models/tourBooking.model";
 import { PaymentModel } from "../../models/payment.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { NotificationService } from "../../services_API/notification.service";
 import { ConfigService } from "../../services_API/config.service";
-import { TourookingService } from "../../services_API/tourBooking.service";
+import { TourBookingService } from "../../services_API/tourBooking.service";
 import { PaymentService } from "../../services_API/payment.service";
+import { ActivatedRoute } from '@angular/router';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
-  selector: 'app-tour-detail',
-  templateUrl: './tour-detail.component.html',
-  styleUrls: ['./tour-detail.component.scss']
+  selector: 'app-tour-booking',
+  templateUrl: './tour-booking.component.html',
+  styleUrls: ['./tour-booking.component.scss']
 })
-export class TourDetailComponent implements OnInit {
+export class TourBookingComponent implements OnInit {
   resTourBooking: TourBookingModel = new TourBookingModel
   resPayment: PaymentModel[]
   discountChild = 50
@@ -26,17 +26,26 @@ export class TourDetailComponent implements OnInit {
   isWallet: boolean
   isCard: boolean
   resSchedule: ScheduleModel
+  listSchedule: ScheduleModel[]
   response: ResponseModel
   activePane = 0;
   isSuccess: boolean
-  constructor(private tourService: TourService, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourookingService: TourookingService) {
-
-  }
+  constructor(private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    this.resSchedule = JSON.parse(sessionStorage.getItem("resShedule")!)
-    this.priceChild =  this.resSchedule.tour.priceAdultPromotion - (this.resSchedule.tour.priceAdultPromotion * this.discountChild / 100)
+    this.listSchedule = JSON.parse(sessionStorage.getItem("listSchedule"))
+    this.resSchedule = JSON.parse(sessionStorage.getItem("resSchedule"))
+    var check = 0
+    this.listSchedule.forEach(listSchedule => {
+      if (listSchedule.idSchedule == this.activatedRoute.snapshot.paramMap.get('id')) {
+        check++
+      }
+    });
+
+    if (check == 0) {
+      location.assign(this.configService.clientUrl + "/#/page404")
+    }
   }
 
   onTabChange($event: number) {
@@ -116,7 +125,7 @@ export class TourDetailComponent implements OnInit {
   }
 
   totalPrice(){
-    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.priceAdultPromotion) + (this.resTourBooking.child * this.priceChild) + (this.resTourBooking.baby * 0)
+    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.tourDetail.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.tour.tourDetail.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.tour.tourDetail.priceBabyPromotion)
     return this.resTourBooking.totalPrice
   }
   changePayment(type: any){
@@ -139,11 +148,13 @@ export class TourDetailComponent implements OnInit {
         this.resTourBooking.hotelId = "34E417CF-CD67-4549-A84C-892CB1F28E0A"
         this.resTourBooking.restaurantId = "966E0B0E-AC69-4F35-95A1-BD4E8FF181D8"
         this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
-        this.tourookingService.create(this.resTourBooking).subscribe(res => {
+        this.tourBookingService.create(this.resTourBooking).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
           if (this.response.notification.type == "Success") {
             this.isSuccess = true
+            sessionStorage.setItem("resTourBooking", JSON.stringify(this.resTourBooking))
+            location.assign(this.configService.clientUrl + "/#/bill/" + this.resTourBooking.scheduleId)
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
       {
         this.resSchedule = this.response.content
         console.log(this.resSchedule);
+        sessionStorage.setItem("listSchedule", JSON.stringify(this.resSchedule))
         this.cd.markForCheck()
         setTimeout(() => {
           this.cd.detach()
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
 
 
   passData(data: any){
-    sessionStorage.setItem("resShedule", JSON.stringify(data))
+    sessionStorage.setItem("resSchedule", JSON.stringify(data))
   }
 }
 

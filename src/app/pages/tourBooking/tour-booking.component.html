@@ -16,7 +16,6 @@
 <div class="untree_co-section  container">
   <div class="row">
     <div class="row">
-
       <div class="container col-7" >
         <c-nav variant="tabs">
           <c-nav-item>
@@ -379,11 +378,11 @@
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{formatPrice(resSchedule.tour.priceAdultPromotion)}}₫</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{formatPrice(resSchedule.tour.tourDetail.priceAdultPromotion)}}₫</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(priceChild) + '₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(resSchedule.tour.tourDetail.priceChildPromotion) + '₫':'0₫'}}</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
@@ -405,7 +404,6 @@
               <ng-template #elseTemplate>
                 <button class="btn btn-danger mt-5" style="font-weight: bold; width: 400px;" (click)="booking()">ĐẶT NGAY</button>
               </ng-template>
-
            </div>
         </div>
       </div>
