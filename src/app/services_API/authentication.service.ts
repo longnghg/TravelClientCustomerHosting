@@ -10,17 +10,14 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class AuthenticationService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
 
-  login(email: any, password: any)
+  login(data: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/EmpLogin", {email, password});
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
   }
 
-  logOut()
+  logOut(empId: string)
   {
-      var empId = localStorage.getItem("empId")
-      localStorage.clear();
-      document.location.assign(this.configService.clientUrl +'/#/login');
-      return  this.http.post(this.configService.apiUrl + "/api/Authentication/Logout", {empId});
+      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+empId);
   }
 
 

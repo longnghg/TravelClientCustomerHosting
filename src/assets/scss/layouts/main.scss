@@ -75,7 +75,6 @@ input {
     border: none;
     border-bottom: 1px solid $grey-light;
     padding: 6px 30px;
-    font-family: Poppins;
     box-sizing: border-box;
     @include input-placeholder($grey-light);
     &:focus {

@@ -149,11 +149,13 @@ export class TourBookingComponent implements OnInit {
         this.resTourBooking.restaurantId = "966E0B0E-AC69-4F35-95A1-BD4E8FF181D8"
         this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
         this.tourBookingService.create(this.resTourBooking).subscribe(res => {
+          console.log(res);
+
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
           if (this.response.notification.type == "Success") {
             this.isSuccess = true
-            sessionStorage.setItem("resTourBooking", JSON.stringify(this.resTourBooking))
+            sessionStorage.setItem("resTourBooking", JSON.stringify(res.content))
             location.assign(this.configService.clientUrl + "/#/bill/" + this.resTourBooking.scheduleId)
           }
         }, error => {
@@ -176,8 +178,4 @@ export class TourBookingComponent implements OnInit {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     this.resTourBooking.phone = input.value
   }
-
-
-
-  //Làm điều khoản
 }
