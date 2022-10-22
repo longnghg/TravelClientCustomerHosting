@@ -31,3 +31,4 @@
 @function shapes-dark-color($key: "step-1-gradient-bg") {
 	@return map-get($shapes-dark-colors, $key);
 }
+@import "~bootstrap/scss/functions";
