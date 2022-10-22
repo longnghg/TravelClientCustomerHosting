@@ -50,6 +50,10 @@ export class RegisterComponent implements OnInit {
           this.customerService.create(file).subscribe(res =>{
             this.response = res
            this.notificationService.handleAlertObj(res.notification)
+           if(this.response.notification.type == "Success")
+           {
+             document.location.assign( this.configService.clientUrl + "/#/login")
+           }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, "Error")

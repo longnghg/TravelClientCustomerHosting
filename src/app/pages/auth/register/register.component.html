@@ -17,24 +17,8 @@
                       <input type="text" [(ngModel)]="resCustomer.phone" name="phone" id="phone" placeholder="Nhập điện thoại"/>
                   </div>
                   <div class="form-group">
-                    <label for="gender"><i class="zmdi "></i></label>
-                    <ng-select [items]="listGender"
-                    bindLabel="name"
-                    bindValue="id"
-                    appendTo="body"
-                    [(ngModel)]="resCustomer.gender"
-                    placeholder="Chọn giới tính..."
-                    name="gender"
-                    id="gender">
-                   </ng-select>
-                  </div>
-                  <div class="form-group">
-                    <label for="address"><i class="zmdi zmdi-address"></i></label>
+                    <label for="address"><i class="zmdi zmdi-home"></i></label>
                     <input type="text" [(ngModel)]="resCustomer.address" name="address" id="address" placeholder="Nhập địa chỉ"/>
-                </div>
-                  <div class="form-group">
-                      <label for="birthday"><i class="zmdi zmdi-birthday"></i></label>
-                      <input  name="text"  (change)="resCustomer.birthday = birthday" [(ngModel)]="birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date"/>
                 </div>
                   <div class="form-group">
                       <label for="pass"><i class="zmdi zmdi-lock"></i></label>

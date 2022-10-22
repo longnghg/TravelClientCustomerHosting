@@ -60,9 +60,9 @@ export class ConfigService{
     }
 
 
-    if (data.gender === null) {
-       err.push("[Giới tính] không được để trống !")
-    }
+    // if (data.gender === null) {
+    //    err.push("[Giới tính] không được để trống !")
+    // }
 
 
     if (data.email == null || data.email == "") {
@@ -80,9 +80,9 @@ export class ConfigService{
        err.push("[Số điện thoại] không hợp lệ !")
     }
 
-    if (data.birthday == null || data.birthday == "") {
-       err.push("[Ngày sinh] không được để trống !")
-    }
+    // if (data.birthday == null || data.birthday == "") {
+    //    err.push("[Ngày sinh] không được để trống !")
+    // }
 
 
     if (data.address == null || data.address == "") {
@@ -98,7 +98,7 @@ export class ConfigService{
     if(data.confirmPassword == null  || data.confirmPassword == ""){
       err.push("[Nhập lại mật khẩu] không được để trống !")
     }else if(data.password != data.confirmPassword){
-      err.push("[Mật khẩu không khớp] nhập lại mật khẩu")
+      err.push("[Mật khẩu không khớp] nhập lại mật khẩu !")
     }
     return err
 
