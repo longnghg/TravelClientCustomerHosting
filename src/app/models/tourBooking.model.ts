@@ -1,7 +1,9 @@
+import { PaymentModel } from "../models/payment.model";
 import { TourBookingDetailModel } from "../models/tourBookingDetail.model";
-
+import { ScheduleModel } from "../models/schedule.model";
 export class TourBookingModel{
   idTourBooking: string = ""
+  customerId: string = ""
   nameCustomer: string = ""
   address: string = ""
   email: string = ""
@@ -13,7 +15,9 @@ export class TourBookingModel{
   adult: number = 1
 
   status: number = 1
+  tourbookingDetails: TourBookingDetailModel
   paymentId: number = 1
+  payment: PaymentModel
   scheduleId: string = ""
 
   hotelId: string = ""
@@ -36,4 +40,9 @@ export class TourBookingModel{
 
   modifyBy: string = ""
   modifyDate: number = 0
+
+  schedule: ScheduleModel
 }
+
+
+

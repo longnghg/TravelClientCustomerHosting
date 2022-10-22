@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
       {
         this.resAthentication = this.response.content
         localStorage.setItem("token", this.resAthentication.token)
+        localStorage.setItem("idUser", this.resAthentication.id)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
         document.location.assign( this.configService.clientUrl + "/#/home")
       }
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  GoogleLogin(){
+  googleLogin(){
     this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
       (googleAuthUser:any) => {
         let profile = googleAuthUser.getBasicProfile();
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
             cookiepolicy: 'single_host_origin',
             scope: ''
           });
-          this.GoogleLogin();
+          this.googleLogin();
         });
       }
 

@@ -48,7 +48,7 @@ import { ComponentsModule } from '../app/components/components.module';
     AppComponent,
     Page404Component,
     ClientLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -16,8 +16,6 @@ export class TourModel{
   // idReview: string
   isDelete: boolean = false
   isActive: boolean = true
-  priceAdult: number
-  priceAdultPromotion: number = 0
   tourDetail: TourDetailModel = new TourDetailModel()
   schedules: ScheduleModel[]
 }

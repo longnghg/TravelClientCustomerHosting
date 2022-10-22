@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit {
   initTour(){
     this.scheduleService.gets().subscribe(res => {
       this.response = res
+      console.log(res);
+
       if(!this.response.notification.type)
       {
         this.resSchedule = this.response.content

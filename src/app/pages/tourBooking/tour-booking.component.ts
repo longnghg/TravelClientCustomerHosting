@@ -1,6 +1,7 @@
 import { Component, OnInit,  } from '@angular/core';
 import { ScheduleModel } from "../../models/schedule.model";
 import { TourBookingModel } from "../../models/tourBooking.model";
+import { AuthenticationModel } from "../../models/authentication.model";
 import { PaymentModel } from "../../models/payment.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { NotificationService } from "../../services_API/notification.service";
@@ -22,10 +23,10 @@ export class TourBookingComponent implements OnInit {
   isCheck: boolean
   isPayment: boolean
   isCash: boolean = true
-  isMethodPayment: any = '1'
   isWallet: boolean
   isCard: boolean
   resSchedule: ScheduleModel
+  resAthentication: AuthenticationModel
   listSchedule: ScheduleModel[]
   response: ResponseModel
   activePane = 0;
@@ -34,17 +35,42 @@ export class TourBookingComponent implements OnInit {
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+
     this.listSchedule = JSON.parse(sessionStorage.getItem("listSchedule"))
     this.resSchedule = JSON.parse(sessionStorage.getItem("resSchedule"))
-    var check = 0
+    var checkId1 = 0
+    var checkId2 = 0
+    if (this.resSchedule.finalPriceHoliday == 0) {
+      this.resSchedule.adultPrice = this.resSchedule.finalPrice
+      this.resSchedule.childPrice = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
+      this.resSchedule.babyPrice = 0
+    }
+    else{
+      this.resSchedule.adultPrice = this.resSchedule.finalPriceHoliday
+      this.resSchedule.childPrice = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
+      this.resSchedule.babyPrice = 0
+    }
+
     this.listSchedule.forEach(listSchedule => {
-      if (listSchedule.idSchedule == this.activatedRoute.snapshot.paramMap.get('id')) {
-        check++
+      if (listSchedule.idSchedule == this.activatedRoute.snapshot.paramMap.get('id1')) {
+        checkId1++
+      }
+
+      if (listSchedule.alias == this.activatedRoute.snapshot.paramMap.get('id2')) {
+        checkId2++
       }
     });
 
-    if (check == 0) {
+    if (checkId1 == 0 || checkId2 == 0) {
       location.assign(this.configService.clientUrl + "/#/page404")
+    }
+
+    this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+
+    if (this.resAthentication) {
+      this.resTourBooking.nameContact = this.resAthentication.name
+      this.resTourBooking.email = this.resAthentication.email
+      this.resTourBooking.customerId = this.resAthentication.id
     }
   }
 
@@ -125,11 +151,12 @@ export class TourBookingComponent implements OnInit {
   }
 
   totalPrice(){
-    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.tour.tourDetail.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.tour.tourDetail.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.tour.tourDetail.priceBabyPromotion)
+    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.adultPrice) + (this.resTourBooking.child * this.resSchedule.childPrice) + (this.resTourBooking.baby * this.resSchedule.babyPrice)
     return this.resTourBooking.totalPrice
+
   }
   changePayment(type: any){
-    this.isMethodPayment = type
+    this.resTourBooking.paymentId = type
   }
   booking(){
     if (!this.isCheck) {
@@ -143,11 +170,13 @@ export class TourBookingComponent implements OnInit {
       if (this.isPayment) {
        if (!this.isSuccess) {
         this.resTourBooking.scheduleId = this.resSchedule.idSchedule
-        this.resTourBooking.paymentId = 1,
         this.resTourBooking.pincode = "NDV",
         this.resTourBooking.hotelId = "34E417CF-CD67-4549-A84C-892CB1F28E0A"
-        this.resTourBooking.restaurantId = "966E0B0E-AC69-4F35-95A1-BD4E8FF181D8"
+        this.resTourBooking.restaurantId = "966e0b0e-ac69-4f35-95a1-bd4e8ff181d8"
         this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
+
+        console.log(this.resTourBooking);
+
         this.tourBookingService.create(this.resTourBooking).subscribe(res => {
           console.log(res);
 

@@ -323,17 +323,17 @@
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbsnail" height="300px" (click)="passData(schedule)" [routerLink]="['','tourBooking',schedule.idSchedule]" [state]=schedule class="card-img-top">
+        <img  [src]="schedule.tour.thumbsnail" height="300px" (click)="passData(schedule)" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule class="card-img-top">
         <div class="card-body" style="height: 350px;">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
           <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{formatDate(schedule.departureDate)}}</h6>
           <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{schedule.idSchedule}}</p>
-          <h6 class="card-subtitle mb-2 text-muted" *ngIf="schedule.tour.tourDetail">{{schedule.tour.tourDetail.description}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
           <p class="card-text">Nơi khởi hành: {{schedule.tour.fromPlace}}</p>
-          <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{formatPrice(schedule.tour.tourDetail.priceAdultPromotion)}}₫</span>/Khách </p>
+          <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!schedule.isHoliday ? formatPrice(schedule.finalPrice) : formatPrice(schedule.finalPriceHoliday)}}₫</span>/Khách </p>
          <div style="position: absolute;bottom: 10px;">
           <button class="btn btn-primary">Ngày khác</button>
-          <button class="btn btn-danger" style="margin-left: 150px;" [routerLink]="['','tourBooking',schedule.idSchedule]" [state]=schedule (click)="passData(schedule)">Đặt ngay</button>
+          <button class="btn btn-danger" style="margin-left: 150px;" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule (click)="passData(schedule)">Đặt ngay</button>
          </div>
         </div>
       </div>

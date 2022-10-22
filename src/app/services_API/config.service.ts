@@ -296,4 +296,10 @@ export class ConfigService{
 
     return formattedDate
    }
+
+   formatFromUnixTimestampToFullDateTimeView(unix_timestamp: number){
+    var date = new Date(unix_timestamp);
+    var formattedDate = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes()+ ':' + date.getMinutes();
+    return formattedDate
+   }
 }

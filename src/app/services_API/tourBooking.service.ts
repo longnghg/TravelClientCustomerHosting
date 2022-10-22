@@ -14,6 +14,11 @@ export class TourBookingService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/get-tourbooking");
   }
+
+  getsHistory(idCustomer: any)
+  {
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/customer/gets-history-booking-bycustomer?idCustomer="+ idCustomer);
+  }
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data);

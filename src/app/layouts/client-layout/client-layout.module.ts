@@ -20,6 +20,8 @@ import { NavModule, TabsModule } from '@coreui/angular';
 import { NgSelectModule }           from '@ng-select/ng-select';
 
 import { BillComponent } from '../../pages/bill/bill.component';
+import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +42,8 @@ import { BillComponent } from '../../pages/bill/bill.component';
     ServicesComponent,
     InforComponent,
     TourBookingComponent,
-    BillComponent
+    BillComponent,
+    BillsHistoryComponent
   ]
 })
 

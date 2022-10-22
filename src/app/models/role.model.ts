@@ -13,24 +13,7 @@ export class RoleModel {
 // }
 
 
-export enum RoleTitle {
-  'Admin' = -1,
-  'Quản lý cục bộ' = 1,
-  'Quản lý dịch vụ' = 2,
-  'Quản lý tour' = 3,
-  'Quản lý tour booking' = 4
-}
 
-export enum StatusBooking {
-  'Đã thanh toán',
-  'Chưa thanh toán',
-}
-
-enum ApprovalStatus {
-  'Đã duyệt',
-  'Chưa duyệt',
-  'Từ chối'
-};
 
 // const request =  {
 //   id: 1,

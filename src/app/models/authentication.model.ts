@@ -4,4 +4,5 @@ export class AuthenticationModel{
   id: string = ""
   name: string = ""
   image: string = ""
+  email: string = ""
 }

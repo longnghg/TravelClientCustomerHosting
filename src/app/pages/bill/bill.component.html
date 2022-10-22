@@ -47,8 +47,20 @@
           <h4  style="color: #2d4271; font-weight: 600;">CHI TIẾT BOOKING</h4>
           <div class="container" style="border-top: 1px solid #2d4271;">
             <div class="row mb-3 mt-3">
-              <label class="form-label col-4" style="font-weight: 600;">Số booking</label>
-              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.bookingNo}}</span> (Quý khách vui lòng nhớ số booking để thuận tiện cho các giao dịch sau này)</p>
+              <label class="form-label col-4" style="font-weight: 600;">Mã giao dịch</label>
+              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.pincode}}</span> (Quý khách vui lòng nhớ số booking để thuận tiện cho các giao dịch sau này)</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Người lớn</label>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourbookingDetails.adult}} người</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Trẻ em</label>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourbookingDetails.child}} người</p>
+            </div>
+            <div class="row">
+              <label class="form-label col-4" style="font-weight: 600;">Trẻ nhỏ</label>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.tourbookingDetails.baby}} người</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Trị giá booking</label>
@@ -56,27 +68,27 @@
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Số tiền đã thanh toán</label>
-               <p class="col-8" style="color: #2d4271;">{{resTourBooking.deposit}}</p>
+               <p class="col-8" style="color: #2d4271;">{{formatPrice(resTourBooking.deposit)}}₫</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Số tiền còn lại</label>
-               <p class="col-8" style="color: #2d4271;">{{resTourBooking.remainPrice}}</p>
+               <p class="col-8" style="color: #2d4271;">{{formatPrice(resTourBooking.remainPrice)}}₫</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Ngày đăng ký</label>
-               <p class="col-8" style="color: #2d4271;">{{formatDate(resTourBooking.dateBooking)}}</p>
+               <p class="col-8" style="color: #2d4271;">{{formatDateTime(resTourBooking.dateBooking)}}</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
-               <p class="col-8" style="color: #2d4271;">Trác Phương Kiệt</p>
+               <p class="col-8" style="color: #2d4271;">{{resTourBooking.payment.namePayment}}</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Tình trạng</label>
-               <p class="col-8" style="color: #2d4271;">Trác Phương Kiệt</p>
+               <p class="col-8" style="color: #2d4271;">{{formatStatus(resTourBooking.tourbookingDetails.status)}}</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Thời hạn thanh toán</label>
-               <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{formatDate(resTourBooking.lastDate)}}</span> (Theo giờ Việt Nam, Booking sẽ tự động hủy nếu quá thời hạn thanh toán trên)</p>
+               <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{formatDateTime(resTourBooking.lastDate)}}</span> (Theo giờ Việt Nam, Booking sẽ tự động hủy nếu quá thời hạn thanh toán trên)</p>
             </div>
           </div>
         </div>
@@ -89,7 +101,7 @@
               <div class="row">
                <div class="mb-3 mt-3">
                  <p style="color: #2d4271; font-weight: 600;">{{resSchedule.nameTour}}</p>
-                 <P style="color: #2d4271">Số booking: <span class="text-danger">{{resTourBooking.bookingNo}}</span></P>
+                 <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
                </div>
               </div>
               <div class="container" style="border-top: 1px solid #2d4271;">

@@ -154,17 +154,17 @@
             <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Các hình thức thanh toán</h4>
             <div class="row">
               <div class="mb-3 col-6" *ngFor="let payment of resPayment">
-                <ng-container *ngIf="payment.type == '1'; else else1">
-                  <label [for]="payment.type" (change)="changePayment(payment.type)" [style]="isMethodPayment == payment.type ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                <ng-container *ngIf="payment.idPayment == 1; else else1">
+                  <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
                     <h6 class="card-subtitle mb-2" style="margin-top: 20px">Quý khách vui lòng thanh toán tại bất kỳ văn phòng Vietravel trên toàn quốc và các chi nhánh tại nước ngoài. Xem chi tiết.</h6>
                     <div class="t_buttons">
-                      <input type="radio" [name]="payment.type" [id]="payment.type" [checked]="isMethodPayment == payment.type" id="">
+                      <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment">
                     </div>
                   </label>
                 </ng-container>
                 <ng-template #else1>
-                  <ng-container *ngIf="payment.type == '2'; else else2">
-                    <label [for]="payment.type" (change)="changePayment(payment.type)" [style]="isMethodPayment == payment.type ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                  <ng-container *ngIf="payment.idPayment == 2; else else2">
+                    <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
                       <h6 class="card-subtitle mb-2" style="margin-top: 20px">
                         Quý khách sau khi thực hiện việc chuyển khoản vui lòng gửi email đến
                         <span style="font-weight: bold; color: #2d4271">contactcenter@vietravel.com</span> hoặc gọi tổng đài
@@ -178,12 +178,12 @@
                         <br>
                         Ngân hàng : Vietcombank – CN Tp.HCM</h6>
                       <div class="t_buttons">
-                        <input type="radio" [name]="payment.type" [id]="payment.type" [checked]="isMethodPayment == payment.type" id="">
+                        <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment">
                       </div>
                     </label>
                   </ng-container>
                   <ng-template #else2>
-                    <label [for]="payment.type" (change)="changePayment(payment.type)" [style]="isMethodPayment == payment.type ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                    <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
                       <h6 class="card-subtitle mb-2" style="margin-top: 20px">
                         Quý khách sau khi thực hiện việc chuyển khoản vui lòng gửi email đến
                         <span style="font-weight: bold; color: #2d4271">contactcenter@vietravel.com</span> hoặc gọi tổng đài
@@ -198,7 +198,7 @@
                         <br>
                         Ngân hàng : Vietcombank – CN Tp.HCM</h6>
                       <div class="t_buttons">
-                        <input type="radio" [name]="payment.type" [id]="payment.type" [checked]="isMethodPayment == payment.type" id="">
+                        <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment" id="">
                       </div>
                     </label>
                   </ng-template>
@@ -345,14 +345,14 @@
               <h4  style="color: #2d4271; font-weight: 600;">Tóm tắt đặt chỗ</h4>
               <ul class="timeline mt-4 pr-md-5">
                 <li>
-                  <div class="title">Khởi hành - {{formatDate(resSchedule.beginDate)}}</div>
+                  <div class="title">Khởi hành - {{formatDate(resSchedule.departureDate)}}</div>
                   <div class="details">
                     <h5 style="color: #2d4271; font-weight: bold;">07:10 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 08:15</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
                   </div>
                 </li>
                 <li>
-                  <div class="title">Khởi hành - {{formatDate(resSchedule.endDate)}}</div>
+                  <div class="title">Khởi hành - {{formatDate(resSchedule.returnDate)}}</div>
                   <div class="details">
                     <h5 style="color: #2d4271; font-weight: bold;">10:15 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 11:20</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
@@ -362,7 +362,7 @@
               <hr color="black">
               <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{resSchedule.tour.nameTour}}</h5>
               <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{resSchedule.idSchedule}}</p>
-              <h6 class="card-subtitle mb-2 text-muted">{{resSchedule.tour.tourDetail.description}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">{{resSchedule.description}}</h6>
               <hr color="black">
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 100px;">Hành khách: {{totalPeople()}}</h5>
@@ -378,15 +378,15 @@
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{formatPrice(resSchedule.tour.tourDetail.priceAdultPromotion)}}₫</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{formatPrice(resSchedule.adultPrice)}}₫</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(resSchedule.tour.tourDetail.priceChildPromotion) + '₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + formatPrice(resSchedule.childPrice) + '₫':'0₫'}}</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + 'x 0₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + 'x' + formatPrice(resSchedule.babyPrice) + '₫':'0₫'}}</h5>
               </div>
               <!-- <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
