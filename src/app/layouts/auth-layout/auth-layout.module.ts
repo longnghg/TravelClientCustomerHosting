@@ -8,7 +8,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { LoginComponent } from '../../pages/auth/login/login.component';
 import { RegisterComponent } from '../../pages/auth/register/register.component';
-
+import { ForgotPasswordComponent } from '../../pages/auth/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from '../../pages/auth/change-password/change-password.component';
 import { NgSelectModule }           from '@ng-select/ng-select';
 @NgModule({
   imports: [
@@ -21,6 +22,8 @@ import { NgSelectModule }           from '@ng-select/ng-select';
   declarations: [
     LoginComponent,
     RegisterComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent,
   ]
 })
 export class AuthLayoutModule { }

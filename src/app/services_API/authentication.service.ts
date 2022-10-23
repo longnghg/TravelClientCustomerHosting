@@ -20,6 +20,9 @@ export class AuthenticationService{
       return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+empId);
   }
 
+  changePassword(idCus: string, password: string, newPassword: string){
+      return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-customer?idCus="+idCus+"&password="+password+"&newPassword="+newPassword);
+  }
 
 
 }

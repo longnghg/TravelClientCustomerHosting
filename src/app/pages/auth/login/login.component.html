@@ -18,8 +18,15 @@
                       <input type="password" name="your_pass" id="your_pass" placeholder="Nhập mật khẩu" [(ngModel)]="resCustomer.password"/>
                   </div>
                   <div class="form-group">
-                      <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                      <label for="remember-me" class="label-agree-term"><span><span></span></span>Ghi nhớ đăng nhập</label>
+                    <div class="row mb-4">
+                      <div class="col-md-6">
+                          <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                          <label for="remember-me" class="label-agree-term text-left"><span></span>Ghi nhớ</label>
+                      </div>
+                      <div class="col-md-6">
+                        <a routerLink="/forgotPassword" class="signup-image-link text-right">Quên tài khoản</a>
+                      </div>
+                    </div>
                   </div>
                   <div class="text-center">
                     <ng-container *ngIf="isloading; else elseTemplate">

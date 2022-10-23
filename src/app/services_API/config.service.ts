@@ -104,6 +104,27 @@ export class ConfigService{
 
    }
 
+   validateChangePass(password: string, newPassword: string, confirmPassword: string){
+    var err = []
+
+    if(password == null  || password == ""){
+      err.push("[Mật khẩu cũ] không được để trống !")
+    }
+
+    if(newPassword == null  || newPassword == ""){
+      err.push("[Mật khẩu mới] không được để trống !")
+    }else if(password === newPassword){
+      err.push("[Mật khẩu mới] không trùng mật khẩu cũ !")
+    }
+
+    if(confirmPassword == null  || confirmPassword == ""){
+      err.push("[Nhập lại mật khẩu] không được để trống !")
+    }else if(newPassword != confirmPassword){
+      err.push("[Nhập lại mật khẩu không khớp] nhập lại mật khẩu !")
+    }
+    return err
+   }
+
   validateEmployee(data: any){
     var err = []
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
