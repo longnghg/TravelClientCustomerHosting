@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from "../../layouts/client-layout/client-layout.routing";
 import { Router } from '@angular/router';
-import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy, ɵparseCookieValue } from '@angular/common';
 import { AuthenticationModel } from "../../models/authentication.model";
 import { ConfigService } from "../../services_API/config.service";
 import { AuthenticationService } from "../../services_API/authentication.service";
@@ -41,7 +41,9 @@ export class NavbarComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
       localStorage.clear()
-      location.assign(this.configService.clientUrl + "/#/login")
+      sessionStorage.clear()
+      this.resAthentication = null
+      location.assign(this.configService.clientUrl + "/#/home")
       location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");

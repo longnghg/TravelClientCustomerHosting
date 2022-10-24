@@ -274,12 +274,13 @@
       </div>
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;">
+
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;">
         <img src="https://media.travel.com.vn/LastMinute/lm_221014103311_104256.jpg" height="300px" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i>> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
           <button class="btn btn-primary" style="margin-left: 100px;">Còn 02 ngày 00:06:31</button>
@@ -291,7 +292,7 @@
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
           <button class="btn btn-primary" style="margin-left: 100px;">Còn 02 ngày 00:06:31</button>
@@ -303,7 +304,7 @@
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
 
@@ -323,17 +324,21 @@
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbsnail" height="300px" (click)="passData(schedule)" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule class="card-img-top">
+        <img  [src]="schedule.tour.thumbsnail" height="300px" style="cursor: pointer;" (click)="passData(schedule)" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" class="card-img-top">
         <div class="card-body" style="height: 350px;">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
+          <div class="stars mb-4" >
+            <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+            <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+        </div>
           <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{formatDate(schedule.departureDate)}}</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{schedule.idSchedule}}</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
           <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
           <p class="card-text">Nơi khởi hành: {{schedule.tour.fromPlace}}</p>
           <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!schedule.isHoliday ? formatPrice(schedule.finalPrice) : formatPrice(schedule.finalPriceHoliday)}}₫</span>/Khách </p>
          <div style="position: absolute;bottom: 10px;">
           <button class="btn btn-primary">Ngày khác</button>
-          <button class="btn btn-danger" style="margin-left: 150px;" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule (click)="passData(schedule)">Đặt ngay</button>
+          <button class="btn btn-danger" style="margin-left: 150px;" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" (click)="passData(schedule)">Đặt ngay</button>
          </div>
         </div>
       </div>
@@ -355,4 +360,10 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
+  <a (click)="removeTourBooking()" class="cart-close"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
+  <i (click)="backTourBooking()" class="fa-solid fa-cart-shopping cart-label"></i>
 </div>

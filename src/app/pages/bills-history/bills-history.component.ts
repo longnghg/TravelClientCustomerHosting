@@ -35,8 +35,6 @@ export class BillsHistoryComponent implements OnInit {
     var idCustomer = localStorage.getItem("idUser")
     this.tourBookingService.getsHistory(idCustomer).subscribe(res => {
       this.response = res
-      console.log(res);
-
       if(!this.response.notification.type)
       {
         this.resTourBookingHistory = this.response.content
@@ -48,7 +46,6 @@ export class BillsHistoryComponent implements OnInit {
             tourBookingHistory.statusName = StatusBooking[tourBookingHistory.status]
           });
         }
-        console.log(this.resTourBookingHistory);
         this.calTotalResult()
         this.calStartEnd()
       }

@@ -337,7 +337,7 @@
 
     </div>
 
-    <div class="container col-5" style="margin-top: 100px;">
+    <div class="container col-5" style="margin-top: 100px;" *ngIf="resSchedule">
       <div class="row">
         <div class="card mr-5 mb-5" style=" padding: 0;">
           <div class="card-body">
@@ -347,21 +347,21 @@
                 <li>
                   <div class="title">Khởi hành - {{formatDate(resSchedule.departureDate)}}</div>
                   <div class="details">
-                    <h5 style="color: #2d4271; font-weight: bold;">07:10 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 08:15</h5>
+                    <h5 style="color: #2d4271; font-weight: bold;">07:10 <i style="margin: 0 60px; font-size: 30px;" class="fa-solid fa-plane"></i> 08:15</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
                   </div>
                 </li>
                 <li>
                   <div class="title">Khởi hành - {{formatDate(resSchedule.returnDate)}}</div>
                   <div class="details">
-                    <h5 style="color: #2d4271; font-weight: bold;">10:15 <img style="margin: 0 40px;" src="../../../assets/images/icons/black-plane.png"> 11:20</h5>
+                    <h5 style="color: #2d4271; font-weight: bold;">10:15 <i style="margin: 0 60px; font-size: 30px;" class="fa-solid fa-plane"></i> 11:20</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
                   </div>
                 </li>
               </ul>
               <hr color="black">
               <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{resSchedule.tour.nameTour}}</h5>
-              <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{resSchedule.idSchedule}}</p>
+              <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</p>
               <h6 class="card-subtitle mb-2 text-muted">{{resSchedule.description}}</h6>
               <hr color="black">
               <div style="position: relative">

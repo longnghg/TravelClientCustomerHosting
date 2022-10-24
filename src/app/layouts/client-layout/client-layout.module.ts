@@ -21,6 +21,8 @@ import { NgSelectModule }           from '@ng-select/ng-select';
 
 import { BillComponent } from '../../pages/bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
+import { ForNumber } from "../../pipes/forNumber.pipe";
+import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
 
 @NgModule({
   imports: [
@@ -43,7 +45,9 @@ import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.c
     InforComponent,
     TourBookingComponent,
     BillComponent,
-    BillsHistoryComponent
+    BillsHistoryComponent,
+    TourDetailComponent,
+    ForNumber,
   ]
 })
 

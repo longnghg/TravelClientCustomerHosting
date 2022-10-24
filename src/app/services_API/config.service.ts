@@ -1,4 +1,4 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable, Inject, PipeTransform, Pipe } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
@@ -324,3 +324,6 @@ export class ConfigService{
     return formattedDate
    }
 }
+
+
+

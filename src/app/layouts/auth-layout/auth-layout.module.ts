@@ -11,6 +11,7 @@ import { RegisterComponent } from '../../pages/auth/register/register.component'
 import { ForgotPasswordComponent } from '../../pages/auth/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from '../../pages/auth/change-password/change-password.component';
 import { NgSelectModule }           from '@ng-select/ng-select';
+
 @NgModule({
   imports: [
     CommonModule,

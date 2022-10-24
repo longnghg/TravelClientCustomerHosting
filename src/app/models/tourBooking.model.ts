@@ -19,6 +19,8 @@ export class TourBookingModel{
   paymentId: number = 1
   payment: PaymentModel
   scheduleId: string = ""
+  tourName: string = ""
+  alias: string = ""
 
   hotelId: string = ""
   restaurantId: string = ""
@@ -41,7 +43,6 @@ export class TourBookingModel{
   modifyBy: string = ""
   modifyDate: number = 0
 
-  schedule: ScheduleModel
 }
 
 
