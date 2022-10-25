@@ -19,4 +19,9 @@ create(data: any)
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);
 }
 
+
+getsSchedulebyIdSchedule(idSchedule: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/get-schedule?idSchedule="+idSchedule);
+}
 }

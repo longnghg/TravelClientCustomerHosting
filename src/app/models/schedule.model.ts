@@ -6,6 +6,8 @@ export class ScheduleModel{
   idSchedule: string = ""
 
   alias: string = ""
+
+  departurePlace: string = ""
   departureDate: string = ""
   returnDate: string = ""
   beginDate: number = 0
@@ -16,6 +18,7 @@ export class ScheduleModel{
   quantityAdult: number = 0
   quantityBaby: number = 0
   quantityChild: number = 0
+  quantityCustomer: number = 1
   minCapacity: number = 0
   maxCapacity: number = 0
 
@@ -42,9 +45,13 @@ export class ScheduleModel{
   finalPrice: number = 0
   finalPriceHoliday: number = 0
 
-  adultPrice: number = 0
-  childPrice: number = 0
-  babyPrice: number = 0
+  priceAdult: number = 0
+  priceChild: number = 0
+  priceBaby: number = 0
+
+  priceAdultHoliday: number = 0
+  priceChildHoliday: number = 0
+  priceBabyHoliday: number = 0
 
   isHoliday: boolean = false
   tour: TourModel = new TourModel

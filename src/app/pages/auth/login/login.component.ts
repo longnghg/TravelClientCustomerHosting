@@ -22,6 +22,20 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
+    var checkCurrent = JSON.parse(localStorage.getItem("currentUser"))
+    if (checkCurrent) {
+      this.authenticationService.logOut(checkCurrent.id).subscribe(res =>{
+        this.response = res
+        // this.notificationService.handleAlertObj(res.notification)
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("idUser")
+        localStorage.removeItem("token")
+        sessionStorage.clear()
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
     this.googleAuthSDK();
   }
 
@@ -37,6 +51,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", this.resAthentication.token)
         localStorage.setItem("idUser", this.resAthentication.id)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+
+        var tourBooking = localStorage.getItem("tourBooking_null")
+        if (tourBooking) {
+          localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+          localStorage.removeItem("tourBooking_null")
+        }
         document.location.assign( this.configService.clientUrl + "/#/home")
       }
 

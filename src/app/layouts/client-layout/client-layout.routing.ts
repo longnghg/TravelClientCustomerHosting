@@ -10,7 +10,7 @@ import { TourBookingComponent } from '../../pages/tourBooking/tour-booking.compo
 import { BillComponent } from '../../pages/bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
 import { ProfileComponent } from '../../pages/profile/profile.component';
-
+import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
 export const ClientLayoutRoutes: Routes = [
     { path: 'home',                 component: HomeComponent },
     { path: 'about',                component: AboutComponent },
@@ -19,6 +19,7 @@ export const ClientLayoutRoutes: Routes = [
     { path: 'services',             component: ServicesComponent },
     { path: 'infor',                component: InforComponent },
     { path: 'tour-booking/:id1/:id2',     component: TourBookingComponent },
+    { path: 'tour-detail/:id1/:id2',     component: TourDetailComponent },
     { path: 'bill/:id',             component: BillComponent },
     { path: 'bills-history',         component: BillsHistoryComponent },
     { path: 'profile/:id',         component: ProfileComponent },

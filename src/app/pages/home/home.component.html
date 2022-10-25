@@ -1,15 +1,15 @@
-
-<div class="hero">
+<div class="hero" style="margin-bottom:unset" >
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-lg-7">
+      <div class="col">
         <div class="intro-wrap">
-          <h1 class="mb-5"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="80" [backSpeed]="80" [startDelay]="1000" [showCursor]="true" [backSpeed]="100" [loop]="true" (stringTyped)="doSmth()"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
+          <h1 class="mb-5" style="text-align: center; color: rgba(255, 255, 255, 0.7);"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="150" [backSpeed]="150" [startDelay]="1000" [showCursor]="true"  [loop]="true" (stringTyped)="doSmth()"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
           <div class="row">
             <div class="col-12">
               <form class="form">
                 <div class="row mb-2">
-                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
+                  <div class="col-6">
+                    <label>Điểm đi</label>
                     <select name="" id="" class="form-control custom-select">
                       <option value="">Destination</option>
                       <option value="">Peru</option>
@@ -22,24 +22,34 @@
                       <option value="">Russia</option>
                     </select>
                   </div>
-                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
-                    <input type="text" class="form-control" name="daterange">
+                  <div class="col-6">
+                    <label>Điểm đến</label>
+                    <select name="" id="" class="form-control custom-select">
+                      <option value="">Destination</option>
+                      <option value="">Peru</option>
+                      <option value="">Japan</option>
+                      <option value="">Thailand</option>
+                      <option value="">Brazil</option>
+                      <option value="">United States</option>
+                      <option value="">Israel</option>
+                      <option value="">China</option>
+                      <option value="">Russia</option>
+                    </select>
                   </div>
-                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-3">
-                    <input type="text" class="form-control" placeholder="# of People">
-                  </div>
-
                 </div>
-                <div class="row align-items-center">
-                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
-                    <input type="submit" class="btn btn-primary btn-block" value="Search">
+                <div class="row mb-4">
+                  <div class="col-6">
+                    <label>Ngày đi</label>
+                    <input class="form-control" type="date">
                   </div>
-                  <div class="col-lg-8">
-                    <label class="control control--checkbox mt-3">
-                      <span class="caption">Save this search</span>
-                      <input type="checkbox" checked="checked" />
-                      <div class="control__indicator"></div>
-                    </label>
+                  <div class="col-6">
+                    <label>Ngày về</label>
+                    <input class="form-control" type="date">
+                  </div>
+                </div>
+                <div class="row align-items-center" style="margin-left: 425px; width: 500px;">
+                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
+                    <input type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
                   </div>
                 </div>
               </form>
@@ -47,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5">
+      <!-- <div class="col-lg-5">
         <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
           <div class="carousel-inner slides">
             <div class="carousel-item active">
@@ -55,13 +65,14 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
 
 
-<div class="untree_co-section testimonial-section mt-5" style="height: 850px; ">
+
+<div class="untree_co-section testimonial-section" style="height: 850px; ">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7 text-center">
@@ -157,7 +168,7 @@
               <button id="prev" (click)="prev()"><i class="fa-solid fa-arrow-left"></i></button>
               <button id="next" (click)="next()"><i class="fa-solid fa-arrow-right"></i></button>
           </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -274,12 +285,13 @@
       </div>
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;">
+
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;">
         <img src="https://media.travel.com.vn/LastMinute/lm_221014103311_104256.jpg" height="300px" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i>> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
           <button class="btn btn-primary" style="margin-left: 100px;">Còn 02 ngày 00:06:31</button>
@@ -291,7 +303,7 @@
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
           <button class="btn btn-primary" style="margin-left: 100px;">Còn 02 ngày 00:06:31</button>
@@ -303,7 +315,7 @@
         <div class="card-body">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">Du Lịch Nha Trang</h5>
           <h6 class="card-subtitle mb-2 text-muted">28/10/2022 - 5 ngày</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> DLNT-1665801223888-S1665801558526</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> DLNT-1665801223888-S1665801558526</p>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text">Giá <s>29,990,000₫</s><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">27,990,000₫</span> </p>
 
@@ -323,17 +335,21 @@
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbsnail" height="300px" (click)="passData(schedule)" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule class="card-img-top">
+        <img  [src]="schedule.tour.thumbsnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
         <div class="card-body" style="height: 350px;">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
+          <div class="stars mb-4" >
+            <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+            <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+        </div>
           <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{formatDate(schedule.departureDate)}}</h6>
-          <p class="card-text">Mã tour: <span><img src="../../../assets/images/icons/ticket.png" width="20px" alt=""></span> {{schedule.idSchedule}}</p>
+          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
           <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
-          <p class="card-text">Nơi khởi hành: {{schedule.tour.fromPlace}}</p>
+          <p class="card-text">Nơi khởi hành: {{schedule.departurePlace}}</p>
           <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!schedule.isHoliday ? formatPrice(schedule.finalPrice) : formatPrice(schedule.finalPriceHoliday)}}₫</span>/Khách </p>
          <div style="position: absolute;bottom: 10px;">
-          <button class="btn btn-primary">Ngày khác</button>
-          <button class="btn btn-danger" style="margin-left: 150px;" [routerLink]="['','tour-booking',schedule.idSchedule,schedule.alias]" [state]=schedule (click)="passData(schedule)">Đặt ngay</button>
+          <button class="btn btn-primary"><i class="fa-regular fa-calendar"></i> Ngày khác</button>
+          <button class="btn btn-danger" style="float:right; margin-left: 120px;" (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
          </div>
         </div>
       </div>
@@ -355,4 +371,10 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
+  <a (click)="removeTourBooking()" class="cart-close"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
+  <i (click)="backTourBooking()" class="fa-solid fa-cart-shopping cart-label"></i>
 </div>

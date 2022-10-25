@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TourBookingHistoryModel } from "../../models/tourBookingHistory.model";
-import { ResponseModel } from "../../models/responsiveModels/response.model";
-import { StatusBooking } from "../../enums/enum";
-import { TourBookingService } from "../../services_API/tourBooking.service";
-import { ConfigService } from "../../services_API/config.service";
-import { NotificationService } from "../../services_API/notification.service";
+import { TourBookingHistoryModel } from "../../../models/tourBookingHistory.model";
+import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { StatusBooking } from "../../../enums/enum";
+import { TourBookingService } from "../../../services_API/tourBooking.service";
+import { ConfigService } from "../../../services_API/config.service";
+import { NotificationService } from "../../../services_API/notification.service";
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
@@ -48,7 +48,6 @@ export class BillsHistoryComponent implements OnInit {
             tourBookingHistory.statusName = StatusBooking[tourBookingHistory.status]
           });
         }
-        console.log(this.resTourBookingHistory);
         this.calTotalResult()
         this.calStartEnd()
       }
@@ -56,6 +55,12 @@ export class BillsHistoryComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
+  }
+
+  billDetail(idTourBooking: string){
+    console.log(idTourBooking);
+
+    location.assign(this.configService.clientUrl + "/#/bill/" + idTourBooking)
   }
 
   formatPrice(price: any){

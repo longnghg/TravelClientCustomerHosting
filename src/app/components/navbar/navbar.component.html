@@ -1,12 +1,12 @@
 <nav class="site-nav">
   <div class="container">
     <div class="site-navigation">
-      <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]">Tour <span class="text-primary">.</span></a>
-
-      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-        <li *ngFor="let info of listTitles; let i=index" [class]="info.class"><a href="#" routerLinkActive="active" (isActiveChange)="this.onRouterLinkActive($event, i)" [routerLink]="[info.path]">{{info.title}}</a></li>
+      <!-- <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]">Travel Rover <span class="text-primary">.</span></a> -->
+      <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]"><img src="../../../assets/images/icons/lgoRover.png" alt="" style="width: 200px;"></a>
+      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; margin-top: 1rem; font-weight: bolder; position: absolute; top: 30px;">
+        <li *ngFor="let info of listTitles; let i=index" [class]="info.class"><a class="nav-color" href="#" routerLinkActive="active" (isActiveChange)="this.onRouterLinkActive($event, i)" [routerLink]="[info.path]">{{info.title}}</a></li>
         <li class="has-children">
-          <a href="#">Dropdown</a>
+          <a class="nav-color" href="#">Dropdown</a>
           <ul class="dropdown">
             <li><a href="elements.html">Elements</a></li>
             <li><a href="#">Menu One</a></li>
@@ -18,14 +18,18 @@
                 <li><a href="#">Sub Menu Three</a></li>
               </ul>
             </li>
-            <li><a href="#">Menu Three</a></li>
+            <li><a  href="#">Menu Three</a></li>
           </ul>
         </li>
 
         <ng-container *ngIf="resAthentication; else elseTemplate">
-          <li class="has-children">
-            <a href="#">{{resAthentication.name}}</a>
+          <li class="has-children" style="top: 15px;">
+            <a class="nav-color" style="overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 200px;"  href="#">{{resAthentication.name}}</a>
             <ul class="dropdown">
+<li><a href="#" [routerLink]="['/changePassword']">Đổi mật khẩu</a></li>
               <li>
                 <a href="#" routerLinkActive="active" [routerLink]="['profile', resAthentication.id]">Thông tin cá nhân</a>
                </li>
@@ -37,7 +41,7 @@
         </ng-container>
         <ng-template #elseTemplate>
         <li>
-         <a href="#" routerLinkActive="active" [routerLink]="['/login']">Đăng nhập</a>
+         <a class="nav-color" href="#" routerLinkActive="active" [routerLink]="['/login']">Đăng nhập</a>
         </li>
         </ng-template>
       </ul>

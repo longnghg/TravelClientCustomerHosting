@@ -15,11 +15,18 @@ export class AuthenticationService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
   }
 
-  logOut(empId: string)
+  logOut(cusId: string)
   {
-      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+empId);
+      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+cusId);
   }
 
+  changePassword(idCus: string, password: string, newPassword: string){
+      return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-customer?idCus="+idCus+"&password="+password+"&newPassword="+newPassword);
+  }
+
+  forgotPassword(email: string, password: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-customer?email="+email+"&password="+password);
+}
 
 
 }

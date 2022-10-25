@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.resCustomer = new CustomerModel()
-    console.log(this.listGender);
     if(this.resCustomer){
       this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
     }
@@ -41,13 +40,8 @@ export class RegisterComponent implements OnInit {
     });
     if (valid.length == 0) {
       if(this.resCustomer.password === this.resCustomer.confirmPassword){
-        var file = new FormData();
-        file.append('data', JSON.stringify(this.resCustomer))
 
-        if (this.formData) {
-          file.append('file', this.formData.path[0].files[0])
-        }
-          this.customerService.create(file).subscribe(res =>{
+          this.customerService.create(this.resCustomer).subscribe(res =>{
             this.response = res
            this.notificationService.handleAlertObj(res.notification)
            if(this.response.notification.type == "Success")
@@ -58,9 +52,9 @@ export class RegisterComponent implements OnInit {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, "Error")
           })
-      }
+
     }
   }
-
+  }
 
 }

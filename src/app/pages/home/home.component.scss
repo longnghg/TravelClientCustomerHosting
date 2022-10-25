@@ -105,5 +105,74 @@ h1{
 
 
 
+.cart{
+  z-index: 999;
+  position: sticky;
+  bottom: 5%;
+  margin-left: 95%;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding-top: 13px;
+  animation: color 2s infinite;
+  transition: 0.5s;
+}
+
+.cart-label{
+  color: white;
+  font-size: 25px
+
+
+}
+
+.cart:hover{
+  transition: 0.5s;
+  width: 60px;
+  height: 60px;
+  padding-top: 17px;
+  cursor: pointer;
+  .cart-label{
+    font-size: 30px
+  }
+  .cart-close{
+    opacity: 1
+  }
+}
+
+.cart-close{
+  position: absolute;
+  top: -10px;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-size: 22px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.cart-close-icon{
+  background-color: rgb(92, 90, 89);
+  border-radius: 50%;
+  color: white;
+}
+
+.cart-info{
+  background-color: antiquewhite;
+  width: 300px;
+  height: 130px;
+  position: absolute;
+  left: -310px;
+  top: -20px;
+  border-radius: 5px;
+}
+
+@keyframes color {
+  0% {background-color: #6998AB}
+  35% {background-color: #5686e0}
+  70% {background-color: #7f49d6}
+  100% {background-color: #6998AB}
+}
 
 
