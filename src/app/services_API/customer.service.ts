@@ -20,6 +20,7 @@ export class CustomerService{
   }
  SendOTP(email: string){
     return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/customer/send-otp?email="+email);
+ }
   update(data:any){
     return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Customer/update-customer",data);
   }

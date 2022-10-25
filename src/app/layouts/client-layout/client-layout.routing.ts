@@ -6,9 +6,9 @@ import { ContactComponent } from '../../pages/contact/contact.component';
 import { ElementsComponent } from '../../pages/elements/elements.component';
 import { ServicesComponent } from '../../pages/services/services.component';
 import { InforComponent } from '../../pages/infor/infor.component';
-import { TourBookingComponent } from '../../pages/tourBooking/tour-booking.component';
-import { BillComponent } from '../../pages/bill/bill.component';
-import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
+import { TourBookingComponent } from '../../pages/tours/tour-booking/tour-booking.component';
+import { BillComponent } from '../../pages/bills//bill/bill.component';
+import { BillsHistoryComponent } from '../../pages/bills/bills-history/bills-history.component';
 import { ProfileComponent } from '../../pages/profile/profile.component';
 import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
 export const ClientLayoutRoutes: Routes = [
