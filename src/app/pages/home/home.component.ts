@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
     this.list.forEach(element => {
       if(output?.innerText == element.location)
       {
-        this.img = element.img
+        // this.img = element.img
       }
      });
   }

@@ -549,12 +549,15 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
 
 .hero {
   padding: 7rem 0 10rem 0;
-  background: #6998AB;
+  /* background: #6998AB; */
+  background: url('../../images/dulich/pexels-francesco-ungaro-2835436.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   margin-bottom: 100px; }
   .hero.hero-inner {
-    padding: 9rem 0 7rem 0;
+    padding: 2rem 0 7rem 0;
     margin-bottom: auto;
-    background: #1A374D; }
+    background: #6998AB;}
   .hero h1 {
     color: #ffffff;
     font-size: 60px; }
