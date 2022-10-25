@@ -20,20 +20,30 @@ export class ForgotPasswordComponent implements OnInit {
   checkOTP: string
   isTrue: boolean = false
   response: ResponseModel
+  timePresent: number 
+  endTime: any
   constructor(private authService: AuthenticationService, private notificationService: NotificationService, private configService: ConfigService,
     private customerService: CustomerService) { }
 
   ngOnInit(): void {
-
+    
+    
   }
 
   btnCheckOTP(){
+    this.timePresent = Date.now()
+    this.endTime = this.OTP.endTime
+
     if(this.checkOTP === this.OTP.otpCode){
-      
-      this.isTrue = true
+      if(this.endTime > this.timePresent){
+        this.isTrue = true
+      }
+      else{
+        console.log("quá thời gian");
+      }
     }
     else{
-      // console.log("sai rùi òi ba, nhập lại đi");
+      //  console.log("sai rùi òi ba, nhập lại đi");
     }
   }
 
@@ -54,7 +64,7 @@ export class ForgotPasswordComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, "Error")
     })
-  // }
+  //  }
   }
 
   CusForgotPass() {
