@@ -39,6 +39,9 @@ export class TourBookingComponent implements OnInit {
     document.documentElement.scrollTop = 0;
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
+
+    this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+
     this.init(this.resTourBooking.scheduleId)
   }
   init(idSchedule: string){
@@ -61,18 +64,12 @@ export class TourBookingComponent implements OnInit {
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
-        this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
-        console.log(localStorage.getItem("idUser"));
 
         var tourBooking = localStorage.getItem("tourBooking_" + localStorage.getItem("idUser"))
         if (tourBooking) {
           this.resTourBooking = JSON.parse(tourBooking)
         }
-        if (this.resAthentication) {
-          this.resTourBooking.nameContact = this.resAthentication.name
-          this.resTourBooking.email = this.resAthentication.email
-          this.resTourBooking.customerId = this.resAthentication.id
-        }
+
         this.resTourBooking.tourName = this.resSchedule.tour.nameTour
         this.setCart()
 
@@ -231,6 +228,14 @@ export class TourBookingComponent implements OnInit {
     }
     else{
       localStorage.setItem("tourBooking_null", JSON.stringify(this.resTourBooking))
+    }
+  }
+
+  link(){
+    if (this.resAthentication) {
+      this.resTourBooking.nameContact = this.resAthentication.name
+      this.resTourBooking.email = this.resAthentication.email
+      this.resTourBooking.customerId = this.resAthentication.id
     }
   }
 }
