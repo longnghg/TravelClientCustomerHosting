@@ -1,14 +1,14 @@
 import { Component, OnInit,  } from '@angular/core';
-import { ScheduleModel } from "../../models/schedule.model";
-import { TourBookingModel, ValidationTourBookingModel } from "../../models/tourBooking.model";
-import { AuthenticationModel } from "../../models/authentication.model";
-import { PaymentModel } from "../../models/payment.model";
-import { ResponseModel } from "../../models/responsiveModels/response.model";
-import { NotificationService } from "../../services_API/notification.service";
-import { ConfigService } from "../../services_API/config.service";
-import { TourBookingService } from "../../services_API/tourBooking.service";
-import { PaymentService } from "../../services_API/payment.service";
-import { ScheduleService } from "../../services_API/schedule.service";
+import { ScheduleModel } from "../../../models/schedule.model";
+import { TourBookingModel, ValidationTourBookingModel } from "../../../models/tourBooking.model";
+import { AuthenticationModel } from "../../../models/authentication.model";
+import { PaymentModel } from "../../../models/payment.model";
+import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { NotificationService } from "../../../services_API/notification.service";
+import { ConfigService } from "../../../services_API/config.service";
+import { TourBookingService } from "../../../services_API/tourBooking.service";
+import { PaymentService } from "../../../services_API/payment.service";
+import { ScheduleService } from "../../../services_API/schedule.service";
 import { ActivatedRoute, Router } from '@angular/router';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({

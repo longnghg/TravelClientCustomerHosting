@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TourBookingModel} from "../../models/tourBooking.model";
-import { StatusBooking} from "../../enums/enum";
-import { ScheduleModel } from "../../models/schedule.model";
-import { ResponseModel } from "../../models/responsiveModels/response.model";
-import { ConfigService } from "../../services_API/config.service";
-import { ScheduleService } from "../../services_API/schedule.service";
-import { TourBookingService } from "../../services_API/tourBooking.service";
-import { NotificationService } from "../../services_API/notification.service";
+import { TourBookingModel} from "../../../models/tourBooking.model";
+import { StatusBooking} from "../../../enums/enum";
+import { ScheduleModel } from "../../../models/schedule.model";
+import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { ConfigService } from "../../../services_API/config.service";
+import { ScheduleService } from "../../../services_API/schedule.service";
+import { TourBookingService } from "../../../services_API/tourBooking.service";
+import { NotificationService } from "../../../services_API/notification.service";
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-bill',

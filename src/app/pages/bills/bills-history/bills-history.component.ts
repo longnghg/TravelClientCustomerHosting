@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { TourBookingHistoryModel } from "../../models/tourBookingHistory.model";
-import { ResponseModel } from "../../models/responsiveModels/response.model";
-import { StatusBooking } from "../../enums/enum";
-import { TourBookingService } from "../../services_API/tourBooking.service";
-import { ConfigService } from "../../services_API/config.service";
-import { NotificationService } from "../../services_API/notification.service";
+import { TourBookingHistoryModel } from "../../../models/tourBookingHistory.model";
+import { ResponseModel } from "../../../models/responsiveModels/response.model";
+import { StatusBooking } from "../../../enums/enum";
+import { TourBookingService } from "../../../services_API/tourBooking.service";
+import { ConfigService } from "../../../services_API/config.service";
+import { NotificationService } from "../../../services_API/notification.service";
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
