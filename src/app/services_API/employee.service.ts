@@ -38,7 +38,7 @@ export class EmployeeService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee", {isDelete});
   }
 
-  search(data){
+  search(data: any){
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/search-employee", data);
   }
   create(data: any)

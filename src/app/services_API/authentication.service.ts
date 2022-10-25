@@ -24,5 +24,9 @@ export class AuthenticationService{
       return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-customer?idCus="+idCus+"&password="+password+"&newPassword="+newPassword);
   }
 
+  forgotPassword(email: string, password: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-customer?email="+email+"&password="+password);
+}
+
 
 }

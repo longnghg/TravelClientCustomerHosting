@@ -18,4 +18,8 @@ export class CustomerService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Customer/create-customer", data);
   }
+
+  SendOTP(email: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/customer/send-otp?email="+email);
+}
 }

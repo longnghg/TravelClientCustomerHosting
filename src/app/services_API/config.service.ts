@@ -307,6 +307,40 @@ export class ConfigService{
 
    }
 
+   validateForgotPass(data: any, model: any){
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (data.email == null || data.email == "") {
+      model.email = "[Email] không được để trống !"
+      model.total += 1
+    }else if (!filter.test(data.email)) {
+      model.email = "[Email] không hợp lệ !"
+      model.total += 1
+    }
+
+    if(data.checkOTP == null || data.checkOTP == ""){
+      model.checkOTP = "[OTP] không được để trống !"
+      model.total += 1
+    }else if(data.checkOTP != data.otpCode){
+      model.checkOTP = "[OTP] không đúng !"
+      model.total += 1
+    }
+
+    if(data.password == null || data.password == ""){
+      model.password = "[Mật khẩu] không được để trống !"
+      model.total += 1
+    }
+
+    if(data.confirmPassword == null || data.confirmPassword == ""){
+      model.confirmPassword = "[Nhập lại mật khẩu] không được để trống !"
+      model.total += 1
+    }else if(data.password != data.confirmPassword){
+      model.confirmPassword = "[Nhập lại mật khẩu] không trùng khớp  !"
+      model.total += 1
+    }
+    return model
+   }
+
    formatFromUnixTimestampToFullDate(unix_timestamp: number){
     var date = new Date(unix_timestamp).toLocaleDateString("en-US");
     var split = date.split("/")
