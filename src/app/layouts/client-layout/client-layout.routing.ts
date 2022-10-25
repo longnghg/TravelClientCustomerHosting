@@ -9,6 +9,7 @@ import { InforComponent } from '../../pages/infor/infor.component';
 import { TourBookingComponent } from '../../pages/tourBooking/tour-booking.component';
 import { BillComponent } from '../../pages/bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
+import { ProfileComponent } from '../../pages/profile/profile.component';
 
 export const ClientLayoutRoutes: Routes = [
     { path: 'home',                 component: HomeComponent },
@@ -20,6 +21,7 @@ export const ClientLayoutRoutes: Routes = [
     { path: 'tour-booking/:id1/:id2',     component: TourBookingComponent },
     { path: 'bill/:id',             component: BillComponent },
     { path: 'bills-history',         component: BillsHistoryComponent },
+    { path: 'profile/:id',         component: ProfileComponent },
 ];
 
 

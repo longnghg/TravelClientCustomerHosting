@@ -22,6 +22,9 @@ import { NgSelectModule }           from '@ng-select/ng-select';
 import { BillComponent } from '../../pages/bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.component';
 
+import { ProfileComponent } from '../../pages/profile/profile.component';
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +46,9 @@ import { BillsHistoryComponent } from '../../pages/bills-history/bills-history.c
     InforComponent,
     TourBookingComponent,
     BillComponent,
-    BillsHistoryComponent
+    BillsHistoryComponent,
+    ProfileComponent,
+
   ]
 })
 

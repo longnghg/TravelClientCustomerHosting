@@ -18,4 +18,10 @@ export class CustomerService{
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Customer/create-customer", data);
   }
+  update(data:any){
+    return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Customer/update-customer",data);
+  }
+  get(idCustomer: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Customer/get-customer?idCustomer="+idCustomer);
+  }
 }

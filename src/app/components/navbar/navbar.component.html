@@ -26,6 +26,9 @@
           <li class="has-children">
             <a href="#">{{resAthentication.name}}</a>
             <ul class="dropdown">
+              <li>
+                <a href="#" routerLinkActive="active" [routerLink]="['profile', resAthentication.id]">Thông tin cá nhân</a>
+               </li>
               <li><a href="#" [routerLink]="['/bills-history']">Lịch sử đặt tour</a></li>
 
               <li><a href="javascript:void(0)" (click)="logOut()">Đăng xuất</a></li>
