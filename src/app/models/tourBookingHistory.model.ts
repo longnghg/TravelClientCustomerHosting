@@ -1,5 +1,6 @@
 export class TourBookingHistoryModel{
   idSchedule: string = ""
+  idTourBooking: string = ""
   nameTour: string = ""
   baby: number = 0
   child: number = 0

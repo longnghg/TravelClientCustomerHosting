@@ -43,7 +43,15 @@ export class TourBookingModel{
   modifyBy: string = ""
   modifyDate: number = 0
 
+  schedule: ScheduleModel
 }
 
 
+export class ValidationTourBookingModel {
+  total: number = 0
+  nameCustomer: string = ""
+  nameContact: string = ""
+  phone: string = ""
+  email: string = ""
+}
 

@@ -1,6 +1,6 @@
 import { Component, OnInit,  } from '@angular/core';
 import { ScheduleModel } from "../../models/schedule.model";
-import { TourBookingModel } from "../../models/tourBooking.model";
+import { TourBookingModel, ValidationTourBookingModel } from "../../models/tourBooking.model";
 import { AuthenticationModel } from "../../models/authentication.model";
 import { PaymentModel } from "../../models/payment.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
@@ -9,7 +9,7 @@ import { ConfigService } from "../../services_API/config.service";
 import { TourBookingService } from "../../services_API/tourBooking.service";
 import { PaymentService } from "../../services_API/payment.service";
 import { ScheduleService } from "../../services_API/schedule.service";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-tour-booking',
@@ -17,6 +17,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./tour-booking.component.scss']
 })
 export class TourBookingComponent implements OnInit {
+  validateTourBooking: ValidationTourBookingModel = new ValidationTourBookingModel
   resTourBooking: TourBookingModel = new TourBookingModel
   resPayment: PaymentModel[]
   discountChild = 50
@@ -32,43 +33,34 @@ export class TourBookingComponent implements OnInit {
   response: ResponseModel
   activePane = 0;
   isSuccess: boolean
-  constructor(private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
+  constructor(private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    this.resTourBooking = new TourBookingModel
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
     this.init(this.resTourBooking.scheduleId)
-
-
-
-
   }
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
       this.resSchedule = this.response.content
-      console.log(this.resSchedule);
-
       if(!this.response.notification.type)
       {
-        if (this.resSchedule.finalPriceHoliday == 0) {
-          this.resSchedule.adultPrice = this.resSchedule.finalPrice
-          this.resSchedule.childPrice = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
-          this.resSchedule.babyPrice = 0
+        if (this.resSchedule.isHoliday) {
+          this.resSchedule.priceAdultHoliday = this.resSchedule.finalPrice
+          this.resSchedule.priceChildHoliday = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
+          this.resSchedule.priceBabyHoliday = 0
         }
         else{
-          this.resSchedule.adultPrice = this.resSchedule.finalPriceHoliday
-          this.resSchedule.childPrice = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
-          this.resSchedule.babyPrice = 0
+          this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
+          this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
+          this.resSchedule.priceBaby = 0
         }
 
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
-        console.log(this.resSchedule.tour.nameTour);
-
         this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
         if (this.resAthentication) {
           this.resTourBooking.nameContact = this.resAthentication.name
@@ -92,6 +84,7 @@ export class TourBookingComponent implements OnInit {
       this.notificationService.handleAlert(message, "Error")
     })
   }
+
   onTabChange($event: number) {
     this.activePane = $event;
     if (this.activePane == 1) {
@@ -171,7 +164,12 @@ export class TourBookingComponent implements OnInit {
 
   totalPrice(){
     localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
-    this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.adultPrice) + (this.resTourBooking.child * this.resSchedule.childPrice) + (this.resTourBooking.baby * this.resSchedule.babyPrice)
+    if (this.resSchedule.isHoliday) {
+      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+    }
+    else{
+      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
+    }
     return this.resTourBooking.totalPrice
 
   }
@@ -183,11 +181,10 @@ export class TourBookingComponent implements OnInit {
     if (!this.isCheck) {
       this.resTourBooking.nameCustomer = this.resTourBooking.nameContact
     }
-    var valid =  this.configService.validateInfoCustomer(this.resTourBooking, this.isCheck)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
-    });
-    if (valid.length == 0) {
+    this.validateTourBooking =  this.configService.validateInfoCustomer(this.resTourBooking, this.validateTourBooking, this.isCheck)
+    console.log(this.validateTourBooking);
+
+    if ( this.validateTourBooking.total == 0) {
       if (this.isPayment) {
        if (!this.isSuccess) {
         this.resTourBooking.scheduleId = this.resSchedule.idSchedule
@@ -195,18 +192,14 @@ export class TourBookingComponent implements OnInit {
         this.resTourBooking.hotelId = "34E417CF-CD67-4549-A84C-892CB1F28E0A"
         this.resTourBooking.restaurantId = "966e0b0e-ac69-4f35-95a1-bd4e8ff181d8"
         this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
-
-        console.log(this.resTourBooking);
-
         this.tourBookingService.create(this.resTourBooking).subscribe(res => {
-          console.log(res);
-
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
           if (this.response.notification.type == "Success") {
             this.isSuccess = true
+            this.resTourBooking = null
             localStorage.removeItem("tourBooking_" + this.resAthentication.id)
-            location.assign(this.configService.clientUrl + "/#/bill/" + this.resTourBooking.scheduleId)
+            location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");

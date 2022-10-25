@@ -43,7 +43,7 @@
               <h6 class="card-subtitle mb-2 text-muted">Ngày về: {{formatDate(tourBookingHistory.returnDate)}}</h6>
             </div>
             <div class="col-3">
-               <button class="btn btn-primary" style="margin-left: 27px;" >Chi tiết</button>
+               <button class="btn btn-primary" style="margin-left: 27px;" (click)="billDetail(tourBookingHistory.idTourBooking)" >Chi tiết</button>
             </div>
           </div>
           </div>

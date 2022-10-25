@@ -11,10 +11,59 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
   styleUrls: ['./tour-detail.component.scss']
 })
 export class TourDetailComponent implements OnInit {
-
+  resSchedule: ScheduleModel
+  response: ResponseModel
   constructor(private scheduleService: ScheduleService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
+    this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
   }
 
+ init(idSchedule: string){
+    this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
+      this.response = res
+      this.resSchedule = this.response.content
+      if(!this.response.notification.type)
+      {
+        if (this.resSchedule.finalPriceHoliday == 0) {
+          this.resSchedule.priceAdult = this.resSchedule.finalPrice
+          this.resSchedule.priceChild = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
+          this.resSchedule.priceBaby = 0
+        }
+        else{
+          this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
+          this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
+          this.resSchedule.priceBaby = 0
+        }
+
+      }
+      else{
+        location.assign(this.configService.clientUrl + "/#/page404")
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+
+  booking(idSchedule: string, alias: string){
+    localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
+    this.router.navigate(['','tour-booking',idSchedule, alias]);
+  }
+
+  formatPrice(price: any){
+    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+  }
+
+  formatDate(date: any){
+    return this.configService.formatFromUnixTimestampToFullDateView(date)
+  }
+
+  formatTimeDate(date: any){
+    return this.configService.formatFromUnixTimestampToFullTimeDateView(date)
+  }
+
+  formatStartEndDate(start: any, end: any){
+    return this.configService.formatFromUnixTimestampToFullStartEndDateView(start, end)
+  }
 }

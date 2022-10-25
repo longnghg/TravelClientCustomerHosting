@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.resCustomer = new CustomerModel()
-    console.log(this.listGender);
     if(this.resCustomer){
       this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
     }

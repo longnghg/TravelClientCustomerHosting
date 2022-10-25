@@ -36,8 +36,6 @@ export class HomeComponent implements OnInit {
     this.initTour()
 
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
-    console.log(this.resTourBooking);
-
     if (this.resTourBooking) {
      this.isBack = true
     }
@@ -79,13 +77,9 @@ export class HomeComponent implements OnInit {
   initTour(){
     this.scheduleService.gets().subscribe(res => {
       this.response = res
-      console.log(res);
-
       if(!this.response.notification.type)
       {
         this.resSchedule = this.response.content
-        console.log(this.resSchedule);
-
         // this.cd.markForCheck()
         // setTimeout(() => {
         //   this.cd.detach()
@@ -97,6 +91,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  booking(idSchedule: string, alias: string){
+    localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
+    this.router.navigate(['','tour-booking',idSchedule, alias]);
+  }
+
   formatPrice(price: any){
     return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
   }
@@ -105,9 +104,5 @@ export class HomeComponent implements OnInit {
     return this.configService.formatFromUnixTimestampToFullDateView(date)
   }
 
-
-  passData(data: any){
-    sessionStorage.setItem("resSchedule", JSON.stringify(data))
-  }
 }
 

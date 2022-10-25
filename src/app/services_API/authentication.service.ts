@@ -15,9 +15,9 @@ export class AuthenticationService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
   }
 
-  logOut(empId: string)
+  logOut(cusId: string)
   {
-      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+empId);
+      return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+cusId);
   }
 
   changePassword(idCus: string, password: string, newPassword: string){

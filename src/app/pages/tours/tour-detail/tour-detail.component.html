@@ -1,1 +1,178 @@
-<p>tour-detail works!</p>
+<div class="hero hero-inner">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mx-auto text-center">
+        <div class="intro-wrap">
+          <h1 class="mb-0">About Us</h1>
+          <p class="text-white">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-5 mb-5" *ngIf="resSchedule">
+  <div class="row mb-5">
+    <div class="col-7" style="padding-left: 30px;">
+      <div class="row">
+        <div class="col" style="color: #4d4aef;font-size: 13px; margin-bottom: 5px;"><i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</div>
+      </div>
+      <div class="row">
+        <div class="col" style="font-size: 26px; font-weight: 700; color: #2d4271; line-height: 30px; margin-bottom: 12px; max-width: 100%;"><h3>{{resSchedule.tour.nameTour}}</h3></div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <i class="fa-solid fa-star text-warning" *ngFor='let star of resSchedule.tour.rating | forNumber'></i>
+          <i class="fa-solid fa-star" *ngFor='let star of 10 - resSchedule.tour.rating | forNumber'></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-5 row">
+        <div class="col-6">
+          <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</span>/Khách </p>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-primary mb-2" style="float: right; height: 50px; width: 250px; font-weight: 700;"><i class="fa-regular fa-calendar"></i>  {{formatStartEndDate(resSchedule.departureDate, resSchedule.endDate)}}</button>
+            <button class="btn btn-danger" style="float: right; height: 50px; width: 250px; font-weight: 700;" (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-7">
+      <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid" alt="" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: 20px;">
+    </div>
+    <div class="col-5">
+      <div class="row mb-2">
+        <div class="col-6">
+          <img src="	https://media.travel.com.vn/tour/tfd_220527020321_459824.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%;" alt="">
+        </div>
+        <div class="col-6">
+          <img src="https://media.travel.com.vn/tour/tfd_220527022238_755091.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: -24px;" alt="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 95%; height: 100%;" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="resSchedule">
+  <div class="row justify-content-center text-center">
+    <div class="col-lg-6">
+      <h2 class="section-title text-center mb-3">Lịch trình</h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <ul class="timeline pr-md-5">
+      <li>
+        <div class="title" style="font-weight: 700;">Ngày 1 - TP. HỒ CHÍ MINH - PHÚ QUỐC - GRAND WORLD Số bữa ăn: 01 bữa(Chiều)</div>
+        <div class="details" style="color: #2d4271; font-weight: 700;">
+          Buổi tối, Quý khách có thể tự do khám phá một số hạng mục nổi bật tại “thành phố không ngủ” Grand World như:
+          <br>- Check in Huyền thoại tre - công trình tre lớn nhất Việt Nam.
+          <br>- Tham quan Công viên Nghệ thuật Đương đại Urban Park - nơi quy tụ những tác phẩm nghệ thuật độc đáo ẩn mình giữa thiên nhiên, là sự giao thoa đặc sắc giữa nghệ thuật đương đại và thiên nhiên Đảo Ngọc.
+          <br>- Tản bộ bên dòng “kênh đào Venice” và nhìn ngắm những chiếc thuyền Gondola, khu phố shophouse lộng lẫy sắc màu, cổng lâu đài tráng lệ, ba cây cầu vòm bán nguyệt...
+          <br>- Thưởng thức bữa tiệc ánh sáng đỉnh cao với show diễn “Sắc màu Venice”.
+          <br>- Tham quan bảo tàng Gấu Teddy: nơi lưu giữ nhiều hiện vật quý giá và tái hiện chuyến phiêu lưu hài hước của “nhà thám hiểm tài ba” Teddy Jones (chi phí tự túc)
+          <br>- Mãn nhãn với chương trình biểu diễn nghệ thuật “Tinh Hoa Việt Nam” quy tụ hơn 200 diễn viên (chi phí tự túc)
+          <br>
+          <br>Nghỉ đêm tại Phú Quốc.
+        </div>
+      </li>
+      <li>
+        <div class="title" style="font-weight: 700;">Ngày 2 - VUI CHƠI THỎA THÍCH TẠI CÔNG VIÊN CHỦ ĐỀ VINWONDERS PHÚ QUỐC – KHU BẢO TỒN THIÊN NHIÊN SAFARI Số bữa ăn: 03 bữa (Sáng, Trưa, Chiều)</div>
+        <div class="details" style="color: #2d4271; font-weight: 700;">
+          Sau khi ăn sáng, Quý khách khám phá Vinpearl Safari Phú Quốc - vườn thú hoang dã đầu tiên tại Việt Nam với quy mô 180 ha, hơn 130 loài động vật quý hiếm, du khách thưởng thức các chương trình biểu diễn, chụp ảnh với động vật; trải nghiệm vườn thú mở trong rừng tự nhiên, gần gũi và thân thiện với con người.
+          <br>
+          <br>Buổi chiều, Quý khách tham quan khám phá Khu vui chơi giải trí VinWonders - công viên chủ đề lớn nhất Việt Nam, quy mô hàng đầu Châu Á, du khách sẽ được:
+          <br>- Trải nghiệm 12 nền văn minh nhân loại từ cổ chí kim;
+          <br>- Khám phá 06 phân khu với hơn 100 hoạt động giải trí siêu độc lạ;
+          <br>- Cuồng nhiệt tại Công Viên Nước lớn nhất Đông Nam Á;
+          <br>- Chinh phục 20 trò chơi mạo hiểm khủng nhất hành tinh như đường trượt nhanh nhất thế giới “Cơn thịnh nộ của Zeus”, đường trượt khô “Cuộc chiến Chằn tinh” cao 15m đầu tiên của Việt Nam, đường trượt trong nhà tối “Chiến binh Đại bàng” và “Lời nguyền Ác long” - trò chơi tương tác trong nhà tối đầu tiên của Việt Nam,…
+          <br>- Ngỡ ngàng với show diễn triệu đô Once đẳng cấp thế giới;
+          <br>- Choáng ngợp trước thế giới đại dương huyền ảo với tầm nhìn vô cực qua tấm kính acrylic khổng lồ 8x25m bên trong Cung điện Hải vương - thủy cung hình rùa lớn nhất thế giới.
+          <br>
+          <br>Quý khách thưởng thức bữa tối tại VinWonders.
+          <br>
+          <br>Nghỉ đêm tại Phú Quốc.
+        </div>
+      </li>
+      <li>
+        <div class="title" style="font-weight: 700;">Ngày 3 - PHÚ QUỐC - TP. HỒ CHÍ MINH Số bữa ăn: 02 bữa (Sáng, trưa)</div>
+        <div class="details" style="color: #2d4271; font-weight: 700;">
+          <br>Sau khi ăn sáng, xe đón đoàn tham quan Hon Thom Nature Park:
+          <br>- Trải nghiệm cáp treo xác lập kỷ lục thế giới mới “Cáp treo 3 dây vượt biển dài nhất thế giới - 7.899.9m” với góc nhìn 360 độ ngang qua Hòn Rơi, Hòn Dừa và dừng chân tại Hòn Thơm. Chỉ khoảng 15 phút trên cáp treo, Quý khách sẽ những khoảnh khắc tuyệt vời với bức tranh biển trời tại Nam Đảo Phú Quốc.
+          <br>- Vui chơi tại một trong những bãi biển “quyến rũ nhất hành tinh” Hòn Thơm với bãi cát trắng mịn, hoang sơ, hàng dừa nghiêng soi bóng, màu nước biển xanh màu ngọc bích, phản chiếu long lanh dưới ánh nắng mặt trời.
+          <br>- Quý khách tham gia vào hành trình khám phá Công viên nước chủ đề hiện đại nhất Đông Nam Á Aquatopia, trải nghiệm 6 khu check in chủ đề hấp dẫn mang phong cách thổ dân huyền bí.
+          <br>- Thử thách với các hoạt động giải trí trên biển: kayak, jetki, dù lượn, phao chuối (chi phí tự túc).
+          <br>
+          <br>Đoàn rời Hòn Thơm, sau đó xe tiếp tục đưa Quý khách tham quan và mua sắm đặc sản nổi tiếng tại Vườn Tiêu Đức Thạnh, Nhà thùng nước mắm Hồng Đức 1, Đặc sản khô, Cơ sở sản xuất ngọc trai Phú Quốc - Trưng bày các trang sức bằng ngọc trai chính hiệu được nuôi cấy tại Phú Quốc.
+          <br>
+          <br>Xe đưa Quý khách ra sân bay đáp chuyến bay trở về TP. Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình du lịch tại sân bay Tân Sơn Nhất.
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container mb-5" *ngIf="resSchedule">
+  <div class="row" style="padding-left: 50px; padding-right: 70px">
+    <div class="col-6" >
+      <h5 class="mb-3"  style="color: #2d4271; font-weight: 600;">Chi tiết tour</h5>
+      <div style="background: #f4f5f8; padding: 20px 20px 10px 20px; border-radius: 10px">
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;  font-weight: bold;">Thông tin tập trung</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Ngày giờ tập trung</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{formatTimeDate(resSchedule.departureDate)}}</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Nơi tập trung</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{resSchedule.departurePlace}}</h6>
+        </div>
+
+        <div class="mt-3" style="position: relative" style="border-top: 1px solid #2d4271;;">
+          <h6 class="card-title mt-3" style="color: #2d4271;  font-weight: bold;">Thông tin hướng dẫn viên</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">HDV dẫn đoàn</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{'Đang cập nhật'}}</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">HDV tiễn</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">Đang cập nhật</h6>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-6" >
+      <h5 class="mb-3"  style="color: #2d4271; font-weight: 600;">Giá tour & phụ thu phòng đơn</h5>
+      <div style="background: #f4f5f8; padding: 20px 20px 10px 20px; border-radius: 10px">
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;  font-weight: bold;">Loại khách</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;  font-weight: bold;">Giá tour</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Người lớn (Từ 12 tuổi trở lên)</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.priceAdult) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Trẻ em (Từ 5 - 11 tuổi)</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Trẻ nhỏ (Từ 2 - 4 tuổi)</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+        </div>
+        <div style="position: relative">
+          <h6 class="card-title" style="color: #2d4271;">Phụ thu phòng đơn</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.additionalPrice) : formatPrice(resSchedule.additionalPriceHoliday)}}₫</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

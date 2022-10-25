@@ -13,7 +13,7 @@
 
 
 
-<div class="untree_co-section  container">
+<div class="untree_co-section  container" *ngIf="resTourBooking">
   <div class="row">
     <div class="row">
       <div class="container col-7" >
@@ -84,7 +84,23 @@
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Tình trạng</label>
-               <p class="col-8" style="color: #2d4271;">{{formatStatus(resTourBooking.tourbookingDetails.status)}}</p>
+
+              <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.tourbookingDetails.status == -1 || resTourBooking.tourbookingDetails.status == 5">
+                <span class="badge badge-success" >{{formatStatus(resTourBooking.tourbookingDetails.status)}}</span>
+              </p>
+
+              <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.tourbookingDetails.status == 3">
+                <span class="badge badge-info" >{{formatStatus(resTourBooking.tourbookingDetails.status)}}</span>
+
+              </p>
+
+              <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.tourbookingDetails.status == -2 || resTourBooking.tourbookingDetails.status == 1 || resTourBooking.tourbookingDetails.status == 2">
+                <span class="badge badge-warning" >{{formatStatus(resTourBooking.tourbookingDetails.status)}}</span>
+              </p>
+
+              <p class="col-8" style="color: #2d4271;" *ngIf="resTourBooking.tourbookingDetails.status == 4 ">
+                <span class="badge badge-danger" >{{formatStatus(resTourBooking.tourbookingDetails.status)}}</span>
+              </p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Thời hạn thanh toán</label>
@@ -98,32 +114,35 @@
           <div style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
             <h4  style="color: #2d4271; font-weight: 600;">PHIẾU XÁC NHẬN BOOKING</h4>
             <div class="container" style="border-top: 1px solid #2d4271;">
-              <div class="row">
-               <div class="mb-3 mt-3">
-                 <p style="color: #2d4271; font-weight: 600;">{{resSchedule.nameTour}}</p>
-                 <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
-               </div>
-              </div>
+              <div class="mb-3 mt-3 row">
+                <div class="col-4">
+                  <img  [src]="resTourBooking.schedule.tour.thumbsnail"  class="card-img-top">
+                </div>
+                <div class="col-8">
+                  <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
+                  <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
+                </div>
+             </div>
               <div class="container" style="border-top: 1px solid #2d4271;">
                 <div class="row mb-3 mt-3">
                   <label class="form-label col-4" style="font-weight: 600;">Mã tour</label>
-                  <p class="col-8" style="color: #2d4271;">{{resSchedule.idSchedule}}</p>
+                  <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.idSchedule}}</p>
                 </div>
                 <div class="row">
                   <label class="form-label col-4" style="font-weight: 600;">Hành trình</label>
-                   <p class="col-8" style="color: #2d4271;">{{resSchedule.tour.fromPlace + ' đến ' + resSchedule.tour.toPlace}}</p>
+                   <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departurePlace + ' đến ' + resTourBooking.schedule.tour.toPlace}}</p>
                 </div>
                 <div class="row">
                   <label class="form-label col-4" style="font-weight: 600;">Ngày đi</label>
-                   <p class="col-8" style="color: #2d4271;">{{formatDate(resSchedule.departureDate)}}</p>
+                   <p class="col-8" style="color: #2d4271;">{{formatDate(resTourBooking.schedule.departureDate)}}</p>
                 </div>
                 <div class="row">
                   <label class="form-label col-4" style="font-weight: 600;">Ngày về</label>
-                   <p class="col-8" style="color: #2d4271;">{{formatDate(resSchedule.endDate)}}</p>
+                   <p class="col-8" style="color: #2d4271;">{{formatDate(resTourBooking.schedule.endDate)}}</p>
                 </div>
                 <div class="row">
                   <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
-                   <p class="col-8" style="color: #2d4271;">{{resSchedule.tour.fromPlace}}</p>
+                   <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departurePlace}}</p>
                 </div>
               </div>
             </div>

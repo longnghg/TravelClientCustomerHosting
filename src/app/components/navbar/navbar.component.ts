@@ -40,7 +40,9 @@ export class NavbarComponent implements OnInit {
     this.authenticationService.logOut(this.resAthentication.id).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
-      localStorage.clear()
+      localStorage.removeItem("currentUser")
+      localStorage.removeItem("idUser")
+      localStorage.removeItem("token")
       sessionStorage.clear()
       this.resAthentication = null
       location.assign(this.configService.clientUrl + "/#/home")
