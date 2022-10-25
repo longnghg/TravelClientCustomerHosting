@@ -22,6 +22,20 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
+    var checkCurrent = JSON.parse(localStorage.getItem("currentUser"))
+    if (checkCurrent) {
+      this.authenticationService.logOut(checkCurrent.id).subscribe(res =>{
+        this.response = res
+        // this.notificationService.handleAlertObj(res.notification)
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("idUser")
+        localStorage.removeItem("token")
+        sessionStorage.clear()
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
     this.googleAuthSDK();
   }
 

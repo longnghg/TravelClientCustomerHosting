@@ -371,9 +371,16 @@
                 </li>
               </ul>
               <hr color="black">
-              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{resSchedule.tour.nameTour}}</h5>
-              <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</p>
-              <h6 class="card-subtitle mb-2 text-muted">{{resSchedule.description}}</h6>
+              <div class="mb-3 mt-3 row">
+                <div class="col-4">
+                  <img  [src]="resSchedule.tour.thumbsnail"  class="card-img-top">
+                </div>
+                <div class="col-8">
+                  <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{resSchedule.tour.nameTour}}</h5>
+                  <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</p>
+                  <h6 class="card-subtitle mb-2 text-muted">{{resSchedule.description}}</h6>
+                </div>
+              </div>
               <hr color="black">
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 100px;">Hành khách: {{totalPeople()}}</h5>

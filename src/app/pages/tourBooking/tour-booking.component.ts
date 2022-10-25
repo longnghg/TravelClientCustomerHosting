@@ -197,8 +197,13 @@ export class TourBookingComponent implements OnInit {
           this.notificationService.handleAlertObj(this.response.notification)
           if (this.response.notification.type == "Success") {
             this.isSuccess = true
-            this.resTourBooking = null
-            localStorage.removeItem("tourBooking_" + this.resAthentication.id)
+            this.resTourBooking = new TourBookingModel
+            if (this.resAthentication) {
+              localStorage.removeItem("tourBooking_" + this.resAthentication.id)
+            }
+            else{
+              localStorage.removeItem("tourBooking_null")
+            }
             location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
           }
         }, error => {
@@ -236,6 +241,9 @@ export class TourBookingComponent implements OnInit {
       this.resTourBooking.nameContact = this.resAthentication.name
       this.resTourBooking.email = this.resAthentication.email
       this.resTourBooking.customerId = this.resAthentication.id
+    }
+    else{
+      location.assign(this.configService.clientUrl + "/#/login")
     }
   }
 }
