@@ -37,6 +37,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("token", this.resAthentication.token)
         localStorage.setItem("idUser", this.resAthentication.id)
         localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+
+        var tourBooking = localStorage.getItem("tourBooking_null")
+        if (tourBooking) {
+          localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+          localStorage.removeItem("tourBooking_null")
+        }
         document.location.assign( this.configService.clientUrl + "/#/home")
       }
 

@@ -62,19 +62,20 @@ export class TourBookingComponent implements OnInit {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
         this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
-        if (this.resAthentication) {
-          this.resTourBooking.nameContact = this.resAthentication.name
-          this.resTourBooking.email = this.resAthentication.email
-          this.resTourBooking.customerId = this.resAthentication.id
-        }
-          this.resTourBooking.tourName = this.resSchedule.tour.nameTour
+        console.log(localStorage.getItem("idUser"));
 
         var tourBooking = localStorage.getItem("tourBooking_" + localStorage.getItem("idUser"))
         if (tourBooking) {
           this.resTourBooking = JSON.parse(tourBooking)
         }
+        if (this.resAthentication) {
+          this.resTourBooking.nameContact = this.resAthentication.name
+          this.resTourBooking.email = this.resAthentication.email
+          this.resTourBooking.customerId = this.resAthentication.id
+        }
+        this.resTourBooking.tourName = this.resSchedule.tour.nameTour
+        this.setCart()
 
-        localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
       }
       else{
         location.assign(this.configService.clientUrl + "/#/page404")
@@ -107,7 +108,7 @@ export class TourBookingComponent implements OnInit {
 
   countBaby(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+      if (this.totalPeople() >= (this.resSchedule.maxCapacity-this.resSchedule.quantityCustomer)) {
         this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
@@ -123,7 +124,7 @@ export class TourBookingComponent implements OnInit {
 
   countAdult(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+      if (this.totalPeople() >= (this.resSchedule.maxCapacity-this.resSchedule.quantityCustomer)) {
         this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
@@ -143,7 +144,9 @@ export class TourBookingComponent implements OnInit {
 
   countChild(type: string){
     if (type == "+") {
-      if (this.totalPeople() == this.resSchedule.maxCapacity) {
+      console.log(this.resSchedule);
+
+      if (this.totalPeople() >= (this.resSchedule.maxCapacity-this.resSchedule.quantityCustomer)) {
         this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
       else {
@@ -158,12 +161,12 @@ export class TourBookingComponent implements OnInit {
   }
 
   totalPeople(){
-    localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
+    this.setCart()
     return this.resTourBooking.adult + this.resTourBooking.child + this.resTourBooking.baby
   }
 
   totalPrice(){
-    localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
+    this.setCart()
     if (this.resSchedule.isHoliday) {
       this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
     }
@@ -174,7 +177,7 @@ export class TourBookingComponent implements OnInit {
 
   }
   changePayment(type: any){
-    localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
+    this.setCart()
     this.resTourBooking.paymentId = type
   }
   booking(){
@@ -220,5 +223,14 @@ export class TourBookingComponent implements OnInit {
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
     this.resTourBooking.phone = input.value
+  }
+
+  setCart(){
+    if (this.resAthentication) {
+      localStorage.setItem("tourBooking_" + this.resAthentication.id, JSON.stringify(this.resTourBooking))
+    }
+    else{
+      localStorage.setItem("tourBooking_null", JSON.stringify(this.resTourBooking))
+    }
   }
 }

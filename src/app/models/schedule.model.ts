@@ -18,6 +18,7 @@ export class ScheduleModel{
   quantityAdult: number = 0
   quantityBaby: number = 0
   quantityChild: number = 0
+  quantityCustomer: number = 1
   minCapacity: number = 0
   maxCapacity: number = 0
 
