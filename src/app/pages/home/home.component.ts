@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   resTourBooking: TourBookingModel
   response: ResponseModel
   isBack: boolean
-  kwFrom: any = null
+  kwFrom: any = "TP Hồ Chí Minh"
   kwTo: any = null
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
