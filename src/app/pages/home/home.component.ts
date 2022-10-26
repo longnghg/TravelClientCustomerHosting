@@ -5,9 +5,10 @@ import { ScheduleModel } from "../../models/schedule.model";
 import { TourBookingModel } from "../../models/tourBooking.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { NotificationService } from "../../services_API/notification.service";
+import { ProvinceService } from "../../services_API/province.service";
 import { ConfigService } from "../../services_API/config.service";
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
-
+import { LocationModel } from "../../models/location.model";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,11 +16,16 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
-  constructor(private cd: ChangeDetectorRef, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  constructor(private provinceService: ProvinceService, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
   resSchedule: ScheduleModel[]
+  resProvince: LocationModel[]
   resTourBooking: TourBookingModel
   response: ResponseModel
   isBack: boolean
+  kwFrom: any = null
+  kwTo: any = null
+  kwDepartureDate: any = ""
+  kwReturnDate: any = ""
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('cart') cart: ElementRef;
   list = [
@@ -33,6 +39,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.provinceService.views().then(res => {this.resProvince = res})
     this.initTour()
 
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -53,15 +60,6 @@ export class HomeComponent implements OnInit {
   removeTourBooking(){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.isBack = false
-  }
-  doSmth(){
-    const output = document.getElementById("typing")
-    this.list.forEach(element => {
-      if(output?.innerText == element.location)
-      {
-        // this.img = element.img
-      }
-     });
   }
 
   next(){
@@ -96,13 +94,15 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['','tour-booking',idSchedule, alias]);
   }
 
-  formatPrice(price: any){
-    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
+  search(){
+    if (!this.kwFrom) {
+      this.kwFrom = ""
+    }
+    if(!this.kwTo){
+      this.kwTo = ""
+    }
+    var kw = "from="+this.kwFrom+"&to="+this.kwTo+"&departureDate="+this.kwDepartureDate+"&returnDate="+this.kwReturnDate
+    this.router.navigate(['','tour',kw]);
   }
-
-  formatDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateView(date)
-  }
-
 }
 

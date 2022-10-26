@@ -8,6 +8,7 @@ import { ScheduleService } from "../../../services_API/schedule.service";
 import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationModel } from "../../../models/authentication.model";
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
@@ -17,12 +18,20 @@ export class BillComponent implements OnInit {
   response: ResponseModel
   resTourBooking: TourBookingModel
   resSchedule: ScheduleModel
+  resAthentication: AuthenticationModel
 
   constructor(private tourBookingService: TourBookingService,private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
 
   ngOnInit(): void {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+    if (this.resAthentication) {
+      localStorage.removeItem("tourBooking_" + this.resAthentication.id)
+    }
+    else{
+      localStorage.removeItem("tourBooking_null")
+    }
     var idTourBooking = this.activatedRoute.snapshot.paramMap.get('id')
     this.init(idTourBooking)
   }
@@ -30,8 +39,6 @@ export class BillComponent implements OnInit {
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
-      console.log(res);
-
       if (this.response.notification.type == "Error") {
         location.assign(this.configService.clientUrl + "/#/page404")
       }
@@ -43,37 +50,5 @@ export class BillComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
-  }
-
-  formatPrice(price: any){
-    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-  }
-
-
-
-  formatDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateView(date)
-  }
-
-  formatDateTime(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateTimeView(date)
-  }
-
-  totalPeople(){
-    return this.resTourBooking.adult + this.resTourBooking.child + this.resTourBooking.baby
-  }
-
-  totalPrice(){
-    if (this.resSchedule.isHoliday) {
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
-    }
-    else{
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
-    }
-    return this.resTourBooking.totalPrice
-  }
-
-  formatStatus(status: any){
-    return StatusBooking[status]
   }
 }

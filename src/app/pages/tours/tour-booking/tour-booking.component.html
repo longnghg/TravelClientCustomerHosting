@@ -344,14 +344,14 @@
               <h4  style="color: #2d4271; font-weight: 600;">Tóm tắt đặt chỗ</h4>
               <ul class="timeline mt-4 pr-md-5">
                 <li>
-                  <div class="title">Khởi hành - {{formatDate(resSchedule.departureDate)}}</div>
+                  <div class="title">Khởi hành - {{resSchedule.departureDate | formatFromUnixTimestampToFullDateView}}</div>
                   <div class="details">
                     <h5 style="color: #2d4271; font-weight: bold;">07:10 <i style="margin: 0 60px; font-size: 30px;" class="fa-solid fa-plane"></i> 08:15</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
                   </div>
                 </li>
                 <li>
-                  <div class="title">Khởi hành - {{formatDate(resSchedule.returnDate)}}</div>
+                  <div class="title">Khởi hành - {{resSchedule.returnDate | formatFromUnixTimestampToFullDateView}}</div>
                   <div class="details">
                     <h5 style="color: #2d4271; font-weight: bold;">10:15 <i style="margin: 0 60px; font-size: 30px;" class="fa-solid fa-plane"></i> 11:20</h5>
                     <small style="color: #2d4271;" class="fg-theme">{{resSchedule.liscensePlate}}</small>
@@ -384,15 +384,15 @@
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{resSchedule.isHoliday ? formatPrice(resSchedule.priceAdultHoliday):formatPrice(resSchedule.priceAdult)}}₫</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{(resSchedule.isHoliday ? resSchedule.priceAdultHoliday:resSchedule.priceAdult)| formatPriceVi}}₫</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + resSchedule.isHoliday ? formatPrice(resSchedule.priceChildHoliday):formatPrice(resSchedule.priceChild) + '₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + 'x' + ((resSchedule.isHoliday ? resSchedule.priceChildHoliday:resSchedule.priceChild) | formatPriceVi) :'0'}}₫</h5>
               </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + 'x' + resSchedule.isHoliday ? formatPrice(resSchedule.priceBabyHoliday):formatPrice(resSchedule.priceBaby) + '₫':'0₫'}}</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + 'x' + ((resSchedule.isHoliday ? resSchedule.priceBabyHoliday:resSchedule.priceBaby) | formatPriceVi) :'0'}}₫</h5>
               </div>
               <!-- <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
@@ -401,7 +401,7 @@
               <hr color="black">
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
-                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{formatPrice(totalPrice())}}₫</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
               </div>
               <div class="row">
                 <ng-container *ngIf="!this.isPayment && activePane == 1; else elseTemplate">

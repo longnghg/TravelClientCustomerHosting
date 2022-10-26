@@ -58,19 +58,11 @@ export class BillsHistoryComponent implements OnInit {
   }
 
   billDetail(idTourBooking: string){
-    console.log(idTourBooking);
-
     location.assign(this.configService.clientUrl + "/#/bill/" + idTourBooking)
   }
 
-  formatPrice(price: any){
-    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-  }
 
 
-  formatDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateView(date)
-  }
 
 
 

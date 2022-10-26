@@ -19,10 +19,10 @@
     </div>
     <div class="col-5 row">
         <div class="col-6">
-          <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</span>/Khách </p>
+          <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!resSchedule.isHoliday ? resSchedule.finalPrice : resSchedule.finalPriceHoliday) | formatPriceVi}}₫</span>/Khách </p>
         </div>
         <div class="col-6">
-            <button class="btn btn-outline-info mb-2" style="float: right; height: 50px; width: 250px; font-weight: 700;"><i class="fa-regular fa-calendar"></i>  {{formatStartEndDate(resSchedule.departureDate, resSchedule.endDate)}}</button>
+            <button class="btn btn-outline-info mb-2" style="float: right; height: 50px; width: 250px; font-weight: 700;"><i class="fa-regular fa-calendar"></i>  {{ resSchedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: resSchedule.returnDate}}</button>
             <button class="btn btn-danger" style="float: right; height: 50px; width: 250px; font-weight: 700;" (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
         </div>
     </div>
@@ -117,7 +117,7 @@
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Ngày giờ tập trung</h6>
-          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{formatTimeDate(resSchedule.departureDate)}}</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{resSchedule.departureDate | formatFromUnixTimestampToFullTimeDateView}}</h6>
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Nơi tập trung</h6>
@@ -147,19 +147,19 @@
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Người lớn (Từ 12 tuổi trở lên)</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.priceAdult) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceAdult : resSchedule.priceAdultHoliday) | formatPriceVi}}₫</h6>
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Trẻ em (Từ 5 - 11 tuổi)</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceChild : resSchedule.priceChildHoliday) | formatPriceVi}}₫</h6>
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Trẻ nhỏ (Từ 2 - 4 tuổi)</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.finalPrice) : formatPrice(resSchedule.finalPriceHoliday)}}₫</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceBaby : resSchedule.priceBabyHoliday) | formatPriceVi}}₫</h6>
         </div>
         <div style="position: relative">
-          <h6 class="card-title" style="color: #2d4271;">Phụ thu phòng đơn</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{!resSchedule.isHoliday ? formatPrice(resSchedule.additionalPrice) : formatPrice(resSchedule.additionalPriceHoliday)}}₫</h6>
+          <h6 class="card-title" style="color: #2d4271;">Phụ thu</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.additionalPrice : resSchedule.additionalPriceHoliday) | formatPriceVi}}₫</h6>
         </div>
       </div>
     </div>

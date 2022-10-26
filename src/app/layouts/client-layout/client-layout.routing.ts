@@ -7,6 +7,7 @@ import { ElementsComponent } from '../../pages/elements/elements.component';
 import { ServicesComponent } from '../../pages/services/services.component';
 import { InforComponent } from '../../pages/infor/infor.component';
 import { TourBookingComponent } from '../../pages/tours/tour-booking/tour-booking.component';
+import { TourListComponent } from '../../pages/tours/tour-list/tour-list.component';
 import { BillComponent } from '../../pages/bills//bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills/bills-history/bills-history.component';
 import { ProfileComponent } from '../../pages/profile/profile.component';
@@ -18,6 +19,7 @@ export const ClientLayoutRoutes: Routes = [
     { path: 'elements',             component: ElementsComponent },
     { path: 'services',             component: ServicesComponent },
     { path: 'infor',                component: InforComponent },
+    { path: 'tour/:id',     component: TourListComponent },
     { path: 'tour-booking/:id1/:id2',     component: TourBookingComponent },
     { path: 'tour-detail/:id1/:id2',     component: TourDetailComponent },
     { path: 'bill/:id',             component: BillComponent },

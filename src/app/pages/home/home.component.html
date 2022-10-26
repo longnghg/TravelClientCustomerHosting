@@ -3,53 +3,51 @@
     <div class="row align-items-center">
       <div class="col">
         <div class="intro-wrap">
-          <h1 class="mb-5" style="text-align: center; color: rgba(255, 255, 255, 0.7);"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="150" [backSpeed]="150" [startDelay]="1000" [showCursor]="true"  [loop]="true" (stringTyped)="doSmth()"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
+          <h1 class="mb-5" style="text-align: center; color: rgba(255, 255, 255, 0.7);"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="150" [backSpeed]="150" [startDelay]="1000" [showCursor]="true"  [loop]="true"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
           <div class="row">
             <div class="col-12">
               <form class="form">
                 <div class="row mb-2">
                   <div class="col-6">
                     <label>Điểm đi</label>
-                    <select name="" id="" class="form-control custom-select">
-                      <option value="">Destination</option>
-                      <option value="">Peru</option>
-                      <option value="">Japan</option>
-                      <option value="">Thailand</option>
-                      <option value="">Brazil</option>
-                      <option value="">United States</option>
-                      <option value="">Israel</option>
-                      <option value="">China</option>
-                      <option value="">Russia</option>
-                    </select>
+                    <ng-select
+                        [items]="resProvince"
+                        [(ngModel)]="kwFrom"
+                        placeholder="Chọn điểm đi..."
+                        bindLabel="nameProvince"
+                        bindValue="nameProvince"
+                        [clearable]="false"
+                        name="from"
+                        id="from">
+
+                      </ng-select>
                   </div>
                   <div class="col-6">
                     <label>Điểm đến</label>
-                    <select name="" id="" class="form-control custom-select">
-                      <option value="">Destination</option>
-                      <option value="">Peru</option>
-                      <option value="">Japan</option>
-                      <option value="">Thailand</option>
-                      <option value="">Brazil</option>
-                      <option value="">United States</option>
-                      <option value="">Israel</option>
-                      <option value="">China</option>
-                      <option value="">Russia</option>
-                    </select>
+                    <ng-select
+                        [items]="resProvince"
+                        [(ngModel)]="kwTo"
+                        placeholder="Chọn điểm đến..."
+                        bindLabel="nameProvince"
+                        bindValue="nameProvince"
+                        name="to"
+                        id="to">
+                      </ng-select>
                   </div>
                 </div>
                 <div class="row mb-4">
                   <div class="col-6">
                     <label>Ngày đi</label>
-                    <input class="form-control" type="date">
+                    <input class="form-control" [(ngModel)]="kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
                   </div>
                   <div class="col-6">
                     <label>Ngày về</label>
-                    <input class="form-control" type="date">
+                    <input class="form-control" [(ngModel)]="kwReturnDate" name="returnDate" onkeydown="return false" type="date">
                   </div>
                 </div>
                 <div class="row align-items-center" style="margin-left: 425px; width: 500px;">
                   <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
-                    <input type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
+                    <input (click)="search()" type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
                   </div>
                 </div>
               </form>
@@ -342,11 +340,11 @@
             <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
             <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
         </div>
-          <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{formatDate(schedule.departureDate)}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
           <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
           <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
           <p class="card-text">Nơi khởi hành: {{schedule.departurePlace}}</p>
-          <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{!schedule.isHoliday ? formatPrice(schedule.finalPrice) : formatPrice(schedule.finalPriceHoliday)}}₫</span>/Khách </p>
+          <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
          <div style="position: absolute;bottom: 10px;">
           <button class="btn btn-primary"><i class="fa-regular fa-calendar"></i> Ngày khác</button>
           <button class="btn btn-danger" style="float:right; margin-left: 120px;" (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>

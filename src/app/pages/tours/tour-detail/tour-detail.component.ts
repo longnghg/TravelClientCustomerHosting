@@ -22,22 +22,21 @@ export class TourDetailComponent implements OnInit {
   }
 
  init(idSchedule: string){
-
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
       this.resSchedule = this.response.content
       if(!this.response.notification.type)
       {
-        if (this.resSchedule.finalPriceHoliday == 0) {
-          this.resSchedule.priceAdult = this.resSchedule.finalPrice
-          this.resSchedule.priceChild = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
-          this.resSchedule.priceBaby = 0
-        }
-        else{
-          this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
-          this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
-          this.resSchedule.priceBaby = 0
-        }
+        // if (this.resSchedule.finalPriceHoliday == 0) {
+        //   this.resSchedule.priceAdult = this.resSchedule.finalPrice
+        //   this.resSchedule.priceChild = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
+        //   this.resSchedule.priceBaby = 0
+        // }
+        // else{
+        //   this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
+        //   this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
+        //   this.resSchedule.priceBaby = 0
+        // }
 
       }
       else{
@@ -54,19 +53,4 @@ export class TourDetailComponent implements OnInit {
     this.router.navigate(['','tour-booking',idSchedule, alias]);
   }
 
-  formatPrice(price: any){
-    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-  }
-
-  formatDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateView(date)
-  }
-
-  formatTimeDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullTimeDateView(date)
-  }
-
-  formatStartEndDate(start: any, end: any){
-    return this.configService.formatFromUnixTimestampToFullStartEndDateView(start, end)
-  }
 }

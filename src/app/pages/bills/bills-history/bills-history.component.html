@@ -24,12 +24,12 @@
           <h6 class="card-subtitle mb-2 text-muted" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{tourBookingHistory.description}}</h6>
           <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
           <p class="card-text" style="padding-bottom: 10px; border-bottom: 1px solid;">
-            Tổng cộng: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{formatPrice(tourBookingHistory.totalPrice)}}₫</span>/{{tourBookingHistory.totalPeople}} người
+            Tổng cộng: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{tourBookingHistory.totalPrice | formatPriceVi}}₫</span>/{{tourBookingHistory.totalPeople}} người
           </p>
           <div class="row">
             <div class="col-9">
-              <h6 class="card-subtitle mb-2 text-muted">Ngày đi: {{formatDate(tourBookingHistory.departureDate)}}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">Ngày về: {{formatDate(tourBookingHistory.returnDate)}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Ngày đi: {{tourBookingHistory.departureDate | formatFromUnixTimestampToFullDateView}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">Ngày về: {{tourBookingHistory.returnDate | formatFromUnixTimestampToFullDateView}}</h6>
             </div>
             <div class="col-3">
                <button class="btn btn-primary" style="margin-left: 27px;" (click)="billDetail(tourBookingHistory.idTourBooking)" >Chi tiết</button>

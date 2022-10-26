@@ -19,6 +19,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class TourBookingComponent implements OnInit {
   validateTourBooking: ValidationTourBookingModel = new ValidationTourBookingModel
   resTourBooking: TourBookingModel = new TourBookingModel
+  resAthentication: AuthenticationModel
   resPayment: PaymentModel[]
   discountChild = 50
   priceChild: number = 0
@@ -28,7 +29,6 @@ export class TourBookingComponent implements OnInit {
   isWallet: boolean
   isCard: boolean
   resSchedule: ScheduleModel
-  resAthentication: AuthenticationModel
   listSchedule: ScheduleModel[]
   response: ResponseModel
   activePane = 0;
@@ -50,17 +50,6 @@ export class TourBookingComponent implements OnInit {
       this.resSchedule = this.response.content
       if(!this.response.notification.type)
       {
-        if (this.resSchedule.isHoliday) {
-          this.resSchedule.priceAdultHoliday = this.resSchedule.finalPrice
-          this.resSchedule.priceChildHoliday = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
-          this.resSchedule.priceBabyHoliday = 0
-        }
-        else{
-          this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
-          this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
-          this.resSchedule.priceBaby = 0
-        }
-
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
@@ -93,15 +82,6 @@ export class TourBookingComponent implements OnInit {
     // console.log('onTabChange', $event);
   }
 
-  formatPrice(price: any){
-    return price.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,').replace(".00", "")
-  }
-
-
-
-  formatDate(date: any){
-    return this.configService.formatFromUnixTimestampToFullDateView(date)
-  }
 
   countBaby(type: string){
     if (type == "+") {
@@ -137,12 +117,11 @@ export class TourBookingComponent implements OnInit {
         this.resTourBooking.adult -= 1
       }
     }
+
   }
 
   countChild(type: string){
     if (type == "+") {
-      console.log(this.resSchedule);
-
       if (this.totalPeople() >= (this.resSchedule.maxCapacity-this.resSchedule.quantityCustomer)) {
         this.notificationService.handleAlert("Số khách tối đa " + this.resSchedule.maxCapacity + " !", "Warning")
       }
@@ -163,27 +142,25 @@ export class TourBookingComponent implements OnInit {
   }
 
   totalPrice(){
-    this.setCart()
     if (this.resSchedule.isHoliday) {
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
-    }
-    else{
       this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
     }
+    else{
+      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+    }
+    this.setCart()
     return this.resTourBooking.totalPrice
-
   }
   changePayment(type: any){
     this.setCart()
     this.resTourBooking.paymentId = type
   }
+
   booking(){
     if (!this.isCheck) {
       this.resTourBooking.nameCustomer = this.resTourBooking.nameContact
     }
     this.validateTourBooking =  this.configService.validateInfoCustomer(this.resTourBooking, this.validateTourBooking, this.isCheck)
-    console.log(this.validateTourBooking);
-
     if ( this.validateTourBooking.total == 0) {
       if (this.isPayment) {
        if (!this.isSuccess) {
@@ -198,12 +175,6 @@ export class TourBookingComponent implements OnInit {
           if (this.response.notification.type == "Success") {
             this.isSuccess = true
             this.resTourBooking = new TourBookingModel
-            if (this.resAthentication) {
-              localStorage.removeItem("tourBooking_" + this.resAthentication.id)
-            }
-            else{
-              localStorage.removeItem("tourBooking_null")
-            }
             location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
           }
         }, error => {

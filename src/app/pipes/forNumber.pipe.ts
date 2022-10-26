@@ -10,3 +10,4 @@ export class ForNumber implements PipeTransform {
       return res;
   }
 }
+

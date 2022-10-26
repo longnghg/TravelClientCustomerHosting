@@ -40,7 +40,7 @@ export class ProvinceService{
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-province");
   }
 
-  search(data){
+  search(data: any){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/search-province", data);
   }
 
