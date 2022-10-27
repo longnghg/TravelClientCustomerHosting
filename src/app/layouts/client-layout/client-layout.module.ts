@@ -25,7 +25,7 @@ import { BillsHistoryComponent } from '../../pages/bills/bills-history/bills-his
 import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
 import { TourListComponent } from '../../pages/tours/tour-list/tour-list.component';
 
-import { ProfileComponent } from '../../pages/profile/profile.component';
+// import { ProfileComponent } from '../../pages/profile/profile.component';
 
 import { PipesModule } from "../../pipes/pipes.module";
 @NgModule({
@@ -52,7 +52,7 @@ import { PipesModule } from "../../pipes/pipes.module";
     TourBookingComponent,
     BillComponent,
     BillsHistoryComponent,
-    ProfileComponent,
+    // ProfileComponent,
     TourDetailComponent,
     TourListComponent,
 

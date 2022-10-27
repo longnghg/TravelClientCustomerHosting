@@ -1,67 +1,84 @@
-
- <div class="hero hero-inner">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6 mx-auto text-center">
-        <div class="intro-wrap">
-          <h1 class="mb-0">Profile</h1>
-          <p class="text-white">Cập nhật thông tin của bạn và tìm hiểu các thông tin này được sử dụng ra sao.
-          </p>
+<div class="container rounded  mt-4 mb-4"  *ngIf="resCustomer">
+    <div class="col">
+      <h5 class="heading-small text-muted mb-4">Thông tin cá nhân</h5>
+      <label class="changeTheme" style="font-weight: 600;">
+        <input type="checkbox" name="changeTheme" (change)="isEditChange()" [checked]="isEdit"><span class="nameCheckBox"></span>
+      </label>
+      </div>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-10">
+            <div class="form-group">
+              <label class="form-control-label" for="nameCustomer" style="font-weight: 600;">Họ & tên
+                <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateCustomer.nameCustomer ? this.validateCustomer.nameCustomer : ''}}</span>
+              </label>
+              <input [(ngModel)]="resCustomer.nameCustomer" (input)="inputChange()" name="nameCustomer" type="text" id="nameCustomer" class="form-control" placeholder="Nhập họ tên"  [readonly]="!isEdit">
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="form-group">
+              <label class="form-control-label" for="nameCustomer" style="font-weight: 600;">Điểm</label>
+              <input [(ngModel)]="resCustomer.point" name="point" type="text" id="point" class="form-control" placeholder="0"  readonly>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="gender" style="font-weight: 600;">Giới tính
+                <span [class]="!isEdit ?'d-none':'text-danger'">* {{this.validateCustomer.gender ? this.validateCustomer.gender : ''}}</span>
+              </label>
+              <ng-select [items]="listGender" [(ngModel)]="resCustomer.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="!isEdit"
+              placeholder="Chọn giới tính..." (change)="inputChange()">
+             </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="dp" style="font-weight: 600;">Ngày sinh
+                <span [class]="!isEdit ?'d-none':'text-danger'">* {{this.validateCustomer.birthday ? this.validateCustomer.birthday : ''}}</span>
+              </label>
+              <input  name="birthday" onkeydown="return false" (change)="inputChange()" [(ngModel)]="resCustomer.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="!isEdit"/>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="container rounded bg-white mt-4 mb-4"  *ngIf="resCustomer">
-  <div class="row">
-      <div class="col-md-3 border-right">
-          <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-            <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-            <span class="text-black-50">{{resCustomer.email}}</span></div>
-      </div>
-      <div class="col-md-5 border-right boder-top boder-bot">
-          <div class="p-3 py-5">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h4 class="text-right">Thông Tin Cá Nhân</h4>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-12"><label class="labels">Họ & Tên</label>
-                  <input [(ngModel)]="resCustomer.nameCustomer" (input)="inputChange()" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên"  [readonly]="!isEdit">
-                </div>
-                <div class="col-md-12"><label class="labels">Giới Tính</label>
-                  <ng-select [items]="listGender" [(ngModel)]="resCustomer.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="!isEdit"
-                      placeholder="Chọn giới tính..." (change)="inputChange()">
-                  </ng-select>
-                </div>
-                  <div class="col-md-12"><label class="labels">Ngày Sinh</label>
-                    <input name="birthday" (change)="inputDateChange(); inputChange()" [(ngModel)]="resCustomer.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="!isEdit"/>
-                  </div>
-                  <div class="col-md-12"><label class="labels">Điểm</label>
-                    <input [(ngModel)]="resCustomer.point" class="form-control form-control-alternative" disabled="" placeholder="Nhập họ tên">
-                  </div>
-              </div>
-              <div class="mt-4 text-center ">
-                <button class="btn btn-primary profile-button" type="button">Trở lại</button>
-                <button class="btn btn-primary profile-button ml-3" type="button">Lưu</button>
-              </div>
+      <hr class="my-4" />
+      <!-- Address -->
+      <h5 class="heading-small text-muted mb-4">Thông tin liên lạc</h5>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="phone" style="font-weight: 600;">Điện thoại
+                <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateCustomer.phone ? this.validateCustomer.phone : ''}}</span>
+              </label>
+              <input [(ngModel)]="resCustomer.phone" (input)="formatInput($any($event).target); inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="!isEdit">
+            </div>
           </div>
-      </div>
-      <div class="col-md-4">
-          <div class="p-3 py-5">
-              <div class="d-flex justify-content-between align-items-center experience" style="font-weight: bold;"><span>THÔNG TIN LIÊN LẠC</span>
-                <span class="border px-3 p-1 add-experience">Chỉnh Sửa</span>
-                <a *ngIf="type == 'detail'" class="border px-3 p-1 add-experience" (click)="isEditChange()">{{!isEdit ? "Chỉnh sửa":"Quay lại"}}</a>
-
-              </div>
-              <br>
-              <div class="col-md-12"><label class="labels">Số Điện Thoại</label>
-                <input [(ngModel)]="resCustomer.phone" (input)="inputChange()" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại" [readonly]="!isEdit">
-              </div> <br>
-              <div class="col-md-12"><label class="labels">Địa Chỉ</label>
-                <textarea [(ngModel)]="resCustomer.address" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="!isEdit"></textarea>
-              </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="email" style="font-weight: 600;">Email</label>
+              <input [(ngModel)]="resCustomer.email" (input)="inputChange()" name="email" type="email" id="email" class="form-control form-control-alternative" placeholder="Nhập email" readonly>
+            </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-control-label" for="address" style="font-weight: 600;">Địa chỉ</label>
+              <textarea [(ngModel)]="resCustomer.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="!isEdit"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+      <div class="row align-items-center">
+        <div class="col-12 text-right" style="position: absolute; bottom: 10px; right: 15px;">
+          <button *ngIf="isChange" class="btn btn-sm btn-primary" (click)="backup()">Khôi phục</button>
+          <button *ngIf="isChange" class="btn btn-sm btn-success ml-2"  (click)="save()">Lưu</button>
+        </div>
+      </div>
+
+
+
 </div>

@@ -14,3 +14,11 @@ export class CustomerModel{
   facebookToken: string
   googleToken: string
 }
+
+export class ValidationCustomerModel{
+  nameCustomer: string
+  phone: string
+  email: string
+  gender: boolean
+  birthday: string
+}

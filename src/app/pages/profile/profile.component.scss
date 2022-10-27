@@ -1,55 +1,70 @@
-.card-body{
-background-color: white;
+.form-control[readonly]:focus {
+  background-color: #e9ecef;
+  opacity: 1;
 }
 
-body {
-  background: rgb(99, 39, 120);
-}
+.changeTheme{
+  width: 145px;
+  top: -8px;
+  left: 190px;
+  display: block;
+  height: 40px;
+  background-color: #CBCBCB;
+  border-radius: 20px;
+  position: absolute;
+  transition: 0.5s;
 
-.form-control:focus {
-  box-shadow: none;
-  border-color: #BA68C8
+  .nameCheckBox::before{
+    left: 27px;
+    position: relative;
+    content: "Tắt chỉnh sửa";
+    color: white;
+  }
 }
-
-.profile-button {
-  background: rgb(99, 39, 120);
-  box-shadow: none;
-  border: none
+.changeTheme::before{
+  position: absolute;
+  left:5px;
+  top:5px;
+  width:30px;
+  height:30px;
+  background-color: #fff;
+  box-shadow: 0 5px 10px #b5b4b4;
+  content:'';
+  border-radius: 20px;
+  transition: 0.5s;
 }
-
-.profile-button:hover {
-  background: #682773
+.changeTheme input{
+  display: none;
 }
-
-.profile-button:focus {
-  background: #682773;
-  box-shadow: none
+.list{
+  padding:0;
+  margin:30px auto;
+  list-style: none;
+  text-align: left;
+  width:400px;
+  display: block;
 }
-
-.profile-button:active {
-  background: #682773;
-  box-shadow: none
+.list li{
+  padding:20px;
+  color:#555;
+  background-color: #ddd;
+  margin-bottom:10px;
+  font-family: monospace;
 }
-
-.back:hover {
-  color: #682773;
-  cursor: pointer
+.nameCheckBox{
+  left: 10px;
+  position: absolute;
+  top: 7px;
 }
-
-.labels {
-  font-size: 14px;
-  margin-top: 12px;
+.changeTheme:has(input:checked){
+  background-color: #4CB774;
+  .nameCheckBox::before{
+    left: unset;
+    position: unset;
+    content: "Bật chỉnh sửa";
+    color: white;
+  }
 }
-
-.boder-top{
-  border-top: 1px solid #dee2e6!important;
-}
-.boder-bot{
-  border-bottom: 1px solid #dee2e6!important;
-}
-.add-experience:hover {
-  background: #BA68C8;
-  color: #fff;
-  cursor: pointer;
-  border: solid 1px #BA68C8
+.changeTheme:has(input:checked)::before{
+  left: calc(100% - 35px);
 }

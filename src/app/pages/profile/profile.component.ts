@@ -2,9 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NotificationService } from 'src/app/services_API/notification.service';
 import { ConfigService } from "../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
-import { CustomerModel } from 'src/app/models/customer.model';
+import { CustomerModel, ValidationCustomerModel } from 'src/app/models/customer.model';
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
+const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -13,38 +14,22 @@ import { ActivatedRoute } from '@angular/router';
 export class ProfileComponent implements OnInit {
   response: ResponseModel
   resCustomer: CustomerModel
-  @Input() type: string
-
+  validateCustomer: ValidationCustomerModel = new ValidationCustomerModel
   listGender =  this.configService.listGender()
   isEdit: boolean = false
   isChange: boolean = false
   resCusTmp: CustomerModel
-  formData: any
-  birthday: string
-  birthdayView: string
   constructor(private activatedRoute: ActivatedRoute,private customerService: CustomerService, private notificationService: NotificationService,
     private configService: ConfigService) { }
 
   ngOnInit(): void {
-    // var idCustomer = this.activatedRoute.snapshot.paramMap.get('id')
-    // console.log(idCustomer);
+
     this.listGender = this.configService.listGender()
-    console.log(this.listGender);
 
     this.init()
   }
 
-  // ngOnChanges(): void {
-  //   if(this.resCustomer){
-  //     if(this.resCustomer.birthday){
-  //       this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
-  //       this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resCustomer.birthday))
-  //     }
-  //   }
-  //   this.resCusTmp = Object.assign({}, this.resCustomer)
-  // }
     inputChange(){
-      this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resCustomer.birthday))
       if (JSON.stringify(this.resCustomer) != JSON.stringify(this.resCusTmp)) {
         this.isChange = true
       }
@@ -68,10 +53,9 @@ export class ProfileComponent implements OnInit {
       this.customerService.get(idCus).subscribe(res =>{
         this.response = res
           this.resCustomer = this.response.content
-
+          this.resCusTmp = Object.assign({}, this.resCustomer)
           if(this.resCustomer.birthday){
             this.resCustomer.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
-            this.birthdayView = this.configService.formatFromUnixTimestampToFullDateView(Number.parseInt(this.resCustomer.birthday))
           }
       }, error => {
 
@@ -80,9 +64,6 @@ export class ProfileComponent implements OnInit {
       })
     }
 
-    inputDateChange(){
-      this.birthdayView = this.configService.formatDateToDateView(this.resCustomer.birthday)
-    }
 
     save(){
       var valid = this.configService.validateCustomer(this.resCustomer)
@@ -93,9 +74,6 @@ export class ProfileComponent implements OnInit {
         this.customerService.update(this.resCustomer).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
-          if (this.type == 'detail') {
-            this.isEdit = false
-          }
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -107,5 +85,10 @@ export class ProfileComponent implements OnInit {
     backup(){
       this.resCustomer = Object.assign({}, this.resCusTmp)
       this.isChange = false
+    }
+
+    formatInput(input: HTMLInputElement) {
+      input.value = input.value.replace(FILTER_PAG_REGEX, '');
+      this.resCustomer.phone = input.value
     }
 }

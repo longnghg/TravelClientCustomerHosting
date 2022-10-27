@@ -6,6 +6,7 @@ import { Page404Component } from './pages/page404/page404.component';
 
 import { ClientLayoutComponent } from './layouts/client-layout/client-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+
 const routes: Routes =[
   {
     path: '',
@@ -29,7 +30,8 @@ const routes: Routes =[
         loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
       }
     ]
-  }, {
+  },
+   {
     path: '**',
     component: Page404Component
   }
