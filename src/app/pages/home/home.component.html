@@ -333,7 +333,7 @@
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbsnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+        <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
         <div class="card-body" style="height: 350px;">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
           <div class="stars mb-4" >
@@ -347,7 +347,7 @@
           <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
          <div style="position: absolute;bottom: 10px;">
           <button class="btn btn-primary"><i class="fa-regular fa-calendar"></i> Ngày khác</button>
-          <button class="btn btn-danger" style="float:right; margin-left: 120px;" (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
+          <button class="btn btn-danger" style=" margin-left: 11.6rem;" (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
          </div>
         </div>
       </div>

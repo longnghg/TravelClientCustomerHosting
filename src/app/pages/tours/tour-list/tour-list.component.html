@@ -20,7 +20,7 @@
     </div>
     <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
       <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbsnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+        <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
         <div class="card-body" style="height: 350px;">
           <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
           <div class="stars mb-4" >

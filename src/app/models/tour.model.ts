@@ -4,7 +4,7 @@ import { ScheduleModel } from "./schedule.model";
 export class TourModel{
   idTour: string = ""
   nameTour: string = ""
-  thumbsnail: string = ""
+  thumbnail: string = ""
   rating: number = 0
   fromPlace: string = ""
   toPlace: string = ""

@@ -77,6 +77,8 @@ export class HomeComponent implements OnInit {
       this.response = res
       if(!this.response.notification.type)
       {
+        console.log(this.resSchedule);
+
         this.resSchedule = this.response.content
         // this.cd.markForCheck()
         // setTimeout(() => {

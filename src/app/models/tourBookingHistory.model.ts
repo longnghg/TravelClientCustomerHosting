@@ -11,7 +11,7 @@ export class TourBookingHistoryModel{
   dateBooking: number = 0
   departureDate: number = 0
   returnDate: number = 0
-  thumbsnail: string = ""
+  thumbnail: string = ""
   description: string = ""
   rowNum: number = 0
   totalPrice: number = 0
