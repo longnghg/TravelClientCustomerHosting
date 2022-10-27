@@ -22,8 +22,16 @@
           <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!resSchedule.isHoliday ? resSchedule.finalPrice : resSchedule.finalPriceHoliday) | formatPriceVi}}₫</span>/Khách </p>
         </div>
         <div class="col-6">
-            <button class="btn btn-outline-info mb-2" style="float: right; height: 50px; width: 250px; font-weight: 700;"><i class="fa-regular fa-calendar"></i>  {{ resSchedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: resSchedule.returnDate}}</button>
-            <button class="btn btn-danger" style="float: right; height: 50px; width: 250px; font-weight: 700;" (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
+            <ng-select class="mb-2" style=" margin-left: -60px; width: 250px" [searchable]="false"  (change)="scheduleChange(resSchedule.departureDate)" [(ngModel)]="resSchedule.departureDate" name="schedules" id="schedules" [clearable]="false" >
+              <ng-container *ngFor="let schedule of resSchedules">
+                <ng-template ng-label-tmp>
+                  <i class="fa-regular fa-calendar"></i>
+                  {{resSchedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: resSchedule.returnDate}}
+                </ng-template>
+                <ng-option [value]="schedule.departureDate" >{{schedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}</ng-option>
+              </ng-container>
+          </ng-select>
+            <button class="btn btn-danger" style="float: right; height: 45px; width: 250px; font-weight: 700;" (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
         </div>
     </div>
   </div>

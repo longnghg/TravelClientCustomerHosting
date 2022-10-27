@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy, Chan
 import { TourService } from "../../services_API/tour.service";
 import { ScheduleService } from "../../services_API/schedule.service";
 import { ScheduleModel } from "../../models/schedule.model";
+import { TourModel } from "../../models/tour.model";
 import { TourBookingModel } from "../../models/tourBooking.model";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { NotificationService } from "../../services_API/notification.service";
@@ -18,8 +19,10 @@ import { LocationModel } from "../../models/location.model";
 export class HomeComponent implements OnInit {
   constructor(private provinceService: ProvinceService, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
   resSchedule: ScheduleModel[]
+  resTour: TourModel[]
   resProvince: LocationModel[]
   resTourBooking: TourBookingModel
+  scheduleIndex: number = 0
   response: ResponseModel
   isBack: boolean
   kwFrom: any = "TP Hồ Chí Minh"
@@ -39,9 +42,10 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.provinceService.views().then(res => {this.resProvince = res})
-    this.initTour()
 
+    this.provinceService.views().then(res => {this.resProvince = res})
+    this.initSchedule()
+    this.initTour()
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (this.resTourBooking) {
      this.isBack = true
@@ -72,7 +76,7 @@ export class HomeComponent implements OnInit {
     this.slide.nativeElement.prepend(lists[lists.length - 1]);
   }
 
-  initTour(){
+  initSchedule(){
     this.scheduleService.gets().subscribe(res => {
       this.response = res
       if(!this.response.notification.type)
@@ -91,6 +95,46 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  initTour(){
+    this.tourService.gets().subscribe(res => {
+      this.response = res
+      console.log(res);
+
+      if(!this.response.notification.type)
+      {
+        console.log(this.resTour);
+
+        this.resTour = this.response.content
+        this.resTour.forEach(tour => {
+          tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
+        });
+        // this.cd.markForCheck()
+        // setTimeout(() => {
+        //   this.cd.detach()
+        // }, 100);
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, "Error")
+    })
+  }
+
+  scheduleChange(tour: TourModel, departureDate: any){
+    tour.schedules.forEach(schedule => {
+      if (schedule.departureDate == departureDate) {
+        // tour.schedules[0].idSchedule = schedule.idSchedule
+        // tour.schedules[0].description = schedule.description
+        // tour.schedules[0].departurePlace = schedule.departurePlace
+        // tour.schedules[0].alias = schedule.alias
+        // tour.schedules[0].isHoliday = schedule.isHoliday
+        // tour.schedules[0].finalPrice = schedule.finalPrice
+        // tour.schedules[0].finalPriceHoliday = schedule.finalPriceHoliday
+        // tour.schedules[0].isHoliday = schedule.isHoliday
+        // tour.schedules[0].returnDate = schedule.returnDate
+        tour.schedules[0] = Object.assign({}, schedule)
+      }
+    });
+  }
   booking(idSchedule: string, alias: string){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.router.navigate(['','tour-booking',idSchedule, alias]);

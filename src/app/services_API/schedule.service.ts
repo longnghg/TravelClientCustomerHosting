@@ -25,10 +25,13 @@ getsSchedulebyIdSchedule(idSchedule: any)
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/get-schedule?idSchedule="+idSchedule);
 }
 
+getsSchedulebyIdTour(idTour: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-gets-schedule-idtour?idTour="+idTour);
+}
+
 searchSchedule(kw: any)
 {
-  console.log(this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw);
-
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw);
 }
 }

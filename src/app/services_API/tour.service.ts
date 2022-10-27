@@ -34,7 +34,7 @@ export class TourService{
   }
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour-with-schedule");
   }
   create(data: any)
   {

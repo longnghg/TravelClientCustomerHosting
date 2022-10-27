@@ -39,15 +39,12 @@ export class TourListComponent implements OnInit {
   init(kw: any){
     this.scheduleService.searchSchedule(kw).subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resSchedule = this.response.content
-        console.log(this.resSchedule);
+      this.resSchedule = this.response.content
+      // if(!this.resSchedule)
+      // {
+      //   location.assign(this.configService.clientUrl + "/#/page404")
 
-      }
-      else{
-        location.assign(this.configService.clientUrl + "/#/page404")
-      }
+      // }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")

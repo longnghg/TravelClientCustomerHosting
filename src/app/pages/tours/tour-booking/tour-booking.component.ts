@@ -48,20 +48,17 @@ export class TourBookingComponent implements OnInit {
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
       this.resSchedule = this.response.content
-      if(!this.response.notification.type)
+      if(this.resSchedule)
       {
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
-
         var tourBooking = localStorage.getItem("tourBooking_" + localStorage.getItem("idUser"))
         if (tourBooking) {
           this.resTourBooking = JSON.parse(tourBooking)
         }
-
         this.resTourBooking.tourName = this.resSchedule.tour.nameTour
         this.setCart()
-
       }
       else{
         location.assign(this.configService.clientUrl + "/#/page404")

@@ -39,11 +39,9 @@ export class BillComponent implements OnInit {
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
-      if (this.response.notification.type == "Error") {
+      this.resTourBooking = this.response.content
+      if (!this.resTourBooking) {
         location.assign(this.configService.clientUrl + "/#/page404")
-      }
-      else{
-        this.resTourBooking = this.response.content
       }
 
     }, error => {

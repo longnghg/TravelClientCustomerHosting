@@ -12,6 +12,7 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 })
 export class TourDetailComponent implements OnInit {
   resSchedule: ScheduleModel
+  resSchedules: ScheduleModel[]
   response: ResponseModel
   constructor(private scheduleService: ScheduleService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -25,29 +26,48 @@ export class TourDetailComponent implements OnInit {
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
       this.resSchedule = this.response.content
-      if(!this.response.notification.type)
-      {
-        // if (this.resSchedule.finalPriceHoliday == 0) {
-        //   this.resSchedule.priceAdult = this.resSchedule.finalPrice
-        //   this.resSchedule.priceChild = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * 50 / 100)
-        //   this.resSchedule.priceBaby = 0
-        // }
-        // else{
-        //   this.resSchedule.priceAdult = this.resSchedule.finalPriceHoliday
-        //   this.resSchedule.priceChild = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * 50 / 100)
-        //   this.resSchedule.priceBaby = 0
-        // }
-
+      if (this.resSchedule) {
+        this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).subscribe(res => {
+          this.response = res
+          this.resSchedules = this.response.content
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
       }
       else{
         location.assign(this.configService.clientUrl + "/#/page404")
       }
+
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
     })
   }
-
+  scheduleChange(departureDate: any){
+    this.resSchedules.forEach(schedule => {
+      if (schedule.departureDate == departureDate) {
+        // this.resSchedule.returnDate = schedule.returnDate
+        // this.resSchedule.idSchedule = schedule.idSchedule
+        // this.resSchedule.description = schedule.description
+        // this.resSchedule.departurePlace = schedule.departurePlace
+        // this.resSchedule.alias = schedule.alias
+        // this.resSchedule.isHoliday = schedule.isHoliday
+        // this.resSchedule.finalPrice = schedule.finalPrice
+        // this.resSchedule.finalPriceHoliday = schedule.finalPriceHoliday
+        // this.resSchedule.isHoliday = schedule.isHoliday
+        // this.resSchedule.priceAdult = schedule.priceAdult
+        // this.resSchedule.priceAdultHoliday = schedule.priceAdultHoliday
+        // this.resSchedule.priceChild = schedule.priceChild
+        // this.resSchedule.priceChildHoliday = schedule.priceChildHoliday
+        // this.resSchedule.priceBaby = schedule.priceBaby
+        // this.resSchedule.priceBabyHoliday = schedule.priceBabyHoliday
+        // this.resSchedule.additionalPrice = schedule.additionalPrice
+        // this.resSchedule.additionalPriceHoliday = schedule.additionalPriceHoliday
+        this.resSchedule = Object.assign({}, schedule)
+      }
+    });
+  }
   booking(idSchedule: string, alias: string){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.router.navigate(['','tour-booking',idSchedule, alias]);
