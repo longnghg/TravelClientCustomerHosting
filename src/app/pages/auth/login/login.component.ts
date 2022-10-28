@@ -49,12 +49,15 @@ export class LoginComponent implements OnInit {
     if (this.validateAuth.total == 0) {
       this.isloading = true
       this.timeBlock = Number.parseInt(localStorage.getItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email))
-    if (this.timeBlock) {
-      this.modalBlock.nativeElement.click()
+
       if (new Date().getTime() >= this.timeBlock) {
-        localStorage.removeItem("MY3t/ez6Q0yEwHMr0/Cy/Q==")
+        localStorage.removeItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email)
+        this.timeBlock = null
         this.countLoginFail = 0
       }
+
+    if (this.timeBlock) {
+      this.modalBlock.nativeElement.click()
       this.isloading = false
     }
     else{
@@ -76,8 +79,6 @@ export class LoginComponent implements OnInit {
           document.location.assign( this.configService.clientUrl + "/#/home")
         }
         else{
-          console.log(this.countLoginFail);
-
           this.countLoginFail +=1
           if (this.countLoginFail > 5) {
            localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())

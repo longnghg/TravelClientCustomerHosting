@@ -1,17 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AuthenticationService } from 'src/app/services_API/authentication.service';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { CustomerService } from 'src/app/services_API/customer.service';
 import { OTPModel, ValidationOtp } from 'src/app/models/otp.model';
-import { CountdownComponent } from 'ngx-countdown/countdown.component';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CustomerModel, ValidationForgotPass } from "../../../models/customer.model";
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  styleUrls: ['./forgot-password.component.scss'],
+  host: {
+    '[class.card]': `true`,
+    '[class.text-center]': `true`,
+  },
 })
 export class ForgotPasswordComponent implements OnInit {
   validationForgotPass: ValidationForgotPass = new ValidationForgotPass
@@ -25,16 +28,17 @@ export class ForgotPasswordComponent implements OnInit {
   isOtp: boolean
   isTrue: boolean = false
   response: ResponseModel
-  timePresent: number 
+  timePresent: number
   endTime: any
-  config: CountdownConfig = { leftTime: 120, format: 'mm:ss'};
+  config: CountdownConfig
   isCountdown: boolean = false
+
   constructor(private authService: AuthenticationService, private notificationService: NotificationService, private configService: ConfigService,
     private customerService: CustomerService) { }
 
   ngOnInit(): void {
-  
-    
+
+
   }
 
   btnCheckOTP(){
@@ -44,27 +48,15 @@ export class ForgotPasswordComponent implements OnInit {
     this.validationOtp =  this.configService.validateOtp(this.OTP, this.validationOtp, true)
     if ( this.validationOtp.total == 0) {
       this.isTrue = true
-
-      // if(this.checkOTP === this.OTP.otpCode){
-      //   // if(this.endTime > this.timePresent){ //thằng này đang chạy đc chưa rồi á
-      //   // }
-      //   // else{
-      //   //   console.log("quá thời gian");
-      //   // }
-      // }
-    }
-
-    if (this.validationOtp.checkOTP) {
-      this.isCountdown = true
     }
   }
 
   SendOTP(){
+    console.log(this.OTP);
+
     this.isload = true
     this.validationOtp = new ValidationOtp
     this.validationOtp =  this.configService.validateOtp(this.OTP, this.validationOtp, false)
-    console.log(this.validationOtp);
-    
     if (this.validationOtp.total == 0) {
       this.customerService.SendOTP(this.OTP.email).subscribe(res => {
         this.response = res
@@ -72,9 +64,11 @@ export class ForgotPasswordComponent implements OnInit {
 
         if (this.response.notification.type == "Success") {
           this.isOtp = true
-          this.OTP = this.response.content
-          console.log(this.OTP);
-          
+          this.OTP.beginTime = this.response.content.beginTime
+          this.OTP.endTime = this.response.content.endTime
+          this.OTP.otpCode = this.response.content.otpCode
+          this.OTP.id = this.response.content.id
+
           this.config = { leftTime: 120, format: 'mm:ss'};
           this.isCountdown = false
           this.isload = false
@@ -89,11 +83,9 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   handleEvent(e: CountdownEvent) {
-    // this.notify = e.action.toUpperCase();
-    // if (e.action === 'notify') {
-    //   this.notify += ` - ${e.left} ms`;
-    // }
-    // console.log('Notify', e);
+    if (e.action === 'done') {
+      this.isCountdown = true
+    }
   }
   CusForgotPass() {
     this.validationForgotPass = new ValidationForgotPass
