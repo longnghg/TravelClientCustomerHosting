@@ -3,13 +3,13 @@ import {Pipe, PipeTransform  } from '@angular/core';
 @Pipe({name: 'formatFromUnixTimestampToFullDateView'})
 export class FormatFromUnixTimestampToFullDateView implements PipeTransform {
   transform(unix_timestamp: any) : any {
-    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
+    var date = new Date(unix_timestamp).toLocaleDateString();
     var split = date.split("/")
-    var day = split[1];
+    var day = split[0];
     if (Number.parseInt(day) < 10) {
       day = "0"+day
     }
-    var month = split[0];
+    var month = split[1];
     if (Number.parseInt(month) < 10) {
       month = "0"+month
     }
@@ -23,7 +23,7 @@ export class FormatFromUnixTimestampToFullDateView implements PipeTransform {
 @Pipe({name: 'formatFromUnixTimestampToFullDate'})
 export class FormatFromUnixTimestampToFullDate implements PipeTransform {
   transform(unix_timestamp: any) : any {
-    var date = new Date(unix_timestamp).toLocaleDateString("en-US");
+    var date = new Date(unix_timestamp).toLocaleDateString();
     var split = date.split("/")
     var day = split[1];
     var month = split[0];
@@ -37,49 +37,11 @@ export class FormatFromUnixTimestampToFullDate implements PipeTransform {
 @Pipe({name: 'formatFromUnixTimestampToFullDateTimeView'})
 export class FormatFromUnixTimestampToFullDateTimeView implements PipeTransform {
   transform(unix_timestamp: any) : any {
-    var date = new Date(unix_timestamp);
-    var day = ""
-    var month =  ""
-    var year = date.getFullYear()
-    var hour =  ""
-    var min = ""
-    var sec = ""
-    if (date.getDate() < 10) {
-      day = "0"+date.getDate().toString()
-    }
-    else{
-      day = date.getDate().toString()
-    }
+    var date = new Date(unix_timestamp).toLocaleString();
+    var splitDateTime = []
+    splitDateTime = date.split(", ")
 
-    if (date.getMonth() < 10) {
-      month = "0"+date.getMonth().toString()
-    }
-    else{
-      month = date.getMonth().toString()
-    }
-
-    if (date.getHours() < 10) {
-      hour = "0"+date.getHours().toString()
-    }
-    else{
-      hour = date.getHours().toString()
-    }
-
-    if (date.getMinutes() < 10) {
-      min = "0"+date.getMinutes().toString()
-    }
-    else{
-      min = date.getMinutes().toString()
-    }
-
-    if (date.getMinutes() < 10) {
-      sec = "0"+date.getSeconds().toString()
-    }
-    else{
-      sec = date.getSeconds().toString()
-    }
-
-    var formattedDate = day + '/' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec;
+    var formattedDate = splitDateTime[1] + " " + splitDateTime[0];
     return formattedDate
   }
 }
@@ -88,35 +50,32 @@ export class FormatFromUnixTimestampToFullDateTimeView implements PipeTransform 
 @Pipe({name: 'formatFromUnixTimestampToFullStartEndDateView'})
 export class FormatFromUnixTimestampToFullStartEndDateView implements PipeTransform {
   transform(start_unix_timestamp: any, end_unix_timestamp: any) : any {
-    var start = new Date(start_unix_timestamp);
-    var end = new Date(end_unix_timestamp);
-    var startDay = ""
-    var endDay = ""
-    var month =  ""
-    var year = end.getFullYear()
+    var start = new Date(start_unix_timestamp).toLocaleString();
+    var startDateTime = []
+    startDateTime = start.split(", ")
 
-    if (start.getDate() < 10) {
-      startDay = "0"+start.getDate().toString()
-    }
-    else{
-      startDay = start.getDate().toString()
-    }
+    var end = new Date(end_unix_timestamp).toLocaleString();
+    var endDateTime = []
+    endDateTime = end.split(", ")
 
-    if (end.getDate() < 10) {
-      endDay = "0"+end.getDate().toString()
-    }
-    else{
-      endDay = end.getDate().toString()
+
+    var startDay = []
+    startDay = startDateTime[1].split("/")
+    if (Number.parseInt(startDay[0]) < 10) {
+      startDay[0] = "0" +  startDay[0]
     }
 
-    if (end.getMonth() < 10) {
-      month = "0"+end.getMonth().toString()
-    }
-    else{
-      month = end.getMonth().toString()
+    var endDay = []
+    endDay = endDateTime[1].split("/")
+    if (Number.parseInt(endDay[0]) < 10) {
+      endDay[0] = "0" +  endDay[0]
     }
 
-    var formattedDate = startDay + '-' + endDay  + '/' + month + '/' + year;
+    if (Number.parseInt(endDay[1]) < 10) {
+      endDay[1] = "0" +  endDay[1]
+    }
+
+    var formattedDate = startDay[0] + '-' + endDay[0] + "/" + endDay[1] + "/" + endDay[2];
     return formattedDate
   }
 }
@@ -125,41 +84,24 @@ export class FormatFromUnixTimestampToFullStartEndDateView implements PipeTransf
 @Pipe({name: 'formatFromUnixTimestampToFullTimeDateView'})
 export class FormatFromUnixTimestampToFullTimeDateView implements PipeTransform {
   transform(unix_timestamp: any) : any {
-    var date = new Date(unix_timestamp);
-    var day = ""
-    var month =  ""
-    var year = date.getFullYear()
-    var hour =  ""
-    var min = ""
-    if (date.getDate() < 10) {
-      day = "0"+date.getDate().toString()
-    }
-    else{
-      day = date.getDate().toString()
+    var dateTime = new Date(unix_timestamp).toLocaleString();
+    var splitDateTime = []
+    splitDateTime = dateTime.split(", ")
+    var time = []
+    time = splitDateTime[0].split(":")
+
+
+    var date = []
+    date = splitDateTime[1].split("/")
+    if (Number.parseInt(date[0]) < 10) {
+      date[0] = "0" +  date[0]
     }
 
-    if (date.getMonth() < 10) {
-      month = "0"+date.getMonth().toString()
-    }
-    else{
-      month = date.getMonth().toString()
+    if (Number.parseInt(time[1]) < 10) {
+      date[1] = "0" +  date[1]
     }
 
-    if (date.getHours() < 10) {
-      hour = "0"+date.getHours().toString()
-    }
-    else{
-      hour = date.getHours().toString()
-    }
-
-    if (date.getMinutes() < 10) {
-      min = "0"+date.getMinutes().toString()
-    }
-    else{
-      min = date.getMinutes().toString()
-    }
-
-    var formattedDate = hour + ':' + min + ' ' + day + '/' + month + '/' + year;
+    var formattedDate = time[0] + ':' + time[1] + ' ' + date[0] + '/' + date[1] + '/' + date[2];
     return formattedDate
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AuthenticationService } from "../../../services_API/authentication.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
-import { AuthenticationModel } from "../../../models/authentication.model";
+import { AuthenticationModel, ValidationLoginModel } from "../../../models/authentication.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CustomerModel } from "../../../models/customer.model";
 @Component({
@@ -12,12 +12,16 @@ import { CustomerModel } from "../../../models/customer.model";
 })
 export class LoginComponent implements OnInit {
   @ViewChild('loginRef', {static: true }) loginElement!: ElementRef;
+  @ViewChild('modalBlock') modalBlock: ElementRef;
   resAthentication: AuthenticationModel
+  validateAuth: ValidationLoginModel = new ValidationLoginModel;
   resCustomer: CustomerModel = new CustomerModel
   response: ResponseModel
   token: string
   isloading = false
   auth2: any
+  countLoginFail = 0
+  timeBlock: any
   constructor( private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
 
 
@@ -40,33 +44,59 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    this.isloading = true
-    this.authenticationService.login(this.resCustomer).subscribe(res=>{
-      this.response = res
-
-      this.notificationService.handleAlertObj(res.notification)
-      if(this.response.notification.type == "Success")
-      {
-        this.resAthentication = this.response.content
-        localStorage.setItem("token", this.resAthentication.token)
-        localStorage.setItem("idUser", this.resAthentication.id)
-        localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-
-        var tourBooking = localStorage.getItem("tourBooking_null")
-        if (tourBooking) {
-          localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
-          localStorage.removeItem("tourBooking_null")
-        }
-        document.location.assign( this.configService.clientUrl + "/#/home")
+    this.validateAuth = new ValidationLoginModel
+    this.validateAuth = this.configService.validateLogin(this.resCustomer, this.validateAuth)
+    if (this.validateAuth.total == 0) {
+      this.isloading = true
+      this.timeBlock = Number.parseInt(localStorage.getItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email))
+    if (this.timeBlock) {
+      this.modalBlock.nativeElement.click()
+      if (new Date().getTime() >= this.timeBlock) {
+        localStorage.removeItem("MY3t/ez6Q0yEwHMr0/Cy/Q==")
+        this.countLoginFail = 0
       }
-
       this.isloading = false
+    }
+    else{
+      this.authenticationService.login(this.resCustomer).subscribe(res=>{
+        this.response = res
 
-    }, error => {
-      this.isloading = false
-      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
-    })
+        if(this.response.notification.type == "Success")
+        {
+          this.resAthentication = this.response.content
+          localStorage.setItem("token", this.resAthentication.token)
+          localStorage.setItem("idUser", this.resAthentication.id)
+          localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+
+          var tourBooking = localStorage.getItem("tourBooking_null")
+          if (tourBooking) {
+            localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+            localStorage.removeItem("tourBooking_null")
+          }
+          document.location.assign( this.configService.clientUrl + "/#/home")
+        }
+        else{
+          console.log(this.countLoginFail);
+
+          this.countLoginFail +=1
+          if (this.countLoginFail > 5) {
+           localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+          }
+        }
+
+        this.notificationService.handleAlertObj(res.notification)
+
+        this.isloading = false
+
+      }, error => {
+        this.isloading = false
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, "Error")
+      })
+    }
+    }
+
+
   }
 
   googleLogin(){
@@ -101,4 +131,6 @@ export class LoginComponent implements OnInit {
         fjs?.parentNode?.insertBefore(js, fjs);
       }(document, 'script', 'google-jssdk'));
     }
+
+
 }

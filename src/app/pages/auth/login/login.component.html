@@ -10,20 +10,24 @@
               <h2 class="form-title">Đăng nhập</h2>
               <form method="POST" class="register-form" id="login-form">
                   <div class="form-group">
-                      <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                      <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i> </label>
                       <input type="email" name="your_name" id="your_name" placeholder="Nhập email"  [(ngModel)]="resCustomer.email"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{this.validateAuth.email ? this.validateAuth.email : ''}}</span>
+
                   <div class="form-group">
                       <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                       <input type="password" name="your_pass" id="your_pass" placeholder="Nhập mật khẩu" [(ngModel)]="resCustomer.password"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{this.validateAuth.password ? this.validateAuth.password : ''}}</span>
+
                   <div class="form-group">
                     <div class="row mb-4">
                       <div class="col-md-6">
                           <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
                           <label for="remember-me" class="label-agree-term text-left"><span></span>Ghi nhớ</label>
                       </div>
-                      <div class="col-md-6">                  
+                      <div class="col-md-6">
                           <a routerLink="/forgotPassword" class="label-agree-term text-right">Quên tài khoản</a>
                       </div>
                     </div>
@@ -52,3 +56,24 @@
       </div>
   </div>
 </section>
+
+
+<button #modalBlock type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#timeBlock"></button>
+
+<!-- Modal -->
+<div class="modal fade" id="timeBlock" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="timeBlockLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="timeBlockLabel">Thông báo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Tài khoản của bạn bị khóa tới <span class="text-danger" style="font-weight: 700;">{{this.timeBlock | formatFromUnixTimestampToFullDateTimeView}}</span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>

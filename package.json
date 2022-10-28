@@ -27,6 +27,7 @@
     "@ngx-loading-bar/http-client": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
     "bootstrap": "^5.2.2",
+    "crypto-js": "^4.1.1",
     "i": "^0.3.7",
     "ngx-toastr": "^15.0.0",
     "ngx-typed-js": "^2.1.1",

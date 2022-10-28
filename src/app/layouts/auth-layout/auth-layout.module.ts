@@ -11,14 +11,15 @@ import { RegisterComponent } from '../../pages/auth/register/register.component'
 import { ForgotPasswordComponent } from '../../pages/auth/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from '../../pages/auth/change-password/change-password.component';
 import { NgSelectModule }           from '@ng-select/ng-select';
-
+import { PipesModule } from "../../pipes/pipes.module";
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
     NgbModule,
-    NgSelectModule
+    NgSelectModule,
+    PipesModule
   ],
   declarations: [
     LoginComponent,
