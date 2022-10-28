@@ -5,4 +5,5 @@ export class AuthenticationModel{
   name: string = ""
   image: string = ""
   email: string = ""
+  dateTime: string
 }
