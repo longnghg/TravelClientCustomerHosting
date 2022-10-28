@@ -3,18 +3,13 @@ export class OTPModel{
  endTime: string
  id: number
  otpCode: string
-
-// test 
- email: string = null
- password: string = null
-    confirmPassword: string = null
-    checkOTP: string = null
+ checkOTP: string
+ email: string
 }
 
-export class ValidationForgotPass {
-    total: number
+export class ValidationOtp {
+    total: number = 0
     email: string = null
-    password: string = null
-    confirmPassword: string = null
     checkOTP: string = null
-  }
+    otpCode: string = null // 2 thằng này check ở đâu để tui demo thử á , 2 th đó check ở đây á
+}

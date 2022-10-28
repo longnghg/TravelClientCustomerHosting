@@ -12,6 +12,7 @@ import { ForgotPasswordComponent } from '../../pages/auth/forgot-password/forgot
 import { ChangePasswordComponent } from '../../pages/auth/change-password/change-password.component';
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { PipesModule } from "../../pipes/pipes.module";
+import { CountdownModule } from 'ngx-countdown';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +20,8 @@ import { PipesModule } from "../../pipes/pipes.module";
     FormsModule,
     NgbModule,
     NgSelectModule,
-    PipesModule
+    PipesModule,
+    CountdownModule
   ],
   declarations: [
     LoginComponent,

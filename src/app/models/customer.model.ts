@@ -22,3 +22,10 @@ export class ValidationCustomerModel{
   gender: boolean
   birthday: string
 }
+
+
+export class ValidationForgotPass {
+  total: number
+  password: string = null
+  confirmPassword: string = null
+}
