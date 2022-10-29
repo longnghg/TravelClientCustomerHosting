@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-
+import { ComponentsModule } from "../../components/components.module";
 import { ClientLayoutRoutes } from './client-layout.routing';
 import { HomeComponent } from '../../pages/home/home.component';
 import { AboutComponent } from '../../pages/about/about.component';
@@ -39,7 +39,8 @@ import { PipesModule } from "../../pipes/pipes.module";
     NavModule,
     TabsModule,
     NgSelectModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ],
   declarations: [
 

@@ -1,0 +1,220 @@
+<div>
+<div class="container" style="font-weight: 600 ;padding-bottom: 2%; background: whitesmoke; width: 350px; margin-left: 1%; border-radius: 10px; box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;">
+ <div style="text-align: left;">
+  <div class="row">
+    <h4 style="padding-top: 20px;">Lọc kết quả</h4>
+  </div>
+  <div class="row mb-3" style="background-color: #6998AB;">
+    <h5 class="text-white" style="padding-top: 5px;">Tất cả</h5>
+  </div>
+  <div class="row mb-3">
+   <div class="col">
+    <label>Điểm đi</label>
+    <ng-select
+        [items]="resProvince"
+        [(ngModel)]="kwFrom"
+        placeholder="Chọn điểm đi..."
+        bindLabel="nameProvince"
+        bindValue="nameProvince"
+        [clearable]="false"
+        name="from"
+        id="from">
+      </ng-select>
+   </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <label>Điểm đến</label>
+      <ng-select
+        [items]="resProvince"
+        [(ngModel)]="kwTo"
+        placeholder="Chọn điểm đến..."
+        bindLabel="nameProvince"
+        bindValue="nameProvince"
+        name="to"
+        id="to">
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="row mb-3" >
+    <div class="col">
+      <label style="padding: unset;">Ngày đi</label>
+    <input class="form-control" [(ngModel)]="kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col">
+      <label style="padding: unset;">Ngày về</label>
+      <input class="form-control" [(ngModel)]="kwReturnDate" name="returnDate" onkeydown="return false" type="date">
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col row">
+      <label>Số người</label>
+      <div class="col-6">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="1customer" checked>
+          <label class="form-check-label" for="1customer">
+            <!-- <i class="fa-solid fa-user"></i> -->
+            1 người
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="3customer">
+          <label class="form-check-label" for="3customer">
+            <!-- <i class="fa-solid fa-user-group"></i> -->
+            3-5 người
+          </label>
+        </div>
+      </div>
+        <div class="col-6">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="customer" id="2customer">
+            <label class="form-check-label" for="2customer">
+              <!-- <i class="fa-solid fa-users"></i> -->
+              2 người
+            </label>
+          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="5customer" >
+          <label class="form-check-label" for="5customer">
+            <!-- <i class="fa-solid fa-user-plus"></i> -->
+            5+ người
+          </label>
+        </div>
+      </div>
+      <!-- <div class="col-6 mb-3">
+        <button class="btn btn-outline-primary btn-block">1 người</button>
+      </div>
+      <div class="col-6 mb-3">
+        <button class="btn btn-outline-primary btn-block">2 người</button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-outline-primary btn-block">3-5 người</button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-outline-primary btn-block">5+ người</button>
+      </div> -->
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col row">
+      <label>Dòng tour</label>
+      <div class="col-6">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="luxury" checked>
+          <label class="form-check-label" for="luxury">
+            <!-- <i class="fa-solid fa-crown"></i> -->
+            Cao cấp
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="eco">
+          <label class="form-check-label" for="eco">
+            <!-- <i class="fa-solid fa-piggy-bank"></i> -->
+            Tiết kiệm
+          </label>
+        </div>
+      </div>
+        <div class="col-6">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type" id="standard">
+            <label class="form-check-label" for="standard">
+              Tiêu chuẩn
+            </label>
+          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="type" id="best" >
+          <label class="form-check-label" for="best">
+            Giá tốt
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- <label>Dòng tour</label>
+    <div class="col-6 mb-3">
+      <button class="btn btn-outline-primary btn-block">Cao cấp</button>
+    </div>
+    <div class="col-6 mb-3">
+      <button class="btn btn-outline-primary btn-block">Tiết kiệm</button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-outline-primary btn-block">Tiêu chuẩn</button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-outline-primary btn-block">Giá tốt</button>
+    </div> -->
+  <!-- </div> -->
+
+  <div class="row mb-3">
+    <div class="col row">
+      <label>Số người</label>
+      <div class="col-6">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="1customer" checked>
+          <label class="form-check-label" for="1customer">
+            <!-- <i class="fa-solid fa-crown"></i> -->
+            Dưới 2tr
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="2customer">
+          <label class="form-check-label" for="2customer">
+            Từ 5-10tr
+            <!-- <i class="fa-solid fa-piggy-bank"></i> -->
+          </label>
+        </div>
+      </div>
+        <div class="col-6">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="customer" id="3customer">
+            <label class="form-check-label" for="3customer">
+              Từ 2-5tr
+            </label>
+          </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="customer" id="5customer" >
+          <label class="form-check-label" for="5customer">
+            Trên 10tr
+          </label>
+        </div>
+      </div>
+    </div>
+       <!-- <label>Giá tour</label>
+    <div class="col-6 mb-3">
+      <button class="btn btn-outline-primary btn-block">Dưới 5tr</button>
+    </div>
+    <div class="col-6 mb-3">
+      <button class="btn btn-outline-primary btn-block">Từ 5-10tr</button>
+    </div>
+    <div class="col-6">
+      <button class="btn btn-outline-primary btn-block">Trên 10tr</button>
+    </div>
+    <div class="col-6">
+      <div  class="btn btn-outline-primary btn-block">
+        <input type="text" class="input-btn" placeholder="Nhập giá...">
+      </div>
+    </div> -->
+ </div>
+
+ <div class="row mb-3">
+  <div class="col">
+    <label>Hiển thị những chuyến đi có</label>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="promotion">
+      <label class="form-check-label" for="promotion">Khuyến mãi</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="slot" checked>
+      <label class="form-check-label" for="slot">Còn chỗ</label>
+    </div>
+  </div>
+</div>
+</div>
+</div>

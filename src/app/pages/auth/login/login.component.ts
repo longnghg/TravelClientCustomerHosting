@@ -107,7 +107,39 @@ export class LoginComponent implements OnInit {
         this.resCustomer.email = profile.getEmail(),
         this.resCustomer.nameCustomer = profile.getName(),
         this.resCustomer.googleToken = googleAuthUser.getAuthResponse().id_token
-        this.login()
+        this.authenticationService.login(this.resCustomer).subscribe(res=>{
+          this.response = res
+
+          if(this.response.notification.type == "Success")
+          {
+            this.resAthentication = this.response.content
+            localStorage.setItem("token", this.resAthentication.token)
+            localStorage.setItem("idUser", this.resAthentication.id)
+            localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+
+            var tourBooking = localStorage.getItem("tourBooking_null")
+            if (tourBooking) {
+              localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+              localStorage.removeItem("tourBooking_null")
+            }
+            document.location.assign( this.configService.clientUrl + "/#/home")
+          }
+          else{
+            this.countLoginFail +=1
+            if (this.countLoginFail > 5) {
+             localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+            }
+          }
+
+          this.notificationService.handleAlertObj(res.notification)
+
+          this.isloading = false
+
+        }, error => {
+          this.isloading = false
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, "Error")
+        })
       });
   }
 

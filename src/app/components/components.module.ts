@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { SidebarModule } from '@coreui/angular';
+import { FilterComponent } from './filter/filter.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -16,18 +17,20 @@ import { SidebarModule } from '@coreui/angular';
     NgSelectModule,
     NgbModule,
     FormsModule,
-    SidebarModule
-
+    SidebarModule,
   ],
   declarations: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
     ProfileComponent,
+    FilterComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
+    FilterComponent,
+    ProfileComponent,
   ]
 })
 export class ComponentsModule { }

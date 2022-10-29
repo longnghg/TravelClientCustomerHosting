@@ -3,7 +3,7 @@
     <div class="site-navigation">
       <!-- <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]">Travel Rover <span class="text-primary">.</span></a> -->
       <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]"><img src="../../../assets/images/icons/lgoRover.png" alt="" style="width: 200px;"></a>
-      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; font-weight: bolder; position: absolute; top: 30px; left: 37rem;">
+      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; font-weight: bolder; position: absolute; top: 30px; left: 40rem;">
         <li *ngFor="let info of listTitles; let i=index" [class]="info.class"><a class="nav-color" href="#" routerLinkActive="active" (isActiveChange)="this.onRouterLinkActive($event, i)" [routerLink]="[info.path]">{{info.title}}</a></li>
         <li class="has-children">
           <a class="nav-color" href="#">Dropdown</a>
@@ -29,7 +29,7 @@
             text-overflow: ellipsis;
             max-width: 200px;"  href="#">{{resAthentication.name}}</a>
             <ul class="dropdown" style="margin-top: -10px;">
-<li><a href="#" [routerLink]="['/changePassword']">Đổi mật khẩu</a></li>
+              <li><a href="#" [routerLink]="['/changePassword']">Đổi mật khẩu</a></li>
               <li>
                 <!-- <a href="#" routerLinkActive="active" [routerLink]="['profile', resAthentication.id]">Thông tin cá nhân</a> -->
                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Thông tin cá nhân</a>
@@ -42,6 +42,9 @@
           </li>
         </ng-container>
         <ng-template #elseTemplate>
+        <li>
+          <a class="nav-color" href="#" routerLinkActive="active" [routerLink]="['/register']">Đăng ký</a>
+        </li>
         <li>
          <a class="nav-color" href="#" routerLinkActive="active" [routerLink]="['/login']">Đăng nhập</a>
         </li>

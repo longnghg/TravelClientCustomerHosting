@@ -2,42 +2,90 @@
 
 
 <div class="untree_co-section">
-  <div class="container">
-    <div class="row justify-content-center text-center mb-5">
-      <div class="col-lg-6">
+  <div class="mb-5 " style="margin-top: -30px;">
+   <div class="row">
+    <div class="col-2" style="padding-left: 3%;">
+      <app-filter></app-filter>
+    </div>
+    <div class="col-10" style="margin-left: 6%; width: 74%; border-radius: 10px; box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px; padding-top: 20px;">
+      <div class="justify-content-center text-center ">
         <ng-container *ngIf="from && to; else elsefrom">
           <h2 class="section-title text-center">Danh sách tour du lịch {{to}} khởi hành từ {{from}}</h2>
         </ng-container>
         <ng-template #elsefrom>
           <h2 class="section-title text-center">Danh sách tour du lịch khởi hành từ {{from}}</h2>
         </ng-template>
-      </div>
-    </div>
-    <div class="row mb-5" style="margin-left: -150px;">
-        <div class="col">
-          <h5>Chúng tôi tìm thấy <span style="font-weight: 900; color:#2d4271">{{resSchedule.length}}</span> tours cho Quý khách.</h5>
-        </div>
-    </div>
-    <div class="row" style="width: 1500px; margin-left: -150px;" *ngIf="resSchedule">
-      <div class="card mr-5 mb-5" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
-        <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
-        <div class="card-body" style="height: 350px;">
-          <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
-          <div class="stars mb-4" >
-            <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
-            <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
-        </div>
-          <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
-          <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
-          <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
-          <p class="card-text">Nơi khởi hành: {{schedule.departurePlace}}</p>
-          <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
-         <div style="position: absolute;bottom: 10px;">
-          <button class="btn btn-primary"><i class="fa-regular fa-calendar"></i> Ngày khác</button>
-          <button class="btn btn-danger" style="float:right; margin-left: 120px;" (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
-         </div>
+
+        <div class="row mb-2">
+          <div class="col">
+            <h5>Chúng tôi tìm thấy <span style="font-weight: 900; color:#2d4271">{{resSchedule ? resSchedule.length: 0}}</span> tours cho Quý khách.</h5>
+          </div>
         </div>
       </div>
+
+
+      <div class="row" style="width: 1500px; margin-left: 3%;" *ngIf="resSchedule">
+        <ng-container *ngFor="let schedule of resSchedule; let i=index">
+          <div class="card mr-5 mb-5 card-shadow" style="width: 30%; padding: 0;" *ngIf="schedule.rowNum >= start && schedule.rowNum <= end">
+            <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+            <div class="card-body" >
+              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
+              <div class="stars mb-4" >
+                <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+                <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+            </div>
+              <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
+              <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
+              <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
+              <p class="card-text">Nơi khởi hành: {{schedule.departurePlace}}</p>
+              <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
+              <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                <button class="btn btn-danger"  (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
+              </div>
+            </div>
+          </div>
+
+        </ng-container>
+
+
+        <nav aria-label="Page navigation example" class="row">
+          <ul class="pagination justify-content-end" style="    margin-left: -20px;">
+            <li class="page-item mr-2">
+              <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prevAll'):''">
+                <span style="font-size: 25px;" >&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item mr-2">
+              <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prev'):''">
+                <span style="font-size: 25px;" >&lsaquo;</span>
+              </a>
+            </li>
+            <li class="page-item mr-2" style="margin-right: 10px; margin-top: 10px;"><h5>Trang</h5></li>
+            <input type="text" #i  inputmode="numeric"
+            pattern="[0-9]*"
+            class="form-control custom-pages-input"
+            id="paginationInput"
+            [(ngModel)]="pageNumber"
+            (keyup.enter)="selectPage(i.value, '')"
+            (blur)="selectPage(i.value, '')"
+            (input)="formatInput($any($event).target)"
+            style="width: 2.8rem">
+            <li class="page-item mr-2" style="margin-left: 10px; margin-top: 10px;"><h5>trên {{pageCount}}</h5></li>
+            <li class="page-item mr-2">
+              <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'next'):''">
+                <span style="font-size: 25px;"  >&rsaquo;</span>
+              </a>
+            </li>
+            <li class="page-item">
+              <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'nextAll'):''">
+                <span style="font-size: 25px;" >&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
     </div>
+    </div>
+   </div>
+
   </div>
 </div>

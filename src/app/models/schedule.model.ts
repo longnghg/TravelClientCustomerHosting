@@ -3,6 +3,7 @@ import { PromotionModel } from "./promotion.model";
 import { TimeLineModel } from "./timeLine.model";
 import { TourModel } from "./tour.model";
 export class ScheduleModel{
+  rowNum: number = 0
   idSchedule: string = ""
 
   alias: string = ""
