@@ -72,34 +72,34 @@ export class ConfigService{
     }
 
 
-    if (data.phone == null || data.phone == "") {
-       err.push("[Số điện thoại] không được để trống !")
-    }else if (data.phone.length > 10) {
-       err.push("[Số điện thoại] vượt quá 10 số !")
-    }else if (!data.phone.startsWith("0")) {
-       err.push("[Số điện thoại] không hợp lệ !")
-    }
+    // if (data.phone == null || data.phone == "") {
+    //    err.push("[Số điện thoại] không được để trống !")
+    // }else if (data.phone.length > 10) {
+    //    err.push("[Số điện thoại] vượt quá 10 số !")
+    // }else if (!data.phone.startsWith("0")) {
+    //    err.push("[Số điện thoại] không hợp lệ !")
+    // }
 
     // if (data.birthday == null || data.birthday == "") {
     //    err.push("[Ngày sinh] không được để trống !")
     // }
 
 
-    if (data.address == null || data.address == "") {
-       err.push("[Địa chỉ] không được để trống !")
-    }else if (data.address.length > 255) {
-      err.push("[Địa chỉ] quá dài !")
-   }
+  //   if (data.address == null || data.address == "") {
+  //      err.push("[Địa chỉ] không được để trống !")
+  //   }else if (data.address.length > 255) {
+  //     err.push("[Địa chỉ] quá dài !")
+  //  }
 
-    if(data.password == null  || data.password == ""){
-      err.push("[Mật khẩu] không được để trống !")
-    }
+    // if(data.password == null  || data.password == ""){
+    //   err.push("[Mật khẩu] không được để trống !")
+    // }
 
-    if(data.confirmPassword == null  || data.confirmPassword == ""){
-      err.push("[Nhập lại mật khẩu] không được để trống !")
-    }else if(data.password != data.confirmPassword){
-      err.push("[Mật khẩu không khớp] nhập lại mật khẩu !")
-    }
+    // if(data.confirmPassword == null  || data.confirmPassword == ""){
+    //   err.push("[Nhập lại mật khẩu] không được để trống !")
+    // }else if(data.password != data.confirmPassword){
+    //   err.push("[Mật khẩu không khớp] nhập lại mật khẩu !")
+    // }
     return err
 
    }
