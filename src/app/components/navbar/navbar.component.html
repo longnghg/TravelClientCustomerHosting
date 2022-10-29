@@ -29,15 +29,15 @@
             text-overflow: ellipsis;
             max-width: 200px;"  href="#">{{resAthentication.name}}</a>
             <ul class="dropdown" style="margin-top: -10px;">
-              <li><a href="#" [routerLink]="['/changePassword']">Đổi mật khẩu</a></li>
+              <li><a href="#" [routerLink]="['/changePassword']" style=" text-decoration: none;">Đổi mật khẩu</a></li>
               <li>
                 <!-- <a href="#" routerLinkActive="active" [routerLink]="['profile', resAthentication.id]">Thông tin cá nhân</a> -->
-                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Thông tin cá nhân</a>
+                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" text-decoration: none;">Thông tin cá nhân</a>
 
                </li>
-              <li><a href="#" [routerLink]="['/bills-history']">Lịch sử đặt tour</a></li>
+              <li><a style=" text-decoration: none;" href="#" [routerLink]="['/bills-history']">Lịch sử đặt tour</a></li>
 
-              <li><a href="javascript:void(0)" (click)="logOut()">Đăng xuất</a></li>
+              <li><a style=" text-decoration: none;" href="javascript:void(0)" (click)="logOut()">Đăng xuất</a></li>
             </ul>
           </li>
         </ng-container>
