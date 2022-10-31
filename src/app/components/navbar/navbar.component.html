@@ -1,9 +1,9 @@
-<nav class="site-nav">
+<nav class="site-nav" #nav style="position: sticky; margin-top: -8%; z-index: 9999; transition: 0.5s;">
   <div class="container">
     <div class="site-navigation">
       <!-- <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]">Travel Rover <span class="text-primary">.</span></a> -->
       <a href="#" class="logo m-0" [routerLink]="[listTitles[0].path]"><img src="../../../assets/images/icons/lgoRover.png" alt="" style="width: 200px;"></a>
-      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; font-weight: bolder; position: absolute; top: 30px; left: 40rem;">
+      <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; font-weight: bolder; position: absolute; top: 30px; left: 30%; right: 30%; width: 100%;">
         <li *ngFor="let info of listTitles; let i=index" [class]="info.class"><a class="nav-color" href="#" routerLinkActive="active" (isActiveChange)="this.onRouterLinkActive($event, i)" [routerLink]="[info.path]">{{info.title}}</a></li>
         <li class="has-children">
           <a class="nav-color" href="#">Dropdown</a>

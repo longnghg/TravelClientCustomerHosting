@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ROUTES } from "../../layouts/client-layout/client-layout.routing";
 import { Router } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy, ɵparseCookieValue } from '@angular/common';
@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   public listTitles: any;
   public location: Location;
   response: ResponseModel
+  @ViewChild('nav') nav: ElementRef;
   resAthentication: AuthenticationModel = new AuthenticationModel()
   constructor(private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
@@ -25,6 +26,15 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+  }
+
+  ngAfterViewChecked(): void {
+    if(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300 ){
+      this.nav.nativeElement.style.backgroundColor = "#6998AB"
+     }
+     else{
+      this.nav.nativeElement.style.backgroundColor = ""
+     }
   }
 
   onRouterLinkActive(e: any, i: number){
