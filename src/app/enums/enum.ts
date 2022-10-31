@@ -30,3 +30,11 @@ export enum StatusBooking
     "Tour đã hoàn thành" = 5, // Finished success
 
 }
+
+export enum StatusNotification
+{
+    Success = "Success",
+    Error = "Error",
+    Warning = "Warning",
+    Info = "Info"
+}

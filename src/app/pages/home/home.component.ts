@@ -10,6 +10,8 @@ import { ProvinceService } from "../../services_API/province.service";
 import { ConfigService } from "../../services_API/config.service";
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { LocationModel } from "../../models/location.model";
+
+import { StatusNotification } from "../../enums/enum";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -92,8 +94,6 @@ export class HomeComponent implements OnInit {
       this.response = res
       if(!this.response.notification.type)
       {
-        console.log(this.resSchedule);
-
         this.resSchedule = this.response.content
         // this.cd.markForCheck()
         // setTimeout(() => {

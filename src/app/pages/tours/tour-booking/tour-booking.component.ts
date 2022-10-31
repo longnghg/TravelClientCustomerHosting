@@ -10,6 +10,8 @@ import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { PaymentService } from "../../../services_API/payment.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ActivatedRoute, Router } from '@angular/router';
+import { StatusNotification } from "../../../enums/enum";
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-tour-booking',
@@ -169,7 +171,7 @@ export class TourBookingComponent implements OnInit {
         this.tourBookingService.create(this.resTourBooking).subscribe(res => {
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
-          if (this.response.notification.type == "Success") {
+          if (this.response.notification.type == StatusNotification.Success) {
             this.isSuccess = true
             this.resTourBooking = new TourBookingModel
             location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)

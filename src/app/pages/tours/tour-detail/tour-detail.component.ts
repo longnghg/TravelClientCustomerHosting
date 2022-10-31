@@ -5,6 +5,8 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { StatusNotification } from "../../../enums/enum";
+
 @Component({
   selector: 'app-tour-detail',
   templateUrl: './tour-detail.component.html',
@@ -25,8 +27,6 @@ export class TourDetailComponent implements OnInit {
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
-      console.log(res);
-
       this.resSchedule = this.response.content
       if (this.resSchedule) {
         this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).subscribe(res => {
