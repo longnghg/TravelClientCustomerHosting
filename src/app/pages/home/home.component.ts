@@ -90,9 +90,11 @@ export class HomeComponent implements OnInit {
   }
 
   initSchedule(){
-    this.scheduleService.gets().subscribe(res => {
+    this.scheduleService.gets().then(res => {
       this.response = res
-      if(!this.response.notification.type)
+      console.log(res);
+
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resSchedule = this.response.content
         // this.cd.markForCheck()
@@ -107,9 +109,9 @@ export class HomeComponent implements OnInit {
   }
 
   initTour(){
-    this.tourService.gets().subscribe(res => {
+    this.tourService.gets().then(res => {
       this.response = res
-      if(!this.response.notification.type)
+      if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
         this.resTour.forEach(tour => {

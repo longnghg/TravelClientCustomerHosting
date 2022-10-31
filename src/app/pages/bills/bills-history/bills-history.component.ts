@@ -35,16 +35,20 @@ export class BillsHistoryComponent implements OnInit {
     var idCustomer = localStorage.getItem("idUser")
     this.tourBookingService.getsHistory(idCustomer).subscribe(res => {
       this.response = res
-      this.resTourBookingHistory = this.response.content
-      if (this.resTourBookingHistory) {
-        this.resTourBookingHistory.forEach(tourBookingHistory => {
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.resTourBookingHistory = this.response.content
+        if (this.resTourBookingHistory ) {
+          this.resTourBookingHistory.forEach(tourBookingHistory => {
           tourBookingHistory.totalPeople = tourBookingHistory.adult + tourBookingHistory.child + tourBookingHistory.baby
 
           tourBookingHistory.statusName = StatusBooking[tourBookingHistory.status]
         });
+
+        this.calTotalResult()
+        this.calStartEnd()
+       }
       }
-      this.calTotalResult()
-      this.calStartEnd()
+
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

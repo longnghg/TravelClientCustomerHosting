@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  ElementRef, ViewChild } from '@angular/core';
 import { TourService } from "../../../services_API/tour.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ScheduleModel } from "../../../models/schedule.model";
@@ -40,7 +40,7 @@ export class TourListComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-
+  @ViewChild('toTop') toTop: ElementRef;
   ngOnInit(): void {
     var split =[]
 
@@ -49,18 +49,37 @@ export class TourListComponent implements OnInit {
     this.to = split[1].replace("to=", "")
 
     this.init(this.activatedRoute.snapshot.paramMap.get('id'))
+
+    this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
+    if (this.resTourBooking) {
+     this.isBack = true
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    if(document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000 ){
+      this.toTop.nativeElement.style.display = "block"
+     }
+     else{
+      this.toTop.nativeElement.style.display = "none"
+     }
   }
   init(kw: any){
-    this.scheduleService.searchSchedule(kw).subscribe(res => {
+    this.scheduleService.searchSchedule(kw).then(res => {
       this.response = res
-      this.resSchedule = this.response.content
+      console.log(res);
+
+      if ( this.response.notification.type == StatusNotification.Success) {
+        this.resSchedule = this.response.content
+        this.calTotalResult()
+        this.calStartEnd()
+      }
       // if(!this.resSchedule)
       // {
       //   location.assign(this.configService.clientUrl + "/#/page404")
 
       // }
-      this.calTotalResult()
-      this.calStartEnd()
+
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -145,5 +164,20 @@ export class TourListComponent implements OnInit {
 
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
+  }
+
+  backToTop(){
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  backTourBooking(){
+    this.isBack = false
+    this.router.navigate(['','tour-booking',this.resTourBooking.scheduleId, this.resTourBooking.alias]);
+  }
+
+  removeTourBooking(){
+    localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
+    this.isBack = false
   }
 }

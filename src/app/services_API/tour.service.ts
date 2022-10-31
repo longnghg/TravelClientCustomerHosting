@@ -32,9 +32,9 @@ export class TourService{
     return value
 
   }
-  gets()
+  async gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour-with-schedule");
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour-with-schedule").toPromise();
   }
   create(data: any)
   {

@@ -47,11 +47,11 @@ export class TourBookingComponent implements OnInit {
     this.init(this.resTourBooking.scheduleId)
   }
   init(idSchedule: string){
-    this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
+    this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      this.resSchedule = this.response.content
-      if(this.resSchedule)
+      if(this.response.notification.type == StatusNotification.Success)
       {
+        this.resSchedule = this.response.content
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
@@ -164,11 +164,11 @@ export class TourBookingComponent implements OnInit {
       if (this.isPayment) {
        if (!this.isSuccess) {
         this.resTourBooking.scheduleId = this.resSchedule.idSchedule
-        this.resTourBooking.pincode = "NDV",
-        this.resTourBooking.hotelId = "34E417CF-CD67-4549-A84C-892CB1F28E0A"
-        this.resTourBooking.restaurantId = "966e0b0e-ac69-4f35-95a1-bd4e8ff181d8"
-        this.resTourBooking.placeId = "B10CF83D-485C-46AD-8C40-7C77C92FEC39"
-        this.tourBookingService.create(this.resTourBooking).subscribe(res => {
+        this.resTourBooking.pincode = "TRB" + new Date().getTime(),
+        this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
+        this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
+        this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+        this.tourBookingService.create(this.resTourBooking).then(res => {
           this.response = res
           this.notificationService.handleAlertObj(this.response.notification)
           if (this.response.notification.type == StatusNotification.Success) {

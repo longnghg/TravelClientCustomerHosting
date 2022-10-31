@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
   response: ResponseModel
   resCustomer: CustomerModel
   listGender = this.configService.listGender()
-  formData: any
   birthday: string
   confirmPassword: string
   constructor(private customerService: CustomerService, private notificationService: NotificationService, private configService: ConfigService) { }
@@ -44,7 +43,7 @@ export class RegisterComponent implements OnInit {
           this.customerService.create(this.resCustomer).subscribe(res =>{
             this.response = res
            this.notificationService.handleAlertObj(res.notification)
-           if(this.response.notification.type == "Success")
+           if(this.response.notification.type == StatusNotification.Success)
            {
              document.location.assign( this.configService.clientUrl + "/#/login")
            }

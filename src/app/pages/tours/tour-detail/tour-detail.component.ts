@@ -25,13 +25,15 @@ export class TourDetailComponent implements OnInit {
   }
 
  init(idSchedule: string){
-    this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
+    this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      this.resSchedule = this.response.content
-      if (this.resSchedule) {
-        this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).subscribe(res => {
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.resSchedule = this.response.content
+        this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).then(res => {
           this.response = res
-          this.resSchedules = this.response.content
+          if (this.response.notification.type == StatusNotification.Success) {
+            this.resSchedules = this.response.content
+          }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)

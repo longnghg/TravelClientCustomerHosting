@@ -1,6 +1,7 @@
 
 import { PromotionModel } from "./promotion.model";
 import { TimeLineModel } from "./timeLine.model";
+import { CostTourModel } from "./costTour.model";
 import { TourModel } from "./tour.model";
 export class ScheduleModel{
   rowNum: number = 0
@@ -14,6 +15,8 @@ export class ScheduleModel{
   beginDate: number = 0
   endDate: number = 0
   timePromotion: number = 0
+  promotions: PromotionModel = new PromotionModel
+  costTour: CostTourModel = new CostTourModel
 
   status: number = 0
   quantityAdult: number = 0
@@ -33,10 +36,8 @@ export class ScheduleModel{
   employeeId: string = ""
   nameEmployee:string = ""
 
-  promotionId: string = ""
-  valuePromotion: number = 0
 
-  totalCostTour: number = 0
+  totalCostTourNotService: number = 0
   profit: number = 0
   vat: number = 0
 
@@ -56,7 +57,7 @@ export class ScheduleModel{
 
   isHoliday: boolean = false
   tour: TourModel = new TourModel
-  timeLine: TimeLineModel[]
+  timeLines: TimeLineModel[]
 
   description:string = ""
 }

@@ -32,17 +32,17 @@ export class NavbarComponent implements OnInit {
 
   ngAfterViewChecked(): void {
     if (this.router.routerState.snapshot.url == "/home"){
-      this.nav.nativeElement.style.marginBottom = "unset"
-
-      if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
-        this.nav.nativeElement.style.backgroundColor = "#6998AB"
-      }
-      else{
-        this.nav.nativeElement.style.backgroundColor = ""
-       }
+      this.nav.nativeElement.style.marginBottom = "-8%"
+      this.nav.nativeElement.style.backgroundColor = ""
+      // if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
+      //   this.nav.nativeElement.style.backgroundColor = "#6998AB"
+      // }
+      // else{
+      //   this.nav.nativeElement.style.backgroundColor = ""
+      //  }
     }
     else{
-      this.nav.nativeElement.style.marginBottom = "10%"
+      this.nav.nativeElement.style.marginBottom = "2%"
       this.nav.nativeElement.style.backgroundColor = "#6998AB"
     }
 

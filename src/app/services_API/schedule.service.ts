@@ -9,9 +9,9 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class ScheduleService{
 constructor(private http:HttpClient, private configService:ConfigService){ }
 
-gets()
+async gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule");
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule").toPromise();
 }
 
 create(data: any)
@@ -19,19 +19,18 @@ create(data: any)
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/create-schedule", data);
 }
 
-
-getsSchedulebyIdSchedule(idSchedule: any)
+async getsSchedulebyIdSchedule(idSchedule: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/get-schedule?idSchedule="+idSchedule);
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/get-schedule?idSchedule="+idSchedule).toPromise();
 }
 
-getsSchedulebyIdTour(idTour: any)
+async getsSchedulebyIdTour(idTour: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-gets-schedule-idtour?idTour="+idTour);
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-gets-schedule-idtour?idTour="+idTour).toPromise();
 }
 
-searchSchedule(kw: any)
+async searchSchedule(kw: any)
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw);
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw).toPromise();
 }
 }

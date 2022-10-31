@@ -15,7 +15,7 @@ export class TourBookingService{
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/get-tourbooking");
   }
 
-  getsHistory(idCustomer: any)
+   getsHistory(idCustomer: any)
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/customer/gets-history-booking-bycustomer?idCustomer="+ idCustomer);
   }
@@ -24,8 +24,9 @@ export class TourBookingService{
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/tour-booking-by-id?idTourBooking="+ idTourBooking);
   }
-  create(data: any)
+
+  async create(data: any)
   {
-    return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data);
+    return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data).toPromise();
   }
 }

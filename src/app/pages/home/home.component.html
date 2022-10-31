@@ -363,7 +363,7 @@
         <h2 class="section-title text-center mb-3">Các tour yêu thích</h2>
       </div>
     </div>
-    <div class="row" style="width: 1500px; margin-left: -5%" *ngIf="resSchedule">
+    <div class="row" style="width: 1500px; margin-left: -5%" *ngIf="resTour">
       <div class="card mr-5 mb-5 card-shadow" style="width: 30%; padding: 0;" *ngFor="let tour of resTour; let i=index">
         <img  [src]="tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
         <div class="card-body" style="height: 330px;">
