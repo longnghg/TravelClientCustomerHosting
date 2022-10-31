@@ -1,12 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ROUTES } from "../../layouts/client-layout/client-layout.routing";
-import { Router } from '@angular/router';
-import { Location, LocationStrategy, PathLocationStrategy, ɵparseCookieValue } from '@angular/common';
+import { Location, LocationStrategy, NgIf, PathLocationStrategy, ɵparseCookieValue } from '@angular/common';
 import { AuthenticationModel } from "../../models/authentication.model";
 import { ConfigService } from "../../services_API/config.service";
 import { AuthenticationService } from "../../services_API/authentication.service";
 import { NotificationService } from "../../services_API/notification.service";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
+import { ActivatedRoute, Router} from '@angular/router';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   response: ResponseModel
   @ViewChild('nav') nav: ElementRef;
   resAthentication: AuthenticationModel = new AuthenticationModel()
-  constructor(private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
+  constructor(private activatedRoute:ActivatedRoute, private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
   }
 
@@ -29,12 +29,23 @@ export class NavbarComponent implements OnInit {
   }
 
   ngAfterViewChecked(): void {
-    if(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300 ){
+    console.log(this.router.routerState.snapshot.url);
+
+    if (this.router.routerState.snapshot.url == "/home"){
+      this.nav.nativeElement.style.marginBottom = "unset"
+
+      if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
+        this.nav.nativeElement.style.backgroundColor = "#6998AB"
+      }
+      else{
+        this.nav.nativeElement.style.backgroundColor = ""
+       }
+    }
+    else{
+      this.nav.nativeElement.style.marginBottom = "10%"
       this.nav.nativeElement.style.backgroundColor = "#6998AB"
-     }
-     else{
-      this.nav.nativeElement.style.backgroundColor = ""
-     }
+    }
+
   }
 
   onRouterLinkActive(e: any, i: number){
