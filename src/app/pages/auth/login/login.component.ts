@@ -5,6 +5,7 @@ import { ConfigService } from "../../../services_API/config.service";
 import { AuthenticationModel, ValidationLoginModel } from "../../../models/authentication.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CustomerModel } from "../../../models/customer.model";
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.clear()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
     this.googleAuthSDK();
@@ -64,7 +65,7 @@ export class LoginComponent implements OnInit {
       this.authenticationService.login(this.resCustomer).subscribe(res=>{
         this.response = res
 
-        if(this.response.notification.type == "Success")
+        if(this.response.notification.type == StatusNotification.Success)
         {
           this.resAthentication = this.response.content
           localStorage.setItem("token", this.resAthentication.token)
@@ -92,7 +93,7 @@ export class LoginComponent implements OnInit {
       }, error => {
         this.isloading = false
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
     }
@@ -110,7 +111,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.resCustomer).subscribe(res=>{
           this.response = res
 
-          if(this.response.notification.type == "Success")
+          if(this.response.notification.type == StatusNotification.Success)
           {
             this.resAthentication = this.response.content
             localStorage.setItem("token", this.resAthentication.token)
@@ -138,7 +139,7 @@ export class LoginComponent implements OnInit {
         }, error => {
           this.isloading = false
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       });
   }

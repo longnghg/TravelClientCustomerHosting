@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TourBookingHistoryModel } from "../../../models/tourBookingHistory.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
-import { StatusBooking } from "../../../enums/enum";
+import { StatusBooking, StatusNotification } from "../../../enums/enum";
 import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -47,7 +47,7 @@ export class BillsHistoryComponent implements OnInit {
       this.calStartEnd()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

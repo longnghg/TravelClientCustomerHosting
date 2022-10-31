@@ -67,7 +67,7 @@ export class TourBookingComponent implements OnInit {
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 
@@ -178,7 +178,7 @@ export class TourBookingComponent implements OnInit {
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
        }
        else{

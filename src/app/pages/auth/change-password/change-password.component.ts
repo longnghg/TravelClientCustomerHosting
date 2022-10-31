@@ -5,6 +5,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { StatusNotification } from "../../../enums/enum";
 
 @Component({
   selector: 'app-change-password',
@@ -26,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
   CuschangePass(){
     var valid =  this.configService.validateChangePass(this.password, this.newPassword, this.confirmPassword)
     valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Error)
     });
     if (valid.length == 0) {
       var idCustomer = localStorage.getItem("idUser")
@@ -34,13 +35,13 @@ export class ChangePasswordComponent implements OnInit {
             this.response = res
            this.notificationService.handleAlertObj(res.notification)
 
-           if(this.response.notification.type == "Success")
+           if(this.response.notification.type == StatusNotification.Success)
            {
              this.logOut()
            }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, "Error")
+            this.notificationService.handleAlert(message, StatusNotification.Error)
           })
     }
   }
@@ -49,12 +50,15 @@ export class ChangePasswordComponent implements OnInit {
     this.authService.logOut(this.resAthentication.id).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
-      localStorage.clear()
+      localStorage.removeItem("currentUser")
+        localStorage.removeItem("idUser")
+        localStorage.removeItem("token")
+        sessionStorage.clear()
       location.assign(this.configService.clientUrl + "/#/login")
       location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 }

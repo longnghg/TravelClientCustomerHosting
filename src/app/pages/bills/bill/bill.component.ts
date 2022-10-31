@@ -9,6 +9,7 @@ import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationModel } from "../../../models/authentication.model";
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
@@ -46,7 +47,7 @@ export class BillComponent implements OnInit {
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 }

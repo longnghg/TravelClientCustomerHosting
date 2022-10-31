@@ -7,6 +7,8 @@ import { AuthenticationService } from "../../services_API/authentication.service
 import { NotificationService } from "../../services_API/notification.service";
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { ActivatedRoute, Router} from '@angular/router';
+import { StatusNotification } from "../../enums/enum";
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -29,8 +31,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngAfterViewChecked(): void {
-    console.log(this.router.routerState.snapshot.url);
-
     if (this.router.routerState.snapshot.url == "/home"){
       this.nav.nativeElement.style.marginBottom = "unset"
 
@@ -70,7 +70,7 @@ export class NavbarComponent implements OnInit {
       location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 }

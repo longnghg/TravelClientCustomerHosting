@@ -4,6 +4,7 @@ import { CustomerModel} from "src/app/models/customer.model"
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -33,10 +34,9 @@ export class RegisterComponent implements OnInit {
 
 
   save(){
-
     var valid =  this.configService.validateCustomer(this.resCustomer)
     valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Error)
     });
     if (valid.length == 0) {
       if(this.resCustomer.password === this.resCustomer.confirmPassword){
@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
            }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, "Error")
+            this.notificationService.handleAlert(message, StatusNotification.Error)
           })
 
     }

@@ -34,7 +34,7 @@ export class TourDetailComponent implements OnInit {
           this.resSchedules = this.response.content
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
       else{
@@ -43,7 +43,7 @@ export class TourDetailComponent implements OnInit {
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
   scheduleChange(departureDate: any){

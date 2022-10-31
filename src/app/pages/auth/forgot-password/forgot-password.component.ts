@@ -7,6 +7,7 @@ import { CustomerService } from 'src/app/services_API/customer.service';
 import { OTPModel, ValidationOtp } from 'src/app/models/otp.model';
 import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { CustomerModel, ValidationForgotPass } from "../../../models/customer.model";
+import { StatusNotification } from "../../../enums/enum";
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -61,8 +62,7 @@ export class ForgotPasswordComponent implements OnInit {
       this.customerService.SendOTP(this.OTP.email).subscribe(res => {
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
-
-        if (this.response.notification.type == "Success") {
+        if (this.response.notification.type == StatusNotification.Success) {
           this.isOtp = true
           this.OTP.beginTime = this.response.content.beginTime
           this.OTP.endTime = this.response.content.endTime
@@ -75,7 +75,7 @@ export class ForgotPasswordComponent implements OnInit {
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
     else{
@@ -94,14 +94,14 @@ export class ForgotPasswordComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
 
-      if (this.response.notification.type == "Success") {
+      if (this.response.notification.type == StatusNotification.Success) {
         localStorage.clear()
         location.assign(this.configService.clientUrl + "/#/login")
         location.reload()
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 

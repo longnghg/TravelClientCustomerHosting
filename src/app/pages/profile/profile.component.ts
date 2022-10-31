@@ -5,6 +5,7 @@ import { CustomerService } from 'src/app/services_API/customer.service';
 import { CustomerModel, ValidationCustomerModel } from 'src/app/models/customer.model';
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { ActivatedRoute } from '@angular/router';
+import { StatusNotification } from "../../enums/enum";
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-profile',
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit {
       }, error => {
 
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, "Error")
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
 
@@ -68,7 +69,7 @@ export class ProfileComponent implements OnInit {
     save(){
       var valid = this.configService.validateCustomer(this.resCustomer)
       valid.forEach(element => {
-        this.notificationService.handleAlert(element, "Error")
+        this.notificationService.handleAlert(element, StatusNotification.Success)
       });
       if(valid.length == 0){
         this.customerService.update(this.resCustomer).subscribe(res =>{
@@ -77,7 +78,7 @@ export class ProfileComponent implements OnInit {
           this.isChange = false
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, "Error")
+          this.notificationService.handleAlert(message, StatusNotification.Error)
         })
       }
     }

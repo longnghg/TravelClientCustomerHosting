@@ -63,7 +63,7 @@ export class TourListComponent implements OnInit {
       this.calStartEnd()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-      this.notificationService.handleAlert(message, "Error")
+      this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
 
