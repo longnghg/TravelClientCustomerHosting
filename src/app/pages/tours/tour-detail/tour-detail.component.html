@@ -8,7 +8,7 @@
         <div class="col" style="color: #4d4aef;font-size: 13px; margin-bottom: 5px;"><i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</div>
       </div>
       <div class="row">
-        <div class="col" style="font-size: 26px; font-weight: 700; color: #2d4271; line-height: 30px; margin-bottom: 12px; max-width: 100%;"><h3>{{resSchedule.tour.nameTour}}</h3></div>
+        <div class="col" style="font-size: 26px; font-weight: 700; color: #2d4271; line-height: 30px; margin-bottom: 12px; max-width: 100%;"><h3>{{resSchedule.tour.nameTour}}  <span *ngIf="resSchedule.isHoliday" class="badge badge-danger">Ngày lễ</span></h3></div>
       </div>
       <div class="row">
         <div class="col">

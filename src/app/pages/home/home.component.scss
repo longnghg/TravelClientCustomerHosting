@@ -104,12 +104,37 @@ h1{
 }
 
 
+.back-to-top{
+  z-index: 999;
+  position: sticky;
+  bottom: 2%;
+  margin-left: 97%;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  padding-top: 13px;
+  animation: color 2s infinite;
+  transition: 0.5s;
+  cursor: pointer
+}
 
+// .back-to-top:hover{
+//   transition: 0.5s;
+//   width: 60px;
+//   height: 60px;
+//   padding-top: 17px;
+//   cursor: pointer;
+//   .cart-label{
+//     font-size: 30px
+//   }
+
+// }
 .cart{
   z-index: 999;
   position: sticky;
-  bottom: 5%;
-  margin-left: 95%;
+  bottom: 8%;
+  margin-left: 97%;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -122,8 +147,6 @@ h1{
 .cart-label{
   color: white;
   font-size: 25px
-
-
 }
 
 .cart:hover{

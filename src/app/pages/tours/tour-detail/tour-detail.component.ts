@@ -25,6 +25,8 @@ export class TourDetailComponent implements OnInit {
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).subscribe(res => {
       this.response = res
+      console.log(res);
+
       this.resSchedule = this.response.content
       if (this.resSchedule) {
         this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).subscribe(res => {
@@ -45,8 +47,10 @@ export class TourDetailComponent implements OnInit {
     })
   }
   scheduleChange(departureDate: any){
+    var tour = this.resSchedule.tour
     this.resSchedules.forEach(schedule => {
       if (schedule.departureDate == departureDate) {
+        schedule.tour = tour
         // this.resSchedule.returnDate = schedule.returnDate
         // this.resSchedule.idSchedule = schedule.idSchedule
         // this.resSchedule.description = schedule.description

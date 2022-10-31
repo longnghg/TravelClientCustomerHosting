@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
   @ViewChild('slide') slide: ElementRef;
-  @ViewChild('cart') cart: ElementRef;
+  @ViewChild('toTop') toTop: ElementRef;
   list = [
     { img: "assets/images/hero-slider-1.jpg", location: "San Francisco."},
     { img: "assets/images/hero-slider-2.jpg", location: "Paris."},
@@ -54,7 +54,18 @@ export class HomeComponent implements OnInit {
       this.prev()
     }, 4000)
 
+
   }
+
+  ngAfterViewChecked(): void {
+    if(document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000 ){
+      this.toTop.nativeElement.style.display = "block"
+     }
+     else{
+      this.toTop.nativeElement.style.display = "none"
+     }
+  }
+
 
   backTourBooking(){
     this.isBack = false
@@ -98,12 +109,8 @@ export class HomeComponent implements OnInit {
   initTour(){
     this.tourService.gets().subscribe(res => {
       this.response = res
-      console.log(res);
-
       if(!this.response.notification.type)
       {
-        console.log(this.resTour);
-
         this.resTour = this.response.content
         this.resTour.forEach(tour => {
           tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
@@ -149,6 +156,13 @@ export class HomeComponent implements OnInit {
     }
     var kw = "from="+this.kwFrom+"&to="+this.kwTo+"&departureDate="+this.kwDepartureDate+"&returnDate="+this.kwReturnDate
     this.router.navigate(['','tour',kw]);
+  }
+
+  backToTop(){
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    this.toTop.nativeElement.style.display = "none"
+
   }
 }
 

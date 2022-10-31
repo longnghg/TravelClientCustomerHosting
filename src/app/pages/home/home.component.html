@@ -335,7 +335,7 @@
       <div class="card mr-5 mb-5 card-shadow" style="width: 30%; padding: 0;" *ngFor="let schedule of resSchedule; let i=index">
         <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
         <div class="card-body" style="height: 330px;">
-          <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}}</h5>
+          <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
           <div class="stars mb-4" >
             <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
             <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
@@ -367,7 +367,7 @@
       <div class="card mr-5 mb-5 card-shadow" style="width: 30%; padding: 0;" *ngFor="let tour of resTour; let i=index">
         <img  [src]="tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
         <div class="card-body" style="height: 330px;">
-          <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{tour.nameTour}}</h5>
+          <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{tour.nameTour}}<span *ngIf="tour.schedules[0].isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
           <div class="stars mb-4" >
             <i class="fa-solid fa-star text-warning" *ngFor='let star of tour.rating | forNumber'></i>
             <i class="fa-solid fa-star" *ngFor='let star of 10 - tour.rating | forNumber'></i>
@@ -401,7 +401,7 @@
   </div>
 </div>
 
-<div class="py-5 cta-section">
+<!-- <div class="py-5 cta-section">
   <div class="container">
     <div class="row text-center">
       <div class="col-md-12">
@@ -412,9 +412,14 @@
     </div>
   </div>
 </div>
-
+ -->
 
 <div *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
   <a (click)="removeTourBooking()" class="cart-close"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
   <i (click)="backTourBooking()" class="fa-solid fa-cart-shopping cart-label"></i>
+</div>
+
+
+<div #toTop (click)="backToTop()" class="back-to-top">
+  <i class="fa-solid fa-arrow-up cart-label"></i>
 </div>
