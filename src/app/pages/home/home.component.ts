@@ -161,8 +161,6 @@ export class HomeComponent implements OnInit {
   backToTop(){
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-    this.toTop.nativeElement.style.display = "none"
-
   }
 }
 
