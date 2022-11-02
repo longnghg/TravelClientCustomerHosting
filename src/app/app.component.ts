@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationModel } from "./models/authentication.model";
+import { AuthenticationService } from "../app/services_API/authentication.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,6 +9,7 @@ import { AuthenticationModel } from "./models/authentication.model";
 export class AppComponent {
   resAthentication: AuthenticationModel
   title = 'TravelRover';
+  constructor( private authenticationService: AuthenticationService){}
   ngOnInit(): void {
     this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
     if(this.resAthentication){
@@ -19,10 +21,12 @@ export class AppComponent {
       var days = millisBetween / (1000 * 3600 * 24);
 
       if (Math.round(Math.abs(days)) == 1) {
-        localStorage.removeItem("currentUser")
-        localStorage.removeItem("idUser")
-        localStorage.removeItem("token")
-        sessionStorage.clear()
+        this.authenticationService.logOut(this.resAthentication.id).subscribe(res =>{
+          localStorage.removeItem("currentUser")
+          localStorage.removeItem("idUser")
+          localStorage.removeItem("token")
+          sessionStorage.clear()
+        })
       }
 
     }

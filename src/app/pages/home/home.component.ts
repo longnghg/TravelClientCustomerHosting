@@ -10,7 +10,7 @@ import { ProvinceService } from "../../services_API/province.service";
 import { ConfigService } from "../../services_API/config.service";
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { LocationModel } from "../../models/location.model";
-
+import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { StatusNotification } from "../../enums/enum";
 @Component({
   selector: 'app-home',
@@ -21,6 +21,8 @@ import { StatusNotification } from "../../enums/enum";
 export class HomeComponent implements OnInit {
   constructor(private provinceService: ProvinceService, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
   resSchedule: ScheduleModel[]
+  resScheduleFalshSale: ScheduleModel[]
+  resSchedulePromotion: ScheduleModel[]
   resTour: TourModel[]
   resProvince: LocationModel[]
   resTourBooking: TourBookingModel
@@ -31,6 +33,7 @@ export class HomeComponent implements OnInit {
   kwTo: any = null
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
+  valueFalshSale = 50
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('toTop') toTop: ElementRef;
   list = [
@@ -42,10 +45,20 @@ export class HomeComponent implements OnInit {
     img = this.list[0].img
     location = ["San Francisco."," Paris."," New Zealand.", " Maui.", " London."]
 
-
+   countdownTimeUnits: Array<[string, number]> = [
+      ['Y', 1000 * 60 * 60 * 24 * 365], // years
+      ['M', 1000 * 60 * 60 * 24 * 30], // months
+      ['D', 1000 * 60 * 60 * 24], // days
+      ['H', 1000 * 60 * 60], // hours
+      ['m', 1000 * 60], // minutes
+      ['s', 1000], // seconds
+      ['S', 1], // million seconds
+    ];
   ngOnInit(): void {
 
     this.provinceService.views().then(res => {this.resProvince = res})
+    this.initFlashSale()
+    this.initSchedulePromotion()
     this.initSchedule()
     this.initTour()
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -89,11 +102,37 @@ export class HomeComponent implements OnInit {
     this.slide.nativeElement.prepend(lists[lists.length - 1]);
   }
 
-  initSchedule(){
-    this.scheduleService.gets().then(res => {
+  initFlashSale(){
+    this.scheduleService.getsScheduleFlashSale().then(res => {
       this.response = res
-      console.log(res);
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resScheduleFalshSale = this.response.content
+        console.warn( this.resScheduleFalshSale);
 
+        this.resScheduleFalshSale.forEach(schedule => {
+          if (schedule.isHoliday) {
+            schedule.priceFlashSale = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.valueFalshSale /100)
+          }
+          else{
+            schedule.priceFlashSale = schedule.finalPrice - (schedule.finalPrice * this.valueFalshSale /100)
+          }
+          var days = (schedule.endDate - new Date().getTime()) / (1000 * 3600 * 24);
+          schedule.outOfTime = Math.abs(days)
+
+          schedule.countdownConfig = this.countDownTime(schedule.outOfTime)
+        });
+
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  initSchedule(){
+    this.scheduleService.getsSchedule().then(res => {
+      this.response = res
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resSchedule = this.response.content
@@ -101,6 +140,35 @@ export class HomeComponent implements OnInit {
         // setTimeout(() => {
         //   this.cd.detach()
         // }, 100);
+
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  initSchedulePromotion(){
+    this.scheduleService.getsSchedulePromotion().then(res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resSchedulePromotion = this.response.content
+
+        this.resSchedulePromotion.forEach(schedule => {
+
+          if (schedule.isHoliday) {
+            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion /100)
+          }
+          else{
+            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion /100)
+          }
+        });
+        // this.cd.markForCheck()
+        // setTimeout(() => {
+        //   this.cd.detach()
+        // }, 100);
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -109,12 +177,23 @@ export class HomeComponent implements OnInit {
   }
 
   initTour(){
-    this.tourService.gets().then(res => {
+    this.tourService.getsTourByRating().then(res => {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
+        console.log(this.resTour);
+
         this.resTour.forEach(tour => {
+          tour.schedules.forEach(schedule => {
+            if (schedule.isHoliday) {
+              schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+            }
+            else{
+              schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+            }
+          })
+
           tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
         });
         // this.cd.markForCheck()
@@ -163,6 +242,29 @@ export class HomeComponent implements OnInit {
   backToTop(){
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  }
+
+  countDownTime(outOfTime: number):CountdownConfig{
+    return  { leftTime: outOfTime * 60 * 60 * 24,
+      formatDate: ({ date, formatStr }) => {
+        let duration = Number(date || 0);
+        return this.countdownTimeUnits.reduce((current, [name, unit]) => {
+          if (current.indexOf(name) !== -1) {
+            const v = Math.floor(duration / unit);
+            duration -= v * unit;
+            return  current.replace(new RegExp(`${name}+`, 'g'), (match: string) => {
+              return v.toString().padStart(match.length, '0');
+            });
+          }
+          return  current;
+        }, formatStr);
+      },
+    };
+  }
+  handleEvent(e: CountdownEvent, index: number) {
+    if (e.action === 'done') {
+      this.resScheduleFalshSale.splice(index, 1)
+    }
   }
 }
 

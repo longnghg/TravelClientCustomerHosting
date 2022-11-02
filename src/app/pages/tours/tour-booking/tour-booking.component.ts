@@ -49,9 +49,26 @@ export class TourBookingComponent implements OnInit {
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
+      console.log(res);
+
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resSchedule = this.response.content
+        if (this.resSchedule) {
+          if (this.resSchedule.promotions.idPromotion != 1) {
+            if (this.resSchedule.isHoliday) {
+              this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdultHoliday - (this.resSchedule.priceAdultHoliday * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceChildPromotion = this.resSchedule.priceChildHoliday - (this.resSchedule.priceChildHoliday * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBabyHoliday - (this.resSchedule.priceBabyHoliday * this.resSchedule.promotions.value /100)
+            }
+            else{
+              this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdult - (this.resSchedule.priceAdult * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceChildPromotion = this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
+            }
+          }
+        }
+
         if (this.resSchedule.alias != this.resTourBooking.alias) {
           location.assign(this.configService.clientUrl + "/#/page404")
         }
@@ -141,12 +158,18 @@ export class TourBookingComponent implements OnInit {
   }
 
   totalPrice(){
-    if (this.resSchedule.isHoliday) {
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
+    if (this.resSchedule.promotions.idPromotion != 1) {
+      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.priceBabyPromotion)
     }
     else{
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+      if (this.resSchedule.isHoliday) {
+        this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
+      }
+      else{
+        this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+      }
     }
+
     this.setCart()
     return this.resTourBooking.totalPrice
   }

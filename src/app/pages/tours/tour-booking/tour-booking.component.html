@@ -380,6 +380,24 @@
                   0 em bé -->
                 </div>
               </div>
+             <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion">
+              <div class="mb-1" style="position: relative; left: 60%;">
+                <span  class="ml-2 badge badge-danger" style="font-size: 14px;">Giá đã áp dụng khuyến mãi</span>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{resSchedule.priceAdultPromotion| formatPriceVi}}₫</h5>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.child > 0 ? resTourBooking.child + ' x ' + (resSchedule.priceChildPromotion | formatPriceVi) :'0'}}₫</h5>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + ' x ' + (resSchedule.priceBabyPromotion | formatPriceVi) :'0'}}₫</h5>
+              </div>
+             </ng-container>
+             <ng-template #elsePromotion>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{(resSchedule.isHoliday ? resSchedule.priceAdultHoliday:resSchedule.priceAdult)| formatPriceVi}}₫</h5>
@@ -392,6 +410,8 @@
                 <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + ' x ' + ((resSchedule.isHoliday ? resSchedule.priceBabyHoliday:resSchedule.priceBaby) | formatPriceVi) :'0'}}₫</h5>
               </div>
+             </ng-template>
+
               <!-- <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">0₫</h5>

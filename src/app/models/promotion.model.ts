@@ -1,5 +1,5 @@
 export class PromotionModel{
-  id: string
+  idPromotion: number
   value: number
   idSchedule: string
   toDate: number

@@ -3,6 +3,7 @@ import { PromotionModel } from "./promotion.model";
 import { TimeLineModel } from "./timeLine.model";
 import { CostTourModel } from "./costTour.model";
 import { TourModel } from "./tour.model";
+import { CountdownConfig } from 'ngx-countdown';
 export class ScheduleModel{
   rowNum: number = 0
   idSchedule: string = ""
@@ -15,7 +16,15 @@ export class ScheduleModel{
   beginDate: number = 0
   endDate: number = 0
   timePromotion: number = 0
+  valuePromotion: number = 0
+  pricePromotion: number = 0
+  promotionId: number = 0
+
   promotions: PromotionModel = new PromotionModel
+
+  priceFlashSale: number = 0
+  timeFlashSale: number = 0
+
   costTour: CostTourModel = new CostTourModel
 
   status: number = 0
@@ -55,9 +64,16 @@ export class ScheduleModel{
   priceChildHoliday: number = 0
   priceBabyHoliday: number = 0
 
+  priceAdultPromotion: number = 0
+  priceChildPromotion: number = 0
+  priceBabyPromotion: number = 0
+
   isHoliday: boolean = false
   tour: TourModel = new TourModel
   timeLines: TimeLineModel[]
 
   description:string = ""
+
+  countdownConfig: CountdownConfig
+  outOfTime: number = 0
 }

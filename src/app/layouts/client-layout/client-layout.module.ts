@@ -24,7 +24,7 @@ import { BillsHistoryComponent } from '../../pages/bills/bills-history/bills-his
 
 import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
 import { TourListComponent } from '../../pages/tours/tour-list/tour-list.component';
-
+import { CountdownModule } from 'ngx-countdown';
 // import { ProfileComponent } from '../../pages/profile/profile.component';
 
 import { PipesModule } from "../../pipes/pipes.module";
@@ -40,7 +40,8 @@ import { PipesModule } from "../../pipes/pipes.module";
     TabsModule,
     NgSelectModule,
     PipesModule,
-    ComponentsModule
+    ComponentsModule,
+    CountdownModule
   ],
   declarations: [
 
