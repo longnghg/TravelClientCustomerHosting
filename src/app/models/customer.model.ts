@@ -23,6 +23,16 @@ export class ValidationCustomerModel{
   birthday: string
 }
 
+export class ValidationRegister{
+  total: number
+  nameCustomer: string
+  phone: string
+  email: string
+  address: string
+  password: string
+  confirmPassword: string
+}
+
 
 export class ValidationForgotPass {
   total: number

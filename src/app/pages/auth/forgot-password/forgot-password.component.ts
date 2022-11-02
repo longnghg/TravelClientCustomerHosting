@@ -88,8 +88,10 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   CusForgotPass() {
+    this.resCustomer.email = this.OTP.email 
     this.validationForgotPass = new ValidationForgotPass
     this.validationForgotPass =  this.configService.validateForgotPass(this.resCustomer, this.validationForgotPass)
+    if (this.validationForgotPass.total == 0) {
     this.authService.forgotPassword(this.resCustomer).subscribe(res => {
       this.response = res
       this.notificationService.handleAlertObj(res.notification)
@@ -104,5 +106,5 @@ export class ForgotPasswordComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
-
+}
 }

@@ -8,26 +8,38 @@
                       <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                       <input type="text" [(ngModel)]="resCustomer.nameCustomer" name="nameCustomer" id="nameCustomer" placeholder="Nhập họ tên"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.nameCustomer ? validateRegister.nameCustomer : ''}}</span>
+
                   <div class="form-group">
                       <label for="email"><i class="zmdi zmdi-email"></i></label>
                       <input type="email" [(ngModel)]="resCustomer.email" name="email" id="email" placeholder="Nhập email"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.email ? validateRegister.email : ''}}</span>
+
                   <div class="form-group">
                       <label for="phone"><i class="zmdi zmdi-phone"></i></label>
                       <input type="text" [(ngModel)]="resCustomer.phone" name="phone" id="phone" placeholder="Nhập điện thoại"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.phone ? validateRegister.phone : ''}}</span>
+
                   <div class="form-group">
                     <label for="address"><i class="zmdi zmdi-home"></i></label>
                     <input type="text" [(ngModel)]="resCustomer.address" name="address" id="address" placeholder="Nhập địa chỉ"/>
                 </div>
+                <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.address ? validateRegister.address : ''}}</span>
+
                   <div class="form-group">
                       <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                       <input type="password" [(ngModel)]="resCustomer.password" name="password" id="password" placeholder="Nhập mật khẩu"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.password ? validateRegister.password : ''}}</span>
+
                   <div class="form-group">
                       <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                       <input type="password" [(ngModel)]="resCustomer.confirmPassword" name="re_pass" id="re_pass" placeholder="Nhập lại mật khẩu"/>
                   </div>
+                  <span class="text-danger" style="position: relative; top: -20px; font-weight: bolder;">{{validateRegister.confirmPassword ? validateRegister.confirmPassword : ''}}</span>
+
                   <div class="form-group">
                       <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                       <label for="agree-term" class="label-agree-term"><span><span></span></span>Tôi đồng ý tất cả <a href="#" class="term-service">Điều khoản dịch vụ</a></label>
