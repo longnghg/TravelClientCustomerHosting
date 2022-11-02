@@ -36,5 +36,7 @@ export enum StatusNotification
     Success = "Success",
     Error = "Error",
     Warning = "Warning",
-    Info = "Info"
+    Info = "Info",
+    Block = "Block",
+    Validation = "Validation"
 }

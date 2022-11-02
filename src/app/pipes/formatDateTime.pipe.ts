@@ -40,8 +40,18 @@ export class FormatFromUnixTimestampToFullDateTimeView implements PipeTransform 
     var date = new Date(unix_timestamp).toLocaleString();
     var splitDateTime = []
     splitDateTime = date.split(", ")
+    var day = splitDateTime[1].split("/")
+    if(Number.parseInt(day[0]) < 10)
+    {
+      day[0] = "0" + day[0]
+    }
 
-    var formattedDate = splitDateTime[1] + " " + splitDateTime[0];
+    if(Number.parseInt(day[1]) < 10)
+    {
+      day[1] = "0" + day[1]
+    }
+
+    var formattedDate = day[0] + "/" + day[1] + "/" + day[2] + " " + splitDateTime[0];
     return formattedDate
   }
 }

@@ -28,5 +28,8 @@ export class AuthenticationService{
     return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-customer?email="+data.email+"&password="+data.password);
 }
 
+  block(email: string){
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email);
+  }
 
 }

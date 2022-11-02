@@ -77,16 +77,30 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
             localStorage.removeItem("tourBooking_null")
           }
+          this.notificationService.handleAlertObj(res.notification)
+
           document.location.assign( this.configService.clientUrl + "/#/home")
+        }
+        else if(this.response.notification.type == StatusNotification.Block){
+          this.timeBlock = this.response.content
+          this.modalBlock.nativeElement.click()
+          this.isloading = false
         }
         else{
           this.countLoginFail +=1
           if (this.countLoginFail > 5) {
-           localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+            this.authenticationService.block(this.resCustomer.email).subscribe(res => {
+              this.response = res
+              if (this.response.notification.type == StatusNotification.Error) {
+                localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+              }
+
+              this.countLoginFail = 0
+            })
           }
+          this.notificationService.handleAlertObj(res.notification)
         }
 
-        this.notificationService.handleAlertObj(res.notification)
 
         this.isloading = false
 
@@ -125,10 +139,22 @@ export class LoginComponent implements OnInit {
             }
             document.location.assign( this.configService.clientUrl + "/#/home")
           }
+          else if(this.response.notification.type == StatusNotification.Block){
+            this.timeBlock = this.response.content
+            this.modalBlock.nativeElement.click()
+            this.isloading = false
+          }
           else{
             this.countLoginFail +=1
             if (this.countLoginFail > 5) {
-             localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+              this.authenticationService.block(this.resCustomer.email).subscribe(res => {
+                this.response = res
+                if (this.response.notification.type == StatusNotification.Error) {
+                  localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
+                }
+
+                this.countLoginFail = 0
+              })
             }
           }
 
