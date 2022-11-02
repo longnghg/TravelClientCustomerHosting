@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services_API/customer.service';
-import { CustomerModel} from "src/app/models/customer.model"
+import { CustomerModel, ValidationRegister} from "src/app/models/customer.model"
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
@@ -11,7 +11,7 @@ import { StatusNotification } from "../../../enums/enum";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  validateRegister: ValidationRegister = new ValidationRegister
   response: ResponseModel
   resCustomer: CustomerModel
   listGender = this.configService.listGender()
@@ -33,11 +33,9 @@ export class RegisterComponent implements OnInit {
 
 
   save(){
-    var valid =  this.configService.validateCustomer(this.resCustomer)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, StatusNotification.Error)
-    });
-    if (valid.length == 0) {
+    this.validateRegister = new ValidationRegister
+    this.validateRegister =  this.configService.validateRegister(this.resCustomer, this.validateRegister)
+    if (this.validateRegister.total == 0) {
       if(this.resCustomer.password === this.resCustomer.confirmPassword){
 
           this.customerService.create(this.resCustomer).subscribe(res =>{
