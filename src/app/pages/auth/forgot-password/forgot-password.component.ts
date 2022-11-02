@@ -53,8 +53,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   SendOTP(){
-    console.log(this.OTP);
-
     this.isload = true
     this.validationOtp = new ValidationOtp
     this.validationOtp =  this.configService.validateOtp(this.OTP, this.validationOtp, false)
@@ -88,7 +86,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
   CusForgotPass() {
-    this.resCustomer.email = this.OTP.email 
+    this.resCustomer.email = this.OTP.email
     this.validationForgotPass = new ValidationForgotPass
     this.validationForgotPass =  this.configService.validateForgotPass(this.resCustomer, this.validationForgotPass)
     if (this.validationForgotPass.total == 0) {

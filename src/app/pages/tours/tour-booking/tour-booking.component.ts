@@ -49,8 +49,6 @@ export class TourBookingComponent implements OnInit {
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      console.log(res);
-
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resSchedule = this.response.content

@@ -108,8 +108,6 @@ export class HomeComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resScheduleFalshSale = this.response.content
-        console.warn( this.resScheduleFalshSale);
-
         this.resScheduleFalshSale.forEach(schedule => {
           if (schedule.isHoliday) {
             schedule.priceFlashSale = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.valueFalshSale /100)
@@ -151,10 +149,11 @@ export class HomeComponent implements OnInit {
   initSchedulePromotion(){
     this.scheduleService.getsSchedulePromotion().then(res => {
       this.response = res
+      console.log(res);
+
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resSchedulePromotion = this.response.content
-
         this.resSchedulePromotion.forEach(schedule => {
 
           if (schedule.isHoliday) {
@@ -182,8 +181,6 @@ export class HomeComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
-        console.log(this.resTour);
-
         this.resTour.forEach(tour => {
           tour.schedules.forEach(schedule => {
             if (schedule.isHoliday) {

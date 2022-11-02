@@ -67,8 +67,6 @@ export class TourListComponent implements OnInit {
   init(kw: any){
     this.scheduleService.searchSchedule(kw).then(res => {
       this.response = res
-      console.log(res);
-
       if ( this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
         this.calTotalResult()

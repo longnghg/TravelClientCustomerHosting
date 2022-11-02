@@ -81,8 +81,6 @@ export class TourDetailComponent implements OnInit {
   initScheduleRelated(idSchedule: string){
     this.scheduleService.getsScheduleRelatebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      console.log(res);
-
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleRelate = this.response.content
         this.resScheduleRelate.forEach(schedule => {
