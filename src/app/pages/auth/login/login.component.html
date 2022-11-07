@@ -33,6 +33,21 @@
                     </div>
                   </div>
                   <div class="text-center">
+                   <div class="mb-3">
+                    <form [formGroup]="aFormGroup">
+                      <ngx-recaptcha2 #captchaElem
+                        [siteKey]="siteKey"
+                        (error)="handleError()"
+                        (expire)="handleExpire()"
+                        (success)="handleSuccess($event)"
+                        [useGlobalDomain]="false"
+                        [theme]="'light'"
+                        [type]="'image'"
+                        formControlName="recaptcha">
+                      </ngx-recaptcha2>
+                    </form>
+                   </div>
+
                     <ng-container *ngIf="isloading; else elseTemplate">
                       <button class="btn btn-outline-info" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

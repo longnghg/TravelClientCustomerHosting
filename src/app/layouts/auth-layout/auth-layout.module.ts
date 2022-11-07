@@ -13,6 +13,9 @@ import { ChangePasswordComponent } from '../../pages/auth/change-password/change
 import { NgSelectModule }           from '@ng-select/ng-select';
 import { PipesModule } from "../../pipes/pipes.module";
 import { CountdownModule } from 'ngx-countdown';
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxCaptchaModule } from 'ngx-captcha';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +24,9 @@ import { CountdownModule } from 'ngx-countdown';
     NgbModule,
     NgSelectModule,
     PipesModule,
-    CountdownModule
+    CountdownModule,
+    NgxCaptchaModule,
+    ReactiveFormsModule
   ],
   declarations: [
     LoginComponent,

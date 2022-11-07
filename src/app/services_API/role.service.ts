@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
-import { RoleModel, RoleTitle } from "../models/role.model";
+import { RoleModel } from "../models/role.model";
 import { NotificationService } from "../services_API/notification.service";
 
 @Injectable({

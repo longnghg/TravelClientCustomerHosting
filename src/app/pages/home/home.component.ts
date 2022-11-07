@@ -108,6 +108,8 @@ export class HomeComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resScheduleFalshSale = this.response.content
+        console.log( this.resScheduleFalshSale);
+
         this.resScheduleFalshSale.forEach(schedule => {
           if (schedule.isHoliday) {
             schedule.priceFlashSale = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.valueFalshSale /100)
@@ -181,22 +183,26 @@ export class HomeComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
+
         this.resTour.forEach(tour => {
           tour.schedules.forEach(schedule => {
-            if (schedule.isHoliday) {
-              schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
-            }
-            else{
-              schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+            if (schedule.promotions.idPromotion != 1) {
+              if (schedule.isHoliday) {
+                schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+              }
+              else{
+                schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+              }
             }
           })
-
           tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
         });
         // this.cd.markForCheck()
         // setTimeout(() => {
         //   this.cd.detach()
         // }, 100);
+        console.warn(this.resTour);
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
