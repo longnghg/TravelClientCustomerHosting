@@ -422,13 +422,29 @@
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
               </div>
               <div class="row">
-                <ng-container *ngIf="!this.isPayment && activePane == 1; else elseTemplate">
+                <ng-container *ngIf="!isPayment && activePane == 1; else elseTemplate">
                   <button class="btn btn-danger mt-5" style="font-weight: bold;" placement="top"
                   ngbPopover="Quý khách cần chọn Điều khoản đăng ký online !" >ĐẶT NGAY</button>
                 </ng-container>
                 <ng-template #elseTemplate>
-                  <button class="btn btn-danger mt-5" style="font-weight: bold; " (click)="booking()">ĐẶT NGAY</button>
+                  <button class="btn btn-danger mt-5" style="font-weight: bold; "
+                  placement="top"
+                  ngbPopover="Quý khách cần vượt Capcha !"
+                  (click)="booking()">ĐẶT NGAY</button>
                 </ng-template>
+              </div>
+              <div class="row mt-3" style="margin-left: 20%;" *ngIf="isRecapcha && isPayment && activePane == 1 ">
+                <form [formGroup]="aFormGroup">
+                  <ngx-recaptcha2 #captchaElem
+                    [siteKey]="siteKey"
+                    (error)="handleError()"
+                    (success)="handleSuccess($event)"
+                    [useGlobalDomain]="false"
+                    [theme]="'light'"
+                    [type]="'image'"
+                    formControlName="recaptcha">
+                  </ngx-recaptcha2>
+                </form>
               </div>
            </div>
         </div>

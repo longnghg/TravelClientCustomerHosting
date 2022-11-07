@@ -46,6 +46,10 @@ export class NotificationService{
         {
             this.toastr.warning(messenge, 'Cảnh báo');
         }
+        else if( type === 'Info')
+        {
+            this.toastr.info(messenge, 'Thông báo');
+        }
         else
         {
             this.toastr.error(messenge, 'Lỗi');

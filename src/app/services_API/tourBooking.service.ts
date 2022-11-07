@@ -29,4 +29,9 @@ export class TourBookingService{
   {
     return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data).toPromise();
   }
+
+  async cancel(idTourBooking: any)
+  {
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking).toPromise();
+  }
 }

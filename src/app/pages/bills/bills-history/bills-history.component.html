@@ -20,7 +20,7 @@
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-bottom: 20px; border-bottom: 1px solid;">{{tourBookingHistory.nameTour}}</h5>
           <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{tourBookingHistory.idSchedule}}</p>
           <h6 class="card-subtitle mb-2 text-muted" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{tourBookingHistory.description}}</h6>
-          <p class="card-text">Nơi khởi hành: TP.Hồ Chí Minh</p>
+          <p class="card-text">Nơi khởi hành: {{tourBookingHistory.fromPlace}}</p>
           <p class="card-text" style="padding-bottom: 10px; border-bottom: 1px solid;">
             Tổng cộng: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{tourBookingHistory.totalPrice | formatPriceVi}}₫</span>/{{tourBookingHistory.totalPeople}} người
           </p>

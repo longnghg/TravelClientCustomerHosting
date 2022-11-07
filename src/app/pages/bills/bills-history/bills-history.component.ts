@@ -138,4 +138,6 @@ export class BillsHistoryComponent implements OnInit {
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
+
+
 }

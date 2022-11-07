@@ -1,4 +1,4 @@
-import { Component, OnInit,  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ScheduleModel } from "../../../models/schedule.model";
 import { TourBookingModel, ValidationTourBookingModel } from "../../../models/tourBooking.model";
 import { AuthenticationModel } from "../../../models/authentication.model";
@@ -11,6 +11,8 @@ import { PaymentService } from "../../../services_API/payment.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ActivatedRoute, Router } from '@angular/router';
 import { StatusNotification } from "../../../enums/enum";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ReCaptcha2Component } from 'ngx-captcha';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
@@ -19,6 +21,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./tour-booking.component.scss']
 })
 export class TourBookingComponent implements OnInit {
+  public readonly siteKey = '6Lc_K-YiAAAAANf7vCWU19G-psPfDiWFgV-r6RTc';
+  @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
   validateTourBooking: ValidationTourBookingModel = new ValidationTourBookingModel
   resTourBooking: TourBookingModel = new TourBookingModel
   resAthentication: AuthenticationModel
@@ -35,16 +39,24 @@ export class TourBookingComponent implements OnInit {
   response: ResponseModel
   activePane = 0;
   isSuccess: boolean
-  constructor(private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
+
+  isRecapcha: boolean
+  protected aFormGroup: FormGroup;
+  constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    this.aFormGroup = this.formBuilder.group({
+      recaptcha: ['', Validators.required]
+    });
+
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
     this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
 
     this.init(this.resTourBooking.scheduleId)
+
   }
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
@@ -184,26 +196,7 @@ export class TourBookingComponent implements OnInit {
     if ( this.validateTourBooking.total == 0) {
       if (this.isPayment) {
        if (!this.isSuccess) {
-        this.resTourBooking.scheduleId = this.resSchedule.idSchedule
-        this.resTourBooking.pincode = "TRB" + new Date().getTime(),
-        this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
-        this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
-        this.resTourBooking.placeId = this.resSchedule.costTour.placeId
-        this.tourBookingService.create(this.resTourBooking).then(res => {
-          this.response = res
-          this.notificationService.handleAlertObj(this.response.notification)
-          if (this.response.notification.type == StatusNotification.Success) {
-            this.isSuccess = true
-            this.resTourBooking = new TourBookingModel
-            location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
-          }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
-        })
-       }
-       else{
-        ///
+          this.isRecapcha = true
        }
       }
       else{
@@ -212,6 +205,7 @@ export class TourBookingComponent implements OnInit {
         this.activePane = 1
       }
     }
+
   }
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
@@ -232,9 +226,41 @@ export class TourBookingComponent implements OnInit {
       this.resTourBooking.nameContact = this.resAthentication.name
       this.resTourBooking.email = this.resAthentication.email
       this.resTourBooking.customerId = this.resAthentication.id
+
+      this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{
       location.assign(this.configService.clientUrl + "/#/login")
+    }
+  }
+
+
+  handleError(){
+    this.isRecapcha = false
+    this.notificationService.handleAlert('Lỗi capcha !', StatusNotification.Error)
+  }
+
+  handleSuccess(e: any){
+    if (e) {
+      this.isRecapcha = false
+      this.captchaElem.resetCaptcha();
+      this.resTourBooking.scheduleId = this.resSchedule.idSchedule
+      this.resTourBooking.pincode = "TRB" + new Date().getTime(),
+      this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
+      this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
+      this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+      this.tourBookingService.create(this.resTourBooking).then(res => {
+        this.response = res
+        this.notificationService.handleAlertObj(this.response.notification)
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.isSuccess = true
+          this.resTourBooking = new TourBookingModel
+          location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
     }
   }
 }

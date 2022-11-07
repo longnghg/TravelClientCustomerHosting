@@ -180,6 +180,8 @@ export class HomeComponent implements OnInit {
   initTour(){
     this.tourService.getsTourByRating().then(res => {
       this.response = res
+      console.log(res);
+
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTour = this.response.content
@@ -201,7 +203,6 @@ export class HomeComponent implements OnInit {
         // setTimeout(() => {
         //   this.cd.detach()
         // }, 100);
-        console.warn(this.resTour);
 
       }
     }, error => {

@@ -16,4 +16,6 @@ export class TourBookingHistoryModel{
   rowNum: number = 0
   totalPrice: number = 0
   valuePromotion: number = 0
+  fromPlace: string
+  toPlace: string
 }

@@ -28,6 +28,9 @@ import { CountdownModule } from 'ngx-countdown';
 // import { ProfileComponent } from '../../pages/profile/profile.component';
 
 import { PipesModule } from "../../pipes/pipes.module";
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxCaptchaModule } from 'ngx-captcha';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,7 +44,9 @@ import { PipesModule } from "../../pipes/pipes.module";
     NgSelectModule,
     PipesModule,
     ComponentsModule,
-    CountdownModule
+    CountdownModule,
+    ReactiveFormsModule,
+    NgxCaptchaModule
   ],
   declarations: [
 

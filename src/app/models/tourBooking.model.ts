@@ -15,7 +15,7 @@ export class TourBookingModel{
   adult: number = 1
 
   status: number = 1
-  tourbookingDetails: TourBookingDetailModel
+  tourBookingDetails: TourBookingDetailModel
   paymentId: number = 1
   payment: PaymentModel
   scheduleId: string = ""
