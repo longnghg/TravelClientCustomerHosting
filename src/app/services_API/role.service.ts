@@ -18,14 +18,8 @@ export class RoleService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resRole =  this.response.content
+        this.resRole =  this.response.content
           resolve(this.resRole);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")

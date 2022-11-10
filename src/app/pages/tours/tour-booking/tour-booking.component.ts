@@ -13,7 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StatusNotification } from "../../../enums/enum";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha';
-
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-tour-booking',
@@ -52,7 +51,6 @@ export class TourBookingComponent implements OnInit {
 
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
-
     this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
 
     this.init(this.resTourBooking.scheduleId)
@@ -242,8 +240,6 @@ export class TourBookingComponent implements OnInit {
 
   handleSuccess(e: any){
     if (e) {
-      this.isRecapcha = false
-      this.captchaElem.resetCaptcha();
       this.resTourBooking.scheduleId = this.resSchedule.idSchedule
       this.resTourBooking.pincode = "TRB" + new Date().getTime(),
       this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
@@ -255,11 +251,17 @@ export class TourBookingComponent implements OnInit {
         if (this.response.notification.type == StatusNotification.Success) {
           this.isSuccess = true
           this.resTourBooking = new TourBookingModel
+          this.isRecapcha = false
           location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
+
+
         }
+
+        this.captchaElem.resetCaptcha();
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.notificationService.handleAlert(message, StatusNotification.Error)
+        this.captchaElem.resetCaptcha();
       })
     }
   }

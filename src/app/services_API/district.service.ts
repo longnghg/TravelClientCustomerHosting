@@ -18,14 +18,8 @@ export class DistrictService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resDistrict =  this.response.content
-          resolve(this.resDistrict);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.resDistrict =  this.response.content
+        resolve(this.resDistrict);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
@@ -38,7 +32,7 @@ export class DistrictService{
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-district");
   }
 
-  search(data){
+  search(data: any){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/search-district", data);
   }
 

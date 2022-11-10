@@ -17,14 +17,8 @@ async views()
   var value = <any>await new Promise<any>(resolve => {
     this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/gets-payment").subscribe(res => {
       this.response = res
-      if(!this.response.notification.type)
-      {
-        this.resPayment =  this.response.content
-        resolve(this.resPayment);
-      }
-      else{
-        this.notificationService.handleAlertObj(res.notification)
-      }
+      this.resPayment =  this.response.content
+      resolve(this.resPayment);
   }, error => {
     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
     this.notificationService.handleAlert(message, "Error")

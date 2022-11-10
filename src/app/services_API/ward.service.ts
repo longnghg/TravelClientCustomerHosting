@@ -18,14 +18,8 @@ export class WardService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-ward").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resWard =  this.response.content
-          resolve(this.resWard);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.resWard =  this.response.content
+        resolve(this.resWard);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
@@ -37,7 +31,7 @@ export class WardService{
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-ward");
   }
 
-  search(data){
+  search(data: any){
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Location/search-ward", data);
   }
 

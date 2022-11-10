@@ -18,14 +18,8 @@ export class EmployeeService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/gets-employee", {isDelete}).subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resEmployee =  this.response.content
-          resolve(this.resEmployee);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.resEmployee =  this.response.content
+        resolve(this.resEmployee);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")

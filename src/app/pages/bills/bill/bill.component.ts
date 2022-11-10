@@ -51,6 +51,8 @@ export class BillComponent implements OnInit {
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
+      console.log(res);
+
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking = this.response.content
       }

@@ -21,14 +21,8 @@ export class ProvinceService{
     var value = <any>await new Promise<any>(resolve => {
       this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Location/gets-province").subscribe(res => {
         this.response = res
-        if(!this.response.notification.type)
-        {
-          this.resProvince =  this.response.content
-          resolve(this.resProvince);
-        }
-        else{
-          this.notificationService.handleAlertObj(res.notification)
-        }
+        this.resProvince =  this.response.content
+        resolve(this.resProvince);
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, "Error")
