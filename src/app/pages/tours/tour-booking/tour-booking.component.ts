@@ -80,7 +80,7 @@ export class TourBookingComponent implements OnInit {
         }
 
         if (this.resSchedule.alias != this.resTourBooking.alias) {
-          location.assign(this.configService.clientUrl + "/#/page404")
+          location.assign(this.configService.clientUrl + "/page404")
         }
         var tourBooking = localStorage.getItem("tourBooking_" + localStorage.getItem("idUser"))
         if (tourBooking) {
@@ -90,7 +90,7 @@ export class TourBookingComponent implements OnInit {
         this.setCart()
       }
       else{
-        location.assign(this.configService.clientUrl + "/#/page404")
+        location.assign(this.configService.clientUrl + "/page404")
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -230,7 +230,7 @@ export class TourBookingComponent implements OnInit {
       this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{
-      location.assign(this.configService.clientUrl + "/#/login")
+      location.assign(this.configService.clientUrl + "/login")
     }
   }
 
@@ -255,7 +255,7 @@ export class TourBookingComponent implements OnInit {
         if (this.response.notification.type == StatusNotification.Success) {
           this.isSuccess = true
           this.resTourBooking = new TourBookingModel
-          location.assign(this.configService.clientUrl + "/#/bill/" + this.response.content)
+          location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
         }
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

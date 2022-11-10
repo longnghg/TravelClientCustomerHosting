@@ -16,7 +16,7 @@ export class ConfigService{
 
     if (status == 401){
         // message = "Hết hạn đăng nhập !"
-        // document.location.assign(this.clientUrl +'/#/login');
+        // document.location.assign(this.clientUrl +'/login');
     }
     else if (status == 200) {
         message = message;
@@ -245,7 +245,7 @@ export class ConfigService{
       model.confirmPassword = "[Nhập lại mật khẩu] không trùng khớp  !"
       model.total += 1
     }
-    
+
     return model
    }
    validateForgotPass(data: any, model: any){

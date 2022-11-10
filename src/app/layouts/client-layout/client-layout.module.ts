@@ -31,6 +31,8 @@ import { PipesModule } from "../../pipes/pipes.module";
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { QRCodeModule } from 'angularx-qrcode';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ import { NgxCaptchaModule } from 'ngx-captcha';
     ComponentsModule,
     CountdownModule,
     ReactiveFormsModule,
-    NgxCaptchaModule
+    NgxCaptchaModule,
+    QRCodeModule
   ],
   declarations: [
 

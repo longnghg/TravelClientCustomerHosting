@@ -54,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
         localStorage.removeItem("idUser")
         localStorage.removeItem("token")
         sessionStorage.clear()
-      location.assign(this.configService.clientUrl + "/#/login")
+      location.assign(this.configService.clientUrl + "/login")
       location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");

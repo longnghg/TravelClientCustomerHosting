@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
               }
               this.notificationService.handleAlertObj(res.notification)
 
-              document.location.assign( this.configService.clientUrl + "/#/home")
+              document.location.assign( this.configService.clientUrl + "/home")
             }
             else if(this.response.notification.type == StatusNotification.Block){
               this.timeBlock = this.response.content
@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
               localStorage.removeItem("tourBooking_null")
             }
             this.notificationService.handleAlertObj(res.notification)
-            document.location.assign( this.configService.clientUrl + "/#/home")
+            document.location.assign( this.configService.clientUrl + "/home")
           }
           else if(this.response.notification.type == StatusNotification.Block){
             this.timeBlock = this.response.content

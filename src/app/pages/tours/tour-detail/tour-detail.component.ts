@@ -69,7 +69,7 @@ export class TourDetailComponent implements OnInit {
         })
       }
       else{
-        location.assign(this.configService.clientUrl + "/#/page404")
+        location.assign(this.configService.clientUrl + "/page404")
       }
 
     }, error => {
@@ -95,7 +95,7 @@ export class TourDetailComponent implements OnInit {
         });
       }
       else{
-        location.assign(this.configService.clientUrl + "/#/page404")
+        location.assign(this.configService.clientUrl + "/page404")
       }
 
     }, error => {

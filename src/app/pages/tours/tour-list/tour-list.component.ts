@@ -74,7 +74,7 @@ export class TourListComponent implements OnInit {
       }
       // if(!this.resSchedule)
       // {
-      //   location.assign(this.configService.clientUrl + "/#/page404")
+      //   location.assign(this.configService.clientUrl + "/page404")
 
       // }
 

@@ -96,7 +96,7 @@ export class ForgotPasswordComponent implements OnInit {
 
       if (this.response.notification.type == StatusNotification.Success) {
         localStorage.clear()
-        location.assign(this.configService.clientUrl + "/#/login")
+        location.assign(this.configService.clientUrl + "/login")
         location.reload()
       }
     }, error => {

@@ -130,7 +130,24 @@
                   <label class="form-label col-4" style="font-weight: 600;">Nơi khởi hành</label>
                    <p class="col-8" style="color: #2d4271;">{{resTourBooking.schedule.departurePlace}}</p>
                 </div>
-
+                <div class="row"style="text-align: center;">
+                  <qrcode
+                  [qrdata]="myAngularxQrCode"
+                  [allowEmptyString]="true"
+                  [ariaLabel]="'QR Code image with the following content...'"
+                  [cssClass]="'center'"
+                  [colorDark]="'#000000ff'"
+                  [colorLight]="'#ffffffff'"
+                  [elementType]="'canvas'"
+                  [errorCorrectionLevel]="'H'"
+                  [imageHeight]="75"
+                  [imageWidth]="75"
+                  [margin]="4"
+                  [scale]="1"
+                  [title]="'Thông tin bill'"
+                  [width]="300"
+                ></qrcode>
+                </div>
                 <div class="row mt-3" *ngIf="resTourBooking.status != 4">
                   <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelTour">
                     Hủy tour

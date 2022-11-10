@@ -24,6 +24,7 @@ export class BillComponent implements OnInit {
   resTourBooking: TourBookingModel
   resSchedule: ScheduleModel
   resAthentication: AuthenticationModel
+  public myAngularxQrCode: string = null;
   @ViewChild('cancelTour') cancelTour: ElementRef;
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
@@ -43,6 +44,7 @@ export class BillComponent implements OnInit {
       localStorage.removeItem("tourBooking_null")
     }
     var idTourBooking = this.activatedRoute.snapshot.paramMap.get('id')
+     this.myAngularxQrCode = this.configService.clientUrl + "/bill/"+ idTourBooking;
     this.init(idTourBooking)
   }
 
@@ -53,7 +55,7 @@ export class BillComponent implements OnInit {
         this.resTourBooking = this.response.content
       }
       else{
-        location.assign(this.configService.clientUrl + "/#/page404")
+        location.assign(this.configService.clientUrl + "/page404")
       }
 
     }, error => {

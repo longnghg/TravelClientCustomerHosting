@@ -56,7 +56,7 @@ export class BillsHistoryComponent implements OnInit {
   }
 
   billDetail(idTourBooking: string){
-    location.assign(this.configService.clientUrl + "/#/bill/" + idTourBooking)
+    location.assign(this.configService.clientUrl + "/bill/" + idTourBooking)
   }
 
 

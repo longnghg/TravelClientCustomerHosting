@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
            this.notificationService.handleAlertObj(res.notification)
            if(this.response.notification.type == StatusNotification.Success)
            {
-             document.location.assign( this.configService.clientUrl + "/#/login")
+             document.location.assign( this.configService.clientUrl + "/login")
            }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
