@@ -92,3 +92,15 @@ body{
   border: 1px solid #cad1d7 !important;
   color: black !important;
 }
+
+legend{
+  width: unset !important;
+  float: unset !important;
+  font-size: 30px !important;
+}
+
+fieldset{
+  border: 1.5px solid !important;
+  padding: 25px !important;
+  border-radius: 0.375rem !important;
+}
