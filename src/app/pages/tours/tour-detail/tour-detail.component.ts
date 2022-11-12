@@ -69,7 +69,7 @@ export class TourDetailComponent implements OnInit {
         })
       }
       else{
-        location.assign(this.configService.clientUrl + "/page404")
+         location.assign(this.configService.clientUrl + "/page404")
       }
 
     }, error => {
@@ -81,6 +81,8 @@ export class TourDetailComponent implements OnInit {
   initScheduleRelated(idSchedule: string){
     this.scheduleService.getsScheduleRelatebyIdSchedule(idSchedule).then(res => {
       this.response = res
+      console.log(res);
+
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleRelate = this.response.content
         this.resScheduleRelate.forEach(schedule => {
@@ -94,10 +96,6 @@ export class TourDetailComponent implements OnInit {
           }
         });
       }
-      else{
-        location.assign(this.configService.clientUrl + "/page404")
-      }
-
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
