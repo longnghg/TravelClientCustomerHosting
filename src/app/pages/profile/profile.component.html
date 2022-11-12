@@ -26,7 +26,6 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="gender" style="font-weight: 600;">Giới tính
-                <span [class]="!isEdit ?'d-none':'text-danger'">* {{this.validateCustomer.gender ? this.validateCustomer.gender : ''}}</span>
               </label>
               <ng-select [items]="listGender" [(ngModel)]="resCustomer.gender" bindValue="id" bindLabel="name" name="gender" id="gender" [disabled]="!isEdit"
               placeholder="Chọn giới tính..." (change)="inputChange()">
@@ -36,7 +35,7 @@
           <div class="col-lg-6">
             <div class="form-group">
               <label class="form-control-label" for="dp" style="font-weight: 600;">Ngày sinh
-                <span [class]="!isEdit ?'d-none':'text-danger'">* {{this.validateCustomer.birthday ? this.validateCustomer.birthday : ''}}</span>
+                 <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateCustomer.birthday ? this.validateCustomer.birthday : ''}}</span>
               </label>
               <input  name="birthday" onkeydown="return false" (change)="inputChange()" [(ngModel)]="resCustomer.birthday" class="form-control datepicker" placeholder="Chọn ngày" name="dp" id="dp" type="date" [disabled]="!isEdit"/>
             </div>
@@ -66,7 +65,9 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <label class="form-control-label" for="address" style="font-weight: 600;">Địa chỉ</label>
+              <label class="form-control-label" for="address" style="font-weight: 600;">Địa chỉ
+                <span [class]="!isEdit?'d-none':'text-danger'">* {{this.validateCustomer.address ? this.validateCustomer.address : ''}}</span>
+              </label>
               <textarea [(ngModel)]="resCustomer.address" (input)="inputChange()" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ" [readonly]="!isEdit"></textarea>
             </div>
           </div>

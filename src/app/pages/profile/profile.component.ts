@@ -67,11 +67,10 @@ export class ProfileComponent implements OnInit {
 
 
     save(){
-      var valid = this.configService.validateCustomer(this.resCustomer)
-      valid.forEach(element => {
-        this.notificationService.handleAlert(element, StatusNotification.Success)
-      });
-      if(valid.length == 0){
+      this.validateCustomer = new ValidationCustomerModel
+      this.validateCustomer =  this.configService.validateCustomer(this.resCustomer, this.validateCustomer)
+
+      if (this.validateCustomer.total == 0) {
         this.customerService.update(this.resCustomer).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)

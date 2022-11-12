@@ -16,10 +16,10 @@ export class CustomerModel{
 }
 
 export class ValidationCustomerModel{
+  total: number
   nameCustomer: string
   phone: string
-  email: string
-  gender: boolean
+  address: string
   birthday: string
 }
 

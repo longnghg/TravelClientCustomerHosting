@@ -46,51 +46,58 @@ export class ConfigService{
     return listStatus
   }
 
-  validateCustomer(data: any){
-    var err = []
+  validateCustomer(data: any, model: any){
+    model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     //name
-    if(data.nameCustomer == null || data.nameCustomer == ""){
-       err.push("[Họ và tên] không được để trống !")
-    }else if (data.nameCustomer.length > 100) {
-       err.push("[Họ và tên] quá dài !")
-    }else if (data.nameCustomer.length < 1) {
-      err.push("[Họ và tên] quá ngắn !")
-    }
 
+    if(data.nameCustomer == null || data.nameCustomer == ""){
+      model.nameCustomer = "[Họ và tên] không được để trống !"
+      model.total += 1
+    }else if (data.nameCustomer.length > 100) {
+      model.nameCustomer = "[Họ và tên] quá dài !"
+      model.total += 1
+    }else if (data.nameCustomer.length < 1) {
+      model.nameCustomer = "[Họ và tên] quá ngắn !"
+      model.total += 1
+    }
 
     // if (data.gender === null) {
     //    err.push("[Giới tính] không được để trống !")
     // }
 
 
-    if (data.email == null || data.email == "") {
-       err.push("[Email] không được để trống !")
-    }else if (!filter.test(data.email)) {
-       err.push("[Email] không hợp lệ !")
+    if (data.phone == null || data.phone == "") {
+      model.phone = "[Số điện thoại] không được để trống !"
+      model.total += 1
+    }else if (data.phone.length > 15) {
+      model.phone = "[Số điện thoại] vượt quá 15 số !"
+      model.total += 1
+    }
+    else if (data.phone.length < 10) {
+      model.phone = "[Số điện thoại] không hợp lệ !"
+      model.total += 1
+    }else if (!data.phone.startsWith("0")) {
+      model.phone = "[Số điện thoại] không hợp lệ !"
+      model.total += 1
     }
 
+    if (data.address == null || data.address == "") {
+      model.address = "[Địa chỉ] không được để trống !"
+      model.total += 1
+    }else if (data.address.length > 255) {
+      model.address = "[Địa chỉ] quá dài !"
+      model.total += 1
+    }
 
-    // if (data.phone == null || data.phone == "") {
-    //    err.push("[Số điện thoại] không được để trống !")
-    // }else if (data.phone.length > 10) {
-    //    err.push("[Số điện thoại] vượt quá 10 số !")
-    // }else if (!data.phone.startsWith("0")) {
-    //    err.push("[Số điện thoại] không hợp lệ !")
-    // }
-
-    // if (data.birthday == null || data.birthday == "") {
-    //    err.push("[Ngày sinh] không được để trống !")
-    // }
-
-
-  //   if (data.address == null || data.address == "") {
-  //      err.push("[Địa chỉ] không được để trống !")
-  //   }else if (data.address.length > 255) {
-  //     err.push("[Địa chỉ] quá dài !")
-  //  }
-
+    let timeDiff = Math.abs(Date.now() - Date.parse(data.birthday));
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
+    //BirthDay
+    if(age < 16){
+      model.birthday = "[Ngày sinh] phải trên 16 tuổi !"
+      model.total += 1
+    }
     // if(data.password == null  || data.password == ""){
     //   err.push("[Mật khẩu] không được để trống !")
     // }
@@ -100,7 +107,7 @@ export class ConfigService{
     // }else if(data.password != data.confirmPassword){
     //   err.push("[Mật khẩu không khớp] nhập lại mật khẩu !")
     // }
-    return err
+    return model
 
    }
 
