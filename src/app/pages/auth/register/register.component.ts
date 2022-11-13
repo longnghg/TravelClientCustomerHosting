@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
   listGender = this.configService.listGender()
   birthday: string
   confirmPassword: string
+  isCheck: boolean
   constructor(private customerService: CustomerService, private notificationService: NotificationService, private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -40,11 +41,12 @@ export class RegisterComponent implements OnInit {
 
           this.customerService.create(this.resCustomer).subscribe(res =>{
             this.response = res
-           this.notificationService.handleAlertObj(res.notification)
            if(this.response.notification.type == StatusNotification.Success)
            {
              document.location.assign( this.configService.clientUrl + "/login")
            }
+           this.notificationService.handleAlertObj(res.notification)
+
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, StatusNotification.Error)
