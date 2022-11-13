@@ -298,7 +298,10 @@
                         <i class="fa-regular fa-calendar"></i>
                         {{schedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}
                       </ng-template>
-                      <ng-option  *ngIf="i > 0"  [value]="schedule.departureDate" > <i class="fa-regular fa-calendar"></i> {{schedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}</ng-option>
+                      <ng-option  *ngIf="i > 0"  [value]="schedule.departureDate" >
+                         <i class="fa-regular fa-calendar"></i>
+                         {{schedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}
+                      </ng-option>
                     </ng-container>
                 </ng-select>
                 </div>
