@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AuthenticationService } from 'src/app/services_API/authentication.service';
-import { CustomerModel} from "src/app/models/customer.model"
+import { CustomerModel, ValidationChangePass} from "src/app/models/customer.model"
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
@@ -14,24 +14,27 @@ import { StatusNotification } from "../../../enums/enum";
 })
 export class ChangePasswordComponent implements OnInit {
   response: ResponseModel
+  resCustomer: CustomerModel
   password: string
   newPassword: string
   confirmPassword: string
+  idUser: string
   resAthentication: AuthenticationModel = new AuthenticationModel()
+  validationChangePass: ValidationChangePass = new ValidationChangePass()
   constructor(private authService: AuthenticationService, private notificationService: NotificationService, private configService: ConfigService) { }
 
   ngOnInit(): void {
+    this.resCustomer = new CustomerModel
     this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+    this.resCustomer.idCustomer = this.resAthentication.id
   }
 
   CuschangePass(){
-    var valid =  this.configService.validateChangePass(this.password, this.newPassword, this.confirmPassword)
-    valid.forEach(element => {
-        this.notificationService.handleAlert(element, StatusNotification.Error)
-    });
-    if (valid.length == 0) {
-      var idCustomer = localStorage.getItem("idUser")
-          this.authService.changePassword(idCustomer, this.password, this.newPassword).subscribe(res =>{
+    this.validationChangePass = new ValidationChangePass
+    this.validationChangePass =  this.configService.validateChangePass(this.resCustomer, this.validationChangePass)
+    if (this.validationChangePass.total == 0) {
+          this.resCustomer.idCustomer = this.resAthentication.id
+          this.authService.changePassword(this.resCustomer.idCustomer, this.resCustomer.password, this.resCustomer.newPassword).subscribe(res =>{
             this.response = res
            this.notificationService.handleAlertObj(res.notification)
 
@@ -43,7 +46,7 @@ export class ChangePasswordComponent implements OnInit {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, StatusNotification.Error)
           })
-    }
+        }
   }
 
   logOut(){
@@ -55,7 +58,6 @@ export class ChangePasswordComponent implements OnInit {
         localStorage.removeItem("token")
         sessionStorage.clear()
       location.assign(this.configService.clientUrl + "/login")
-      location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
