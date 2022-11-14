@@ -44,6 +44,7 @@ export class TourBookingComponent implements OnInit {
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
+  url = this.configService.apiUrl
   ngOnInit() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -231,6 +232,8 @@ export class TourBookingComponent implements OnInit {
       this.resTourBooking.email = this.resAthentication.email
       this.resTourBooking.customerId = this.resAthentication.id
       this.resTourBooking.phone = this.resAthentication.phone
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
       this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{
