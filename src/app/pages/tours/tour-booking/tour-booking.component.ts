@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ScheduleModel } from "../../../models/schedule.model";
 import { TourBookingModel, ValidationTourBookingModel } from "../../../models/tourBooking.model";
 import { AuthenticationModel } from "../../../models/authentication.model";
@@ -22,6 +22,8 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 export class TourBookingComponent implements OnInit {
   public readonly siteKey = '6Lc_K-YiAAAAANf7vCWU19G-psPfDiWFgV-r6RTc';
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
+  @ViewChild('recapchaModal') recapchaModal: ElementRef;
+  @ViewChild('closeModal') closeModal: ElementRef;
   validateTourBooking: ValidationTourBookingModel = new ValidationTourBookingModel
   resTourBooking: TourBookingModel = new TourBookingModel
   resAthentication: AuthenticationModel
@@ -194,7 +196,7 @@ export class TourBookingComponent implements OnInit {
     if ( this.validateTourBooking.total == 0) {
       if (this.isPayment) {
        if (!this.isSuccess) {
-          this.isRecapcha = true
+          this.recapchaModal.nativeElement.click()
        }
       }
       else{
@@ -244,33 +246,44 @@ export class TourBookingComponent implements OnInit {
 
   handleSuccess(e: any){
     if (e) {
-      this.resTourBooking.scheduleId = this.resSchedule.idSchedule
-      this.resTourBooking.pincode = "TRB" + new Date().getTime()
-      if (this.resSchedule.costTour) {
-        this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
-        this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
-        this.resTourBooking.placeId = this.resSchedule.costTour.placeId
-      }
-
-      this.tourBookingService.create(this.resTourBooking).then(res => {
-        this.response = res
-        if (this.response.notification.type == StatusNotification.Success) {
-          this.notificationService.handleAlertObj(this.response.notification)
-          this.isSuccess = true
-          this.resTourBooking = new TourBookingModel
-          this.isRecapcha = false
-          location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
-        }
-        else{
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        }
-        this.captchaElem.resetCaptcha();
-      }, error => {
-        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-        this.notificationService.handleAlert(message, StatusNotification.Error)
-        this.captchaElem.resetCaptcha();
-      })
+      this.isRecapcha = true
     }
+  }
+
+  finalBooking(){
+    this.resTourBooking.scheduleId = this.resSchedule.idSchedule
+    // this.resTourBooking.pincode = "TRB" + new Date().getTime()
+    if (this.resSchedule.costTour) {
+      this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
+      this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
+      this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+    }
+
+    this.tourBookingService.create(this.resTourBooking).then(res => {
+      this.response = res
+      this.notificationService.handleAlertObj(this.response.notification)
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.isSuccess = true
+        this.resTourBooking = new TourBookingModel
+        this.isRecapcha = false
+        this.closeModal.nativeElement.click()
+        // location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
+        this.router.navigate(['','bill', this.response.content]);
+      }
+      else{
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      }
+      this.captchaElem.resetCaptcha();
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+      this.captchaElem.resetCaptcha();
+    })
+  }
+
+  closeRecapchaModal(){
+    this.captchaElem.resetCaptcha();
+    this.isRecapcha = false
   }
 }

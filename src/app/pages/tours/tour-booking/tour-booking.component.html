@@ -89,7 +89,7 @@
                 <div class="form-check">
                   <input class="form-check-input" style=" cursor: pointer;" type="checkbox" id="flexCheckDefault" (change)="isCheck ? isCheck = false : isCheck = true">
                   <label class="form-check-label" style=" cursor: pointer;" for="flexCheckDefault">
-                    <h5 class="fg-dark">Tôi không đi khách sạn này, tôi đặt giúp cho người khác</h5>
+                    <h5 class="fg-dark">Tôi không đi tour này, tôi đặt giúp cho người khác</h5>
                   </label>
                 </div>
               </div>
@@ -428,12 +428,10 @@
                 </ng-container>
                 <ng-template #elseTemplate>
                   <button class="btn btn-danger mt-5" style="font-weight: bold; "
-                  placement="top"
-                  ngbPopover="Quý khách cần vượt Capcha !"
                   (click)="booking()">ĐẶT NGAY</button>
                 </ng-template>
               </div>
-              <div class="row mt-3" style="margin-left: 20%;" *ngIf="isRecapcha && isPayment && activePane == 1 ">
+              <!-- <div class="row mt-3" style="margin-left: 20%;" *ngIf="isRecapcha && isPayment && activePane == 1 ">
                 <form [formGroup]="aFormGroup">
                   <ngx-recaptcha2 #captchaElem
                     [siteKey]="siteKey"
@@ -445,7 +443,7 @@
                     formControlName="recaptcha">
                   </ngx-recaptcha2>
                 </form>
-              </div>
+              </div> -->
            </div>
         </div>
       </div>
@@ -453,10 +451,46 @@
     </div>
   </div>
 </div>
+<button #recapchaModal type="button" class="d-none" data-bs-toggle="modal" data-bs-target="#recapchaModal"></button>
+<div class="modal fade" style="z-index: 9999;" id="recapchaModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="recapchaModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="recapchaModalLabel">Xác nhận</h1>
+        <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeRecapchaModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p style="font-weight: 600;">Sau bước này bạn sẽ không thể thay đổi dữ liệu nữa !</p>
+        <div class="row mt-3" style="margin-left: 15%;">
+          <form [formGroup]="aFormGroup">
+            <ngx-recaptcha2 #captchaElem
+              [siteKey]="siteKey"
+              (error)="handleError()"
+              (success)="handleSuccess($event)"
+              [useGlobalDomain]="false"
+              [theme]="'light'"
+              [type]="'image'"
+              formControlName="recaptcha">
+            </ngx-recaptcha2>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  (click)="closeRecapchaModal()">Không</button>
+        <ng-container *ngIf="!isRecapcha; else elseRecapcha">
+          <button type="button" class="btn btn-primary" placement="top"
+          ngbPopover="Quý khách cần vượt Capcha !">Đồng ý</button>
+        </ng-container>
+        <ng-template #elseRecapcha>
+          <button type="button" class="btn btn-primary"  (click)="finalBooking()">Đồng ý</button>
+        </ng-template>
 
+      </div>
+    </div>
+  </div>
+</div>
 
-
-<div class="untree_co-section">
+<!-- <div class="untree_co-section">
   <div class="container">
     <div class="row justify-content-center mb-5">
       <div class="col-md-6 text-center">
@@ -554,7 +588,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 

@@ -198,7 +198,7 @@
             <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
             <p class="card-text mb-4">Nơi khởi hành: {{schedule.departurePlace}}</p>
             <div class="mb-2"  style="position: relative;">
-              <span class="badge badge-danger" style="position: absolute; top:-47%;">Giảm sâu tới {{valueFalshSale}}%</span>
+              <span class="badge badge-danger" style="position: absolute; top:-60%;">Giảm sâu tới {{valueFalshSale}}%</span>
               <p class="card-text">Giá chỉ từ: <s class="card-title" style="font-weight: 600;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</s> <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{schedule.priceFlashSale|formatPriceVi}}₫</span>/Khách </p>
             </div>
           <div class="row" style="padding-left: 15px; padding-right: 15px;">
@@ -239,7 +239,7 @@
             <p class="card-text mb-4">Nơi khởi hành: {{schedule.departurePlace}}</p>
 
             <div class="mb-2"  style="position: relative;">
-              <span class="ml-2 badge badge-info" style="position: absolute; top:-47%; left: -2%">Giảm {{schedule.valuePromotion}}% tới ngày {{schedule.timePromotion| formatFromUnixTimestampToFullDateView}}</span>
+              <span class="ml-2 badge badge-info" style="position: absolute; top:-60%; left: -2%">Giảm {{schedule.valuePromotion}}% tới ngày {{schedule.timePromotion| formatFromUnixTimestampToFullDateView}}</span>
               <p class="card-text">Giá chỉ từ: <s class="card-title" style="font-weight: 600;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</s>
                 <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{schedule.pricePromotion|formatPriceVi}}₫</span>/Khách </p>
             </div>
@@ -280,7 +280,7 @@
             <p class="card-text mb-4">Nơi khởi hành: {{tour.schedules[0].departurePlace}}</p>
             <div class="mb-2"  style="position: relative;">
               <ng-container *ngIf="tour.schedules[0].promotions.idPromotion != 1 else elsePromotion">
-                <span class="ml-2 badge badge-info" style="position: absolute; top:-47%; left: -2%">Giảm {{tour.schedules[0].promotions.value}}% tới ngày {{tour.schedules[0].timePromotion| formatFromUnixTimestampToFullDateView}}</span>
+                <span class="ml-2 badge badge-info" style="position: absolute; top:-60%; left: -2%">Giảm {{tour.schedules[0].promotions.value}}% tới ngày {{tour.schedules[0].timePromotion| formatFromUnixTimestampToFullDateView}}</span>
                 <p class="card-text">Giá chỉ từ: <s class="card-title" style="font-weight: 600;">{{(!tour.schedules[0].isHoliday ? tour.schedules[0].finalPrice : tour.schedules[0].finalPriceHoliday)|formatPriceVi}}₫</s>
                   <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{tour.schedules[0].pricePromotion|formatPriceVi}}₫</span>/Khách </p>
               </ng-container>

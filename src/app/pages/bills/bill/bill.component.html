@@ -31,9 +31,13 @@
         <div class="mt-5" style="border: 1px solid #2d4271; border-radius: 10px; padding: 20px;">
           <h4  style="color: #2d4271; font-weight: 600;">CHI TIẾT BOOKING</h4>
           <div class="container" style="border-top: 1px solid #2d4271;">
+            <div class="row mb-3 mt-3" *ngIf="resTourBooking.bookingNo">
+              <label class="form-label col-4" style="font-weight: 600;">BookingNo</label>
+              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.bookingNo}}</span> (Quý khách vui lòng nhớ mã giao dịch để thuận tiện cho các giao dịch sau này)</p>
+            </div>
             <div class="row mb-3 mt-3">
-              <label class="form-label col-4" style="font-weight: 600;">Mã giao dịch</label>
-              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.pincode}}</span> (Quý khách vui lòng nhớ mã giao dịch để thuận tiện cho các giao dịch sau này)</p>
+              <label class="form-label col-4" style="font-weight: 600;">Pin code</label>
+              <p class="col-8" style="color: #2d4271;"><span class="text-danger" style="font-weight: 600;">{{resTourBooking.pincode}}</span> (Quý khách vui lòng nhớ mã pincode để thuận tiện cho việc thanh toán)</p>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Người lớn</label>
@@ -105,7 +109,6 @@
                 </div>
                 <div class="col-8">
                   <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
-                  <P style="color: #2d4271">Mã giao dịch: <span class="text-danger">{{resTourBooking.pincode}}</span></P>
                   <h6 class="card-subtitle mb-2 text-muted">{{resTourBooking.schedule.description}}</h6>
                 </div>
               </div>
