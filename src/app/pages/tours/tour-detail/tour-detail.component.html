@@ -217,7 +217,7 @@
       <ng-container *ngFor="let schedule of resScheduleRelate; let i=index">
         <div class="col-3">
           <div class="card mb-4 card-shadow" style="width: 100%; padding: 0;" *ngIf="i < 4">
-            <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+            <img  [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;" (click)="goto(schedule.idSchedule, schedule.alias)" class="card-img-top">
             <div class="card-body" style="height: 330px;">
               <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
               <div class="stars mb-2" >

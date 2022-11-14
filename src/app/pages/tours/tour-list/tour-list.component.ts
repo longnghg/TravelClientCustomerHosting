@@ -19,6 +19,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
 })
 export class TourListComponent implements OnInit {
   constructor(private provinceService: ProvinceService, private scheduleService: ScheduleService,private tourService: TourService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  url = this.configService.apiUrl
   resSchedule: ScheduleModel[]
   resProvince: LocationModel[]
   resTourBooking: TourBookingModel

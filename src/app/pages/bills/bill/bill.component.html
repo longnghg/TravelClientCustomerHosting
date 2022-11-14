@@ -105,7 +105,7 @@
             <div class="container" style="border-top: 1px solid #2d4271;">
               <div class="mb-3 mt-3 row">
                 <div class="col-4">
-                  <img  [src]="resTourBooking.schedule.tour.thumbnail"  class="card-img-top">
+                  <img  [src]="url+resTourBooking.schedule.tour.thumbnail"  class="card-img-top">
                 </div>
                 <div class="col-8">
                   <p style="color: #2d4271; font-weight: 600;">{{resTourBooking.schedule.tour.nameTour}}</p>
@@ -151,7 +151,7 @@
                   [width]="300"
                 ></qrcode>
                 </div>
-                <div class="row mt-3" *ngIf="resTourBooking.status != 4">
+                <div class="row mt-3" *ngIf="resTourBooking.status == 1 || resTourBooking.status == 2">
                   <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelTour">
                     Hủy tour
                   </button>

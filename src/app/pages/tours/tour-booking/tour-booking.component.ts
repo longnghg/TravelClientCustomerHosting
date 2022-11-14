@@ -230,7 +230,7 @@ export class TourBookingComponent implements OnInit {
       this.resTourBooking.nameContact = this.resAthentication.name
       this.resTourBooking.email = this.resAthentication.email
       this.resTourBooking.customerId = this.resAthentication.id
-
+      this.resTourBooking.phone = this.resAthentication.phone
       this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{

@@ -34,6 +34,7 @@ export class HomeComponent implements OnInit {
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
   valueFalshSale = 50
+  url = this.configService.apiUrl
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('toTop') toTop: ElementRef;
   list = [

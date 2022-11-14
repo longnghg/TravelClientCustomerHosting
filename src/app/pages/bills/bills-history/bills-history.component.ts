@@ -26,7 +26,7 @@ export class BillsHistoryComponent implements OnInit {
 
   resTourBookingHistory: TourBookingHistoryModel[]
   constructor(private notificationService: NotificationService, private configService: ConfigService, private tourBookingService: TourBookingService) { }
-
+  url = this.configService.apiUrl
   ngOnInit(): void {
     this.init()
   }

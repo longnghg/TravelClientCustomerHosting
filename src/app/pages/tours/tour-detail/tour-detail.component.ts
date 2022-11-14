@@ -18,7 +18,7 @@ export class TourDetailComponent implements OnInit {
   resScheduleRelate: ScheduleModel[]
   response: ResponseModel
   constructor(private scheduleService: ScheduleService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
-
+  url = this.configService.apiUrl
   ngOnInit(): void {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -148,4 +148,8 @@ export class TourDetailComponent implements OnInit {
     this.router.navigate(['','tour-booking',idSchedule, alias]);
   }
 
+  goto(idSchedule: string, alias: string){
+    // location.reload()
+    location.assign(this.configService.clientUrl + "/tour-detail/"+idSchedule+"/"+alias)
+  }
 }

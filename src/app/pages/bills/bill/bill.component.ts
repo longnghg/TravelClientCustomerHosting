@@ -29,7 +29,7 @@ export class BillComponent implements OnInit {
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private tourBookingService: TourBookingService,private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
-
+  url = this.configService.apiUrl
   ngOnInit(): void {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -51,10 +51,15 @@ export class BillComponent implements OnInit {
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
-      console.log(res);
-
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking = this.response.content
+
+        if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
+          var date = new Date().getTime()
+          if (this.resTourBooking.lastDate < date) {
+            this.resTourBooking.status = 4
+          }
+        }
       }
       else{
         location.assign(this.configService.clientUrl + "/page404")

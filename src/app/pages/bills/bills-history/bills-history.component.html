@@ -9,7 +9,7 @@
       <div class="card mr-5 mb-5 card-shadow" *ngIf="tourBookingHistory.rowNum >= start && tourBookingHistory.rowNum <= end" style="width: 1100px;">
         <div class=" row" style="max-height: 300px;">
           <div class="col-5" >
-            <img [src]="tourBookingHistory.thumbnail" height="300px" width="104%" style="position: relative; left: -12px; border-bottom-left-radius: 2px; border-top-left-radius: 2px;">
+            <img [src]="url+tourBookingHistory.thumbnail" height="300px" width="104%" style="position: relative; left: -12px; border-bottom-left-radius: 2px; border-top-left-radius: 2px;">
           </div>
           <div class="col-7" style="    padding-top: 10px;">
             <span class="badge badge-success" *ngIf="tourBookingHistory.status == -1 || tourBookingHistory.status == 5">{{tourBookingHistory.statusName}}</span>
