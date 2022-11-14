@@ -203,6 +203,10 @@ export class TourBookingComponent implements OnInit {
         this.activePane = 1
       }
     }
+    else{
+      document.body.scrollTop = 100;
+        document.documentElement.scrollTop = 100;
+    }
 
   }
   formatInput(input: HTMLInputElement) {
@@ -241,22 +245,26 @@ export class TourBookingComponent implements OnInit {
   handleSuccess(e: any){
     if (e) {
       this.resTourBooking.scheduleId = this.resSchedule.idSchedule
-      this.resTourBooking.pincode = "TRB" + new Date().getTime(),
-      this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
-      this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
-      this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+      this.resTourBooking.pincode = "TRB" + new Date().getTime()
+      if (this.resSchedule.costTour) {
+        this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
+        this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
+        this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+      }
+
       this.tourBookingService.create(this.resTourBooking).then(res => {
         this.response = res
-        this.notificationService.handleAlertObj(this.response.notification)
         if (this.response.notification.type == StatusNotification.Success) {
+          this.notificationService.handleAlertObj(this.response.notification)
           this.isSuccess = true
           this.resTourBooking = new TourBookingModel
           this.isRecapcha = false
           location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
-
-
         }
-
+        else{
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }
         this.captchaElem.resetCaptcha();
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");

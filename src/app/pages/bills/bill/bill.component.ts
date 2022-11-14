@@ -88,7 +88,7 @@ export class BillComponent implements OnInit {
             this.cancelTour.nativeElement.click()
             this.captchaElem.resetCaptcha();
             this.isRecapcha = false
-            //location.reload()
+            location.reload()
           }
         }, error => {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
