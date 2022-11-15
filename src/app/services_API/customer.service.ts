@@ -12,7 +12,7 @@ export class CustomerService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Customer/gets-customer");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Customer/list-customer");
   }
   create(data: any)
   {
@@ -25,6 +25,6 @@ export class CustomerService{
     return this.http.post<ResponseModel>(this.configService.apiUrl + "/api/Customer/update-customer",data);
   }
   get(idCustomer: string){
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Customer/get-customer?idCustomer="+idCustomer);
+    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Customer/detail-customer?idCustomer="+idCustomer);
   }
 }

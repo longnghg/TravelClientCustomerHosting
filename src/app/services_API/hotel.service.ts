@@ -11,7 +11,7 @@ constructor(private http:HttpClient, private configService:ConfigService){ }
 
 gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/gets-hotel");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Service/list-hotel");
 }
 
 create(data: any)

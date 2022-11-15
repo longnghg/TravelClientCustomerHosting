@@ -15,7 +15,7 @@ resPayment: PaymentModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/gets-payment").subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/list-payment").subscribe(res => {
       this.response = res
       this.resPayment =  this.response.content
       resolve(this.resPayment);
@@ -28,7 +28,7 @@ async views()
 }
 gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/gets-payment");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/list-payment");
 }
 
 create(data: any)

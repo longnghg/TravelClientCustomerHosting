@@ -12,12 +12,12 @@ export class TourBookingService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/get-tourbooking");
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/list-tourbooking");
   }
 
    getsHistory(idCustomer: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/customer/gets-history-booking-bycustomer?idCustomer="+ idCustomer);
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/customer/list-history-booking-bycustomer?idCustomer="+ idCustomer);
   }
 
   getTourBooking(idTourBooking: any)

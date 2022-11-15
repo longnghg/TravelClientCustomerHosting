@@ -11,7 +11,7 @@ constructor(private http:HttpClient, private configService:ConfigService){ }
 
 async getsSchedule()
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-gets-schedule").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-list-schedule").toPromise();
 }
 
 create(data: any)
@@ -21,27 +21,27 @@ create(data: any)
 
 async getsSchedulebyIdSchedule(idSchedule: any)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/get-schedule?idSchedule="+idSchedule).toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/detail-schedule?idSchedule="+idSchedule).toPromise();
 }
 
 async getsScheduleRelatebyIdSchedule(idSchedule: any)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-relate?idSchedule="+idSchedule).toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-relate?idSchedule="+idSchedule).toPromise();
 }
 
 async getsSchedulePromotion()
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-promotion").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-promotion").toPromise();
 }
 
 async getsScheduleFlashSale()
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/gets-schedule-flash-sale").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-flash-sale").toPromise();
 }
 
 async getsSchedulebyIdTour(idTour: any)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-gets-schedule-idtour?idTour="+idTour).toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-list-schedule-idtour?idTour="+idTour).toPromise();
 }
 
 async searchSchedule(kw: any)

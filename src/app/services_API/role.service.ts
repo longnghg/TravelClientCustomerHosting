@@ -16,7 +16,7 @@ export class RoleService{
   async views()
   {
     var value = <any>await new Promise<any>(resolve => {
-      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role").subscribe(res => {
+      this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/list-role").subscribe(res => {
         this.response = res
         this.resRole =  this.response.content
           resolve(this.resRole);
@@ -29,15 +29,11 @@ export class RoleService{
   }
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-role");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/list-role");
   }
   search(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/search-role", data);
-  }
-  getsDelete()
-  {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Role/gets-delete-role");
   }
 
   create(data: any)

@@ -12,7 +12,7 @@ export class PromotionService{
 
   gets()
   {
-      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/gets-promotion");
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Promotion/list-promotion");
   }
 
   create(data: any)
