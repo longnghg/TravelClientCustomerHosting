@@ -10,7 +10,7 @@ import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { PaymentService } from "../../../services_API/payment.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ActivatedRoute, Router } from '@angular/router';
-import { StatusNotification } from "../../../enums/enum";
+import { StatusNotification, PaymentMethod } from "../../../enums/enum";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha';
 const FILTER_PAG_REGEX = /[^0-9]/g;
@@ -40,7 +40,11 @@ export class TourBookingComponent implements OnInit {
   response: ResponseModel
   activePane = 0;
   isSuccess: boolean
-
+  paypal: {
+    status: number,
+    url: string,
+    debugId: string
+  }
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
@@ -186,7 +190,7 @@ export class TourBookingComponent implements OnInit {
   }
   changePayment(type: any){
     this.setCart()
-    this.resTourBooking.paymentId = type
+    this.resTourBooking.paymentId = Number(type)
   }
 
   booking(){
@@ -266,12 +270,27 @@ export class TourBookingComponent implements OnInit {
       this.response = res
       this.notificationService.handleAlertObj(this.response.notification)
       if (this.response.notification.type == StatusNotification.Success) {
-        this.isSuccess = true
-        this.resTourBooking = new TourBookingModel
-        this.isRecapcha = false
-        this.closeModal.nativeElement.click()
-        // location.assign(this.configService.clientUrl + "/bill/" + this.response.content)
-        this.router.navigate(['','bill', this.response.content]);
+        this.resTourBooking.idTourBooking = this.response.content
+        if (this.resTourBooking.paymentId == PaymentMethod.Paypal) {
+          this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
+            console.log(res);
+            this.paypal = res
+            if (!res.debugId) {
+              location.assign(this.paypal.url)
+            }
+            else{
+               this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
+            }
+
+          })
+        }
+        else{
+          this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
+          this.isSuccess = true
+          this.resTourBooking = new TourBookingModel
+          this.isRecapcha = false
+          this.closeModal.nativeElement.click()
+        }
       }
       else{
         document.body.scrollTop = 0;

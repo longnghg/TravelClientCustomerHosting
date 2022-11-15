@@ -34,4 +34,8 @@ export class TourBookingService{
   {
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking).toPromise();
   }
+
+  async paypal(idTourBooking: string){
+    return await this.http.get<any>( this.configService.apiUrl + "/api/pay/checkout-paypal?idTourBooking="+idTourBooking).toPromise();;
+  }
 }

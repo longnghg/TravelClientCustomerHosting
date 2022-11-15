@@ -182,18 +182,8 @@
                   <ng-template #else2>
                     <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
                       <h6 class="card-subtitle mb-2" style="margin-top: 20px">
-                        Quý khách sau khi thực hiện việc chuyển khoản vui lòng gửi email đến
-                        <span style="font-weight: bold; color: #2d4271">contactcenter@TravelRover.com</span> hoặc gọi tổng đài
-                        <span style="font-weight: bold; color: #2d4271">19001839</span> để được xác nhận từ công ty chúng tôi.
-                        <br>
-                        <br>
-                        Tên Tài Khoản : Công ty CP Du lịch và Tiếp thị GTVT Việt Nam – TravelRover
-                        <br>
-                        Tên tài khoản viết tắt : TravelRover
-                        <br>
-                        Số Tài khoản : <span style="font-weight: bold; color: #2d4271">007 100 115 1480</span>
-                        <br>
-                        Ngân hàng : Vietcombank – CN Tp.HCM</h6>
+                        Thanh toán bằng Paypal
+                        </h6>
                       <div class="t_buttons">
                         <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment" id="">
                       </div>
@@ -591,56 +581,3 @@
 </div> -->
 
 
-
-
-<div class="untree_co-section">
-  <div class="container">
-    <div class="row justify-content-between align-items-center">
-
-      <div class="col-lg-6">
-        <figure class="img-play-video">
-          <a id="play-video" class="video-play-button" href="https://www.youtube.com/watch?v=mwtbEGNABWU" data-fancybox>
-            <span></span>
-          </a>
-          <img src="assets/images/hero-slider-2.jpg" alt="Image" class="img-fluid rounded-20">
-        </figure>
-      </div>
-
-      <div class="col-lg-5">
-        <h2 class="section-title text-left mb-4">Take a look at Tour Video</h2>
-        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-        <p class="mb-4">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-
-        <ul class="list-unstyled two-col clearfix">
-          <li>Outdoor recreation activities</li>
-          <li>Airlines</li>
-          <li>Car Rentals</li>
-          <li>Cruise Lines</li>
-          <li>Hotels</li>
-          <li>Railways</li>
-          <li>Travel Insurance</li>
-          <li>Package Tours</li>
-          <li>Insurance</li>
-          <li>Guide Books</li>
-        </ul>
-
-        <p><a href="#" class="btn btn-primary">Get Started</a></p>
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="py-5 cta-section">
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-md-12">
-        <h2 class="mb-2 text-white">Lets you Explore the Best. Contact Us Now</h2>
-        <p class="mb-4 lead text-white text-white-opacity">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, fugit?</p>
-        <p class="mb-0"><a href="booking.html" class="btn btn-outline-white text-white btn-md font-weight-bold">Get in touch</a></p>
-      </div>
-    </div>
-  </div>
-</div>

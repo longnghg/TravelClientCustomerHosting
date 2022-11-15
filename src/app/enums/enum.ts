@@ -40,3 +40,11 @@ export enum StatusNotification
     Block = "Block",
     Validation = "Validation"
 }
+
+
+export enum PaymentMethod
+{
+    Cash = 1,
+    Card = 2,
+    Paypal = 3,
+}
