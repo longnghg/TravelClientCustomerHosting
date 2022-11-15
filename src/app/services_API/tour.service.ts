@@ -34,12 +34,12 @@ export class TourService{
   }
   async gets()
   {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/get-tour-with-schedule").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-with-schedule").toPromise();
   }
 
   async getsTourByRating()
   {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/gets-tour-by-rating").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-by-rating").toPromise();
   }
   create(data: any)
   {
