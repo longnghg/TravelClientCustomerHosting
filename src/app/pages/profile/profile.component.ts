@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
       this.validateCustomer =  this.configService.validateCustomer(this.resCustomer, this.validateCustomer)
 
       if (this.validateCustomer.total == 0) {
-        this.customerService.update(this.resCustomer).subscribe(res =>{
+        this.customerService.update(this.resCustomer, this.resCustomer.idCustomer).subscribe(res =>{
           this.response = res
           this.notificationService.handleAlertObj(res.notification)
           this.isChange = false
