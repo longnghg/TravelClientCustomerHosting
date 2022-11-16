@@ -21,15 +21,15 @@ export class AuthenticationService{
   }
 
   changePassword(idCus: string, password: string, newPassword: string){
-      return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-customer?idCus="+idCus+"&password="+password+"&newPassword="+newPassword);
+      return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/change-pass-customer?idCus="+idCus+"&password="+password+"&newPassword="+newPassword, {});
   }
 
   forgotPassword(data: any){
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-customer?email="+data.email+"&password="+data.password);
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/forgot-pass-customer?email="+data.email+"&password="+data.password, {});
 }
 
   block(email: string){
-    return this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email);
+    return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email, {});
   }
 
 }

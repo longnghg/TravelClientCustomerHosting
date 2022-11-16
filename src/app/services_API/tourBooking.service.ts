@@ -32,7 +32,7 @@ export class TourBookingService{
 
   async cancel(idTourBooking: any)
   {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking).toPromise();
+    return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking, {}).toPromise();
   }
 
   async paypal(idTourBooking: string){
