@@ -71,6 +71,9 @@ export class ForgotPasswordComponent implements OnInit {
           this.isCountdown = false
           this.isload = false
         }
+        if(this.response.notification.type == StatusNotification.Error){
+          this.isload = false
+        }
       }, error => {
         var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
         this.notificationService.handleAlert(message, StatusNotification.Error)

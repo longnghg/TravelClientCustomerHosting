@@ -45,6 +45,9 @@ export class RegisterComponent implements OnInit {
            {
              document.location.assign( this.configService.clientUrl + "/login")
            }
+           if(this.response.notification.type == StatusNotification.Validation){
+
+           }
            this.notificationService.handleAlertObj(res.notification)
 
           }, error => {
