@@ -140,7 +140,7 @@ h1{
   height: 50px;
   text-align: center;
   padding-top: 13px;
-  animation: color 2s infinite;
+  animation: color 2s infinite alternate;
   transition: 0.5s;
 }
 
@@ -193,9 +193,9 @@ h1{
 
 @keyframes color {
   0% {background-color: #6998AB}
-  35% {background-color: #5686e0}
-  70% {background-color: #7f49d6}
-  100% {background-color: #6998AB}
+  50% {background-color: #5686e0}
+  100% {background-color: #7f49d6}
+  // 100% {background-color: #6998AB}
 }
 
 .card-shadow{
