@@ -48,4 +48,8 @@ async searchSchedule(kw: any)
 {
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw).toPromise();
 }
+
+async searchSheduleFilter(data: any){
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule-filter"+ data).toPromise();
+}
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProvinceService } from "../../services_API/province.service";
 import { LocationModel } from "../../models/location.model";
+import { SearchScheduleFilter } from 'src/app/models/schedule.model';
 
 
 @Component({
@@ -10,10 +11,10 @@ import { LocationModel } from "../../models/location.model";
 })
 export class FilterComponent implements OnInit {
   resProvince: LocationModel[]
-  kwFrom: any = "TP Hồ Chí Minh"
-  kwTo: any = null
-  kwDepartureDate: any = ""
-  kwReturnDate: any = ""
+
+  @Output() kwSearch = new EventEmitter<any>();
+  resScheduleFilter:  SearchScheduleFilter
+  kwPriceFromToSmall: any
   value: number = 100;
   constructor(private provinceService: ProvinceService,) { }
   formatLabel(value: number) {
@@ -24,8 +25,37 @@ export class FilterComponent implements OnInit {
     return value;
   }
   ngOnInit(): void {
+    this.resScheduleFilter = new SearchScheduleFilter
     this.provinceService.views().then(res => {this.resProvince = res})
+  }
 
+
+  ngOnChanges(): void {
+    
+   
+  }
+
+  promotionFormat(){
+    if(this.resScheduleFilter.kwPromotion){
+      this.resScheduleFilter.kwPromotion = 2
+    }
+    else{
+      this.resScheduleFilter.kwPromotion = 1
+    }
+  }
+
+  priceFromToSmall(){
+    this.resScheduleFilter.kwPriceFrom = 20000000
+    this.resScheduleFilter.kwPriceTo = 5000000
+  }
+
+  priceFromToLarge(){
+    this.resScheduleFilter.kwPriceFrom = 50000000
+    this.resScheduleFilter.kwPriceTo = 10000000
+  }
+
+  searchFilter() {
+    this.kwSearch.emit(this.resScheduleFilter);
   }
 
 }

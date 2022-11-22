@@ -12,11 +12,11 @@
     <label>Điểm đi</label>
     <ng-select
         [items]="resProvince"
-        [(ngModel)]="kwFrom"
+        [(ngModel)]="resScheduleFilter.kwFrom"
         placeholder="Chọn điểm đi..."
         bindLabel="nameProvince"
         bindValue="nameProvince"
-        [clearable]="false"
+        (change)="searchFilter()"
         name="from"
         id="from">
       </ng-select>
@@ -27,10 +27,11 @@
       <label>Điểm đến</label>
       <ng-select
         [items]="resProvince"
-        [(ngModel)]="kwTo"
+        [(ngModel)]="resScheduleFilter.kwTo"
         placeholder="Chọn điểm đến..."
         bindLabel="nameProvince"
         bindValue="nameProvince"
+        (change)="searchFilter()"
         name="to"
         id="to">
       </ng-select>
@@ -40,14 +41,14 @@
   <div class="row mb-3" >
     <div class="col">
       <label style="padding: unset;">Ngày đi</label>
-    <input class="form-control" [(ngModel)]="kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
+    <input class="form-control" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
     </div>
   </div>
 
   <div class="row mb-2">
     <div class="col">
       <label style="padding: unset;">Ngày về</label>
-      <input class="form-control" [(ngModel)]="kwReturnDate" name="returnDate" onkeydown="return false" type="date">
+      <input class="form-control" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwReturnDate" name="returnDate" onkeydown="return false" type="date">
     </div>
   </div>
 
@@ -101,42 +102,6 @@
     </div>
   </div>
 
-  <div class="row mb-3">
-    <div class="col row">
-      <label>Dòng tour</label>
-      <div class="col-6">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="type" id="luxury" checked>
-          <label class="form-check-label" for="luxury">
-            <!-- <i class="fa-solid fa-crown"></i> -->
-            Cao cấp
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="type" id="eco">
-          <label class="form-check-label" for="eco">
-            <!-- <i class="fa-solid fa-piggy-bank"></i> -->
-            Tiết kiệm
-          </label>
-        </div>
-      </div>
-        <div class="col-6">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="standard">
-            <label class="form-check-label" for="standard">
-              Tiêu chuẩn
-            </label>
-          </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="type" id="best" >
-          <label class="form-check-label" for="best">
-            Giá tốt
-          </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
     <!-- <label>Dòng tour</label>
     <div class="col-6 mb-3">
       <button class="btn btn-outline-primary btn-block">Cao cấp</button>
@@ -154,18 +119,18 @@
 
   <div class="row mb-3">
     <div class="col row">
-      <label>Số người</label>
+      <label>Số tiền</label>
       <div class="col-6">
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="customer" id="1customer" checked>
-          <label class="form-check-label" for="1customer">
+          <input class="form-check-input" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwPriceFrom" value="2000000" type="radio" name="price" id="1price" checked>
+          <label class="form-check-label" for="1price">
             <!-- <i class="fa-solid fa-crown"></i> -->
             Dưới 2tr
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="customer" id="2customer">
-          <label class="form-check-label" for="2customer">
+          <input class="form-check-input" (change)="searchFilter(); priceFromToLarge()" type="radio" name="price" id="2price">
+          <label class="form-check-label" for="2price">
             Từ 5-10tr
             <!-- <i class="fa-solid fa-piggy-bank"></i> -->
           </label>
@@ -173,14 +138,15 @@
       </div>
         <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="customer" id="3customer">
-            <label class="form-check-label" for="3customer">
+            <input class="form-check-input" (change)="searchFilter(); priceFromToSmall()"  type="radio" name="price" id="3price">
+          
+            <label class="form-check-label" for="3price">
               Từ 2-5tr
             </label>
           </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="customer" id="5customer" >
-          <label class="form-check-label" for="5customer">
+          <input class="form-check-input" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwPriceTo" value="10000000" type="radio" name="price" id="5price" >
+          <label class="form-check-label" for="5price">
             Trên 10tr
           </label>
         </div>
@@ -207,7 +173,7 @@
   <div class="col">
     <label>Hiển thị những chuyến đi có</label>
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="promotion">
+      <input class="form-check-input" (change)="searchFilter(); promotionFormat()" [(ngModel)]="resScheduleFilter.kwPromotion" type="checkbox" role="switch" id="promotion">
       <label class="form-check-label" for="promotion">Khuyến mãi</label>
     </div>
     <div class="form-check form-switch">

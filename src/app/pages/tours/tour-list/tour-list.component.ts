@@ -7,7 +7,7 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ProvinceService } from "../../../services_API/province.service";
 import { ConfigService } from "../../../services_API/config.service";
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, Data } from '@angular/router';
 import { LocationModel } from "../../../models/location.model";
 import { StatusNotification } from "../../../enums/enum";
 
@@ -41,6 +41,7 @@ export class TourListComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
+  filter: any
   @ViewChild('toTop') toTop: ElementRef;
   ngOnInit(): void {
     var split =[]
@@ -54,6 +55,15 @@ export class TourListComponent implements OnInit {
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (this.resTourBooking) {
      this.isBack = true
+    }
+    
+  }
+
+  ngOnChanges(): void {
+    console.log(this.filter);
+    
+    if(this.filter){
+      this.initFilter(this.filter)
     }
   }
 
@@ -83,6 +93,32 @@ export class TourListComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  initFilter(data: any){
+
+    this.scheduleService.searchSheduleFilter(data).then(res => {
+      this.response = res
+      if ( this.response.notification.type == StatusNotification.Success) {
+        this.resSchedule = this.response.content
+        this.calTotalResult()
+        this.calStartEnd()
+      }
+      // if(!this.resSchedule)
+      // {
+      //   location.assign(this.configService.clientUrl + "/page404")
+
+      // }
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  searchFilter(value: any) {
+    this.filter = value;
+    console.log(this.filter);
   }
 
   booking(idSchedule: string, alias: string){

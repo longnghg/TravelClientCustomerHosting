@@ -77,3 +77,13 @@ export class ScheduleModel{
   countdownConfig: CountdownConfig
   outOfTime: number = 0
 }
+
+export class SearchScheduleFilter{
+  kwFrom: any 
+  kwTo: any = null
+  kwDepartureDate: any = ""
+  kwReturnDate: any = ""
+  kwPriceFrom: any
+  kwPriceTo: any
+  kwPromotion: any
+}
