@@ -80,7 +80,7 @@ export class ScheduleModel{
 
 export class SearchScheduleFilter{
   kwFrom: any 
-  kwTo: any = null
+  kwTo: any  
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
   kwPriceFrom: any

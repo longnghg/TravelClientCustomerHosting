@@ -42,6 +42,7 @@ export class FilterComponent implements OnInit {
     else{
       this.resScheduleFilter.kwPromotion = 1
     }
+   
   }
 
   priceFromToSmall(){
@@ -55,6 +56,7 @@ export class FilterComponent implements OnInit {
   }
 
   searchFilter() {
+    this.promotionFormat()
     this.kwSearch.emit(this.resScheduleFilter);
   }
 

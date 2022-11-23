@@ -1,7 +1,7 @@
 import { Component, OnInit,  ElementRef, ViewChild } from '@angular/core';
 import { TourService } from "../../../services_API/tour.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
-import { ScheduleModel } from "../../../models/schedule.model";
+import { ScheduleModel, SearchScheduleFilter } from "../../../models/schedule.model";
 import { TourBookingModel } from "../../../models/tourBooking.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -41,7 +41,7 @@ export class TourListComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-  filter: any
+  resScheduleFilter: SearchScheduleFilter
   @ViewChild('toTop') toTop: ElementRef;
   ngOnInit(): void {
     var split =[]
@@ -60,11 +60,8 @@ export class TourListComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.filter);
     
-    if(this.filter){
-      this.initFilter(this.filter)
-    }
+    
   }
 
   ngAfterViewChecked(): void {
@@ -109,7 +106,6 @@ export class TourListComponent implements OnInit {
       //   location.assign(this.configService.clientUrl + "/page404")
 
       // }
-
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -117,8 +113,12 @@ export class TourListComponent implements OnInit {
   }
 
   searchFilter(value: any) {
-    this.filter = value;
-    console.log(this.filter);
+    this.resScheduleFilter = value;
+    console.log(this.resScheduleFilter);
+    if(this.resScheduleFilter){
+      this.initFilter(this.resScheduleFilter)
+      this.resScheduleFilter = new SearchScheduleFilter
+    }
   }
 
   booking(idSchedule: string, alias: string){
