@@ -79,11 +79,11 @@ export class ScheduleModel{
 }
 
 export class SearchScheduleFilter{
-  kwFrom: any 
-  kwTo: any  
+  kwFrom: any = "TP Hồ Chí Minh"
+  kwTo: any = null
   kwDepartureDate: any = ""
-  kwReturnDate: any = ""
-  kwPriceFrom: any
-  kwPriceTo: any
-  kwPromotion: any
+  kwReturnDate: any =""
+  kwPriceFrom: any = ""
+  kwPriceTo: any = ""
+  kwPromotion: any = ""
 }

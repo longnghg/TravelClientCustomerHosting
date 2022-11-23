@@ -50,6 +50,8 @@ async searchSchedule(kw: any)
 }
 
 async searchSheduleFilter(data: any){
+  console.warn(data);
+
     return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule-filter", data).toPromise();
 }
 }

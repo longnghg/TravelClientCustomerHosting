@@ -31,8 +31,8 @@ export class FilterComponent implements OnInit {
 
 
   ngOnChanges(): void {
-    
-   
+
+
   }
 
   promotionFormat(){
@@ -42,22 +42,36 @@ export class FilterComponent implements OnInit {
     else{
       this.resScheduleFilter.kwPromotion = 1
     }
-   
+
+  }
+
+  priceFromSmall(){
+    this.resScheduleFilter.kwPriceFrom = null
+    this.resScheduleFilter.kwPriceTo = null
+    this.resScheduleFilter.kwPriceFrom = 2000000
+    this.searchFilter()
+  }
+
+  priceToLarge(){
+    this.resScheduleFilter.kwPriceFrom = null
+    this.resScheduleFilter.kwPriceTo = null
+    this.resScheduleFilter.kwPriceTo = 10000000
+    this.searchFilter()
   }
 
   priceFromToSmall(){
-    this.resScheduleFilter.kwPriceFrom = 20000000
+    this.resScheduleFilter.kwPriceFrom = 2000000
     this.resScheduleFilter.kwPriceTo = 5000000
+    this.searchFilter()
   }
 
   priceFromToLarge(){
-    this.resScheduleFilter.kwPriceFrom = 50000000
+    this.resScheduleFilter.kwPriceFrom = 5000000
     this.resScheduleFilter.kwPriceTo = 10000000
+    this.searchFilter()
   }
 
   searchFilter() {
-    this.promotionFormat()
     this.kwSearch.emit(this.resScheduleFilter);
   }
-
 }

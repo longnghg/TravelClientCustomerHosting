@@ -50,18 +50,20 @@ export class TourListComponent implements OnInit {
     this.from = split[0].replace("from=", "")
     this.to = split[1].replace("to=", "")
 
+
+
     this.init(this.activatedRoute.snapshot.paramMap.get('id'))
 
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (this.resTourBooking) {
      this.isBack = true
     }
-    
+
   }
 
   ngOnChanges(): void {
-    
-    
+
+
   }
 
   ngAfterViewChecked(): void {
@@ -77,14 +79,9 @@ export class TourListComponent implements OnInit {
       this.response = res
       if ( this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
-        this.calTotalResult()
-        this.calStartEnd()
       }
-      // if(!this.resSchedule)
-      // {
-      //   location.assign(this.configService.clientUrl + "/page404")
-
-      // }
+      this.calTotalResult()
+        this.calStartEnd()
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -98,14 +95,13 @@ export class TourListComponent implements OnInit {
       this.response = res
       if ( this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
-        this.calTotalResult()
-        this.calStartEnd()
-      }
-      // if(!this.resSchedule)
-      // {
-      //   location.assign(this.configService.clientUrl + "/page404")
 
-      // }
+      }
+      else{
+        this.resSchedule = []
+      }
+      this.calTotalResult()
+      this.calStartEnd()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
@@ -114,10 +110,8 @@ export class TourListComponent implements OnInit {
 
   searchFilter(value: any) {
     this.resScheduleFilter = value;
-    console.log(this.resScheduleFilter);
     if(this.resScheduleFilter){
       this.initFilter(this.resScheduleFilter)
-      this.resScheduleFilter = new SearchScheduleFilter
     }
   }
 
