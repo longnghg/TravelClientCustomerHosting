@@ -52,34 +52,28 @@
     </div>
   </div>
 
-    <!-- <label>Dòng tour</label>
-    <div class="col-6 mb-3">
-      <button class="btn btn-outline-primary btn-block">Cao cấp</button>
-    </div>
-    <div class="col-6 mb-3">
-      <button class="btn btn-outline-primary btn-block">Tiết kiệm</button>
-    </div>
-    <div class="col-6">
-      <button class="btn btn-outline-primary btn-block">Tiêu chuẩn</button>
-    </div>
-    <div class="col-6">
-      <button class="btn btn-outline-primary btn-block">Giá tốt</button>
-    </div> -->
-  <!-- </div> -->
 
   <div class="row mb-3">
     <div class="col row">
-      <label>Số tiền</label>
+      <div class="row">
+        <div class="col-4">
+          <label>Số tiền</label>
+        </div>
+        <div class="col-8">
+          <input class="form-check-input"  (click)="priceAll()" type="radio" name="price" id="price" checked>
+          <label class="form-check-label" for="price">Tất cả</label>
+        </div>
+      </div>
       <div class="col-6">
         <div class="form-check">
-          <input class="form-check-input" (change)="searchFilter(); priceFromSmall()"  type="radio" name="price" id="1price" >
+          <input class="form-check-input"  (click)="priceFromSmall()"  type="radio" name="price" id="1price" >
           <label class="form-check-label" for="1price">
             <!-- <i class="fa-solid fa-crown"></i> -->
             Dưới 2tr
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" (change)="searchFilter(); priceFromToLarge()" type="radio" name="price" id="2price">
+          <input class="form-check-input"  (click)="priceFromToLarge()" type="radio" name="price" id="2price">
           <label class="form-check-label" for="2price">
             Từ 5-10tr
             <!-- <i class="fa-solid fa-piggy-bank"></i> -->
@@ -88,46 +82,35 @@
       </div>
         <div class="col-6">
           <div class="form-check">
-            <input class="form-check-input" (change)="searchFilter(); priceFromToSmall()"  type="radio" name="price" id="3price">
+            <input class="form-check-input"  (click)="priceFromToSmall()"  type="radio" name="price" id="3price">
 
             <label class="form-check-label" for="3price">
               Từ 2-5tr
             </label>
           </div>
         <div class="form-check">
-          <input class="form-check-input" (change)="searchFilter(); priceToLarge()" type="radio" name="price" id="4price" >
+          <input class="form-check-input"  (click)="priceToLarge()" type="radio" name="price" id="4price" >
           <label class="form-check-label" for="4price">
             Trên 10tr
           </label>
         </div>
       </div>
     </div>
-       <!-- <label>Giá tour</label>
-    <div class="col-6 mb-3">
-      <button class="btn btn-outline-primary btn-block">Dưới 5tr</button>
-    </div>
-    <div class="col-6 mb-3">
-      <button class="btn btn-outline-primary btn-block">Từ 5-10tr</button>
-    </div>
-    <div class="col-6">
-      <button class="btn btn-outline-primary btn-block">Trên 10tr</button>
-    </div>
-    <div class="col-6">
-      <div  class="btn btn-outline-primary btn-block">
-        <input type="text" class="input-btn" placeholder="Nhập giá...">
-      </div>
-    </div> -->
  </div>
 
  <div class="row mb-3">
   <div class="col">
     <label>Hiển thị những chuyến đi có</label>
     <div class="form-check form-switch">
-      <input class="form-check-input" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwPromotion" type="checkbox" role="switch" id="promotion">
+      <input class="form-check-input" (change)="checkOption()" type="checkbox" role="switch" id="promotion" [checked]="resScheduleFilter.kwIsAllOption">
+      <label class="form-check-label" for="promotion">Tất cả</label>
+    </div>
+    <div class="form-check form-switch">
+      <input #promotion class="form-check-input" [disabled]="resScheduleFilter.kwIsAllOption" (change)="promotionFormat()" type="checkbox" role="switch" id="promotion">
       <label class="form-check-label" for="promotion">Khuyến mãi</label>
     </div>
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="slot" checked>
+      <input class="form-check-input" [disabled]="resScheduleFilter.kwIsAllOption" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwIsHoliday" type="checkbox" role="switch" id="slot" checked>
       <label class="form-check-label" for="slot">Ngày lễ</label>
     </div>
   </div>

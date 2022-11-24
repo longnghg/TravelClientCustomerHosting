@@ -86,4 +86,6 @@ export class SearchScheduleFilter{
   kwPriceFrom: any = ""
   kwPriceTo: any = ""
   kwPromotion: any = ""
+  kwIsHoliday: boolean = false
+  kwIsAllOption: boolean = true
 }

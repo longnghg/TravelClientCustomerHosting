@@ -42,15 +42,17 @@ export class TourListComponent implements OnInit {
   btnPrev: boolean = false
   btnNext: boolean = true
   resScheduleFilter: SearchScheduleFilter
+  kwRoute:string
   @ViewChild('toTop') toTop: ElementRef;
   ngOnInit(): void {
     var split =[]
-
-    split = this.activatedRoute.snapshot.paramMap.get('id').split("&")
+    this.kwRoute = this.activatedRoute.snapshot.paramMap.get('id')
+    split =  this.kwRoute.split("&")
     this.from = split[0].replace("from=", "")
     this.to = split[1].replace("to=", "")
 
 
+    console.log(split);
 
     this.init(this.activatedRoute.snapshot.paramMap.get('id'))
 
@@ -79,6 +81,14 @@ export class TourListComponent implements OnInit {
       this.response = res
       if ( this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
+        this.resSchedule.forEach(schedule => {
+          if (schedule.isHoliday) {
+            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+          }
+          else{
+            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+          }
+        });
       }
       this.calTotalResult()
         this.calStartEnd()
@@ -95,7 +105,43 @@ export class TourListComponent implements OnInit {
       this.response = res
       if ( this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
+        var i = 0
+        var arr = [0]
+        arr = []
+        this.resSchedule.forEach(schedule => {
 
+          if (schedule.isHoliday) {
+            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+          }
+          else{
+            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+          }
+          if (this.resScheduleFilter) {
+            if (this.resScheduleFilter.kwPriceFrom > 0 && this.resScheduleFilter.kwPriceTo > 0) {
+              if (this.resScheduleFilter.kwPriceFrom >= schedule.pricePromotion) {
+                arr.push(i)
+              }
+              else if(this.resScheduleFilter.kwPriceTo <= schedule.pricePromotion){
+                arr.push(i)
+              }
+            }
+            else if(this.resScheduleFilter.kwPriceFrom > 0){
+              if (this.resScheduleFilter.kwPriceFrom <= schedule.pricePromotion) {
+                arr.push(i)
+              }
+            }
+            else{
+              if (this.resScheduleFilter.kwPriceTo >= schedule.pricePromotion) {
+                arr.push(i)
+              }
+            }
+          }
+          i++
+        });
+        arr.sort().reverse()
+        arr.forEach(number => {
+          this.resSchedule.splice(number, 1)
+        });
       }
       else{
         this.resSchedule = []
