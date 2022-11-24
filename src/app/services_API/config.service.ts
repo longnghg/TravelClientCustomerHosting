@@ -46,6 +46,19 @@ export class ConfigService{
     return listStatus
   }
 
+  validateComment(data:any, model: any){
+    model.total = 0
+    if(data.commentText == null || data.commentText == ""){
+      model.commentText = "[Bình luận] không được để trống !"
+      model.total += 1
+    }
+    if(data.commentText.length > 1000){
+      model.commentText = "[Bình luận] quá dài !"
+      model.total += 1
+    }
+    return model
+  }
+
   validateCustomer(data: any, model: any){
     model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;

@@ -1,11 +1,15 @@
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform  } from '@angular/core';
+import { Component, OnInit,Input, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform  } from '@angular/core';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ScheduleModel } from "../../../models/schedule.model";
+import { CommentModel, ValidationCommentModel } from "../../../models/comment.model";
+import { CommentService } from 'src/app/services_API/comment.service';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { StatusNotification } from "../../../enums/enum";
+import { AuthenticationModel } from 'src/app/models/authentication.model';
+import { getLocaleDateFormat } from '@angular/common';
 
 @Component({
   selector: 'app-tour-detail',
@@ -16,21 +20,39 @@ export class TourDetailComponent implements OnInit {
   resSchedule: ScheduleModel
   resSchedules: ScheduleModel[]
   resScheduleRelate: ScheduleModel[]
+  resComment: CommentModel []
+  resCmt: CommentModel = new CommentModel
   response: ResponseModel
-  constructor(private scheduleService: ScheduleService, private notificationService: NotificationService, private configService: ConfigService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  auth: AuthenticationModel
+  idComment: string
+  validateComment: ValidationCommentModel = new ValidationCommentModel
+  constructor(private scheduleService: ScheduleService,
+    private notificationService: NotificationService,
+    private configService: ConfigService,
+    private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService) { }
   url = this.configService.apiUrl
+
   ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
   }
 
+  // ngOnChanges(): void {
+  //   if(this.resComment){
+  //     this.resComment.commentTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resComment.commentTime)
+  //   }
+
+  // }
+
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
+
         if (this.resSchedule.promotions.idPromotion != 1) {
           if (this.resSchedule.isHoliday) {
             this.resSchedule.pricePromotion = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * this.resSchedule.promotions.value /100)
@@ -67,10 +89,20 @@ export class TourDetailComponent implements OnInit {
           var message = this.configService.error(error.status, error.error != null?error.error.text:"");
           this.notificationService.handleAlert(message, StatusNotification.Error)
         })
+
+        this.commentService.gets(this.resSchedule.tour.idTour).subscribe(res => {
+          this.response = res
+          if(this.response.notification.type == StatusNotification.Success){
+            this.resComment = this.response.content
+          }
+        })
+
       }
       else{
          location.assign(this.configService.clientUrl + "/page404")
       }
+
+
 
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -81,8 +113,6 @@ export class TourDetailComponent implements OnInit {
   initScheduleRelated(idSchedule: string){
     this.scheduleService.getsScheduleRelatebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      console.log(res);
-
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleRelate = this.response.content
         this.resScheduleRelate.forEach(schedule => {
@@ -152,4 +182,43 @@ export class TourDetailComponent implements OnInit {
     // location.reload()
     location.assign(this.configService.clientUrl + "/tour-detail/"+idSchedule+"/"+alias)
   }
+
+  createComment(){
+    this.validateComment = new ValidationCommentModel
+    this.validateComment = this.configService.validateComment(this.resCmt, this.validateComment)
+
+    if(this.validateComment.total == 0){
+      this.resCmt.idTour = this.resSchedule.tour.idTour
+      this.resCmt.idCustomer = this.auth.id
+      this.commentService.create(this.resCmt).subscribe(res =>{
+        this.response = res
+        this.notificationService.handleAlertObj(res.notification)
+        if(this.response.notification.type == StatusNotification.Success)
+        {
+		      this.resCmt = Object.assign({}, new CommentModel)
+          this.validateComment = new ValidationCommentModel
+        }
+          }, error => {
+            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+            this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
+
+  getData(idComment: string){
+    this.idComment = idComment
+  }
+
+  deleteComment(){
+
+    this.commentService.delete(this.idComment, this.auth.id).subscribe(res =>{
+      this.response = res
+      this.notificationService.handleAlertObj(res.notification)
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
 }
+
