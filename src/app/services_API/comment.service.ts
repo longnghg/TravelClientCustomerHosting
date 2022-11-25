@@ -18,7 +18,10 @@ export class CommentService{
   {
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Comment/gets-comment?idTour=" + idTour);
   }
-
+  getidCus(idCus: string)
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Comment/gets-comment?idCus=" + idCus);
+  }
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/comment/create-comment", data);
@@ -28,5 +31,6 @@ export class CommentService{
   {
     return this.http.delete<ResponseModel>(this.configService.apiUrl + "/api/comment/delete-comment?idComment="+idComment+"&idCustomer="+idCustomer);
   }
+
 
 }

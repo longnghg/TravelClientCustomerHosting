@@ -12,3 +12,8 @@ export class ValidationCommentModel{
   commentText: string = null
   total: number
 }
+export class ValidationCommentTextModel{
+  commentText: string = null
+  total: number
+}
+

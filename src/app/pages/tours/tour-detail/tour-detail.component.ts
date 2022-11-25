@@ -1,7 +1,7 @@
 import { Component, OnInit,Input, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform  } from '@angular/core';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ScheduleModel } from "../../../models/schedule.model";
-import { CommentModel, ValidationCommentModel } from "../../../models/comment.model";
+import { CommentModel, ValidationCommentModel,  ValidationCommentTextModel } from "../../../models/comment.model";
 import { CommentService } from 'src/app/services_API/comment.service';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
@@ -25,7 +25,9 @@ export class TourDetailComponent implements OnInit {
   response: ResponseModel
   auth: AuthenticationModel
   idComment: string
+  idCus: string
   validateComment: ValidationCommentModel = new ValidationCommentModel
+  validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
@@ -34,18 +36,14 @@ export class TourDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
   }
 
-  // ngOnChanges(): void {
-  //   if(this.resComment){
-  //     this.resComment.commentTimeDisplay = this.configService.formatFromUnixTimestampToFullDate(this.resComment.commentTime)
-  //   }
 
-  // }
 
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
@@ -97,6 +95,12 @@ export class TourDetailComponent implements OnInit {
           }
         })
 
+        // this.commentService.getidCus(this.auth.id).subscribe(res => {
+        //   this.response = res
+        //   if(this.response.notification.type == StatusNotification.Success){
+        //     this.idCus = this.response.content
+        //   }
+        // })
       }
       else{
          location.assign(this.configService.clientUrl + "/page404")
@@ -185,9 +189,11 @@ export class TourDetailComponent implements OnInit {
 
   createComment(){
     this.validateComment = new ValidationCommentModel
+
     this.validateComment = this.configService.validateComment(this.resCmt, this.validateComment)
 
-    if(this.validateComment.total == 0){
+    if(this.validateComment.total == 0 ){
+      this.validateCommentText = this.configService.validateCommentText(this.resCmt, this.validateCommentText)
       this.resCmt.idTour = this.resSchedule.tour.idTour
       this.resCmt.idCustomer = this.auth.id
       this.commentService.create(this.resCmt).subscribe(res =>{
@@ -210,7 +216,6 @@ export class TourDetailComponent implements OnInit {
   }
 
   deleteComment(){
-
     this.commentService.delete(this.idComment, this.auth.id).subscribe(res =>{
       this.response = res
       this.notificationService.handleAlertObj(res.notification)

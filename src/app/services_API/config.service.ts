@@ -59,6 +59,27 @@ export class ConfigService{
     return model
   }
 
+  validateCommentText(data:any, model: any){
+    var words = [ 'lolz', 'lone','đmm','Đmm','dmm','Dmm','cl','clm','clmm','clgt','Clgt','đéo', 'Đéo','Đụ','đụ','Bitch','bitch','Fuck','ncc','đỉ','Đĩ','đĩ','Lồn','lồn','lỏ','cc','khủng khiếp']
+
+    var split = [""]
+    split = data.commentText.split(" ")
+    var text = ""
+    split.forEach(element => {
+      if (words.indexOf(element) >= 0) {
+        text += "*** "
+      }
+      else{
+        text += element + " "
+      }
+      data.commentText = text
+    });
+
+
+    return model
+
+  }
+
   validateCustomer(data: any, model: any){
     model.total = 0
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
