@@ -1,12 +1,16 @@
-
 <div class="container mt-5 mb-5" *ngIf="resSchedule">
   <div class="row mb-5">
     <div class="col-7" style="padding-left: 30px;">
       <div class="row">
-        <div class="col" style="color: #4d4aef;font-size: 13px; margin-bottom: 5px;"><i class="fa-solid fa-ticket"></i> {{resSchedule.idSchedule}}</div>
+        <div class="col" style="color: #4d4aef;font-size: 13px; margin-bottom: 5px;"><i class="fa-solid fa-ticket"></i>
+          {{resSchedule.idSchedule}}</div>
       </div>
       <div class="row">
-        <div class="col" style="font-size: 26px; font-weight: 700; color: #2d4271; line-height: 30px; margin-bottom: 12px; max-width: 100%;"><h3>{{resSchedule.tour.nameTour}}  <span *ngIf="resSchedule.isHoliday" class="badge badge-danger">Ngày lễ</span></h3></div>
+        <div class="col"
+          style="font-size: 26px; font-weight: 700; color: #2d4271; line-height: 30px; margin-bottom: 12px; max-width: 100%;">
+          <h3>{{resSchedule.tour.nameTour}} <span *ngIf="resSchedule.isHoliday" class="badge badge-danger">Ngày
+              lễ</span></h3>
+        </div>
       </div>
       <div class="row">
         <div class="col">
@@ -16,49 +20,63 @@
       </div>
     </div>
     <div class="col-5 row">
-        <div class="col-6">
-          <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion">
-            <p class="card-text" style="float: right; margin-right: 40px;">
-              <s class="card-title" style="font-weight: 600;">{{(!resSchedule.isHoliday ? resSchedule.finalPrice : resSchedule.finalPriceHoliday)|formatPriceVi}}₫</s>
-              <span class="ml-2 badge badge-info" >Giảm {{resSchedule.promotions.value}}%</span>
-              <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{resSchedule.pricePromotion| formatPriceVi}}₫</span>/Khách </p>
+      <div class="col-6">
+        <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion">
+          <p class="card-text" style="float: right; margin-right: 40px;">
+            <s class="card-title" style="font-weight: 600;">{{(!resSchedule.isHoliday ? resSchedule.finalPrice :
+              resSchedule.finalPriceHoliday)|formatPriceVi}}₫</s>
+            <span class="ml-2 badge badge-info">Giảm {{resSchedule.promotions.value}}%</span>
+            <span class="card-title text-danger ml-2"
+              style="font-weight: bold; font-size: 20px;">{{resSchedule.pricePromotion| formatPriceVi}}₫</span>/Khách
+          </p>
+        </ng-container>
+        <ng-template #elsePromotion>
+          <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span
+              class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!resSchedule.isHoliday
+              ? resSchedule.finalPrice : resSchedule.finalPriceHoliday) | formatPriceVi}}₫</span>/Khách </p>
+
+        </ng-template>
+
+      </div>
+      <div class="col-6">
+        <ng-select class="mb-2" style=" margin-left: -60px; width: 250px" [searchable]="false"
+          (change)="scheduleChange(resSchedule.departureDate)" [(ngModel)]="resSchedule.departureDate" name="schedules"
+          id="schedules" [clearable]="false">
+          <ng-container *ngFor="let schedule of resSchedules">
+            <ng-template ng-label-tmp>
+              <i class="fa-regular fa-calendar"></i>
+              {{resSchedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: resSchedule.returnDate}}
+            </ng-template>
+            <ng-option [value]="schedule.departureDate">{{schedule.departureDate |
+              formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}</ng-option>
           </ng-container>
-          <ng-template #elsePromotion>
-            <p class="card-text" style="float: right; margin-right: 40px; margin-top: 8px;"><span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!resSchedule.isHoliday ? resSchedule.finalPrice : resSchedule.finalPriceHoliday) | formatPriceVi}}₫</span>/Khách </p>
-
-          </ng-template>
-
-        </div>
-        <div class="col-6">
-            <ng-select class="mb-2" style=" margin-left: -60px; width: 250px" [searchable]="false"  (change)="scheduleChange(resSchedule.departureDate)" [(ngModel)]="resSchedule.departureDate" name="schedules" id="schedules" [clearable]="false" >
-              <ng-container *ngFor="let schedule of resSchedules">
-                <ng-template ng-label-tmp>
-                  <i class="fa-regular fa-calendar"></i>
-                  {{resSchedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: resSchedule.returnDate}}
-                </ng-template>
-                <ng-option [value]="schedule.departureDate" >{{schedule.departureDate | formatFromUnixTimestampToFullStartEndDateView: schedule.returnDate}}</ng-option>
-              </ng-container>
-          </ng-select>
-            <button class="btn btn-danger" style="float: right; height: 45px; width: 250px; font-weight: 700;" (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
-        </div>
+        </ng-select>
+        <button class="btn btn-danger" style="float: right; height: 45px; width: 250px; font-weight: 700;"
+          (click)="booking(resSchedule.idSchedule, resSchedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt
+          ngay</button>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-7">
-      <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid" alt="" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: 20px;">
+      <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid" alt=""
+        style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: 20px;">
     </div>
     <div class="col-5">
       <div class="row mb-2">
         <div class="col-6">
-          <img src="	https://media.travel.com.vn/tour/tfd_220527020321_459824.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%;" alt="">
+          <img src="	https://media.travel.com.vn/tour/tfd_220527020321_459824.jpg" class="img-fluid"
+            style="border-radius:10px; object-fit:fill; width: 100%; height: 100%;" alt="">
         </div>
         <div class="col-6">
-          <img src="https://media.travel.com.vn/tour/tfd_220527022238_755091.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: -24px;" alt="">
+          <img src="https://media.travel.com.vn/tour/tfd_220527022238_755091.jpg" class="img-fluid"
+            style="border-radius:10px; object-fit:fill; width: 100%; height: 100%; margin-left: -24px;" alt="">
         </div>
       </div>
       <div class="row">
         <div class="col">
-          <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid" style="border-radius:10px; object-fit:fill; width: 95%; height: 100%;" alt="">
+          <img src="https://media.travel.com.vn/tour/tfd_220527022403_110298.jpg" class="img-fluid"
+            style="border-radius:10px; object-fit:fill; width: 95%; height: 100%;" alt="">
         </div>
       </div>
     </div>
@@ -74,31 +92,43 @@
   <div class="card-body">
     <ul class="timeline pr-md-5">
       <li>
-        <div class="title" style="font-weight: 700;">Ngày 1 - TP. HỒ CHÍ MINH - PHÚ QUỐC - GRAND WORLD Số bữa ăn: 01 bữa(Chiều)</div>
+        <div class="title" style="font-weight: 700;">Ngày 1 - TP. HỒ CHÍ MINH - PHÚ QUỐC - GRAND WORLD Số bữa ăn: 01
+          bữa(Chiều)</div>
         <div class="details" style="color: #2d4271; font-weight: 700;">
           Buổi tối, Quý khách có thể tự do khám phá một số hạng mục nổi bật tại “thành phố không ngủ” Grand World như:
           <br>- Check in Huyền thoại tre - công trình tre lớn nhất Việt Nam.
-          <br>- Tham quan Công viên Nghệ thuật Đương đại Urban Park - nơi quy tụ những tác phẩm nghệ thuật độc đáo ẩn mình giữa thiên nhiên, là sự giao thoa đặc sắc giữa nghệ thuật đương đại và thiên nhiên Đảo Ngọc.
-          <br>- Tản bộ bên dòng “kênh đào Venice” và nhìn ngắm những chiếc thuyền Gondola, khu phố shophouse lộng lẫy sắc màu, cổng lâu đài tráng lệ, ba cây cầu vòm bán nguyệt...
+          <br>- Tham quan Công viên Nghệ thuật Đương đại Urban Park - nơi quy tụ những tác phẩm nghệ thuật độc đáo ẩn
+          mình giữa thiên nhiên, là sự giao thoa đặc sắc giữa nghệ thuật đương đại và thiên nhiên Đảo Ngọc.
+          <br>- Tản bộ bên dòng “kênh đào Venice” và nhìn ngắm những chiếc thuyền Gondola, khu phố shophouse lộng lẫy
+          sắc màu, cổng lâu đài tráng lệ, ba cây cầu vòm bán nguyệt...
           <br>- Thưởng thức bữa tiệc ánh sáng đỉnh cao với show diễn “Sắc màu Venice”.
-          <br>- Tham quan bảo tàng Gấu Teddy: nơi lưu giữ nhiều hiện vật quý giá và tái hiện chuyến phiêu lưu hài hước của “nhà thám hiểm tài ba” Teddy Jones (chi phí tự túc)
-          <br>- Mãn nhãn với chương trình biểu diễn nghệ thuật “Tinh Hoa Việt Nam” quy tụ hơn 200 diễn viên (chi phí tự túc)
+          <br>- Tham quan bảo tàng Gấu Teddy: nơi lưu giữ nhiều hiện vật quý giá và tái hiện chuyến phiêu lưu hài hước
+          của “nhà thám hiểm tài ba” Teddy Jones (chi phí tự túc)
+          <br>- Mãn nhãn với chương trình biểu diễn nghệ thuật “Tinh Hoa Việt Nam” quy tụ hơn 200 diễn viên (chi phí tự
+          túc)
           <br>
           <br>Nghỉ đêm tại Phú Quốc.
         </div>
       </li>
       <li>
-        <div class="title" style="font-weight: 700;">Ngày 2 - VUI CHƠI THỎA THÍCH TẠI CÔNG VIÊN CHỦ ĐỀ VINWONDERS PHÚ QUỐC – KHU BẢO TỒN THIÊN NHIÊN SAFARI Số bữa ăn: 03 bữa (Sáng, Trưa, Chiều)</div>
+        <div class="title" style="font-weight: 700;">Ngày 2 - VUI CHƠI THỎA THÍCH TẠI CÔNG VIÊN CHỦ ĐỀ VINWONDERS PHÚ
+          QUỐC – KHU BẢO TỒN THIÊN NHIÊN SAFARI Số bữa ăn: 03 bữa (Sáng, Trưa, Chiều)</div>
         <div class="details" style="color: #2d4271; font-weight: 700;">
-          Sau khi ăn sáng, Quý khách khám phá Vinpearl Safari Phú Quốc - vườn thú hoang dã đầu tiên tại Việt Nam với quy mô 180 ha, hơn 130 loài động vật quý hiếm, du khách thưởng thức các chương trình biểu diễn, chụp ảnh với động vật; trải nghiệm vườn thú mở trong rừng tự nhiên, gần gũi và thân thiện với con người.
+          Sau khi ăn sáng, Quý khách khám phá Vinpearl Safari Phú Quốc - vườn thú hoang dã đầu tiên tại Việt Nam với quy
+          mô 180 ha, hơn 130 loài động vật quý hiếm, du khách thưởng thức các chương trình biểu diễn, chụp ảnh với động
+          vật; trải nghiệm vườn thú mở trong rừng tự nhiên, gần gũi và thân thiện với con người.
           <br>
-          <br>Buổi chiều, Quý khách tham quan khám phá Khu vui chơi giải trí VinWonders - công viên chủ đề lớn nhất Việt Nam, quy mô hàng đầu Châu Á, du khách sẽ được:
+          <br>Buổi chiều, Quý khách tham quan khám phá Khu vui chơi giải trí VinWonders - công viên chủ đề lớn nhất Việt
+          Nam, quy mô hàng đầu Châu Á, du khách sẽ được:
           <br>- Trải nghiệm 12 nền văn minh nhân loại từ cổ chí kim;
           <br>- Khám phá 06 phân khu với hơn 100 hoạt động giải trí siêu độc lạ;
           <br>- Cuồng nhiệt tại Công Viên Nước lớn nhất Đông Nam Á;
-          <br>- Chinh phục 20 trò chơi mạo hiểm khủng nhất hành tinh như đường trượt nhanh nhất thế giới “Cơn thịnh nộ của Zeus”, đường trượt khô “Cuộc chiến Chằn tinh” cao 15m đầu tiên của Việt Nam, đường trượt trong nhà tối “Chiến binh Đại bàng” và “Lời nguyền Ác long” - trò chơi tương tác trong nhà tối đầu tiên của Việt Nam,…
+          <br>- Chinh phục 20 trò chơi mạo hiểm khủng nhất hành tinh như đường trượt nhanh nhất thế giới “Cơn thịnh nộ
+          của Zeus”, đường trượt khô “Cuộc chiến Chằn tinh” cao 15m đầu tiên của Việt Nam, đường trượt trong nhà tối
+          “Chiến binh Đại bàng” và “Lời nguyền Ác long” - trò chơi tương tác trong nhà tối đầu tiên của Việt Nam,…
           <br>- Ngỡ ngàng với show diễn triệu đô Once đẳng cấp thế giới;
-          <br>- Choáng ngợp trước thế giới đại dương huyền ảo với tầm nhìn vô cực qua tấm kính acrylic khổng lồ 8x25m bên trong Cung điện Hải vương - thủy cung hình rùa lớn nhất thế giới.
+          <br>- Choáng ngợp trước thế giới đại dương huyền ảo với tầm nhìn vô cực qua tấm kính acrylic khổng lồ 8x25m
+          bên trong Cung điện Hải vương - thủy cung hình rùa lớn nhất thế giới.
           <br>
           <br>Quý khách thưởng thức bữa tối tại VinWonders.
           <br>
@@ -106,17 +136,25 @@
         </div>
       </li>
       <li>
-        <div class="title" style="font-weight: 700;">Ngày 3 - PHÚ QUỐC - TP. HỒ CHÍ MINH Số bữa ăn: 02 bữa (Sáng, trưa)</div>
+        <div class="title" style="font-weight: 700;">Ngày 3 - PHÚ QUỐC - TP. HỒ CHÍ MINH Số bữa ăn: 02 bữa (Sáng, trưa)
+        </div>
         <div class="details" style="color: #2d4271; font-weight: 700;">
           <br>Sau khi ăn sáng, xe đón đoàn tham quan Hon Thom Nature Park:
-          <br>- Trải nghiệm cáp treo xác lập kỷ lục thế giới mới “Cáp treo 3 dây vượt biển dài nhất thế giới - 7.899.9m” với góc nhìn 360 độ ngang qua Hòn Rơi, Hòn Dừa và dừng chân tại Hòn Thơm. Chỉ khoảng 15 phút trên cáp treo, Quý khách sẽ những khoảnh khắc tuyệt vời với bức tranh biển trời tại Nam Đảo Phú Quốc.
-          <br>- Vui chơi tại một trong những bãi biển “quyến rũ nhất hành tinh” Hòn Thơm với bãi cát trắng mịn, hoang sơ, hàng dừa nghiêng soi bóng, màu nước biển xanh màu ngọc bích, phản chiếu long lanh dưới ánh nắng mặt trời.
-          <br>- Quý khách tham gia vào hành trình khám phá Công viên nước chủ đề hiện đại nhất Đông Nam Á Aquatopia, trải nghiệm 6 khu check in chủ đề hấp dẫn mang phong cách thổ dân huyền bí.
+          <br>- Trải nghiệm cáp treo xác lập kỷ lục thế giới mới “Cáp treo 3 dây vượt biển dài nhất thế giới - 7.899.9m”
+          với góc nhìn 360 độ ngang qua Hòn Rơi, Hòn Dừa và dừng chân tại Hòn Thơm. Chỉ khoảng 15 phút trên cáp treo,
+          Quý khách sẽ những khoảnh khắc tuyệt vời với bức tranh biển trời tại Nam Đảo Phú Quốc.
+          <br>- Vui chơi tại một trong những bãi biển “quyến rũ nhất hành tinh” Hòn Thơm với bãi cát trắng mịn, hoang
+          sơ, hàng dừa nghiêng soi bóng, màu nước biển xanh màu ngọc bích, phản chiếu long lanh dưới ánh nắng mặt trời.
+          <br>- Quý khách tham gia vào hành trình khám phá Công viên nước chủ đề hiện đại nhất Đông Nam Á Aquatopia,
+          trải nghiệm 6 khu check in chủ đề hấp dẫn mang phong cách thổ dân huyền bí.
           <br>- Thử thách với các hoạt động giải trí trên biển: kayak, jetki, dù lượn, phao chuối (chi phí tự túc).
           <br>
-          <br>Đoàn rời Hòn Thơm, sau đó xe tiếp tục đưa Quý khách tham quan và mua sắm đặc sản nổi tiếng tại Vườn Tiêu Đức Thạnh, Nhà thùng nước mắm Hồng Đức 1, Đặc sản khô, Cơ sở sản xuất ngọc trai Phú Quốc - Trưng bày các trang sức bằng ngọc trai chính hiệu được nuôi cấy tại Phú Quốc.
+          <br>Đoàn rời Hòn Thơm, sau đó xe tiếp tục đưa Quý khách tham quan và mua sắm đặc sản nổi tiếng tại Vườn Tiêu
+          Đức Thạnh, Nhà thùng nước mắm Hồng Đức 1, Đặc sản khô, Cơ sở sản xuất ngọc trai Phú Quốc - Trưng bày các trang
+          sức bằng ngọc trai chính hiệu được nuôi cấy tại Phú Quốc.
           <br>
-          <br>Xe đưa Quý khách ra sân bay đáp chuyến bay trở về TP. Hồ Chí Minh. Chia tay Quý khách và kết thúc chương trình du lịch tại sân bay Tân Sơn Nhất.
+          <br>Xe đưa Quý khách ra sân bay đáp chuyến bay trở về TP. Hồ Chí Minh. Chia tay Quý khách và kết thúc chương
+          trình du lịch tại sân bay Tân Sơn Nhất.
         </div>
       </li>
     </ul>
@@ -125,19 +163,21 @@
 
 <div class="container mb-5" *ngIf="resSchedule">
   <div class="row" style="padding-left: 50px; padding-right: 70px">
-    <div class="col-6" >
-      <h5 class="mb-3"  style="color: #2d4271; font-weight: 600;">Chi tiết tour</h5>
+    <div class="col-6">
+      <h5 class="mb-3" style="color: #2d4271; font-weight: 600;">Chi tiết tour</h5>
       <div style="background: #f4f5f8; padding: 20px 20px 10px 20px; border-radius: 10px">
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;  font-weight: bold;">Thông tin tập trung</h6>
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Ngày giờ tập trung</h6>
-          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{resSchedule.departureDate | formatFromUnixTimestampToFullTimeDateView}}</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">
+            {{resSchedule.departureDate | formatFromUnixTimestampToFullTimeDateView}}</h6>
         </div>
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Nơi tập trung</h6>
-          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">{{resSchedule.departurePlace}}</h6>
+          <h6 class="card-title" style="color: #2d4271; position: absolute;top: 0; right: 0;">
+            {{resSchedule.departurePlace}}</h6>
         </div>
 
         <div class="mt-3" style="position: relative" style="border-top: 1px solid #2d4271;;">
@@ -154,51 +194,62 @@
 
       </div>
     </div>
-    <div class="col-6" >
-      <h5 class="mb-3"  style="color: #2d4271; font-weight: 600;">Giá tour & phụ thu phòng đơn</h5>
+    <div class="col-6">
+      <h5 class="mb-3" style="color: #2d4271; font-weight: 600;">Giá tour & phụ thu phòng đơn</h5>
       <div style="background: #f4f5f8; padding: 20px 20px 10px 20px; border-radius: 10px">
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;  font-weight: bold;">Loại khách</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;  font-weight: bold;">Giá tour</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;  font-weight: bold;">Giá
+            tour</h6>
         </div>
         <ng-container *ngIf="resSchedule.promotions.idPromotion != 1 else elseTemplate">
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Người lớn (Từ 12 tuổi trở lên)</h6>
-            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceAdult : resSchedule.priceAdultHoliday) | formatPriceVi}}</s>
-               <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceAdultPromotion) | formatPriceVi}}₫</span>
+            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceAdult :
+                resSchedule.priceAdultHoliday) | formatPriceVi}}</s>
+              <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceAdultPromotion) |
+                formatPriceVi}}₫</span>
             </h6>
           </div>
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Trẻ em (Từ 5 - 11 tuổi)</h6>
-            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceChild : resSchedule.priceChildHoliday) | formatPriceVi}}</s>
-              <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceChildPromotion) | formatPriceVi}}₫</span>
-           </h6>
+            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceChild :
+                resSchedule.priceChildHoliday) | formatPriceVi}}</s>
+              <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceChildPromotion) |
+                formatPriceVi}}₫</span>
+            </h6>
           </div>
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Trẻ nhỏ (Từ 2 - 4 tuổi)</h6>
-            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceBaby : resSchedule.priceBabyHoliday) | formatPriceVi}}</s>
-              <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceBabyPromotion) | formatPriceVi}}₫</span>
-           </h6>
+            <h6 style="position: absolute;top: 0; right: 0; "><s>{{(!resSchedule.isHoliday ? resSchedule.priceBaby :
+                resSchedule.priceBabyHoliday) | formatPriceVi}}</s>
+              <span class="card-title ml-2" style="color: red;">{{(resSchedule.priceBabyPromotion) |
+                formatPriceVi}}₫</span>
+            </h6>
           </div>
         </ng-container>
         <ng-template #elseTemplate>
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Người lớn (Từ 12 tuổi trở lên)</h6>
-            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceAdult : resSchedule.priceAdultHoliday) | formatPriceVi}}₫</h6>
+            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ?
+              resSchedule.priceAdult : resSchedule.priceAdultHoliday) | formatPriceVi}}₫</h6>
           </div>
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Trẻ em (Từ 5 - 11 tuổi)</h6>
-            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceChild : resSchedule.priceChildHoliday) | formatPriceVi}}₫</h6>
+            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ?
+              resSchedule.priceChild : resSchedule.priceChildHoliday) | formatPriceVi}}₫</h6>
           </div>
           <div style="position: relative">
             <h6 class="card-title" style="color: #2d4271;">Trẻ nhỏ (Từ 2 - 4 tuổi)</h6>
-            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.priceBaby : resSchedule.priceBabyHoliday) | formatPriceVi}}₫</h6>
+            <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ?
+              resSchedule.priceBaby : resSchedule.priceBabyHoliday) | formatPriceVi}}₫</h6>
           </div>
         </ng-template>
 
         <div style="position: relative">
           <h6 class="card-title" style="color: #2d4271;">Phụ thu</h6>
-          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ? resSchedule.additionalPrice : resSchedule.additionalPriceHoliday) | formatPriceVi}}₫</h6>
+          <h6 class="card-title" style="position: absolute;top: 0; right: 0; color: red;">{{(!resSchedule.isHoliday ?
+            resSchedule.additionalPrice : resSchedule.additionalPriceHoliday) | formatPriceVi}}₫</h6>
         </div>
       </div>
     </div>
@@ -217,14 +268,17 @@
       <ng-container *ngFor="let schedule of resScheduleRelate; let i=index">
         <div class="col-3">
           <div class="card mb-4 card-shadow" style="width: 100%; padding: 0;" *ngIf="i < 4">
-            <img  [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;" (click)="goto(schedule.idSchedule, schedule.alias)" class="card-img-top">
+            <img [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;"
+              (click)="goto(schedule.idSchedule, schedule.alias)" class="card-img-top">
             <div class="card-body" style="height: 330px;">
-              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
-              <div class="stars mb-2" >
+              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span
+                  *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
+              <div class="stars mb-2">
                 <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
                 <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
-            </div>
-              <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
+              </div>
+              <h6 class="card-subtitle mb-2 text-muted">Ngày đi {{schedule.departureDate|
+                formatFromUnixTimestampToFullDateView}}</h6>
               <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
               <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
               <p class="card-text mb-4">Nơi khởi hành: {{schedule.departurePlace}}</p>
@@ -233,21 +287,29 @@
                 <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
               </div> -->
 
-              <div class="mb-2"  style="position: relative;">
+              <div class="mb-2" style="position: relative;">
                 <ng-container *ngIf="schedule.promotionId != 1 else elsePromotion">
-                  <span class="ml-2 badge badge-info" style="position: absolute; top:-60%; left: -2%">Giảm {{schedule.valuePromotion}}% </span>
-                  <p class="card-text">Giá chỉ từ: <s class="card-title" style="font-weight: 600;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</s>
-                    <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{schedule.pricePromotion|formatPriceVi}}₫</span>/Khách </p>
+                  <span class="ml-2 badge badge-info" style="position: absolute; top:-60%; left: -2%">Giảm
+                    {{schedule.valuePromotion}}% </span>
+                  <p class="card-text">Giá chỉ từ: <s class="card-title"
+                      style="font-weight: 600;">{{(!schedule.isHoliday ? schedule.finalPrice :
+                      schedule.finalPriceHoliday)|formatPriceVi}}₫</s>
+                    <span class="card-title text-danger ml-2"
+                      style="font-weight: bold; font-size: 20px;">{{schedule.pricePromotion|formatPriceVi}}₫</span>/Khách
+                  </p>
                 </ng-container>
               </div>
               <ng-template #elsePromotion>
-              <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice : schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
+                <p class="card-text">Giá chỉ từ: <span class="card-title text-danger ml-2"
+                    style="font-weight: bold; font-size: 20px;">{{(!schedule.isHoliday ? schedule.finalPrice :
+                    schedule.finalPriceHoliday)|formatPriceVi}}₫</span>/Khách </p>
 
               </ng-template>
 
-            <div class="row" style="padding-left: 15px; padding-right: 15px;">
-              <button class="btn btn-danger"  (click)="booking(schedule.idSchedule, schedule.alias)"><i class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
-            </div>
+              <div class="row" style="padding-left: 15px; padding-right: 15px;">
+                <button class="btn btn-danger" (click)="booking(schedule.idSchedule, schedule.alias)"><i
+                    class="fa-solid fa-cart-shopping"></i> Đặt ngay</button>
+              </div>
             </div>
           </div>
         </div>
@@ -265,29 +327,37 @@
     <div class="row">
       <div *ngIf="auth">
         <div class="row">
-          <span style="color:red; margin-left: 7%;">{{this.validateComment.commentText ? this.validateComment.commentText : ''}}</span>
+          <span style="color:red; margin-left: 7%;">{{this.validateComment.commentText ?
+            this.validateComment.commentText : ''}}</span>
           <div class="col-sm-3 col-lg-2 hidden-xs">
-            <img class="img-responsive" style="width: 70px; height:70px" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+            <img class="img-responsive" style="width: 70px; height:70px"
+              src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
           </div>
-        <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-            <textarea [(ngModel)]="resCmt.commentText " name="commentText" class="form-control" style="width:114%; margin-left: -13%;" id="message" placeholder="Hãy bình luận gì đó" required="">
+          <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+            <textarea [(ngModel)]="resCmt.commentText" name="commentText" class="form-control"
+              style="width:114%; margin-left: -13%;" id="message" placeholder="Hãy bình luận gì đó" required="">
             </textarea>
+          </div>
         </div>
-        </div>
-          <button (click)="createComment()" type="submit" class="btn btn-primary mt-1 mb-4 float-right">Bình luận</button>
+        <button (click)="createComment()" type="submit" class="btn btn-primary mt-1 mb-4 float-right">Bình luận</button>
       </div>
     </div>
 
     <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 40rem;">
-      <div *ngFor="let item of resComment" class="media mt-3" style="width: 94rem; background-color: #EFF5F5; border-radius: 0.375rem; position: relative;" >
-        <button data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getData(item.idComment)" *ngIf="auth.id == item.idCustomer" style="position:absolute; top: 13px; right: 20px;" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+      <div *ngFor="let item of resComment" class="media mt-3"
+        style="width: 94rem; background-color: #EFF5F5; border-radius: 0.375rem; position: relative;">
+        <button data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getData(item.idComment)"
+          *ngIf="auth.id == item.idCustomer" style="position:absolute; top: 13px; right: 20px;"
+          class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
         <div class="media-left media-top" style="border-radius: 0.375rem;  margin-top: 1rem; margin-left: 1rem;">
-          <img class="img-circle img-sm media-object" alt="Profile Picture" style="width:60px" src="https://bootdey.com/img/Content/avatar/avatar2.png">
+          <img class="img-circle img-sm media-object" alt="Profile Picture" style="width:60px"
+            src="https://bootdey.com/img/Content/avatar/avatar2.png">
         </div>
         <div class="media-body" style="margin-left: 15px;  margin-top: 1rem;">
           <div class="mar-btm">
             <h5 class="text-semibold media-heading box-inline">{{item.nameCustomer}}</h5>
-            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime | formatFromUnixTimestampToFullDateTimeView}}</p>
+            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
+              formatFromUnixTimestampToFullDateTimeView}}</p>
           </div>
           <p>{{item.commentText}}</p>
           <hr>
@@ -298,7 +368,8 @@
   <hr>
 </div>
 
-<div class="modal fade" style="z-index: 9999;" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" style="z-index: 9999;" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -307,10 +378,10 @@
       </div>
       <div class="modal-body">
         <h4 class="modal-title fs-5">Bạn có muốn xóa bình luận này không</h4>
-
+        <h1></h1>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteComment()" >Xóa</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteComment()">Xóa</button>
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Không</button>
       </div>
     </div>
