@@ -9,9 +9,9 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class ScheduleService{
 constructor(private http:HttpClient, private configService:ConfigService){ }
 
-async getsSchedule()
+async getsSchedule(pageIndex: number, pageSize: number)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-list-schedule").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-list-schedule?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
 }
 
 create(data: any)
@@ -24,19 +24,19 @@ async getsSchedulebyIdSchedule(idSchedule: any)
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/detail-schedule?idSchedule="+idSchedule).toPromise();
 }
 
-async getsScheduleRelatebyIdSchedule(idSchedule: any)
+async getsScheduleRelatebyIdSchedule(idSchedule: any, pageIndex: number, pageSize: number)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-relate?idSchedule="+idSchedule).toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-relate?idSchedule="+idSchedule+"&pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
 }
 
-async getsSchedulePromotion()
+async getsSchedulePromotion(pageIndex: number, pageSize: number)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-promotion").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-promotion?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
 }
 
-async getsScheduleFlashSale()
+async getsScheduleFlashSale(pageIndex: number, pageSize: number)
 {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-flash-sale").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/list-schedule-flash-sale?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
 }
 
 async getsSchedulebyIdTour(idTour: any)
@@ -50,8 +50,6 @@ async searchSchedule(kw: any)
 }
 
 async searchSheduleFilter(data: any){
-  console.warn(data);
-
     return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule-filter", data).toPromise();
 }
 }

@@ -37,9 +37,9 @@ export class TourService{
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-with-schedule").toPromise();
   }
 
-  async getsTourByRating()
+  async getsTourByRating(pageIndex: number, pageSize: number)
   {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-by-rating").toPromise();
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-by-rating?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
   }
   create(data: any)
   {

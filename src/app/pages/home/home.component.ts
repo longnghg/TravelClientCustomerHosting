@@ -66,6 +66,10 @@ export class HomeComponent implements OnInit {
     ['s', 1000], // seconds
     ['S', 1], // million seconds
   ];
+
+
+  pageIndex= 1
+  pageSize= 6
   ngOnInit(): void {
 
     this.provinceService.views().then(res => { this.resProvince = res })
@@ -130,7 +134,7 @@ export class HomeComponent implements OnInit {
   }
 
   initFlashSale() {
-    this.scheduleService.getsScheduleFlashSale().then(res => {
+    this.scheduleService.getsScheduleFlashSale(this.pageIndex, this.pageSize).then(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleFalshSale = this.response.content
@@ -156,7 +160,7 @@ export class HomeComponent implements OnInit {
   }
 
   initSchedule() {
-    this.scheduleService.getsSchedule().then(res => {
+    this.scheduleService.getsSchedule(this.pageIndex, this.pageSize).then(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
@@ -173,7 +177,7 @@ export class HomeComponent implements OnInit {
   }
 
   initSchedulePromotion() {
-    this.scheduleService.getsSchedulePromotion().then(res => {
+    this.scheduleService.getsSchedulePromotion(this.pageIndex, this.pageSize).then(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedulePromotion = this.response.content
@@ -199,7 +203,7 @@ export class HomeComponent implements OnInit {
   }
 
   initTour() {
-    this.tourService.getsTourByRating().then(res => {
+    this.tourService.getsTourByRating(this.pageIndex, this.pageSize).then(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTour = this.response.content
