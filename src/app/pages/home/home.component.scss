@@ -27,6 +27,7 @@ h1{
     background-size: 100%;
     position: absolute;
     z-index: 1;
+    background-repeat: no-repeat;
 }
 .s_item:nth-child(1){
     transform: translate(-150%);

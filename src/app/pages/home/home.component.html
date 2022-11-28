@@ -112,7 +112,7 @@
 
         <div class="s_container">
           <div id="slide" #slide>
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-1.jpg)">
+              <!-- <div class="s_item" style="background-image: url(assets/images/hero-slider-1.jpg)">
                   <div class="s_content">
                       <div class="s_from">
                         <span class="icon-room mr-3"></span>
@@ -121,47 +121,15 @@
                       <div class="s_name">Rialto Mountains</div>
                       <div class="s_type"> $520.00</div>
                   </div>
-              </div>
+              </div> -->
+              <div *ngFor="let item of resListImage" class="s_item" style="background-image: url(https://localhost:44394/{{item.filePath}})">
+                <!-- <div class="s_content">
+                    <div class="s_from">{{item.nameImage}}</div>
+                    <div class="s_name">https://localhost:44394/{{item.filePath}}</div>
+                    <div class="s_type">Leo núi</div>
+                </div> -->
+            </div>
 
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-2.jpg)">
-                  <div class="s_content">
-                      <div class="s_from">Dak Lak</div>
-                      <div class="s_name">Núi đá voi DakLak</div>
-                      <div class="s_type">Leo núi</div>
-                  </div>
-              </div>
-
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-3.jpg)">
-                  <div class="s_content">
-                      <div class="s_from">Dak Lak</div>
-                      <div class="s_name">Núi đá voi DakLak</div>
-                      <div class="s_type">Leo núi</div>
-                  </div>
-              </div>
-
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-4.jpg)">
-                  <div class="s_content">
-                      <div class="s_from">Dak Lak</div>
-                      <div class="s_name">Núi đá voi DakLak</div>
-                      <div class="s_type">Leo núi</div>
-                  </div>
-              </div>
-
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-5.jpg)">
-                  <div class="s_content">
-                      <div class="s_from">Dak Lak</div>
-                      <div class="s_name">Núi đá voi DakLak</div>
-                      <div class="s_type">Leo núi</div>
-                  </div>
-              </div>
-
-              <div class="s_item" style="background-image: url(assets/images/hero-slider-3.jpg)">
-                  <div class="s_content">
-                      <div class="s_from">Dak Lak</div>
-                      <div class="s_name">Núi đá voi DakLak</div>
-                      <div class="s_type">Leo núi</div>
-                  </div>
-              </div>
           </div>
           <div class="s_buttons">
               <button id="prev" (click)="prev()"><i class="fa-solid fa-arrow-left"></i></button>
