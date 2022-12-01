@@ -6,7 +6,7 @@ import { AuthenticationModel, ValidationLoginModel } from "../../../models/authe
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CustomerModel } from "../../../models/customer.model";
 import { StatusNotification } from "../../../enums/enum";
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,9 +28,16 @@ export class LoginComponent implements OnInit {
   timeBlock: any
   recapcha: string
 
-  constructor(private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
+  constructor(private router:Router, private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
+    console.log(1);
+
+    if (history.state.reload) {
+      location.reload()
+    }
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     var checkCurrent = JSON.parse(localStorage.getItem("currentUser"))
     if (checkCurrent) {
       this.authenticationService.logOut(checkCurrent.id).subscribe(res =>{
@@ -83,7 +90,17 @@ export class LoginComponent implements OnInit {
               }
               this.notificationService.handleAlertObj(res.notification)
 
-              document.location.assign( this.configService.clientUrl + "/home")
+              var wait = sessionStorage.getItem("wait")
+              if (wait) {
+               this.router.navigateByUrl(wait);
+              }
+              else{
+               this.router.navigate(['', 'home']);
+              }
+               setTimeout(() => {
+                 document.body.scrollTop = 0;
+                 document.documentElement.scrollTop = 0;
+               }, 200);
             }
             else if(this.response.notification.type == StatusNotification.Block){
               this.timeBlock = this.response.content
@@ -141,7 +158,18 @@ export class LoginComponent implements OnInit {
               localStorage.removeItem("tourBooking_null")
             }
             this.notificationService.handleAlertObj(res.notification)
-            document.location.assign( this.configService.clientUrl + "/home")
+          var wait = sessionStorage.getItem("wait")
+           if (wait) {
+            this.router.navigateByUrl(wait);
+           }
+           else{
+            this.router.navigate(['', 'home']);
+           }
+            setTimeout(() => {
+              document.body.scrollTop = 0;
+              document.documentElement.scrollTop = 0;
+            }, 200);
+            // document.location.assign( this.configService.clientUrl + "/home")
           }
           else if(this.response.notification.type == StatusNotification.Block){
             this.timeBlock = this.response.content
@@ -177,6 +205,7 @@ export class LoginComponent implements OnInit {
   }
 
     googleAuthSDK() {
+
       (<any>window)['googleSDKLoaded'] = () => {
         (<any>window)['gapi'].load('auth2', () => {
           this.auth2 = (<any>window)['gapi'].auth2.init({

@@ -58,7 +58,7 @@ export class TourBookingComponent implements OnInit {
 
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
-    this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+
 
     this.init(this.resTourBooking.scheduleId)
 
@@ -201,7 +201,19 @@ export class TourBookingComponent implements OnInit {
     if ( this.validateTourBooking.total == 0) {
       if (this.isPayment) {
        if (!this.isSuccess) {
+        this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
+        if (this.resAthentication) {
           this.recapchaModal.nativeElement.click()
+        }
+        else{
+          this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Info)
+          sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+          setTimeout(() => {
+            this.router.navigate(["", "login"], { state: { reload: true } })
+          }, 1000);
+        }
        }
       }
       else{
@@ -231,6 +243,7 @@ export class TourBookingComponent implements OnInit {
   }
 
   link(){
+    this.resAthentication = JSON.parse(localStorage.getItem("currentUser"))
     if (this.resAthentication) {
       this.resTourBooking.nameContact = this.resAthentication.name
       this.resTourBooking.email = this.resAthentication.email
@@ -241,7 +254,13 @@ export class TourBookingComponent implements OnInit {
       this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{
-      location.assign(this.configService.clientUrl + "/login")
+      this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Info)
+      sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      setTimeout(() => {
+        this.router.navigate(["", "login"], { state: { reload: true } })
+      }, 2000);
     }
   }
 
