@@ -59,7 +59,6 @@ export class TourBookingComponent implements OnInit {
     this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
-
     this.init(this.resTourBooking.scheduleId)
 
   }
@@ -277,6 +276,10 @@ export class TourBookingComponent implements OnInit {
   }
 
   finalBooking(){
+    document.body.style.overflow = "hidden"
+    document.getElementById("fade-load").setAttribute("class","fade-load")
+    document.getElementById("bg-load").style.display = "block"
+
     this.resTourBooking.scheduleId = this.resSchedule.idSchedule
     // this.resTourBooking.pincode = "TRB" + new Date().getTime()
     if (this.resSchedule.costTour) {
@@ -292,31 +295,49 @@ export class TourBookingComponent implements OnInit {
         this.resTourBooking.idTourBooking = this.response.content
         if (this.resTourBooking.paymentId == PaymentMethod.Paypal) {
           this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
-            console.log(res);
             this.paypal = res
             if (!res.debugId) {
-              location.assign(this.paypal.url)
+              setTimeout(() => {
+                document.body.removeAttribute("style")
+                document.getElementById("fade-load").removeAttribute("class")
+                document.getElementById("bg-load").removeAttribute("style")
+                location.assign(this.paypal.url)
+              }, 5000);
             }
             else{
+              document.body.removeAttribute("style")
+              document.getElementById("fade-load").removeAttribute("class")
+              document.getElementById("bg-load").removeAttribute("style")
                this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
             }
 
           })
         }
         else{
-          this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
-          this.isSuccess = true
-          this.resTourBooking = new TourBookingModel
-          this.isRecapcha = false
-          this.closeModal.nativeElement.click()
+          setTimeout(() => {
+            document.body.removeAttribute("style")
+            document.getElementById("fade-load").removeAttribute("class")
+            document.getElementById("bg-load").removeAttribute("style")
+            this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
+            this.isSuccess = true
+            this.resTourBooking = new TourBookingModel
+            this.isRecapcha = false
+            this.closeModal.nativeElement.click()
+          }, 5000);
         }
       }
       else{
+        document.body.removeAttribute("style")
+        document.getElementById("fade-load").removeAttribute("class")
+        document.getElementById("bg-load").removeAttribute("style")
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }
       this.captchaElem.resetCaptcha();
     }, error => {
+      document.body.removeAttribute("style")
+      document.getElementById("fade-load").removeAttribute("class")
+      document.getElementById("bg-load").removeAttribute("style")
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
       this.captchaElem.resetCaptcha();
