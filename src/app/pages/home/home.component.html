@@ -122,7 +122,7 @@
                       <div class="s_type"> $520.00</div>
                   </div>
               </div> -->
-              <div *ngFor="let item of resListImage" class="s_item" style="background-image: url(https://localhost:44394/{{item.filePath}})">
+              <div *ngFor="let item of resListImage" class="s_item" style="background-image: url({{item.filePath}})">
                 <!-- <div class="s_content">
                     <div class="s_from">{{item.nameImage}}</div>
                     <div class="s_name">https://localhost:44394/{{item.filePath}}</div>
