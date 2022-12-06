@@ -10,6 +10,9 @@ import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { getLocaleDateFormat } from '@angular/common';
+import { ImageModel } from 'src/app/models/image.model';
+import { ImageService } from 'src/app/services_API/image.service';
+
 
 @Component({
   selector: 'app-tour-detail',
@@ -22,6 +25,8 @@ export class TourDetailComponent implements OnInit {
   resScheduleRelate: ScheduleModel[]
   resComment: CommentModel []
   resCmt: CommentModel = new CommentModel
+  resImage: ImageModel[] 
+  imgDetail: any[] = []
   response: ResponseModel
   auth: AuthenticationModel
   idComment: string
@@ -31,6 +36,7 @@ export class TourDetailComponent implements OnInit {
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
+    private imageService: ImageService,
     private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService) { }
   url = this.configService.apiUrl
 
@@ -103,6 +109,7 @@ export class TourDetailComponent implements OnInit {
         //     this.idCus = this.response.content
         //   }
         // })
+        this.initImage(this.resSchedule.tour.idTour)
       }
       else{
          location.assign(this.configService.clientUrl + "/page404")
@@ -178,6 +185,33 @@ export class TourDetailComponent implements OnInit {
     });
 
 
+  }
+
+  initImage(idTour: string){
+    this.imageService.getsbyidTour(idTour).subscribe(res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resImage = this.response.content
+        
+        this.resImage.forEach(image => {
+          if (image.filePath) {
+            this.imgDetail.push(image.filePath)
+            console.log(this.imgDetail);
+            
+          }
+        });
+        if (this.resImage.length < 4) {
+          for (let index = 0; index < 4 - this.resImage.length; index++) {
+            this.imgDetail.push("../../../../assets/images/icons/lgoRover.png")
+          }
+        }
+       
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
   booking(idSchedule: string, alias: string){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
