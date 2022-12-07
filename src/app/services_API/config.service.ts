@@ -1,14 +1,28 @@
 import { Injectable, Inject, PipeTransform, Pipe } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
-
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
 
+  private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
+  signIR(){
+    return this.hubConnectionBuilder = new HubConnectionBuilder()
+   .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+   {
+    
+       accessTokenFactory: () => localStorage.getItem("token")
+   })
+   .withAutomaticReconnect()
+   .build();
+  }
+  goivui(id:string): void{
+   this.hubConnectionBuilder.invoke('GetInfo',id)
+ }
 
   error(status: any, message: any){
     console.log('Status:  '  + status);

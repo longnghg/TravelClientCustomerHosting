@@ -7,12 +7,18 @@ import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CustomerModel } from "../../../models/customer.model";
 import { StatusNotification } from "../../../enums/enum";
 import { Router } from '@angular/router';
+
+
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    //signalr
+    private hubConnectionBuilder: HubConnection
   public readonly siteKey = '6Lc_K-YiAAAAANf7vCWU19G-psPfDiWFgV-r6RTc';
   @ViewChild('loginRef', {static: true }) loginElement!: ElementRef;
   @ViewChild('modalBlock') modalBlock: ElementRef;
@@ -31,8 +37,8 @@ export class LoginComponent implements OnInit {
   constructor(private router:Router, private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
-    console.log(1);
 
+    
     if (history.state.reload) {
       location.reload()
     }
@@ -82,6 +88,9 @@ export class LoginComponent implements OnInit {
               localStorage.setItem("token", this.resAthentication.token)
               localStorage.setItem("idUser", this.resAthentication.id)
               localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+            
+                // connect to signalR
+                this.connectSignalR();
 
               var tourBooking = localStorage.getItem("tourBooking_null")
               if (tourBooking) {
@@ -134,7 +143,17 @@ export class LoginComponent implements OnInit {
       }
 
   }
+  connectSignalR(){
+    this.hubConnectionBuilder = this.configService.signIR()
+    this.hubConnectionBuilder.start().then(function(){
+        console.log("Successfully connect");
+        
+    });
 
+    this.hubConnectionBuilder.on('Init', (result: any) => {
+      console.log("da nah ndc tin hieu");
+    })
+  }
   googleLogin(){
     this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
       (googleAuthUser:any) => {
@@ -152,6 +171,10 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("idUser", this.resAthentication.id)
             localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
 
+
+
+                // connect to signalR
+                this.connectSignalR();
             var tourBooking = localStorage.getItem("tourBooking_null")
             if (tourBooking) {
               localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)

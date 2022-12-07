@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from "../../services_API/config.service";
 
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  constructor() { }
+  constructor(public configService:ConfigService) { }
 
   ngOnInit(): void {
+   
   }
 
 }

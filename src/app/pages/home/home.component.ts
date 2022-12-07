@@ -14,6 +14,8 @@ import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { StatusNotification } from "../../enums/enum";
 import { BannerService } from "../../services_API/banner.service"
 import { ImageModel } from 'src/app/models/image.model';
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,6 +32,10 @@ export class HomeComponent implements OnInit {
     private _bannerService: BannerService,
 
     private router: Router) { }
+  // message
+  messA: string
+  messB:string
+  messC:string
   resSchedule: ScheduleModel[]
   resScheduleFalshSale: ScheduleModel[]
   resSchedulePromotion: ScheduleModel[]
@@ -103,8 +109,21 @@ export class HomeComponent implements OnInit {
       this.toTop.nativeElement.style.display = "none"
     }
   }
+  GuimailA(){
+    console.log("ban vua nhan tin voi A" + this.messA);
+    
+    this.configService.goivui("C8CBA551-5A96-4678-5940-08DAD93E36F5");
+  }
+  GuimailB(){
+    console.log("ban vua nhan tin voi B" + this.messB);
 
+    this.configService.goivui("2DAFA092-7D3A-4DA8-1BDC-08DAD9EF2389");
+  }
+  GuimailC(){
+    console.log("ban vua nhan tin voi C" + this.messC);
 
+    this.configService.goivui("CC368B02-2582-4994-8E7A-AEB9863DF3DC");
+  }
   backTourBooking() {
     this.isBack = false
     this.router.navigate(['', 'tour-booking', this.resTourBooking.scheduleId, this.resTourBooking.alias]);
