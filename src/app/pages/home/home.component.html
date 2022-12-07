@@ -154,7 +154,7 @@
     <div class="row" style="width: 1500px;  margin-left: -5%" *ngIf="resScheduleFalshSale">
       <ng-container *ngFor="let schedule of resScheduleFalshSale; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf=" i < 3">
-          <img  [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
           <div class="card-body" style="height: 350px;">
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
             <div class="stars mb-4" >
@@ -235,7 +235,7 @@
     <div class="row" style="width: 1500px; margin-left: -5%" *ngIf="resTour">
       <ng-container  *ngFor="let tour of resTour; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf="i < 3 && tour.schedules.length > 1">
-          <img  [src]="url+tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
+          <img  [src]="tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
           <div class="card-body" style="height: 330px;">
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{tour.nameTour}}<span *ngIf="tour.schedules[0].isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
             <div class="stars mb-4" >
@@ -296,7 +296,7 @@
     <div class="row" style="width: 1500px;  margin-left: -5%" *ngIf="resSchedule">
       <ng-container *ngFor="let schedule of resSchedule; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf="schedule.promotionId == 1 && i < 3">
-          <img  [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
           <div class="card-body" style="height: 330px;">
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
             <div class="stars mb-2" >
@@ -340,7 +340,7 @@
         <div class="card mr-5 mb-5 card-shadow" style="max-width: unset; width: 109.8%; margin-left: -4%;">
           <div class=" row">
             <div class="col-5" >
-              <img [src]="url+schedule.tour.thumbnail" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" height="100%" width="100%" style="position: relative; left: -12px; border-bottom-left-radius: 2px; border-top-left-radius: 2px;">
+              <img [src]="schedule.tour.thumbnail" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" height="100%" width="100%" style="position: relative; left: -12px; border-bottom-left-radius: 2px; border-top-left-radius: 2px;">
             </div>
             <div class="col-7" style="padding-top: 80px; font-size: 22px;">
               <h3 class="card-title" style="font-weight: bolder; color: #2d4271; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-bottom: 20px; border-bottom: 1px solid; position: relative; top: -55px;">{{schedule.nameTour}}  <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h3>
