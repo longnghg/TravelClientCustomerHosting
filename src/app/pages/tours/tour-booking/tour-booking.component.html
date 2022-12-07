@@ -475,7 +475,23 @@
         <ng-template #elseRecapcha>
           <button type="button" class="btn btn-primary"  (click)="finalBooking()">Đồng ý</button>
         </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
 
+<button #goto type="button" class="d-none btn btn-primary" data-bs-toggle="modal" data-bs-target="#goto"></button>
+<div class="modal fade" style="z-index: 9999;" id="goto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gotoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="gotoLabel">Thông báo</h1>
+      </div>
+      <div class="modal-body">
+        Bạn cần phải đăng nhập !
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="gotoLogin()">Ok</button>
       </div>
     </div>
   </div>

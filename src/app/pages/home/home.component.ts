@@ -87,16 +87,8 @@ export class HomeComponent implements OnInit {
 
     this._bannerService.GetBannerAll().subscribe(res => {
       this.response = res
-      console.log(res);
+      this.resListImage = this.response.content
 
-      if (!this.response.notification.type) {
-        this.resListImage = this.response.content
-        console.log( this.resListImage);
-
-      }
-      else {
-        this.notificationService.handleAlertObj(res.notification)
-      }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, StatusNotification.Error)

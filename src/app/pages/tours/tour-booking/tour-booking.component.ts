@@ -24,6 +24,7 @@ export class TourBookingComponent implements OnInit {
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
   @ViewChild('recapchaModal') recapchaModal: ElementRef;
   @ViewChild('closeModal') closeModal: ElementRef;
+  @ViewChild('goto') goto: ElementRef;
   validateTourBooking: ValidationTourBookingModel = new ValidationTourBookingModel
   resTourBooking: TourBookingModel = new TourBookingModel
   resAthentication: AuthenticationModel
@@ -205,13 +206,14 @@ export class TourBookingComponent implements OnInit {
           this.recapchaModal.nativeElement.click()
         }
         else{
-          this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Info)
-          sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-          setTimeout(() => {
-            this.router.navigate(["", "login"], { state: { reload: true } })
-          }, 1000);
+          // this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Info)
+          // sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
+          // document.body.scrollTop = 0;
+          // document.documentElement.scrollTop = 0;
+          // setTimeout(() => {
+          //   this.router.navigate(["", "login"], { state: { reload: true } })
+          // }, 1000);
+          this.goto.nativeElement.click()
         }
        }
       }
@@ -253,13 +255,7 @@ export class TourBookingComponent implements OnInit {
       this.notificationService.handleAlert("Liên kết tài khoản thành công !", StatusNotification.Info)
     }
     else{
-      this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Info)
-      sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-      setTimeout(() => {
-        this.router.navigate(["", "login"], { state: { reload: true } })
-      }, 2000);
+      this.goto.nativeElement.click()
     }
   }
 
@@ -347,5 +343,12 @@ export class TourBookingComponent implements OnInit {
   closeRecapchaModal(){
     this.captchaElem.resetCaptcha();
     this.isRecapcha = false
+  }
+
+  gotoLogin(){
+    sessionStorage.setItem("wait","/tour-booking/"+this.activatedRoute.snapshot.paramMap.get('id1')+"/"+this.activatedRoute.snapshot.paramMap.get('id2'))
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    this.router.navigate(["", "login"], { state: { reload: true } })
   }
 }
