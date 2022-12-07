@@ -25,7 +25,7 @@ export class TourDetailComponent implements OnInit {
   resScheduleRelate: ScheduleModel[]
   resComment: CommentModel []
   resCmt: CommentModel = new CommentModel
-  resImage: ImageModel[] 
+  resImage: ImageModel[]
   imgDetail: any[] = []
   response: ResponseModel
   auth: AuthenticationModel
@@ -193,20 +193,13 @@ export class TourDetailComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resImage = this.response.content
-        
+
         this.resImage.forEach(image => {
           if (image.filePath) {
             this.imgDetail.push(image.filePath)
-            console.log(this.imgDetail);
-            
           }
         });
-        if (this.resImage.length < 4) {
-          for (let index = 0; index < 4 - this.resImage.length; index++) {
-            this.imgDetail.push("../../../../assets/images/icons/lgoRover.png")
-          }
-        }
-       
+
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
