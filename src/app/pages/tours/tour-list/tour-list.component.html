@@ -25,7 +25,7 @@
        <ng-container *ngFor="let schedule of resSchedule; let i=index">
         <div class="col-4">
          <div class="card mb-5 card-shadow" *ngIf="schedule.rowNum >= start && schedule.rowNum <= end">
-           <img  [src]="url+schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+           <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
            <div class="card-body" >
              <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
              <div class="stars mb-4" >
