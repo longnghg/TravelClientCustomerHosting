@@ -12,6 +12,8 @@ import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { getLocaleDateFormat } from '@angular/common';
 import { ImageModel } from 'src/app/models/image.model';
 import { ImageService } from 'src/app/services_API/image.service';
+import { TimeLineModel } from 'src/app/models/timeLine.model';
+import { TimelineService } from 'src/app/services_API/timeline.service';
 
 
 @Component({
@@ -23,6 +25,7 @@ export class TourDetailComponent implements OnInit {
   resSchedule: ScheduleModel
   resSchedules: ScheduleModel[]
   resScheduleRelate: ScheduleModel[]
+  resTimeline: TimeLineModel []
   resComment: CommentModel []
   resCmt: CommentModel = new CommentModel
   resImage: ImageModel[]
@@ -37,6 +40,7 @@ export class TourDetailComponent implements OnInit {
     private notificationService: NotificationService,
     private configService: ConfigService,
     private imageService: ImageService,
+    private timelineService: TimelineService,
     private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService) { }
   url = this.configService.apiUrl
 
@@ -110,6 +114,8 @@ export class TourDetailComponent implements OnInit {
         //   }
         // })
         this.initImage(this.resSchedule.tour.idTour)
+
+        this.initTimeline(this.resSchedule.idSchedule)
       }
       else{
          location.assign(this.configService.clientUrl + "/page404")
@@ -206,6 +212,22 @@ export class TourDetailComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
+
+  initTimeline(idTour: string){
+    this.timelineService.getTimelineidSchedule(idTour).subscribe(res => {
+      this.response = res
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resTimeline = this.response.content
+        console.log(this.resTimeline);
+
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
   booking(idSchedule: string, alias: string){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.router.navigate(['','tour-booking',idSchedule, alias]);
