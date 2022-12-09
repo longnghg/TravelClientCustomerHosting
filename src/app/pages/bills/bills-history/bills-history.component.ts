@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TourBookingHistoryModel } from "../../../models/tourBookingHistory.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusBooking, StatusNotification } from "../../../enums/enum";
 import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { ConfigService } from "../../../services_API/config.service";
 import { NotificationService } from "../../../services_API/notification.service";
+
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
 @Component({
   selector: 'app-bills-history',
   templateUrl: './bills-history.component.html',
-  styleUrls: ['./bills-history.component.scss']
+  styleUrls: ['./bills-history.component.scss'],
 })
 export class BillsHistoryComponent implements OnInit {
+
   response: ResponseModel
   totalResult: number
   pageCount: number = 1
@@ -23,12 +26,16 @@ export class BillsHistoryComponent implements OnInit {
   end: number = 0
   btnPrev: boolean = false
   btnNext: boolean = true
-
   resTourBookingHistory: TourBookingHistoryModel[]
-  constructor(private notificationService: NotificationService, private configService: ConfigService, private tourBookingService: TourBookingService) { }
+
+  idSchedule: any
+  idTourBooking: any
+  constructor(private notificationService: NotificationService, private configService: ConfigService, private tourBookingService: TourBookingService,
+  ){ }
   url = this.configService.apiUrl
   ngOnInit(): void {
     this.init()
+
   }
 
   init(){
@@ -43,7 +50,7 @@ export class BillsHistoryComponent implements OnInit {
 
           tourBookingHistory.statusName = StatusBooking[tourBookingHistory.status]
         });
-
+        console.log(this.resTourBookingHistory);
         this.calTotalResult()
         this.calStartEnd()
        }
@@ -58,10 +65,6 @@ export class BillsHistoryComponent implements OnInit {
   billDetail(idTourBooking: string){
     location.assign(this.configService.clientUrl + "/bill/" + idTourBooking)
   }
-
-
-
-
 
 
   calStartEnd(){
@@ -139,5 +142,8 @@ export class BillsHistoryComponent implements OnInit {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
 
-
+  childData(idSchedule: any, idTourBooking: any){
+    this.idSchedule = idSchedule
+    this.idTourBooking = idTourBooking
+  }
 }

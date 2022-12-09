@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxTypedJsModule} from 'ngx-typed-js';
 // import { ToastrModule } from 'ngx-toastr';
 import { TourBookingComponent } from '../../pages/tours/tour-booking/tour-booking.component';
+
 import { NavModule, TabsModule } from '@coreui/angular';
 import { NgSelectModule }           from '@ng-select/ng-select';
 
@@ -33,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CommentComponent } from 'src/app/pages/comment/comment/comment.component';
 
 @NgModule({
   imports: [
@@ -67,7 +69,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     // ProfileComponent,
     TourDetailComponent,
     TourListComponent,
-
+    CommentComponent
   ]
 })
 
