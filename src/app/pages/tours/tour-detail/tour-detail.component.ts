@@ -15,6 +15,8 @@ import { ImageService } from 'src/app/services_API/image.service';
 import { TimeLineModel } from 'src/app/models/timeLine.model';
 import { TimelineService } from 'src/app/services_API/timeline.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 
 @Component({
   selector: 'app-tour-detail',

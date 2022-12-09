@@ -32,6 +32,7 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { QRCodeModule } from 'angularx-qrcode';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CountdownModule,
     ReactiveFormsModule,
     NgxCaptchaModule,
-    QRCodeModule
+    QRCodeModule,
+    CKEditorModule
   ],
   declarations: [
 
