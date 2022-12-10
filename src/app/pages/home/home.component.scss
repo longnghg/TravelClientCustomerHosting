@@ -206,3 +206,77 @@ h1{
 .card-shadow:hover{
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
+//
+.card-mess {
+    width: 350px;
+    height: 500px;
+    border-radius: 30px;
+    background: #f8f5f5;
+    float: right;
+    box-shadow: 15px 15px 30px #bebebe,
+                -15px -15px 30px #ffffff;
+                border: 1px solid #000000a6;
+   }
+.header-mess{
+  width: 350px;
+  height: 50px;
+  box-shadow: 15px 15px 30px #f8f5f5;
+  border-bottom: 2px solid #000000a6;
+}
+.body-mess
+{
+  width: 350px;
+  height: 350px;
+
+}
+.message-content-sender{
+  padding: 0.5rem;
+  width: 350px; height:60px;margin-left: 0px; margin-top: 20px;
+}
+.message-content-receive{
+    padding: 0.5rem;
+  width: 350px; height:60px;margin-left: 0px; margin-top: 20px;
+}
+.message-receive{
+  padding-left:0.5rem;
+  padding-top: 7px ;
+  background-color: azure;
+      border: 1px solid #2c262825; margin-left: 15px; min-height: 35px;max-width: 300px; word-break: break-word;
+      border-radius: 10px 10px 10px 0px;
+}
+.message-sender{
+  padding-left:0.5rem;
+  padding-top: 7px ;
+  background-color: azure;
+      border: 1px solid #2c262825; margin-left: 15px; min-height: 35px;max-width: 300px; word-break: break-word;
+  border-radius: 10px 10px 0px 10px;
+}
+.footer-mess
+{
+  width: 350px;
+  height: 50px;
+  margin-top: 5px;
+}
+.col-sm-9{
+  float: right;
+  font-size: 30px;
+}
+
+.inputGroup {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 1em 0 1em 0;
+  max-width: 280px;
+  position: relative;
+
+}
+
+.inputGroup input {
+  font-size: 75%;
+  padding: 0.8em;
+  outline: none;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
+  width: 110%;
+}
+
