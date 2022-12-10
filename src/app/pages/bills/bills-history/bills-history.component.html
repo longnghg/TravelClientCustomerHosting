@@ -25,12 +25,15 @@
             Tổng cộng: <span class="card-title text-danger ml-2" style="font-weight: bold; font-size: 20px;">{{tourBookingHistory.totalPrice | formatPriceVi}}₫</span>/{{tourBookingHistory.totalPeople}} người
           </p>
           <div class="row">
-            <div class="col-9">
+            <div class="col-6">
               <h6 class="card-subtitle mb-2 text-muted">Ngày đi: {{tourBookingHistory.departureDate | formatFromUnixTimestampToFullDateView}}</h6>
               <h6 class="card-subtitle mb-2 text-muted">Ngày về: {{tourBookingHistory.returnDate | formatFromUnixTimestampToFullDateView}}</h6>
             </div>
-            <div class="col-3">
-               <button class="btn btn-primary" style="margin-left: 3rem;" (click)="billDetail(tourBookingHistory.idTourBooking)" >Chi tiết</button>
+            <div class="col-6 text-right">
+               <button class="btn btn-primary" style="margin-left: 7rem;" (click)="billDetail(tourBookingHistory.idTourBooking)" >Chi tiết</button>
+               <ng-container *ngIf="tourBookingHistory.isSendFeedBack == false && tourBookingHistory.status == 5">
+                <button (click)="childData(tourBookingHistory.idSchedule, tourBookingHistory.idTourBooking)" class="btn btn-danger" style="margin-left: 1rem;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá</button>
+               </ng-container>
             </div>
           </div>
           </div>
@@ -137,4 +140,14 @@
       </ul>
     </nav>
 
+  </div>
+
+
+
+  <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+       <app-comment [idSchedule]="idSchedule" [idTourBooking]="idTourBooking"></app-comment>
+      </div>
+    </div>
   </div>

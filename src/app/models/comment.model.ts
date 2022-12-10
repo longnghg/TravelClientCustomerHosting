@@ -5,7 +5,10 @@ export class CommentModel {
     commentText: string
     idCustomer: string
     idTour: string
+    idSchedule: string
     nameCustomer: string
+    idTourBooking: string
+    rating: number
 }
 
 export class ValidationCommentModel{

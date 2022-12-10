@@ -15,6 +15,8 @@ import { ImageService } from 'src/app/services_API/image.service';
 import { TimeLineModel } from 'src/app/models/timeLine.model';
 import { TimelineService } from 'src/app/services_API/timeline.service';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 
 @Component({
   selector: 'app-tour-detail',
@@ -43,6 +45,8 @@ export class TourDetailComponent implements OnInit {
     private timelineService: TimelineService,
     private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService) { }
   url = this.configService.apiUrl
+
+  public Editor = ClassicEditor;
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -238,29 +242,6 @@ export class TourDetailComponent implements OnInit {
     location.assign(this.configService.clientUrl + "/tour-detail/"+idSchedule+"/"+alias)
   }
 
-  createComment(){
-    this.validateComment = new ValidationCommentModel
-
-    this.validateComment = this.configService.validateComment(this.resCmt, this.validateComment)
-
-    if(this.validateComment.total == 0 ){
-      this.validateCommentText = this.configService.validateCommentText(this.resCmt, this.validateCommentText)
-      this.resCmt.idTour = this.resSchedule.tour.idTour
-      this.resCmt.idCustomer = this.auth.id
-      this.commentService.create(this.resCmt).subscribe(res =>{
-        this.response = res
-        this.notificationService.handleAlertObj(res.notification)
-        if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resCmt = Object.assign({}, new CommentModel)
-          this.validateComment = new ValidationCommentModel
-        }
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
-    }
-  }
 
   getData(idComment: string){
     this.idComment = idComment

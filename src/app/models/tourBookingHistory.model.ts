@@ -18,4 +18,5 @@ export class TourBookingHistoryModel{
   valuePromotion: number = 0
   fromPlace: string
   toPlace: string
+  isSendFeedBack: boolean
 }
