@@ -17,6 +17,7 @@ import { TimelineService } from 'src/app/services_API/timeline.service';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-tour-detail',
@@ -43,7 +44,8 @@ export class TourDetailComponent implements OnInit {
     private configService: ConfigService,
     private imageService: ImageService,
     private timelineService: TimelineService,
-    private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService) { }
+    private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService,
+    config: NgbRatingConfig) { config.readonly = true;}
   url = this.configService.apiUrl
 
   public Editor = ClassicEditor;
@@ -108,6 +110,8 @@ export class TourDetailComponent implements OnInit {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success){
             this.resComment = this.response.content
+            console.log(this.resComment);
+
           }
         })
 

@@ -30,6 +30,7 @@ export class BillsHistoryComponent implements OnInit {
 
   idSchedule: any
   idTourBooking: any
+  nameTour: any
   constructor(private notificationService: NotificationService, private configService: ConfigService, private tourBookingService: TourBookingService,
   ){ }
   url = this.configService.apiUrl
@@ -142,8 +143,9 @@ export class BillsHistoryComponent implements OnInit {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
   }
 
-  childData(idSchedule: any, idTourBooking: any){
+  childData(idSchedule: any, idTourBooking: any, nameTour: any){
     this.idSchedule = idSchedule
     this.idTourBooking = idTourBooking
+    this.nameTour = nameTour
   }
 }

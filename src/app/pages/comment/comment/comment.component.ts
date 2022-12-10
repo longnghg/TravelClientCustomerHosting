@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ElementRef, Output } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import { CommentModel, ValidationCommentModel, ValidationCommentTextModel } from 'src/app/models/comment.model';
@@ -17,26 +17,27 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 export class CommentComponent implements OnInit {
   @ViewChild( 'editor' ) editorComponent: CKEditorComponent;
   @ViewChild('closeModal') closeModal: ElementRef
+
   @Input() idSchedule: any
   @Input() idTourBooking: any
+  @Input() nameTour: any
   response: ResponseModel
   public Editor = ClassicEditor;
 
   validateComment: ValidationCommentModel = new ValidationCommentModel
   validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
   resCmt: CommentModel = new CommentModel
-  currentRate = 0;
+  currentRate = 5;
   constructor(private commentService: CommentService,private notificationService: NotificationService, private configService: ConfigService, config: NgbRatingConfig) {
-    config.max = 5;
+    config.max = 10;
   }
 
   ngOnInit(): void {
 
-
   }
 
   ngOnChanges(): void {
-
+    this.currentRate = 5;
   }
 
 
@@ -62,6 +63,8 @@ export class CommentComponent implements OnInit {
           setTimeout(() => {
             this.closeModal.nativeElement.click()
           }, 100);
+
+          this.currentRate = 5;
         }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");

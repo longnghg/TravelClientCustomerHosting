@@ -31,8 +31,8 @@
             </div>
             <div class="col-6 text-right">
                <button class="btn btn-primary" style="margin-left: 7rem;" (click)="billDetail(tourBookingHistory.idTourBooking)" >Chi tiết</button>
-               <ng-container *ngIf="tourBookingHistory.isSendFeedBack == false && tourBookingHistory.status == 5">
-                <button (click)="childData(tourBookingHistory.idSchedule, tourBookingHistory.idTourBooking)" class="btn btn-danger" style="margin-left: 1rem;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá</button>
+               <ng-container *ngIf="!tourBookingHistory.isSendFeedBack && tourBookingHistory.status == 5">
+                <button (click)="childData(tourBookingHistory.idSchedule, tourBookingHistory.idTourBooking, tourBookingHistory.nameTour)" class="btn btn-danger" style="margin-left: 1rem;" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Đánh giá</button>
                </ng-container>
             </div>
           </div>
@@ -147,7 +147,7 @@
   <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
-       <app-comment [idSchedule]="idSchedule" [idTourBooking]="idTourBooking"></app-comment>
+       <app-comment [idSchedule]="idSchedule" [idTourBooking]="idTourBooking" [nameTour]="nameTour"></app-comment>
       </div>
     </div>
   </div>
