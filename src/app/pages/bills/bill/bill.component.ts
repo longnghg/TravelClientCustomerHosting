@@ -53,6 +53,7 @@ export class BillComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking = this.response.content
+        console.log(this.resTourBooking);
 
         if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
           var date = new Date().getTime()

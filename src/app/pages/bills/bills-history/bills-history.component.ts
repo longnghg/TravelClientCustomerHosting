@@ -45,6 +45,7 @@ export class BillsHistoryComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBookingHistory = this.response.content
+
         if (this.resTourBookingHistory ) {
           this.resTourBookingHistory.forEach(tourBookingHistory => {
           tourBookingHistory.totalPeople = tourBookingHistory.adult + tourBookingHistory.child + tourBookingHistory.baby
