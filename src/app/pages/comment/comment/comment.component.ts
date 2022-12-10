@@ -38,8 +38,12 @@ export class CommentComponent implements OnInit {
 
   ngOnChanges(): void {
     this.currentRate = 5;
+    this.editorComponent.editorInstance.setData("")
   }
 
+  clear(){
+    this.editorComponent.editorInstance.setData("")
+  }
 
   createComment(){
     var idCustomer = localStorage.getItem("idUser")
