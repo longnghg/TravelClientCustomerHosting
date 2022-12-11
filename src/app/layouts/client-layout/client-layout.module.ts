@@ -35,7 +35,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CommentComponent } from 'src/app/pages/comment/comment/comment.component';
-
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -70,7 +70,9 @@ import { CommentComponent } from 'src/app/pages/comment/comment/comment.componen
     TourDetailComponent,
     TourListComponent,
     CommentComponent
-  ]
+  ],
+  providers: [NavbarComponent],
+
 })
 
 export class ClientLayoutModule {}

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
 import { ToastrService } from 'ngx-toastr';
+import { ResponseModel } from "../models/responsiveModels/response.model";
 @Injectable({
     providedIn: 'root'
 })
@@ -55,5 +56,20 @@ export class NotificationService{
             this.toastr.error(messenge, 'Lỗi');
         }
 
+    }
+
+    async reply(data: any)
+    {
+      return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Chat/create-messenger", data).toPromise();
+    }
+
+    async view(Idcustomer: string)
+    {
+      return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Chat/cus-messenger?idCustomer="+Idcustomer).toPromise();
+    }
+
+    async updateIsSeenMess(idCus: string, idSp: string)
+    {
+      return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Chat/check-seen-messenger-cus?idCus="+idCus+"&idSp="+idSp, {}).toPromise();
     }
 }

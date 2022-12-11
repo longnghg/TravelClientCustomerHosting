@@ -504,6 +504,12 @@
     </div>
   </div>
 </div>
+<div *ngIf="auth" #mess (click)="openMess()" class="mess">
+  <span *ngIf="!resGroup.isSeen" class="position-absolute translate-middle badge rounded-pill bg-danger" [style]="resGroup.totalNew<10?'top: 0.5rem;right: -1rem;':'top: 0.5rem;right: -1.6rem;'">
+    {{resGroup.totalNew < 99 ? resGroup.totalNew: "99+"}}
+  </span>
+  <i class="fab fa-facebook-messenger mess-label"></i>
+</div>
 
 <div *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
   <a (click)="removeTourBooking()" class="cart-close"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
@@ -512,86 +518,68 @@
 
 
 <div #toTop (click)="backToTop()" class="back-to-top">
-  <i class="fa-solid fa-arrow-up cart-label"></i>
+  <i class="fa-solid fa-arrow-up back-to-top-label"></i>
 </div>
 
 
-<div #toTop (click)="backToTop()" class="back-to-top">
-  <i class="fab fa-facebook-messenger cart-label"></i>
-</div>
 
-<div class="card-mess">
-  <div class="header-mess">
-    <div class="row">
-      <div class="col-sm-3">
-        <div class="card__header">
-          <h5 class="card__title">Kiệt Trác</h5>
-        </div>
-      </div>
-      <div class="col-sm-9">
-        <i class="fa-solid fa-minus" style="margin-left: 190px;"></i>
-        <i class="fa-solid fa-xmark" style="margin-left: 10px;"></i>
 
-      </div>
-    </div>
-
-  </div>
-  <div class="body-mess">
-    <div class="row mr-2">
-      <div class="col">
-          <div class="card-send">Tôi cần hỗ trợ</div>
-      </div>
-    </div>
-
-    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-    <div class="row ml-2">
-        <div class="col">
-            <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
-        </div>
-    </div>
-    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-
-    <div class="row mr-2">
-        <div class="col">
-            <div class="card-send">Bạn tính copy bài của t đúng không ?</div>
-        </div>
-    </div>
-    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-      <div class="row mr-2">
-          <div class="col">
-              <div class="card-send"> ẩu rồi đó ba</div>
+<div *ngIf="auth" #card class="card-mess">
+  <ng-container *ngIf="resMess">
+    <div class="header-mess">
+      <div class="row">
+        <div class="col-10">
+          <div class="card__header">
+            <h5 class="card__title">Phan Thanh Cốt</h5>
+            <h6 class="card__time">{{resMess.length > 0?(resMess[resMess.length-1].sendDate | dateAgo): 'Hiện tại'}}</h6>
           </div>
+        </div>
+        <div class="col-2">
+          <i class="fa-solid fa-minus" style="    margin-top: 0.7rem;
+          cursor: pointer;
+          font-size: 30px;" (click)="closeMess()"></i>
+        </div>
       </div>
-    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-    <div class="row ml-2">
-      <div class="col">
-          <div class="card-receive">Hãy giúp đỡ </div>
-      </div>
-  </div>
-  <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
-  <div class="row ml-2">
-    <div class="col">
-        <div class="card-receive">Hãy trả lại đi </div>
+
     </div>
-</div>
-</div>
+    <div *ngIf="cardFocus" class="body-mess" id="mess">
+      <ng-container *ngFor="let item of resMess; let i=index">
+        <ng-container *ngIf="item.senderId == auth.id; else elseSend">
+            <div class="row mr-2">
+                <div class="col">
+                    <div class="card-send">{{item.content}}</div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #elseSend>
+            <div class="row ml-2">
+                <div class="col">
+                    <div class="card-receive">{{item.content}}</div>
+                </div>
+            </div>
+        </ng-template>
 
 
-  <div class="footer-mess row">
-    <div class="col-10" style="margin-top: 0.2rem;">
-      <div class="searchbar">
-          <div class="searchbar-wrapper">
-              <div class="searchbar-center">
-                  <div class="searchbar-input-spacer"></div>
+        <div  class="row" style="margin: 2rem;"> <div class="col"></div></div>
+    </ng-container>
+    </div>
+    <div class="footer-mess row">
+      <div class="col-10" style="margin-top: 0.2rem;">
+        <div class="searchbar">
+            <div class="searchbar-wrapper">
+                <div class="searchbar-center">
+                    <div class="searchbar-input-spacer"></div>
 
-                  <input type="text" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @Kiệt Trác">
-              </div>
-          </div>
+                    <input type="text" class="searchbar-input" [(ngModel)]="dataSend.content" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn">
+                </div>
+            </div>
 
-      </div>
-  </div>
-  <div class="col-2">
-      <i class="icon-send fa-solid fa-location-arrow" style="font-size: 25px;"></i>
-  </div>
+        </div>
+    </div>
+    <div class="col-2">
+        <i class="icon-send fa-solid fa-location-arrow" style="font-size: 25px;" (click)="reply()"></i>
+    </div>
+    </div>
+  </ng-container>
+
 </div>

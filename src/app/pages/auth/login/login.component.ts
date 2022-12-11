@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
   constructor(private router:Router, private configService:ConfigService, private notificationService:NotificationService, private authenticationService:AuthenticationService) { }
 
   ngOnInit(): void {
-
-
     if (history.state.reload) {
       location.reload()
     }
@@ -90,7 +88,7 @@ export class LoginComponent implements OnInit {
               localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
 
                 // connect to signalR
-                this.connectSignalR();
+                // this.connectSignalR();
 
               var tourBooking = localStorage.getItem("tourBooking_null")
               if (tourBooking) {
@@ -143,16 +141,16 @@ export class LoginComponent implements OnInit {
       }
 
   }
-  connectSignalR(){
-    this.hubConnectionBuilder = this.configService.signIR()
-    this.hubConnectionBuilder.start().then(function(){
-        console.log("Successfully connect");
-    });
+  // connectSignalR(){
+  //   this.hubConnectionBuilder = this.configService.signIR()
+  //   this.hubConnectionBuilder.start().then(function(){
+  //       console.log("Successfully connect");
+  //   });
 
-    this.hubConnectionBuilder.on('Message', (result: any) => {
-      console.log("Nhan dc tin heiu");
-    })
-  }
+  //   this.hubConnectionBuilder.on('Message', (result: any) => {
+  //     console.log("Nhan dc tin heiu");
+  //   })
+  // }
   googleLogin(){
     this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
       (googleAuthUser:any) => {
@@ -173,7 +171,7 @@ export class LoginComponent implements OnInit {
 
 
                 // connect to signalR
-                this.connectSignalR();
+                // this.connectSignalR();
             var tourBooking = localStorage.getItem("tourBooking_null")
             if (tourBooking) {
               localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)

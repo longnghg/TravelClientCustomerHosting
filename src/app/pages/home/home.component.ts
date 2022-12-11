@@ -14,9 +14,10 @@ import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { StatusNotification } from "../../enums/enum";
 import { BannerService } from "../../services_API/banner.service"
 import { ImageModel } from 'src/app/models/image.model';
-
+import { GroupMessage, Message } from "../../models/message.model";
 // signalr
-import { HubConnection } from '@microsoft/signalr';
+import { NavbarComponent  } from "../../components/navbar/navbar.component";
+import { AuthenticationModel } from "../../models/authentication.model";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -25,7 +26,7 @@ import { HubConnection } from '@microsoft/signalr';
 })
 export class HomeComponent implements OnInit {
      //signalr
-     private hubConnectionBuilder: HubConnection
+    //  private hubConnectionBuilder: HubConnection
   constructor(private provinceService: ProvinceService,
     private scheduleService: ScheduleService,
     private tourService: TourService,
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
     private configService: ConfigService,
     private activatedRoute: ActivatedRoute,
     private _bannerService: BannerService,
-
+    private navbarComponent: NavbarComponent,
     private router: Router) { }
   // message
   messA: string
@@ -54,9 +55,14 @@ export class HomeComponent implements OnInit {
   kwReturnDate: any = ""
   valueFalshSale = 50
   resListImage: ImageModel[]
-  url = this.configService.apiUrl
+  resMess: Message[]
+  resGroup: GroupMessage = new GroupMessage
+  dataSend: Message = new Message
+  cardFocus: boolean
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('toTop') toTop: ElementRef;
+  @ViewChild('card') card: ElementRef
+  @ViewChild('mess') mess: ElementRef
   list = [
     { img: "assets/images/hero-slider-1.jpg", location: "San Francisco." },
     { img: "assets/images/hero-slider-2.jpg", location: "Paris." },
@@ -79,8 +85,10 @@ export class HomeComponent implements OnInit {
 
   pageIndex= 1
   pageSize= 6
-  ngOnInit(): void {
 
+  auth: AuthenticationModel
+  ngOnInit(): void {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.provinceService.views().then(res => { this.resProvince = res })
     this.initFlashSale()
     this.initSchedulePromotion()
@@ -102,21 +110,26 @@ export class HomeComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+    this.initChat()
+    this.loadMessageSignalR()
   }
 
   ngAfterViewChecked(): void {
+    // if (!this.auth) {
+    //     this.closeMess()
+    // }
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
       this.toTop.nativeElement.style.display = "block"
     }
     else {
       this.toTop.nativeElement.style.display = "none"
     }
+
   }
   loadMessageSignalR(){
-    this.hubConnectionBuilder.on('Message', (result: any) => {
-      console.log("nahn dc roi nhe");
-
-    })
+      this.navbarComponent.hubConnectionBuilder.on('Message', (result: any) => {
+        this.initChat();
+      })
   }
   GuimailA(){
     console.log("ban vua nhan tin voi A" + this.messA);
@@ -312,6 +325,89 @@ export class HomeComponent implements OnInit {
     if (e.action === 'done') {
       this.resScheduleFalshSale.splice(index, 1)
     }
+  }
+
+  initChat(){
+    this.notificationService.view(this.auth.id).then(res => {
+      this.response = res
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.resMess = this.response.content
+        if (this.resMess) {
+          this.resGroup.totalNew = 0
+          this.resMess.forEach(item =>{
+            if (!item.isSeen) {
+              this.resGroup.totalNew += 1
+            }
+          })
+          if (this.resGroup.totalNew > 0) {
+            this.resGroup.isSeen = false
+          }
+          else{
+            this.resGroup.isSeen = true
+          }
+
+          if (this.cardFocus) {
+            if (!this.resGroup.isSeen) {
+              this.updateIsSeen()
+            }
+            setTimeout(() => {
+              document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
+            }, 200);
+          }
+        }
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  reply(){
+    this.dataSend.senderId = this.auth.id
+    this.dataSend.senderName = this.auth.name
+    this.notificationService.reply(this.dataSend).then(res => {
+      this.response = res
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.configService.callChatSignalR(this.response.content)
+        this.dataSend = new Message
+        this.initChat()
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  openMess(){
+    this.cardFocus = true
+    this.initChat()
+    this.card.nativeElement.style.display = "block"
+    this.mess.nativeElement.style.display = "none"
+    this.card.nativeElement.setAttribute("class","card-mess card-mess-open")
+  }
+
+  closeMess(){
+    this.cardFocus = false
+    this.mess.nativeElement.style.display = "block"
+    this.mess.nativeElement.setAttribute("class","mess card-mess-open")
+    this.card.nativeElement.setAttribute("class","card-mess card-mess-close")
+    setTimeout(() => {
+      this.card.nativeElement.removeAttribute("style")
+    }, 300);
+  }
+
+  updateIsSeen(){
+    this.notificationService.updateIsSeenMess(this.auth.id, this.resMess[0].receiverId).then(res => {
+      this.response = res
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.resGroup.isSeen = true
+        this.resGroup.totalNew = 0
+
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 }
 

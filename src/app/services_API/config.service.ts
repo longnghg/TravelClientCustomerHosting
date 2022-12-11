@@ -10,11 +10,10 @@ export class ConfigService{
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public clientUrl = this.document.location.origin
-  signIR(){
+  signalR(){
     return this.hubConnectionBuilder = new HubConnectionBuilder()
    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
    {
-
        accessTokenFactory: () => localStorage.getItem("token")
    })
    .withAutomaticReconnect()

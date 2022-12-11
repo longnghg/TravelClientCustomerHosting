@@ -23,16 +23,16 @@
           </ul>
         </li>
 
-        <ng-container *ngIf="resAthentication; else elseTemplate">
+        <ng-container *ngIf="auth; else elseTemplate">
           <li class="has-children" style="top: 15px;">
             <a class="nav-color" style="overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            max-width: 200px;"  href="javascript:void(0)">{{resAthentication.name}}</a>
+            max-width: 200px;"  href="javascript:void(0)">{{auth.name}}</a>
             <ul class="dropdown" style="margin-top: -10px;">
               <li><a href="#" [routerLink]="['/changePassword']" style=" text-decoration: none;">Đổi mật khẩu</a></li>
               <li>
-                <!-- <a href="#" routerLinkActive="active" [routerLink]="['profile', resAthentication.id]">Thông tin cá nhân</a> -->
+                <!-- <a href="#" routerLinkActive="active" [routerLink]="['profile', auth.id]">Thông tin cá nhân</a> -->
                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style=" text-decoration: none;">Thông tin cá nhân</a>
 
                </li>
@@ -69,7 +69,7 @@
         <img src="../../../assets/images/icons/lgoRover.png" alt="" style="width: 150px" id="staticBackdropLabel">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngIf="resAthentication">
+      <div class="modal-body" *ngIf="auth">
         <app-profile></app-profile>
       </div>
 
