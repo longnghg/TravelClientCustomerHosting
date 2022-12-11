@@ -519,11 +519,14 @@
 <div #toTop (click)="backToTop()" class="back-to-top">
   <i class="fab fa-facebook-messenger cart-label"></i>
 </div>
+
 <div class="card-mess">
   <div class="header-mess">
     <div class="row">
       <div class="col-sm-3">
-        <i class="fa-regular fa-circle-user"   style=" font-size: 35px;margin: 10px;" ></i>
+        <div class="card__header">
+          <h5 class="card__title">Kiệt Trác</h5>
+        </div>
       </div>
       <div class="col-sm-9">
         <i class="fa-solid fa-minus" style="margin-left: 190px;"></i>
@@ -534,38 +537,61 @@
 
   </div>
   <div class="body-mess">
-    <div class="row message-content-sender">
-      <div class="col-2">
-        <i class="fa-regular fa-circle-user" style="font-size: 35px;"></i>
-    </div>
-    <div class="col-10">
-      <div class="message-receive"> hi ! I
-       </div>
-    </div>
-    </div>
-    <div class="row" style="width: 350px; height: 50px;">
-
-    <div class="col-10">
-        <div class="message-sender" > Hello
-
+    <div class="row mr-2">
+      <div class="col">
+          <div class="card-send">Tôi cần hỗ trợ</div>
       </div>
     </div>
-    <div class="col-2">
-      <i class="fa-regular fa-circle-user" style="font-size: 35px;"></i>
-  </div>
+
+    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
+
+    <div class="row ml-2">
+        <div class="col">
+            <div class="card-receive">Xin chào Kiệt Trác, bạn cần hỗ trợ gì</div>
+        </div>
     </div>
-  </div>
-  <div class="footer-mess">
-    <div class="row">
-      <div class="col-9">
-          <div class="inputGroup">
-            <input type="text" required=""placeholder="Nhập lời nhắn.." autocomplete="off"  style="margin-left: 10px;margin-top: 12px;">
+    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
+
+    <div class="row mr-2">
+        <div class="col">
+            <div class="card-send">Bạn tính copy bài của t đúng không ?</div>
+        </div>
+    </div>
+    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
+      <div class="row mr-2">
+          <div class="col">
+              <div class="card-send"> ẩu rồi đó ba</div>
           </div>
       </div>
-          <div class="col-3">
-            <i class="fa-solid fa-location-arrow" style="transform: rotate(44deg); font-size: 30px;      margin-left: 25px;  margin-top: 35px;"></i>
+    <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
+    <div class="row ml-2">
+      <div class="col">
+          <div class="card-receive">Hãy giúp đỡ </div>
+      </div>
+  </div>
+  <div class="row" style="margin: 2rem;"> <div class="col"></div></div>
+  <div class="row ml-2">
+    <div class="col">
+        <div class="card-receive">Hãy trả lại đi </div>
+    </div>
+</div>
+</div>
+
+
+  <div class="footer-mess row">
+    <div class="col-10" style="margin-top: 0.2rem;">
+      <div class="searchbar">
+          <div class="searchbar-wrapper">
+              <div class="searchbar-center">
+                  <div class="searchbar-input-spacer"></div>
+
+                  <input type="text" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn tới @Kiệt Trác">
+              </div>
           </div>
 
-    </div>
+      </div>
+  </div>
+  <div class="col-2">
+      <i class="icon-send fa-solid fa-location-arrow" style="font-size: 25px;"></i>
   </div>
 </div>
