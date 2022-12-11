@@ -14,16 +14,15 @@ export class ConfigService{
     return this.hubConnectionBuilder = new HubConnectionBuilder()
    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
    {
-    
+
        accessTokenFactory: () => localStorage.getItem("token")
    })
    .withAutomaticReconnect()
    .build();
   }
-  goivui(id:string): void{
-   this.hubConnectionBuilder.invoke('GetInfo',id)
- }
-
+  callChatSignalR(id:string): void{
+   this.hubConnectionBuilder.invoke('Chat',id)
+  }
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);

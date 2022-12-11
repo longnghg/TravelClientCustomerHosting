@@ -15,7 +15,8 @@ import { StatusNotification } from "../../enums/enum";
 import { BannerService } from "../../services_API/banner.service"
 import { ImageModel } from 'src/app/models/image.model';
 
-
+// signalr
+import { HubConnection } from '@microsoft/signalr';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,6 +24,8 @@ import { ImageModel } from 'src/app/models/image.model';
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
+     //signalr
+     private hubConnectionBuilder: HubConnection
   constructor(private provinceService: ProvinceService,
     private scheduleService: ScheduleService,
     private tourService: TourService,
@@ -109,20 +112,26 @@ export class HomeComponent implements OnInit {
       this.toTop.nativeElement.style.display = "none"
     }
   }
+  loadMessageSignalR(){
+    this.hubConnectionBuilder.on('Message', (result: any) => {
+      console.log("nahn dc roi nhe");
+
+    })
+  }
   GuimailA(){
     console.log("ban vua nhan tin voi A" + this.messA);
-    
-    this.configService.goivui("C8CBA551-5A96-4678-5940-08DAD93E36F5");
+
+    this.configService.callChatSignalR("B07A87D7-C378-4E6C-9AF8-447A3EE852B1");
   }
   GuimailB(){
     console.log("ban vua nhan tin voi B" + this.messB);
 
-    this.configService.goivui("2DAFA092-7D3A-4DA8-1BDC-08DAD9EF2389");
+    this.configService.callChatSignalR("2DAFA092-7D3A-4DA8-1BDC-08DAD9EF2389");
   }
   GuimailC(){
     console.log("ban vua nhan tin voi C" + this.messC);
 
-    this.configService.goivui("CC368B02-2582-4994-8E7A-AEB9863DF3DC");
+    this.configService.callChatSignalR("CC368B02-2582-4994-8E7A-AEB9863DF3DC");
   }
   backTourBooking() {
     this.isBack = false

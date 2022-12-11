@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+
     if (history.state.reload) {
       location.reload()
     }
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit {
               localStorage.setItem("token", this.resAthentication.token)
               localStorage.setItem("idUser", this.resAthentication.id)
               localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-            
+
                 // connect to signalR
                 this.connectSignalR();
 
@@ -147,11 +147,10 @@ export class LoginComponent implements OnInit {
     this.hubConnectionBuilder = this.configService.signIR()
     this.hubConnectionBuilder.start().then(function(){
         console.log("Successfully connect");
-        
     });
 
-    this.hubConnectionBuilder.on('Init', (result: any) => {
-      console.log("da nah ndc tin hieu");
+    this.hubConnectionBuilder.on('Message', (result: any) => {
+      console.log("Nhan dc tin heiu");
     })
   }
   googleLogin(){
