@@ -30,52 +30,81 @@
           <h1 class="mb-5" style="text-align: center; color: rgba(255, 255, 255, 0.7);"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="150" [backSpeed]="150" [startDelay]="1000" [showCursor]="true"  [loop]="true"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
           <div class="row">
             <div class="col-12">
-              <form class="form">
-                <div class="row mb-2">
-                  <div class="col-6">
-                    <label>Điểm đi</label>
-                    <ng-select
-                        [items]="resProvince"
-                        [(ngModel)]="kwFrom"
-                        placeholder="Chọn điểm đi..."
-                        bindLabel="nameProvince"
-                        bindValue="nameProvince"
-                        [clearable]="false"
-                        [searchable]="false"
-                        name="from"
-                        id="from">
-                      </ng-select>
-                  </div>
-                  <div class="col-6">
-                    <label>Điểm đến</label>
-                    <ng-select
-                        [items]="resProvince"
-                        [(ngModel)]="kwTo"
-                        placeholder="Chọn điểm đến..."
-                        bindLabel="nameProvince"
-                        bindValue="nameProvince"
-                        [searchable]="false"
-                        name="to"
-                        id="to">
-                      </ng-select>
-                  </div>
-                </div>
-                <div class="row mb-4">
-                  <div class="col-6">
-                    <label>Ngày đi</label>
-                    <input class="form-control" [(ngModel)]="kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
-                  </div>
-                  <div class="col-6">
-                    <label>Ngày về</label>
-                    <input class="form-control" [(ngModel)]="kwReturnDate" name="returnDate" onkeydown="return false" type="date">
-                  </div>
-                </div>
-                <div class="row align-items-center" style="justify-content: center;">
-                  <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
-                    <input (click)="search()" type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
-                  </div>
-                </div>
-              </form>
+              <ul ngbNav #nav="ngbNav" class="nav-tabs" style="background-color: white;border-radius: 0.5rem;">
+                <li ngbNavItem>
+                  <a ngbNavLink>Tour du lịch trọn gói</a>
+                  <ng-template ngbNavContent>
+                    <form class="form">
+                      <div class="row mb-2">
+                        <div class="col-6">
+                          <label>Điểm đi</label>
+                          <ng-select
+                              [items]="resProvince"
+                              [(ngModel)]="kwFrom"
+                              placeholder="Chọn điểm đi..."
+                              bindLabel="nameProvince"
+                              bindValue="nameProvince"
+                              [clearable]="false"
+                              [searchable]="false"
+                              name="from"
+                              id="from">
+                            </ng-select>
+                        </div>
+                        <div class="col-6">
+                          <label>Điểm đến</label>
+                          <ng-select
+                              [items]="resProvince"
+                              [(ngModel)]="kwTo"
+                              placeholder="Chọn điểm đến..."
+                              bindLabel="nameProvince"
+                              bindValue="nameProvince"
+                              [searchable]="false"
+                              name="to"
+                              id="to">
+                            </ng-select>
+                        </div>
+                      </div>
+                      <div class="row mb-4">
+                        <div class="col-6">
+                          <label>Ngày đi</label>
+                          <input class="form-control" [(ngModel)]="kwDepartureDate" name="departureDate" onkeydown="return false" type="date">
+                        </div>
+                        <div class="col-6">
+                          <label>Ngày về</label>
+                          <input class="form-control" [(ngModel)]="kwReturnDate" name="returnDate" onkeydown="return false" type="date">
+                        </div>
+                      </div>
+                      <div class="row align-items-center" style="justify-content: center;">
+                        <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
+                          <input (click)="search()" type="submit" class="btn btn-primary btn-block" value="Tìm kiếm">
+                        </div>
+                      </div>
+                    </form>
+                  </ng-template>
+                </li>
+                <li ngbNavItem>
+                  <a ngbNavLink> Tra cứu Booking</a>
+                  <ng-template ngbNavContent>
+                    <form class="form">
+                      <div class="row">
+                        <fieldset style="width: 57rem;margin-left: 10rem;">
+                          <legend>Tra cứu</legend>
+                          <div class="row">
+                            <div class="col-6" style="margin-left: 5rem;">
+                              <input class="form-control"  name="" placeholder="Nhập mã pincode hoặc số booking của quý khách" type="text">
+                            </div>
+                            <div class="col-3">
+                              <input  type="submit" class="btn btn-primary btn-block" value="Tra cứu"  style="height: 2.8rem;">
+                            </div>
+                          </div>
+                        </fieldset>
+
+                      </div>
+                    </form>
+                  </ng-template>
+                </li>
+              </ul>
+              <div [ngbNavOutlet]="nav"></div>
             </div>
           </div>
         </div>
