@@ -289,20 +289,26 @@ export class HomeComponent implements OnInit {
   }
 
   searchBookingNo(){
-    this.tourbookingService.cusSearchBookingNo(this.kwBookingNo).subscribe(res => {
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.tourBookingNo = this.response.content
-        this.kwBookingNo = ""
-        this.billDetail(this.tourBookingNo.idTourBooking)
-      }
-      else{
-        this.notificationService.handleAlertObj(res.notification)
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+    if(this.kwBookingNo == ""){
+      this.notificationService.handleAlert("Bạn cần nhập BookingNo !", StatusNotification.Warning)
+    }
+    else{
+      this.tourbookingService.cusSearchBookingNo(this.kwBookingNo).subscribe(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.tourBookingNo = this.response.content
+          this.kwBookingNo = ""
+          this.billDetail(this.tourBookingNo.idTourBooking)
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+
   }
 
   billDetail(idTourBooking: string){

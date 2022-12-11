@@ -30,9 +30,9 @@
           <h1 class="mb-5" style="text-align: center; color: rgba(255, 255, 255, 0.7);"><span class="d-block">Let's Enjoy Your</span> Trip In <ngx-typed-js [strings]="location" [typeSpeed]="150" [backSpeed]="150" [startDelay]="1000" [showCursor]="true"  [loop]="true"> <span class="typing" id="typing"></span> </ngx-typed-js></h1>
           <div class="row">
             <div class="col-12">
-              <ul ngbNav #nav="ngbNav" class="nav-tabs" style="background-color: white;border-radius: 0.5rem;">
+              <ul ngbNav #nav="ngbNav" class="nav-tabs" style="border-radius: 0.5rem; height: 3rem;">
                 <li ngbNavItem>
-                  <a ngbNavLink>Tour du lịch trọn gói</a>
+                  <a ngbNavLink> <i class="fa-solid fa-car-side"></i> Tour du lịch trọn gói</a>
                   <ng-template ngbNavContent>
                     <form class="form">
                       <div class="row mb-2">
@@ -83,15 +83,15 @@
                   </ng-template>
                 </li>
                 <li ngbNavItem>
-                  <a ngbNavLink> Tra cứu Booking</a>
+                  <a ngbNavLink> <i class="fa-solid fa-magnifying-glass"></i> Tra cứu Booking</a>
                   <ng-template ngbNavContent>
-                    <form class="form">
+                    <form class="form" style="height: 14.5rem;">
                       <div class="row">
                         <fieldset style="width: 57rem;margin-left: 10rem;">
                           <legend>Tra cứu</legend>
                           <div class="row">
                             <div class="col-6" style="margin-left: 5rem;">
-                              <input class="form-control" [(ngModel)]="kwBookingNo" name="kwBookingNo" placeholder="Nhập mã số BookingNo của quý khách" type="text">
+                              <input class="form-control" [(ngModel)]="kwBookingNo" name="kwBookingNo" placeholder="Nhập mã số BookingNo của Quý khách" type="text">
                             </div>
                             <div class="col-3">
                               <input  type="submit" (click)="searchBookingNo()" class="btn btn-primary btn-block" value="Tra cứu"  style="height: 2.8rem;">

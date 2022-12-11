@@ -284,43 +284,47 @@
         <button (click)="createComment()" type="submit" class="btn btn-primary mt-1 mb-4 float-right">Bình luận</button>
       </div>
     </div> -->
+    <ng-container *ngIf="lengthComment > 0; else noneComment">
+      <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 40rem;">
+        <div *ngFor="let item of resComment" class="media mt-3"
+          style="width: 94rem; background-color: #EFF5F5; border-radius: 0.375rem; position: relative;">
 
-    <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 40rem;">
-      <div *ngFor="let item of resComment" class="media mt-3"
-        style="width: 94rem; background-color: #EFF5F5; border-radius: 0.375rem; position: relative;">
-
-        <ng-container *ngIf="auth">
-          <button data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getData(item.idComment)"
-          *ngIf="auth.id == item.idCustomer" style="position:absolute; top: 13px; right: 20px;"
-          class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-        </ng-container>
+          <ng-container *ngIf="auth">
+            <button data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getData(item.idComment)"
+            *ngIf="auth.id == item.idCustomer" style="position:absolute; top: 13px; right: 20px;"
+            class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+          </ng-container>
 
 
 
-        <div class="media-left media-top" style="border-radius: 0.375rem;  margin-top: 1rem; margin-left: 1rem;">
-          <img class="img-circle img-sm media-object" alt="Profile Picture" style="width:60px"
-            src="https://bootdey.com/img/Content/avatar/avatar2.png">
-        </div>
-        <div class="media-body" style="margin-left: 15px;  margin-top: 1rem;">
-          <div class="mar-btm">
-            <div class="row">
-              <div class="col-6">
-                <h5 class="text-semibold media-heading box-inline">{{item.nameCustomer}}</h5>
-              </div>
-              <div class="col-6" style="margin-right: 1rem;">
-                <ngb-rating  [rate]="item.rating" style="font-size: 2rem; color: orange">
-                </ngb-rating>
-              </div>
-            </div>
-
-            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
-              formatFromUnixTimestampToFullDateTimeView}}</p>
+          <div class="media-left media-top" style="border-radius: 0.375rem;  margin-top: 1rem; margin-left: 1rem;">
+            <img class="img-circle img-sm media-object" alt="Profile Picture" style="width:60px"
+              src="https://bootdey.com/img/Content/avatar/avatar2.png">
           </div>
-          <ckeditor [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
-          <hr>
+          <div class="media-body" style="margin-left: 15px;  margin-top: 1rem;">
+            <div class="mar-btm">
+              <div class="row">
+                <div class="col-6">
+                  <h5 class="text-semibold media-heading box-inline">{{item.nameCustomer}}</h5>
+                </div>
+                <div class="col-6" style="margin-right: 1rem;">
+                  <ngb-rating  [rate]="item.rating" style="font-size: 2rem; color: orange">
+                  </ngb-rating>
+                </div>
+              </div>
+
+              <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
+                formatFromUnixTimestampToFullDateTimeView}}</p>
+            </div>
+            <ckeditor [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
+            <hr>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-template #noneComment>
+      <h2 style="margin-left: 34rem;">Chưa có bình luận</h2>
+    </ng-template>
   </fieldset>
   <hr>
 </div>

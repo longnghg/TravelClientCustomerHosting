@@ -30,6 +30,7 @@ export class TourDetailComponent implements OnInit {
   resScheduleRelate: ScheduleModel[]
   resTimeline: TimeLineModel []
   resComment: CommentModel []
+  lengthComment: any
   resCmt: CommentModel = new CommentModel
   resImage: ImageModel[]
   imgDetail: any[] = []
@@ -64,7 +65,6 @@ export class TourDetailComponent implements OnInit {
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
-      console.log(res);
 
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
@@ -110,9 +110,8 @@ export class TourDetailComponent implements OnInit {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success){
             this.resComment = this.response.content
-            console.log(this.resComment);
-
           }
+          this.lengthComment = this.resComment.length
         })
 
         // this.commentService.getidCus(this.auth.id).subscribe(res => {
@@ -227,8 +226,6 @@ export class TourDetailComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success)
       {
         this.resTimeline = this.response.content
-        console.log(this.resTimeline);
-
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -254,7 +251,10 @@ export class TourDetailComponent implements OnInit {
   deleteComment(){
     this.commentService.delete(this.idComment, this.auth.id).subscribe(res =>{
       this.response = res
-      this.notificationService.handleAlertObj(res.notification)
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.notificationService.handleAlert("Xóa thành công !", StatusNotification.Success)
+      }
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

@@ -27,9 +27,10 @@ export class CommentComponent implements OnInit {
   validateComment: ValidationCommentModel = new ValidationCommentModel
   validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
   resCmt: CommentModel = new CommentModel
-  currentRate: number;
+  currentRate = 5;
   constructor(private commentService: CommentService,private notificationService: NotificationService, private configService: ConfigService, config: NgbRatingConfig) {
     config.max = 10;
+    config.readonly = false;
   }
 
   ngOnInit(): void {
