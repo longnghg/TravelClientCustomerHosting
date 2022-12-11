@@ -30,6 +30,7 @@ export class CommentComponent implements OnInit {
   currentRate = 5;
   constructor(private commentService: CommentService,private notificationService: NotificationService, private configService: ConfigService, config: NgbRatingConfig) {
     config.max = 10;
+    config.readonly = false;
   }
 
   ngOnInit(): void {
@@ -37,8 +38,7 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    this.currentRate = 5;
-    this.editorComponent.editorInstance.setData("")
+    this.currentRate = 5
   }
 
   clear(){
@@ -67,8 +67,6 @@ export class CommentComponent implements OnInit {
           setTimeout(() => {
             this.closeModal.nativeElement.click()
           }, 100);
-
-          this.currentRate = 5;
         }
           }, error => {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");

@@ -14,6 +14,7 @@ import { CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { StatusNotification } from "../../enums/enum";
 import { BannerService } from "../../services_API/banner.service"
 import { ImageModel } from 'src/app/models/image.model';
+import { TourBookingService } from 'src/app/services_API/tourBooking.service';
 import { GroupMessage, Message } from "../../models/message.model";
 // signalr
 import { NavbarComponent  } from "../../components/navbar/navbar.component";
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
     private configService: ConfigService,
     private activatedRoute: ActivatedRoute,
     private _bannerService: BannerService,
+    private tourbookingService: TourBookingService,
     private navbarComponent: NavbarComponent,
     private router: Router) { }
   // message
@@ -46,6 +48,7 @@ export class HomeComponent implements OnInit {
   resTour: TourModel[]
   resProvince: LocationModel[]
   resTourBooking: TourBookingModel
+  tourBookingNo: TourBookingModel
   scheduleIndex: number = 0
   response: ResponseModel
   isBack: boolean
@@ -53,6 +56,7 @@ export class HomeComponent implements OnInit {
   kwTo: any = null
   kwDepartureDate: any = ""
   kwReturnDate: any = ""
+  kwBookingNo: any = ""
   valueFalshSale = 50
   resListImage: ImageModel[]
   resMess: Message[]
@@ -296,6 +300,33 @@ export class HomeComponent implements OnInit {
     }
     var kw = "from=" + this.kwFrom + "&to=" + this.kwTo + "&departureDate=" + this.kwDepartureDate + "&returnDate=" + this.kwReturnDate
     this.router.navigate(['', 'tour', kw]);
+  }
+
+  searchBookingNo(){
+    if(this.kwBookingNo == ""){
+      this.notificationService.handleAlert("Bạn cần nhập BookingNo !", StatusNotification.Warning)
+    }
+    else{
+      this.tourbookingService.cusSearchBookingNo(this.kwBookingNo).subscribe(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.tourBookingNo = this.response.content
+          this.kwBookingNo = ""
+          this.billDetail(this.tourBookingNo.idTourBooking)
+        }
+        else{
+          this.notificationService.handleAlertObj(res.notification)
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+
+  }
+
+  billDetail(idTourBooking: string){
+    location.assign(this.configService.clientUrl + "/bill/" + idTourBooking)
   }
 
   backToTop() {

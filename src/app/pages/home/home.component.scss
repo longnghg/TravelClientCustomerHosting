@@ -514,3 +514,36 @@ h1{
   border-radius: 50px;
   background: linear-gradient(-45deg, #209077, #1ae28a 100%) !important;
  }
+
+// .nav-tabs .nav-link {
+//   background: #6D67E4;}
+
+  .nav-link {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .nav-tabs .nav-link {
+    background: #97DECE ;
+  }
+
+  .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    background-color: #EFF5F5;
+    color: cornflowerblue;}
+
+  .nav-tabs {
+      --bs-nav-tabs-link-hover-border-color: white
+  }
+
+  .form {
+    position: relative;
+    box-shadow: 0 15px 30px 0 rgb(0 0 0 / 30%);
+    border-radius: unset;
+    z-index: 9;
+    padding: 30px;
+    background: #ffffff;
+    border-bottom-left-radius: 10px ;
+    border-bottom-right-radius: 10px ;
+    border-top-right-radius: 10px ;
+  }
