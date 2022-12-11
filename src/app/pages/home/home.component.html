@@ -1,7 +1,7 @@
 
 <div class="hero" style="margin-bottom:unset" >
   <div class="container">
-    <h1>Begin nowrap</h1>
+    <!-- <h1>Begin nowrap</h1>
     <div class="row">
       <div class="col-3">
           <textarea name="" id=""  [(ngModel)]="messA" cols="30" rows="10" placeholder="PLayer A"></textarea>
@@ -21,7 +21,7 @@
         C
       </button>
   </div>
-    </div>
+    </div> -->
 
 
     <div class="row align-items-center">
@@ -91,10 +91,10 @@
                           <legend>Tra cứu</legend>
                           <div class="row">
                             <div class="col-6" style="margin-left: 5rem;">
-                              <input class="form-control"  name="" placeholder="Nhập mã pincode hoặc số booking của quý khách" type="text">
+                              <input class="form-control" [(ngModel)]="kwBookingNo" name="kwBookingNo" placeholder="Nhập mã số BookingNo của quý khách" type="text">
                             </div>
                             <div class="col-3">
-                              <input  type="submit" class="btn btn-primary btn-block" value="Tra cứu"  style="height: 2.8rem;">
+                              <input  type="submit" (click)="searchBookingNo()" class="btn btn-primary btn-block" value="Tra cứu"  style="height: 2.8rem;">
                             </div>
                           </div>
                         </fieldset>
