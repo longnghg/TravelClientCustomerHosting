@@ -7,6 +7,7 @@ export class VoucherModel{
   startDateDisplay: string
   endDateDisplay: string
   IdUserModify: string
+  rowNum: number = 0
 }
 
 interface IObjectKeys {

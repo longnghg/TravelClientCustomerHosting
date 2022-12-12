@@ -6,7 +6,7 @@ import { VoucherModel } from '../../models/voucher.model';
 import { ResponseModel } from "../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-
+import { ActivatedRoute, Router, NavigationStart, Data } from '@angular/router';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -21,15 +21,13 @@ export class ContactComponent implements OnInit {
   @Output() parentType = new EventEmitter<any>()
   auth: AuthenticationModel  = new AuthenticationModel
   data: any
-
-
+  img = "https://res.cloudinary.com/ddv2idi9d/image/upload/v1670764405/Upload/Ve/abbb_perh4n.jpg"
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
-
+    private router: Router,
     private configService: ConfigService) { }
 
     ngOnInit(): void {
       this.auth = JSON.parse(localStorage.getItem("currentUser"))
-      console.log(this.auth);
 
       this.init()
     }
@@ -59,19 +57,24 @@ export class ContactComponent implements OnInit {
     }
 
     buyVoucher(voucher :VoucherModel){
-
+     if(this.auth){
       this.voucherService.buy(voucher.idVoucher , this.auth.id ).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)
             {
               this.resVoucher = Object.assign({}, new VoucherModel)
-
             }
             }, error => {
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");
               this.notificationService.handleAlert(message, StatusNotification.Error)
             })
+     }
+     else{
+      this.router.navigate(['/login']);
+      this.notificationService.handleAlert("Bạn cần phải đăng nhập !", StatusNotification.Warning)
+     }
+
     }
 
 

@@ -24,7 +24,10 @@ buy(idVoucher: any , idCus : any )
 {
   return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Voucher/voucher-tiket?idVoucher="+idVoucher+"&idCus="+idCus, {});
 }
-
+getsHistory(idCustomer: any)
+{
+    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Voucher/vouchers-history?idCustomer="+idCustomer);
+}
 
 }
 

@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-6" style="margin-left: 33rem">
+        <h2 class="section-title text-center mb-3">Kho voucher</h2>
+      </div>
+    </div>
+    <div class="row" style="width:100vw" >
+        <div class="col-sm-4" *ngFor="let voucher of resVouchers; let i=index">
+          <ng-container *ngIf="voucher.rowNum >= start && voucher.rowNum <= end">
+            <div class="card2" >
+            </div>
+            <div class="card bg-gradient-logo mx-auto">
+              <div class="main" (change)="dateChange('startDate')" >
+                <div class="co-img ">
+                <h2>Voucher</h2>
+
+                </div>
+                <div class="vertical"></div>
+                <div class="content" >
+
+                  <h2>Gift Voucher</h2>
+                  <h1> {{voucher.value}}% <span>Coupon</span></h1>
+                  <P>Từ ngày :<span>{{voucher.startDate | formatFromUnixTimestampToFullDateView}}</span></P>
+                  <P>Đến ngày :<span>{{voucher.endDate | formatFromUnixTimestampToFullDateView}}</span></P>
+                </div>
+              </div>
+              <div class="copy-button">
+                <input id="copyvalue" type="text" readonly value="Travel Rover" />
+                <button  class="copybtn" style="width: 9rem;">Áp dụng</button>
+              </div>
+            </div>
+            <div class="card3">
+            </div>
+          </ng-container>
+
+
+        </div>
+      </div>
+      <nav *ngIf="resVouchers" aria-label="Page navigation example" class="row">
+        <ul class="pagination justify-content-end" style=" margin-left: -4%;">
+          <li class="page-item mr-2">
+            <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prevAll'):''">
+              <span style="font-size: 25px;" >&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item mr-2">
+            <a href="javascript:void(0)" tabindex="-1" (click)="btnPrev == true?selectPage(i.value, 'prev'):''">
+              <span style="font-size: 25px;" >&lsaquo;</span>
+            </a>
+          </li>
+          <li class="page-item mr-2" style="margin-right: 10px; margin-top: 10px;"><h5>Trang</h5></li>
+          <input type="text" #i  inputmode="numeric"
+          pattern="[0-9]*"
+          class="form-control custom-pages-input"
+          id="paginationInput"
+          [(ngModel)]="pageNumber"
+          (keyup.enter)="selectPage(i.value, '')"
+          (blur)="selectPage(i.value, '')"
+          (input)="formatInput($any($event).target)"
+          style="width: 2.8rem">
+          <li class="page-item mr-2" style="margin-left: 10px; margin-top: 10px;"><h5>trên {{pageCount}}</h5></li>
+          <li class="page-item mr-2">
+            <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'next'):''">
+              <span style="font-size: 25px;"  >&rsaquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a href="javascript:void(0)" (click)="btnNext == true?selectPage(i.value, 'nextAll'):''">
+              <span style="font-size: 25px;" >&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+</div>
+
+
+
+
+

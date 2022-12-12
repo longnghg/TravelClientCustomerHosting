@@ -36,6 +36,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CommentComponent } from 'src/app/pages/comment/comment/comment.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
+import { VouchersHistoryComponent } from 'src/app/pages/voucher/vouchers-history/vouchers-history.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -69,7 +70,8 @@ import { NavbarComponent } from '../../components/navbar/navbar.component';
     // ProfileComponent,
     TourDetailComponent,
     TourListComponent,
-    CommentComponent
+    CommentComponent,
+    VouchersHistoryComponent
   ],
   providers: [NavbarComponent],
 

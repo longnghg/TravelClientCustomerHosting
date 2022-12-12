@@ -12,10 +12,11 @@ import { BillComponent } from '../../pages/bills//bill/bill.component';
 import { BillsHistoryComponent } from '../../pages/bills/bills-history/bills-history.component';
 import { ProfileComponent } from '../../pages/profile/profile.component';
 import { TourDetailComponent } from '../../pages/tours/tour-detail/tour-detail.component';
+import { VouchersHistoryComponent } from 'src/app/pages/voucher/vouchers-history/vouchers-history.component';
 export const ClientLayoutRoutes: Routes = [
     { path: 'home',                 component: HomeComponent },
     { path: 'about',                component: AboutComponent },
-    { path: 'contact',              component: ContactComponent },
+    { path: 'voucher',              component: ContactComponent },
     { path: 'elements',             component: ElementsComponent },
     { path: 'services',             component: ServicesComponent },
     { path: 'infor',                component: InforComponent },
@@ -25,6 +26,7 @@ export const ClientLayoutRoutes: Routes = [
     { path: 'bill/:id',             component: BillComponent },
     { path: 'bills-history',         component: BillsHistoryComponent },
     { path: 'profile/:id',         component: ProfileComponent },
+    { path: 'vouchers-history',     component: VouchersHistoryComponent}
 ];
 
 
@@ -37,7 +39,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
   { path: '/home',      title: 'Home',      icon: '',     class: '' },
   { path: '/about',     title: 'About',     icon: '',     class: '' },
-  { path: '/contact',   title: 'Voucher',   icon: '',     class: '' },
+  { path: '/voucher',   title: 'Voucher',   icon: '',     class: '' },
   { path: '/elements',  title: 'Elements',  icon: '',     class: '' },
   { path: '/services',  title: 'Services',  icon: '',     class: '' },
 ];
