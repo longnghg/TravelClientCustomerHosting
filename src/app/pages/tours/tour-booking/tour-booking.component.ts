@@ -54,6 +54,7 @@ export class TourBookingComponent implements OnInit {
   resVoucher:VoucherModel
   idCustomer: string
   totalPriceNotVoucher: number
+  totalPriceVoucher: number
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   url = this.configService.apiUrl
@@ -197,8 +198,7 @@ export class TourBookingComponent implements OnInit {
       else{
         this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
         if(this.resVoucher){
-          this.totalPriceNotVoucher = this.resTourBooking.totalPrice
-          this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
+          this.totalPriceVoucher = this.resTourBooking.totalPrice * ((100 - this.resVoucher.value)/100)
         }
       }
     }
@@ -300,6 +300,10 @@ export class TourBookingComponent implements OnInit {
       this.resTourBooking.hotelId = this.resSchedule.costTour.hotelId
       this.resTourBooking.restaurantId = this.resSchedule.costTour.restaurantId
       this.resTourBooking.placeId = this.resSchedule.costTour.placeId
+    }
+
+    if(this.resVoucher){
+      this.resTourBooking.voucherCode = this.resVoucher.code
     }
 
     this.tourBookingService.create(this.resTourBooking).then(res => {
