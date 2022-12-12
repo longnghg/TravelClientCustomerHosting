@@ -13,6 +13,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StatusNotification, PaymentMethod } from "../../../enums/enum";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha';
+import { VoucherModel } from 'src/app/models/voucher.model';
+import { VoucherService } from 'src/app/services_API/voucher.service';
+
 const FILTER_PAG_REGEX = /[^0-9]/g;
 @Component({
   selector: 'app-tour-booking',
@@ -47,10 +50,15 @@ export class TourBookingComponent implements OnInit {
     debugId: string
   }
   isRecapcha: boolean
+  resVouchers: VoucherModel[]
+  resVoucher:VoucherModel
+  idCustomer: string
+  totalPriceNotVoucher: number
   protected aFormGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService) {}
+  constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   url = this.configService.apiUrl
   ngOnInit() {
+    this.idCustomer = localStorage.getItem("idUser")
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.aFormGroup = this.formBuilder.group({
@@ -61,7 +69,7 @@ export class TourBookingComponent implements OnInit {
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
     this.init(this.resTourBooking.scheduleId)
-
+    this.initVoucher(this.idCustomer)
   }
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
@@ -100,6 +108,12 @@ export class TourBookingComponent implements OnInit {
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
+  initVoucher(idCustomer: any){
+    this.voucherService.views(idCustomer).then(response => {
+      this.resVouchers = response
     })
   }
 
@@ -182,6 +196,10 @@ export class TourBookingComponent implements OnInit {
       }
       else{
         this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+        if(this.resVoucher){
+          this.totalPriceNotVoucher = this.resTourBooking.totalPrice
+          this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
+        }
       }
     }
 
@@ -350,5 +368,19 @@ export class TourBookingComponent implements OnInit {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.router.navigate(["", "login"], { state: { reload: true } })
+  }
+
+
+  applyVoucher(voucher: any){
+    this.resVoucher = voucher
+    console.log(this.resVoucher);
+
+    setTimeout(() => {
+      this.closeModal.nativeElement.click()
+    }, 100);
+  }
+
+  deleteVoucher(){
+    this.resVoucher = null
   }
 }

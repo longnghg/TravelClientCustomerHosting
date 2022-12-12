@@ -11,7 +11,22 @@ import { StatusNotification } from "../enums/enum";
 export class VoucherService{
   constructor(private http:HttpClient, private configService:ConfigService,private notificationService: NotificationService){ }
   response: ResponseModel
-  resCar: VoucherModel[]
+  resVoucher: VoucherModel[]
+
+  async views(idCustomer: any)
+{
+  var value = <any>await new Promise<any>(resolve => {
+    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Voucher/vouchers-history?idCustomer="+idCustomer).subscribe(res => {
+      this.response = res
+      this.resVoucher =  this.response.content
+      resolve(this.resVoucher);
+  }, error => {
+    var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+    this.notificationService.handleAlert(message, "Error")
+  })})
+  return value
+
+}
 
   gets()
 {

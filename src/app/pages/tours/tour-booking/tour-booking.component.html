@@ -407,6 +407,47 @@
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">0₫</h5>
               </div> -->
               <hr color="black">
+              <div style="position: relative" *ngIf="idCustomer">
+                <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 80px;"><i class="fa-solid fa-gift"></i> Voucher</h5>
+                <div class=" text-muted" style="position: absolute;top: 0; right: 0;">
+                  <button class="btn text-primary" data-bs-toggle="modal" data-bs-target="#voucherModalToggle" style="margin-top: -0.4rem; margin-right: -0.8rem;">Chọn mã voucher</button>
+                </div>
+                <div class="card-title" *ngIf="resVoucher">
+                  <div class="coupon p-3 bg-gradient-logo text-white" style="width: 23rem; height: 6rem; margin-top: -3rem; font-weight: bold;">
+                    <div class="row no-gutters">
+                      <div class="col-md-4 border-right">
+                         <div class="d-flex flex-column align-items-center">
+                          <img src="https://res.cloudinary.com/ddv2idi9d/image/upload/v1670731543/Upload/Logo/Logoaiu_ntvora.png" style="width: 7rem;">
+                          <span class="text-white" style="font-weight: bold;">Travel Rover</span>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div>
+                          <div class="d-flex flex-row justify-content-end off">
+                            <span (click)="deleteVoucher()" class="btn border px-3 rounded code btn btn-danger" style="margin-top: -0.5rem;">Hủy</span>
+                          </div>
+                           <div class="d-flex flex-row justify-content-between off px-3 p-2">
+                            <span style="margin-top: -2.5rem;">Voucher:</span>
+
+                          </div>
+                          <h1 class="text-white" style="margin-top: -1rem;margin-left: 1rem;">{{resVoucher.value}}%</h1>
+                          <h6 class="text-white" style="margin-top: -2.1rem;margin-left: 8rem;">{{resVoucher.code}}</h6>
+                         </div>
+                       </div>
+                    </div>
+                   </div>
+              </div>
+              </div>
+
+              <hr color="black">
+              <div style="position: relative" *ngIf="resVoucher">
+                <h5 class="card-title" style="color: #2d4271">Tạm tính</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{this.totalPriceNotVoucher | formatPriceVi}}₫</h5>
+              </div>
+              <div style="position: relative" *ngIf="resVoucher">
+                <h5 class="card-title" style="color: #2d4271">Giảm giá</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{resVoucher.value}}%</h5>
+              </div>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
@@ -496,6 +537,59 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" style="z-index: 9999;" id="voucherModalToggle" aria-hidden="true" aria-labelledby="voucherModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-left" id="voucherModalToggleLabel" >Chọn voucher</h1>
+        <button type="button" class="btn" placement="bottom" ngbPopover="
+        Để có thể áp dụng mã voucher, bạn hãy tích điểm của mỗi chuyến tour để đổi về mục kho voucher của bạn nhé."
+	          popoverTitle="Cách Sử Dụng Voucher" style="margin-left: 14rem;">
+	          Hỗ trợ <i class="fa-solid fa-question"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn chỉ có thể chọn 1</p>
+        <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 26rem;">
+            <ng-container *ngFor="let voucher of resVouchers; let i=index">
+              <div class="row" style="height: 16rem;margin-left: 0rem;">
+                <div class="card2" >
+                </div>
+                <div id="card1" class="card bg-gradient-logo mx-auto">
+                  <div class="main">
+                    <div class="co-img ">
+                    <h2>Voucher</h2>
+                    </div>
+                    <div class="vertical"></div>
+                    <div class="content" style="margin-top: -4rem;
+                    margin-left: 1rem;">
+                      <h2 style="margin-top: 1rem;">Gift Voucher</h2>
+                      <h1> {{voucher.value}}% <span>Coupon</span></h1>
+                      <P>Từ ngày :<span>{{voucher.startDate | formatFromUnixTimestampToFullDateView}}</span></P>
+                      <P style="margin-top: -1rem;">Đến ngày :<span>{{voucher.endDate | formatFromUnixTimestampToFullDateView}}</span></P>
+                    </div>
+                  </div>
+                  <div class="copy-button">
+                    <input id="copyvalue" type="text" readonly value="Travel Rover" />
+                    <button (click)="applyVoucher(voucher)" data-bs-dismiss="modal" aria-label="Close" class="copybtn" style="width: 9rem;margin-left: 0.4rem;z-index: 1;">Áp dụng</button>
+                  </div>
+                </div>
+                <div class="card3">
+                </div>
+                <hr color="black">
+              </div>
+            </ng-container>
+            <p>* Đã hiển thị tất cả voucher thuộc kho Voucher của bạn.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-danger" data-bs-dismiss="modal" aria-label="Close">Trở về</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- <div class="untree_co-section">
   <div class="container">
     <div class="row justify-content-center mb-5">

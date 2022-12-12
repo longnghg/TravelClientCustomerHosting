@@ -3,7 +3,7 @@ export class VoucherModel{
   code: string
   startDate: number
   endDate: number
-  value : string
+  value : number
   startDateDisplay: string
   endDateDisplay: string
   IdUserModify: string
