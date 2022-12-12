@@ -38,6 +38,7 @@ export class TourDetailComponent implements OnInit {
   auth: AuthenticationModel
   idComment: string
   idCus: string
+  weatherResponse: any
   validateComment: ValidationCommentModel = new ValidationCommentModel
   validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
   constructor(private scheduleService: ScheduleService,
@@ -58,9 +59,12 @@ export class TourDetailComponent implements OnInit {
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
+
   }
 
+  ngAfterViewInit ():void{
 
+  }
 
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
@@ -144,6 +148,7 @@ export class TourDetailComponent implements OnInit {
         this.resScheduleRelate.forEach(schedule => {
           if (schedule.promotionId != 1) {
             if (schedule.isHoliday) {
+
               schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion /100)
             }
             else{
