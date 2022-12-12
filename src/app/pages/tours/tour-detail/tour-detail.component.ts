@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform  } from '@angular/core';
+import { Component, OnInit,AfterContentInit,Input, ElementRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Pipe, PipeTransform  } from '@angular/core';
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ScheduleModel } from "../../../models/schedule.model";
 import { CommentModel, ValidationCommentModel,  ValidationCommentTextModel } from "../../../models/comment.model";
@@ -24,6 +24,7 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './tour-detail.component.html',
   styleUrls: ['./tour-detail.component.scss']
 })
+
 export class TourDetailComponent implements OnInit {
   resSchedule: ScheduleModel
   resSchedules: ScheduleModel[]
@@ -59,11 +60,7 @@ export class TourDetailComponent implements OnInit {
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
-
-  }
-
-  ngAfterViewInit ():void{
-
+    
   }
 
  init(idSchedule: string){
@@ -71,7 +68,9 @@ export class TourDetailComponent implements OnInit {
       this.response = res
 
       if (this.response.notification.type == StatusNotification.Success) {
+
         this.resSchedule = this.response.content
+        console.log(this.resSchedule);
 
         if (this.resSchedule.promotions.idPromotion != 1) {
           if (this.resSchedule.isHoliday) {
@@ -86,6 +85,7 @@ export class TourDetailComponent implements OnInit {
               this.resSchedule.priceChildPromotion = this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100)
               this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
           }
+
         }
 
         this.scheduleService.getsSchedulebyIdTour(this.resSchedule.tour.idTour).then(res => {
@@ -267,4 +267,5 @@ export class TourDetailComponent implements OnInit {
   }
 
 }
+
 

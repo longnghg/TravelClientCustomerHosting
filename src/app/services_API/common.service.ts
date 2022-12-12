@@ -9,10 +9,10 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 export class CommonService{
 constructor(private http:HttpClient, private configService:ConfigService){ }
 
-// async getsWeather()
-// {
-//     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-list-schedule?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
-// }
+async getsWeather(data: string)
+{
+    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/news/weather-forecast?location=" + data).toPromise();
+}
 
 // async getsSchedulebyIdSchedule(idSchedule: any)
 // {
