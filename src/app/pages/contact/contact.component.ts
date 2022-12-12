@@ -22,6 +22,8 @@ export class ContactComponent implements OnInit {
   auth: AuthenticationModel  = new AuthenticationModel
   data: any
   img = "https://res.cloudinary.com/ddv2idi9d/image/upload/v1670764405/Upload/Ve/abbb_perh4n.jpg"
+  isloading: boolean = false
+
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
     private router: Router,
     private configService: ConfigService) { }
@@ -41,9 +43,6 @@ export class ContactComponent implements OnInit {
         this.response = res
         if(this.response.notification.type == StatusNotification.Success){
           this.resVouchers = this.response.content
-
-          console.log(this.resVouchers);
-
         }
         else{
           this.resVouchers = null
@@ -58,12 +57,14 @@ export class ContactComponent implements OnInit {
 
     buyVoucher(voucher :VoucherModel){
      if(this.auth){
+      this.isloading = true
       this.voucherService.buy(voucher.idVoucher , this.auth.id ).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)
           if(this.response.notification.type == StatusNotification.Success)
             {
               this.resVoucher = Object.assign({}, new VoucherModel)
+              this.isloading = false
             }
             }, error => {
               var message = this.configService.error(error.status, error.error != null?error.error.text:"");

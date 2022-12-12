@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit {
   birthday: string
   confirmPassword: string
   isCheck: boolean
+  isloading: boolean = false
   constructor(private customerService: CustomerService, private notificationService: NotificationService, private configService: ConfigService) { }
 
   ngOnInit(): void {
@@ -25,6 +26,9 @@ export class RegisterComponent implements OnInit {
     if(this.resCustomer){
       this.birthday = this.configService.formatFromUnixTimestampToFullDate(Number.parseInt(this.resCustomer.birthday))
     }
+
+    console.log(this.isloading);
+
   }
 
   ngOnChanges(): void {
@@ -37,8 +41,8 @@ export class RegisterComponent implements OnInit {
     this.validateRegister = new ValidationRegister
     this.validateRegister =  this.configService.validateRegister(this.resCustomer, this.validateRegister)
     if (this.validateRegister.total == 0) {
+      this.isloading = true
       if(this.resCustomer.password === this.resCustomer.confirmPassword){
-
           this.customerService.create(this.resCustomer).subscribe(res =>{
             this.response = res
            if(this.response.notification.type == StatusNotification.Success)
@@ -54,8 +58,8 @@ export class RegisterComponent implements OnInit {
             var message = this.configService.error(error.status, error.error != null?error.error.text:"");
             this.notificationService.handleAlert(message, StatusNotification.Error)
           })
-
     }
+    this.isloading = false
   }
   }
 

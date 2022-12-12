@@ -2,7 +2,7 @@ export class CommentModel {
     idComment: string
     commentTime: number
     commentTimeDisplay: string
-    commentText: string
+    commentText: string = ""
     idCustomer: string
     idTour: string
     idSchedule: string

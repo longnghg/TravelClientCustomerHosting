@@ -30,7 +30,15 @@
         </div>
         <div class="copy-button">
           <input id="copyvalue" type="text" readonly value="Travel Rover" />
-          <button  (click)="buyVoucher(voucher)"class="copybtn">Mua</button>
+
+          <ng-container *ngIf="isloading; else elseTemplate">
+            <button class="btn btn-outline-info" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <button  (click)="buyVoucher(voucher)"class="copybtn">Mua</button>
+          </ng-template>
         </div>
       </div>
       <div class="card3">

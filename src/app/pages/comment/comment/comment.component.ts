@@ -23,6 +23,7 @@ export class CommentComponent implements OnInit {
   @Input() nameTour: any
   response: ResponseModel
   public Editor = ClassicEditor;
+  isloading = false
 
   validateComment: ValidationCommentModel = new ValidationCommentModel
   validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
@@ -34,7 +35,6 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   ngOnChanges(): void {
@@ -56,6 +56,7 @@ export class CommentComponent implements OnInit {
       this.resCmt.idCustomer = idCustomer
       this.resCmt.idTourBooking = this.idTourBooking
       this.resCmt.rating = this.currentRate
+      this.isloading = true
       this.commentService.create(this.resCmt).subscribe(res =>{
         this.response = res
         this.notificationService.handleAlertObj(res.notification)

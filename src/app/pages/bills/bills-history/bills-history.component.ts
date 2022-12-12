@@ -52,7 +52,7 @@ export class BillsHistoryComponent implements OnInit {
 
           tourBookingHistory.statusName = StatusBooking[tourBookingHistory.status]
         });
-        console.log(this.resTourBookingHistory);
+
         this.calTotalResult()
         this.calStartEnd()
        }

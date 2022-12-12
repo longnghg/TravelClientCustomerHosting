@@ -38,8 +38,17 @@
       </div>
       <div class="row">
         <div class="col-12 text-right">
-          <button (click)="createComment()" type="button" class="btn btn-primary" style="margin-right: 1rem;">Gửi</button>
+          <ng-container *ngIf="isloading; else elseTemplate">
+            <button class="btn btn-outline-info" type="button" disabled>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Đang gửi...
+            </button>
+          </ng-container>
+          <ng-template #elseTemplate>
+            <button (click)="createComment()" type="button" class="btn btn-primary" style="margin-right: 1rem;">Gửi</button>
           <button type="button" (click)="clear()" class="btn btn-danger" data-bs-dismiss="modal" style="margin-right: 3rem;">Đóng</button>
+          </ng-template>
+
         </div>
       </div>
 

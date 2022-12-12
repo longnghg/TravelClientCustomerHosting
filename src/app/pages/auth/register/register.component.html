@@ -48,11 +48,19 @@
               </form>
               <div class="row">
                 <ng-container *ngIf="!isCheck; else elseTemplate">
-                  <input type="submit" name="signup" id="signup" class="form-submit" placement="end"
-                  ngbPopover="Quý khách cần chọn Điều khoản!" value="Đăng ký"/>
+                  <!-- <input type="submit" name="signup" id="signup" class="form-submit" placement="end"
+                  ngbPopover="Quý khách cần chọn Điều khoản!" value="Đăng ký"/> -->
+                  <button type="button" class="btn btn-outline-info mb-3" ngbPopover="Quý khách cần chọn Điều khoản!">Đăng ký</button>
                 </ng-container>
                 <ng-template #elseTemplate>
-                  <input type="submit" (click)="save()" name="signup" id="signup" class="form-submit" value="Đăng ký"/>
+                    <ng-container *ngIf="isloading; else elseTemplate">
+                        <button class="btn btn-outline-info" type="button" disabled>
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        </button>
+                      </ng-container>
+                      <ng-template #elseTemplate>
+                        <button type="button" (click)="save()" class="btn btn-outline-info mb-3" >Đăng ký</button>
+                      </ng-template>
                 </ng-template>
               </div>
           </div>
