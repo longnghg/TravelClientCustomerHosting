@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   tourBookingNo: TourBookingModel
   scheduleIndex: number = 0
   response: ResponseModel
-  isBack: boolean
+  isBack: boolean = false
   kwFrom: any = "TP Hồ Chí Minh"
   kwTo: any = null
   kwDepartureDate: any = ""
@@ -117,12 +117,19 @@ export class HomeComponent implements OnInit {
     })
     if(this.auth){
       this.initChat()
+      this.loadMessageSignalR()
     }
-    this.loadMessageSignalR()
   }
 
   ngAfterViewChecked(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
+    if (this.resTourBooking) {
+      this.isBack = true
+    }
+    else{
+      this.isBack = false
+    }
+
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
       this.toTop.nativeElement.style.display = "block"
       if (this.resTourBooking) {
