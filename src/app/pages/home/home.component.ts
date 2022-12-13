@@ -115,7 +115,9 @@ export class HomeComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
-    this.initChat()
+    if(this.auth){
+      this.initChat()
+    }
     this.loadMessageSignalR()
   }
 
@@ -124,21 +126,29 @@ export class HomeComponent implements OnInit {
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
       this.toTop.nativeElement.style.display = "block"
       if (this.resTourBooking) {
+       if (this.auth) {
         this.mess.nativeElement.style.bottom = "13%"
+       }
         this.cardH.nativeElement.style.bottom = "7%"
       }
       else{
-        this.mess.nativeElement.style.bottom = "7%"
+        if (this.auth) {
+          this.mess.nativeElement.style.bottom = "7%"
+        }
       }
     }
     else {
       this.toTop.nativeElement.style.display = "none"
       if (this.resTourBooking) {
-        this.mess.nativeElement.style.bottom = "7%"
+        if (this.auth) {
+          this.mess.nativeElement.style.bottom = "7%"
+        }
         this.cardH.nativeElement.style.bottom = "1%"
       }
       else{
-        this.mess.nativeElement.style.bottom = "1%"
+        if (this.auth) {
+          this.mess.nativeElement.style.bottom = "1%"
+        }
       }
     }
 
