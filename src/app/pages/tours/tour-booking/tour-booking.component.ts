@@ -322,16 +322,21 @@ export class TourBookingComponent implements OnInit {
               document.body.removeAttribute("style")
               document.getElementById("fade-load").removeAttribute("class")
               document.getElementById("bg-load").removeAttribute("style")
+
+              this.isSuccess = true
+              this.resTourBooking = new TourBookingModel
+              this.isRecapcha = false
               this.closeModal.nativeElement.click()
+              this.closeModal.nativeElement.click()
+
               location.assign(this.pay.url)
             }
             else{
               document.body.removeAttribute("style")
               document.getElementById("fade-load").removeAttribute("class")
               document.getElementById("bg-load").removeAttribute("style")
-               this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
+              this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
             }
-
           })
         }
         else  if (this.resTourBooking.paymentId == PaymentMethod.Vnpay){
@@ -341,18 +346,15 @@ export class TourBookingComponent implements OnInit {
             document.body.removeAttribute("style")
             document.getElementById("fade-load").removeAttribute("class")
             document.getElementById("bg-load").removeAttribute("style")
+
+
+
+            this.isSuccess = true
+            this.resTourBooking = new TourBookingModel
+            this.isRecapcha = false
             this.closeModal.nativeElement.click()
+
             location.assign(this.pay.url)
-            // if (!res.debugId) {
-
-            // }
-            // else{
-            //   document.body.removeAttribute("style")
-            //   document.getElementById("fade-load").removeAttribute("class")
-            //   document.getElementById("bg-load").removeAttribute("style")
-            //    this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
-            // }
-
           })
         }
         else{
@@ -362,6 +364,11 @@ export class TourBookingComponent implements OnInit {
             document.getElementById("fade-load").removeAttribute("class")
             document.getElementById("bg-load").removeAttribute("style")
             this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
+
+            this.isSuccess = true
+            this.resTourBooking = new TourBookingModel
+            this.isRecapcha = false
+            this.closeModal.nativeElement.click()
           }, 5000);
         }
       }
@@ -372,10 +379,7 @@ export class TourBookingComponent implements OnInit {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }
-      this.isSuccess = true
-      this.resTourBooking = new TourBookingModel
-      this.isRecapcha = false
-      this.closeModal.nativeElement.click()
+
       this.captchaElem.resetCaptcha();
     }, error => {
       document.body.removeAttribute("style")
