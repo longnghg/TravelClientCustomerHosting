@@ -540,7 +540,7 @@
   <i class="fab fa-facebook-messenger mess-label"></i>
 </div>
 
-<div *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
+<div #cardH *ngIf="isBack" class="cart" placement="left" [ngbTooltip]="resTourBooking.tourName" >
   <a (click)="removeTourBooking()" class="cart-close"><i  class="fa-regular fa-circle-xmark cart-close-icon"></i></a>
   <i (click)="backTourBooking()" class="fa-solid fa-cart-shopping cart-label"></i>
 </div>

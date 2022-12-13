@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('toTop') toTop: ElementRef;
   @ViewChild('card') card: ElementRef
+  @ViewChild('cardH') cardH: ElementRef
   @ViewChild('mess') mess: ElementRef
   list = [
     { img: "assets/images/hero-slider-1.jpg", location: "San Francisco." },
@@ -119,14 +120,26 @@ export class HomeComponent implements OnInit {
   }
 
   ngAfterViewChecked(): void {
-    // if (!this.auth) {
-    //     this.closeMess()
-    // }
+    this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
       this.toTop.nativeElement.style.display = "block"
+      if (this.resTourBooking) {
+        this.mess.nativeElement.style.bottom = "13%"
+        this.cardH.nativeElement.style.bottom = "7%"
+      }
+      else{
+        this.mess.nativeElement.style.bottom = "7%"
+      }
     }
     else {
       this.toTop.nativeElement.style.display = "none"
+      if (this.resTourBooking) {
+        this.mess.nativeElement.style.bottom = "7%"
+        this.cardH.nativeElement.style.bottom = "1%"
+      }
+      else{
+        this.mess.nativeElement.style.bottom = "1%"
+      }
     }
 
   }

@@ -180,14 +180,27 @@
                     </label>
                   </ng-container>
                   <ng-template #else2>
-                    <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
-                      <h6 class="card-subtitle mb-2" style="margin-top: 20px">
-                        Thanh toán bằng Paypal
-                        </h6>
-                      <div class="t_buttons">
-                        <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment" id="">
-                      </div>
-                    </label>
+                    <ng-container *ngIf="payment.idPayment == 3; else elsePayPal">
+                      <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                        <h6 class="card-subtitle mb-2" style="margin-top: 20px">
+                          Thanh toán bằng Paypal
+                          </h6>
+                        <div class="t_buttons">
+                          <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment" id="">
+                        </div>
+                      </label>
+                    </ng-container>
+                    <ng-template #elsePayPal>
+                      <label [for]="payment.idPayment" (change)="changePayment(payment.idPayment)" [style]="resTourBooking.paymentId == payment.idPayment ?'height: auto': 'height: 50px; overflow: hidden;'" class="form-control paymentform">{{payment.namePayment}}
+                        <h6 class="card-subtitle mb-2" style="margin-top: 20px">
+                          Thanh toán bằng Vnpay
+                          </h6>
+                        <div class="t_buttons">
+                          <input type="radio" [name]="payment.idPayment" [id]="payment.idPayment" [checked]="resTourBooking.paymentId == payment.idPayment" id="">
+                        </div>
+                      </label>
+                    </ng-template>
+
                   </ng-template>
 
                 </ng-template>
@@ -590,7 +603,6 @@
     </div>
   </div>
 </div>
-
 <!-- <div class="untree_co-section">
   <div class="container">
     <div class="row justify-content-center mb-5">

@@ -19,16 +19,20 @@ export class ConfigService{
    .withAutomaticReconnect()
    .build();
   }
+
   callChatSignalR(id:string): void{
    this.hubConnectionBuilder.invoke('Chat',id)
+  }
+  callNotyfSignalR(roleId:string): void{
+    this.hubConnectionBuilder.invoke('SendNotyf',roleId)
   }
   error(status: any, message: any){
     console.log('Status:  '  + status);
     console.log('Message: '  + message);
 
     if (status == 401){
-        // message = "Hết hạn đăng nhập !"
-        // document.location.assign(this.clientUrl +'/login');
+        message = "Hết hạn đăng nhập !"
+        document.location.assign(this.clientUrl +'/login');
     }
     else if (status == 200) {
         message = message;

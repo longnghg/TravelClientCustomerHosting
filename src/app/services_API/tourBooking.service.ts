@@ -39,6 +39,10 @@ export class TourBookingService{
     return await this.http.get<any>( this.configService.apiUrl + "/api/pay/checkout-paypal?idTourBooking="+idTourBooking).toPromise();;
   }
 
+  async vnpay(idTourBooking: string){
+    return await this.http.get<any>( this.configService.apiUrl + "/api/pay/checkout-vnpay?idTourBooking="+idTourBooking).toPromise();;
+  }
+
   cusSearchBookingNo(bookingNo: string){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cus-search-bookingNo?bookingNo="+ bookingNo);
   }

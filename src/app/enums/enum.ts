@@ -1,9 +1,11 @@
 export enum RoleTitle {
   'Admin' = -1,
-  'Quản lý cục bộ' = 1,
-  'Quản lý dịch vụ' = 2,
-  'Quản lý tour' = 3,
-  'Quản lý tour booking' = 4
+  'Quản lý cục bộ', LocalManager = 1,
+  'Quản lý dịch vụ', ServiceManager = 2,
+  'Quản lý tour', TourManager = 3,
+  'Quản lý tour booking', TourBookingManager = 4,
+  'Hướng dẫn viên', TourGuide = 5,
+  'Hỗ trợ viên', Supporter = 6
 }
 
 export enum StatusBooking {
@@ -47,4 +49,5 @@ export enum PaymentMethod
     Cash = 1,
     Card = 2,
     Paypal = 3,
+    Vnpay = 4,
 }

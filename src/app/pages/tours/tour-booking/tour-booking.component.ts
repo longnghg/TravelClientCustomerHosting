@@ -10,7 +10,7 @@ import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { PaymentService } from "../../../services_API/payment.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { ActivatedRoute, Router } from '@angular/router';
-import { StatusNotification, PaymentMethod } from "../../../enums/enum";
+import { StatusNotification, PaymentMethod, RoleTitle } from "../../../enums/enum";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha';
 import { VoucherModel } from 'src/app/models/voucher.model';
@@ -44,7 +44,7 @@ export class TourBookingComponent implements OnInit {
   response: ResponseModel
   activePane = 0;
   isSuccess: boolean
-  paypal: {
+  pay: {
     status: number,
     url: string,
     debugId: string
@@ -55,9 +55,9 @@ export class TourBookingComponent implements OnInit {
   idCustomer: string
   totalPriceNotVoucher: number
   totalPriceVoucher: number
+
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
-  url = this.configService.apiUrl
   ngOnInit() {
     this.idCustomer = localStorage.getItem("idUser")
     document.body.scrollTop = 0;
@@ -71,7 +71,9 @@ export class TourBookingComponent implements OnInit {
 
     this.init(this.resTourBooking.scheduleId)
     this.initVoucher(this.idCustomer)
+
   }
+
   init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
@@ -314,14 +316,14 @@ export class TourBookingComponent implements OnInit {
         this.resTourBooking.idTourBooking = this.response.content
         if (this.resTourBooking.paymentId == PaymentMethod.Paypal) {
           this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
-            this.paypal = res
+            this.pay = res
             if (!res.debugId) {
-              setTimeout(() => {
-                document.body.removeAttribute("style")
-                document.getElementById("fade-load").removeAttribute("class")
-                document.getElementById("bg-load").removeAttribute("style")
-                location.assign(this.paypal.url)
-              }, 5000);
+              this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
+              document.body.removeAttribute("style")
+              document.getElementById("fade-load").removeAttribute("class")
+              document.getElementById("bg-load").removeAttribute("style")
+              this.closeModal.nativeElement.click()
+              location.assign(this.pay.url)
             }
             else{
               document.body.removeAttribute("style")
@@ -332,16 +334,34 @@ export class TourBookingComponent implements OnInit {
 
           })
         }
+        else  if (this.resTourBooking.paymentId == PaymentMethod.Vnpay){
+          this.tourBookingService.vnpay(this.resTourBooking.idTourBooking).then(res => {
+            this.pay = res
+            this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
+            document.body.removeAttribute("style")
+            document.getElementById("fade-load").removeAttribute("class")
+            document.getElementById("bg-load").removeAttribute("style")
+            this.closeModal.nativeElement.click()
+            location.assign(this.pay.url)
+            // if (!res.debugId) {
+
+            // }
+            // else{
+            //   document.body.removeAttribute("style")
+            //   document.getElementById("fade-load").removeAttribute("class")
+            //   document.getElementById("bg-load").removeAttribute("style")
+            //    this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
+            // }
+
+          })
+        }
         else{
+          this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
           setTimeout(() => {
             document.body.removeAttribute("style")
             document.getElementById("fade-load").removeAttribute("class")
             document.getElementById("bg-load").removeAttribute("style")
             this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
-            this.isSuccess = true
-            this.resTourBooking = new TourBookingModel
-            this.isRecapcha = false
-            this.closeModal.nativeElement.click()
           }, 5000);
         }
       }
@@ -352,6 +372,10 @@ export class TourBookingComponent implements OnInit {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
       }
+      this.isSuccess = true
+      this.resTourBooking = new TourBookingModel
+      this.isRecapcha = false
+      this.closeModal.nativeElement.click()
       this.captchaElem.resetCaptcha();
     }, error => {
       document.body.removeAttribute("style")
