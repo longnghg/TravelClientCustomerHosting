@@ -49,6 +49,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.validationOtp =  this.configService.validateOtp(this.OTP, this.validationOtp, true)
     if ( this.validationOtp.total == 0) {
       this.isTrue = true
+      this.notificationService.handleAlert("Mã OTP hợp lệ, bạn hãy nhập mật khẩu mới !", StatusNotification.Success)
     }
   }
 

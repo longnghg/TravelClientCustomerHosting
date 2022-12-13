@@ -38,7 +38,7 @@ body{
 
 .container{
     padding: 20px 70px;
-    color:#fff;
+    // color:#fff;
 }
 
 .current-info{
@@ -187,11 +187,11 @@ body{
 
 
 @media only screen and  (max-width:730px){
-    
+
     .container{
         padding: 20px;
     }
-    
+
     .future-forecast{
         justify-content: start;
         align-items: none;

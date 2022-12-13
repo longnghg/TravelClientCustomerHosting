@@ -406,8 +406,8 @@
                 <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">0₫</h5>
               </div> -->
-              <hr color="black">
-              <div style="position: relative" *ngIf="idCustomer">
+              <hr color="black" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1">
+              <div style="position: relative" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 80px;"><i class="fa-solid fa-gift"></i> Voucher</h5>
                 <div class=" text-muted" style="position: absolute;top: 0; right: 0;">
                   <button class="btn text-primary" data-bs-toggle="modal" data-bs-target="#voucherModalToggle" style="margin-top: -0.4rem; margin-right: -0.8rem;">Chọn mã voucher</button>
@@ -440,26 +440,18 @@
               </div>
 
               <hr color="black">
-              <ng-container *ngIf="resVoucher; else voucherTemplate">
-                <div style="position: relative" >
-                  <h5 class="card-title" style="color: #2d4271">Tạm tính</h5>
-                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{totalPrice() | formatPriceVi}}₫</h5>
-                </div>
-                <div style="position: relative" >
-                  <h5 class="card-title" style="color: #2d4271">Giảm giá</h5>
-                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{resVoucher.value}}%</h5>
-                </div>
-                <div style="position: relative">
-                  <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
-                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPriceVoucher | formatPriceVi}}₫</h5>
-                </div>
-              </ng-container>
-              <ng-template #voucherTemplate>
-                <div style="position: relative">
-                  <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
-                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
-                </div>
-              </ng-template>
+              <div style="position: relative" *ngIf="resVoucher">
+                <h5 class="card-title" style="color: #2d4271">Tạm tính</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{totalPriceNotVoucher | formatPriceVi}}₫</h5>
+              </div>
+              <div style="position: relative" *ngIf="resVoucher">
+                <h5 class="card-title" style="color: #2d4271">Giảm giá</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271;">{{resVoucher.value}}%</h5>
+              </div>
+              <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
+                <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
+              </div>
 
               <div class="row">
                 <ng-container *ngIf="!isPayment && activePane == 1; else elseTemplate">

@@ -6,7 +6,7 @@ import { VoucherModel } from '../../../models/voucher.model';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
-
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 
 const FILTER_PAG_REGEX = /[^0-9]/g;
 
@@ -30,9 +30,10 @@ export class VouchersHistoryComponent implements OnInit {
   btnPrev: boolean = false
   btnNext: boolean = true
   totalResult: number
+  totalVoucher: any
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
 
-    private configService: ConfigService) { }
+    private configService: ConfigService, private router:Router) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -49,7 +50,7 @@ export class VouchersHistoryComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success){
         this.resVouchers = this.response.content
-
+        this.totalVoucher = this.resVouchers.length
         this.calTotalResult()
         this.calStartEnd()
       }
@@ -133,5 +134,10 @@ export class VouchersHistoryComponent implements OnInit {
   }
   formatInput(input: HTMLInputElement) {
     input.value = input.value.replace(FILTER_PAG_REGEX, '');
+  }
+
+  apllyVoucher(){
+    var kw = "from=" + '' + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
+    this.router.navigate(['', 'tour', kw]);
   }
 }

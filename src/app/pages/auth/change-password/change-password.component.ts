@@ -36,10 +36,10 @@ export class ChangePasswordComponent implements OnInit {
           this.resCustomer.idCustomer = this.resAthentication.id
           this.authService.changePassword(this.resCustomer.idCustomer, this.resCustomer.password, this.resCustomer.newPassword).subscribe(res =>{
             this.response = res
-           this.notificationService.handleAlertObj(res.notification)
 
            if(this.response.notification.type == StatusNotification.Success)
            {
+            this.notificationService.handleAlertObj(res.notification)
              this.logOut()
            }
           }, error => {

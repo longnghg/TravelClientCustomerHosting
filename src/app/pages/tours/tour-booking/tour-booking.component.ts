@@ -198,7 +198,8 @@ export class TourBookingComponent implements OnInit {
       else{
         this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
         if(this.resVoucher){
-          this.totalPriceVoucher = this.resTourBooking.totalPrice * ((100 - this.resVoucher.value)/100)
+          this.totalPriceNotVoucher = this.resTourBooking.totalPrice
+          this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
         }
       }
     }

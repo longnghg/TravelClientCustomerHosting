@@ -11,7 +11,7 @@
           <div class="temp">Manto&#176; C</div>
       </div>
   </div>
-  
+
   <div class="weather-forecast" id="weather-forecast">
      <div class="weather-forecast-item">
           <div class="day">11/8</div>
@@ -387,7 +387,7 @@
               <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
                 formatFromUnixTimestampToFullDateTimeView}}</p>
             </div>
-            <ckeditor [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
+            <ckeditor style="color: #2d4271;" [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
             <hr>
           </div>
         </div>
