@@ -51,9 +51,6 @@ export class TourListComponent implements OnInit {
     this.from = split[0].replace("from=", "")
     this.to = split[1].replace("to=", "")
 
-
-    console.log(split);
-
     this.init(this.activatedRoute.snapshot.paramMap.get('id'))
 
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -77,6 +74,8 @@ export class TourListComponent implements OnInit {
      }
   }
   init(kw: any){
+    console.log(kw);
+
     this.scheduleService.searchSchedule(kw).then(res => {
       this.response = res
       if ( this.response.notification.type == StatusNotification.Success) {
@@ -155,6 +154,8 @@ export class TourListComponent implements OnInit {
   }
 
   searchFilter(value: any) {
+    console.warn(value);
+
     this.resScheduleFilter = value;
     if(this.resScheduleFilter){
       this.initFilter(this.resScheduleFilter)

@@ -327,8 +327,9 @@ export class TourBookingComponent implements OnInit {
 
               this.isSuccess = true
               this.resTourBooking = new TourBookingModel
+              this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
+              this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
               this.isRecapcha = false
-              this.closeModal.nativeElement.click()
               this.closeModal.nativeElement.click()
 
               location.assign(this.pay.url)
@@ -353,6 +354,8 @@ export class TourBookingComponent implements OnInit {
 
             this.isSuccess = true
             this.resTourBooking = new TourBookingModel
+            this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
+            this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
             this.isRecapcha = false
             this.closeModal.nativeElement.click()
 
@@ -369,6 +372,8 @@ export class TourBookingComponent implements OnInit {
 
             this.isSuccess = true
             this.resTourBooking = new TourBookingModel
+            this.resTourBooking.scheduleId = this.activatedRoute.snapshot.paramMap.get('id1')
+            this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
             this.isRecapcha = false
             this.closeModal.nativeElement.click()
           }, 5000);

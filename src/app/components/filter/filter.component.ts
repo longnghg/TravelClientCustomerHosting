@@ -31,15 +31,16 @@ export class FilterComponent implements OnInit {
 
 
   ngOnChanges(): void {
-      console.log(this.resScheduleFilter);
      if (this.resScheduleFilter) {
       var split = []
       split =  this.kwRoute.split("&")
       this.resScheduleFilter.kwFrom = split[0].replace("from=", "")
       this.resScheduleFilter.kwTo = split[1].replace("to=", "")
+      if (!this.resScheduleFilter.kwTo) {
+        this.resScheduleFilter.kwTo = null
+      }
       this.resScheduleFilter.kwDepartureDate = split[2].replace("departureDate=", "")
       this.resScheduleFilter.kwReturnDate = split[3].replace("returnDate=", "")
-      console.log( this.resScheduleFilter);
      }
 
   }
