@@ -55,7 +55,7 @@ export class TourBookingComponent implements OnInit {
   idCustomer: string
   totalPriceNotVoucher: number
   totalPriceVoucher: number
-
+  lengthVoucher: any
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   ngOnInit() {
@@ -119,6 +119,7 @@ export class TourBookingComponent implements OnInit {
   initVoucher(idCustomer: any){
     this.voucherService.views(idCustomer).then(response => {
       this.resVouchers = response
+      this.lengthVoucher = this.resVouchers.length
     })
   }
 

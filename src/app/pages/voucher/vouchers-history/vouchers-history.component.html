@@ -1,10 +1,11 @@
 <div class="container mt-5">
     <div class="row justify-content-center text-center">
       <div class="col-lg-6" style="margin-left: 33rem">
-        <h2 class="section-title text-center mb-3">Kho voucher ({{totalVoucher}})</h2>
+        <h2 class="section-title text-center mb-3">Kho voucher <span *ngIf="resVouchers">({{totalVoucher}})</span> </h2>
       </div>
     </div>
     <div class="row" style="width:100vw" >
+      <ng-container *ngIf="resVouchers; else elseTemplate">
         <div class="col-sm-4" *ngFor="let voucher of resVouchers; let i=index">
           <ng-container *ngIf="voucher.rowNum >= start && voucher.rowNum <= end">
             <div class="card2" >
@@ -32,10 +33,17 @@
             <div class="card3">
             </div>
           </ng-container>
-
-
         </div>
-      </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <img src="https://res.cloudinary.com/ddv2idi9d/image/upload/v1670947523/Upload/Ve/voucher_eok6e7.png" alt="" style="width: 33rem; margin-left: 40rem; margin-top: 1rem;">
+        <h3 style="margin-left: 50rem;"> Voucher Trống</h3>
+        <h5 style="margin-left: 37rem;margin-top: 2rem;">Bạn hãy tích điểm sau những chuyến đi để đổi các voucher hấp dẫn nhé !</h5>
+      </ng-template>
+
+
+    </div>
+
       <nav *ngIf="resVouchers" aria-label="Page navigation example" class="row">
         <ul class="pagination justify-content-end" style=" margin-left: -4%;">
           <li class="page-item mr-2">

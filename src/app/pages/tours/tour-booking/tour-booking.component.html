@@ -556,7 +556,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 text-left" id="voucherModalToggleLabel" >Chọn voucher</h1>
+        <h1 class="modal-title fs-5 text-left" id="voucherModalToggleLabel" style="color: #2d4271; font-weight: bold">Chọn voucher</h1>
         <button type="button" class="btn" placement="bottom" ngbPopover="
         Để có thể áp dụng mã voucher, bạn hãy tích điểm của mỗi chuyến tour để đổi về mục kho voucher của bạn nhé."
 	          popoverTitle="Cách Sử Dụng Voucher" style="margin-left: 14rem;">
@@ -564,8 +564,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Bạn chỉ có thể chọn 1</p>
         <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 26rem;">
+          <p>Bạn chỉ có thể chọn 1 <span *ngIf="resVouchers" style="margin-left: 11rem;font-weight: bold;">Tổng cộng: {{lengthVoucher}}</span></p>
+          <ng-container *ngIf="resVouchers; else voucherTemplate">
             <ng-container *ngFor="let voucher of resVouchers; let i=index">
               <div class="row" style="height: 16rem;margin-left: 0rem;">
                 <div class="card2" >
@@ -595,6 +596,13 @@
               </div>
             </ng-container>
             <p>* Đã hiển thị tất cả voucher thuộc kho Voucher của bạn.</p>
+          </ng-container>
+          <ng-template #voucherTemplate>
+            <img src="https://res.cloudinary.com/ddv2idi9d/image/upload/v1670947523/Upload/Ve/voucher_eok6e7.png" alt="" style="width: 23rem;height: 19rem;margin-left: 3.5rem;">
+            <h3 style="margin-left: 10rem;"> Voucher Trống</h3>
+          </ng-template>
+
+
         </div>
       </div>
       <div class="modal-footer">
