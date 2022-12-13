@@ -70,7 +70,9 @@ export class TourBookingComponent implements OnInit {
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
     this.init(this.resTourBooking.scheduleId)
-    this.initVoucher(this.idCustomer)
+    if (this.idCustomer) {
+      this.initVoucher(this.idCustomer)
+    }
 
   }
 

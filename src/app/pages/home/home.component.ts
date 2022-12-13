@@ -120,8 +120,7 @@ export class HomeComponent implements OnInit {
       this.loadMessageSignalR()
     }
   }
-
-  ngAfterViewChecked(): void {
+  ngDoCheck(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (this.resTourBooking) {
       this.isBack = true
@@ -129,7 +128,8 @@ export class HomeComponent implements OnInit {
     else{
       this.isBack = false
     }
-
+  }
+  ngAfterViewChecked(): void {
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
       this.toTop.nativeElement.style.display = "block"
       if (this.resTourBooking) {
@@ -158,7 +158,6 @@ export class HomeComponent implements OnInit {
         }
       }
     }
-
   }
   loadMessageSignalR(){
       this.navbarComponent.hubConnectionBuilder.on('Message', (result: any) => {
