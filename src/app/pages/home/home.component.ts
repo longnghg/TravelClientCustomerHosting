@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
     this.initSchedule()
     this.initTour()
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
-    console.error(this.resTourBooking);
+    //console.error(this.resTourBooking);
 
     if (this.resTourBooking) {
       this.isBack = true
