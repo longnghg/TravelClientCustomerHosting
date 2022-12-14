@@ -372,7 +372,6 @@ export class ConfigService{
     var formattedDate = year + '-' + month + '-' + day;
     return formattedDate
    }
-
 }
 
 

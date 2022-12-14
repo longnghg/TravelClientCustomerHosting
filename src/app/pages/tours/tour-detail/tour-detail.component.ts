@@ -14,7 +14,7 @@ import { ImageModel } from 'src/app/models/image.model';
 import { ImageService } from 'src/app/services_API/image.service';
 import { TimeLineModel } from 'src/app/models/timeLine.model';
 import { TimelineService } from 'src/app/services_API/timeline.service';
-
+import { Daily } from "../../../models/weather.model";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +26,7 @@ import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class TourDetailComponent implements OnInit {
+  resWeather: Daily[]
   resSchedule: ScheduleModel
   resSchedules: ScheduleModel[]
   resScheduleRelate: ScheduleModel[]
@@ -60,7 +61,6 @@ export class TourDetailComponent implements OnInit {
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
-    
   }
 
  init(idSchedule: string){
@@ -71,6 +71,7 @@ export class TourDetailComponent implements OnInit {
 
         this.resSchedule = this.response.content
         console.log(this.resSchedule);
+        this.initWeather()
 
         if (this.resSchedule.promotions.idPromotion != 1) {
           if (this.resSchedule.isHoliday) {
@@ -241,6 +242,25 @@ export class TourDetailComponent implements OnInit {
   booking(idSchedule: string, alias: string){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.router.navigate(['','tour-booking',idSchedule, alias]);
+  }
+
+  initWeather(){
+    this.scheduleService.weather(this.resSchedule.tour.toPlace).then(res =>{
+      this.response = res
+
+      if(this.response.notification.type == StatusNotification.Success)
+      {
+        this.resWeather = this.response.content.daily
+        this.resWeather.forEach(daily => {
+          daily.dt = Number(daily.dt + '000')
+        });
+        console.log(this.resWeather);
+      }
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
   }
 
   goto(idSchedule: string, alias: string){

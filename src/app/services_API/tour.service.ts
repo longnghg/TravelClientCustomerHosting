@@ -41,9 +41,12 @@ export class TourService{
   {
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Tour/list-tour-by-rating?pageIndex="+pageIndex+"&pageSize="+pageSize).toPromise();
   }
+
+
   create(data: any)
   {
     return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Tour/create-tour", data);
   }
+
 }
 
