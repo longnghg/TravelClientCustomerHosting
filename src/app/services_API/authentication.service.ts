@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
+import { TokenModel } from "../models/tokenModel.model";
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,6 @@ import { ResponseModel } from "../models/responsiveModels/response.model";
 
 export class AuthenticationService{
   constructor(private http:HttpClient, private configService:ConfigService){ }
-
   login(data: any)
   {
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
@@ -31,5 +31,9 @@ export class AuthenticationService{
   block(email: string){
     return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email, {});
   }
+   generateRefreshToken(data:any){
+    return   this.http.post(this.configService.apiUrl + "/api/Authentication/refresh-token",data);
+  }
+
 
 }

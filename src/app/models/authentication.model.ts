@@ -1,5 +1,6 @@
 export class AuthenticationModel{
   token: string = ""
+  refToken: string = ""
   roleId: number = 0
   id: string = ""
   name: string = ""

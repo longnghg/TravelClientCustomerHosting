@@ -203,6 +203,7 @@ export class HomeComponent implements OnInit {
 
   initFlashSale() {
     this.scheduleService.getsScheduleFlashSale(this.pageIndex, this.pageSize).then(res => {
+      
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleFalshSale = this.response.content
@@ -229,6 +230,9 @@ export class HomeComponent implements OnInit {
 
   initSchedule() {
     this.scheduleService.getsSchedule(this.pageIndex, this.pageSize).then(res => {
+      console.log("scheudle re");
+      console.log(res);
+      
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content

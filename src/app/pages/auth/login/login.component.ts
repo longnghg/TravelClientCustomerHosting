@@ -5,9 +5,9 @@ import { ConfigService } from "../../../services_API/config.service";
 import { AuthenticationModel, ValidationLoginModel } from "../../../models/authentication.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { CustomerModel } from "../../../models/customer.model";
+import { TokenModel } from "../../../models/tokenModel.model";
 import { StatusNotification } from "../../../enums/enum";
 import { Router } from '@angular/router';
-
 
 // signalr
 import { HubConnection } from '@microsoft/signalr';
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   resAthentication: AuthenticationModel
   validateAuth: ValidationLoginModel = new ValidationLoginModel;
   resCustomer: CustomerModel = new CustomerModel
+  resToken: TokenModel = new TokenModel
   response: ResponseModel
   token: string
   isloading = false
@@ -50,6 +51,7 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem("currentUser")
         localStorage.removeItem("idUser")
         localStorage.removeItem("token")
+        localStorage.removeItem("refreshToken")
         sessionStorage.clear()
       }, error => {
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
@@ -58,7 +60,17 @@ export class LoginComponent implements OnInit {
     }
     this.googleAuthSDK();
   }
+ 
+  refreshToken(token:string,refToken:string){
+    this.resToken.accessToken = token;
+    this.resToken.refreshToken = refToken;
+    this.authenticationService.login(this.resToken).subscribe(res=>{
+       console.log("refreshtoken");
+       console.log(res);
+       
+    })
 
+  }
   login(){
     this.validateAuth = new ValidationLoginModel
       this.validateAuth = this.configService.validateLogin(this.resCustomer, this.validateAuth)
@@ -84,6 +96,7 @@ export class LoginComponent implements OnInit {
             {
               this.resAthentication = this.response.content
               localStorage.setItem("token", this.resAthentication.token)
+              localStorage.setItem("refreshToken", this.resAthentication.refToken)
               localStorage.setItem("idUser", this.resAthentication.id)
               localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
 
@@ -162,12 +175,15 @@ export class LoginComponent implements OnInit {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success)
           {
-
+            
             this.resAthentication = this.response.content
+            console.log(this.resAthentication);
+
             localStorage.setItem("token", this.resAthentication.token)
+            localStorage.setItem("refreshToken", this.resAthentication.refToken)
             localStorage.setItem("idUser", this.resAthentication.id)
             localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-
+            
 
 
                 // connect to signalR

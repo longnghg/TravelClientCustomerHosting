@@ -27,12 +27,14 @@ export class ConfigService{
     this.hubConnectionBuilder.invoke('SendNotyf',roleId)
   }
   error(status: any, message: any){
-    console.log('Status:  '  + status);
+    console.log('Statu 1s:  '  + status);
     console.log('Message: '  + message);
 
     if (status == 401){
+        console.log("vo trong status 401");
+        
         message = "Hết hạn đăng nhập !"
-        document.location.assign(this.clientUrl +'/login');
+      //  document.location.assign(this.clientUrl +'/login');
     }
     else if (status == 200) {
         message = message;
