@@ -76,7 +76,6 @@ export class TourDetailComponent implements OnInit {
       if (this.response.notification.type == StatusNotification.Success) {
 
         this.resSchedule = this.response.content
-        console.log(this.resSchedule);
         if(this.resSchedule){
           var createDate = new Date(this.resSchedule.tour.createDate)
           this.createDateAfter30Day = new Date(this.resSchedule.tour.createDate).setDate(createDate.getDate() + 30);

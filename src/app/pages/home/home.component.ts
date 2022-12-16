@@ -454,17 +454,19 @@ export class HomeComponent implements OnInit {
   reply(){
     this.dataSend.senderId = this.auth.id
     this.dataSend.senderName = this.auth.name
-    this.notificationService.reply(this.dataSend).then(res => {
-      this.response = res
-      if (this.response.notification.type == StatusNotification.Success) {
-        this.configService.callChatSignalR(this.response.content)
-        this.dataSend = new Message
-        this.initChat()
-      }
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
+    if (this.dataSend.content) {
+      this.notificationService.reply(this.dataSend).then(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+          this.configService.callChatSignalR(this.response.content)
+          this.dataSend = new Message
+          this.initChat()
+        }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
   }
 
   openMess(){

@@ -219,6 +219,7 @@ export class TourBookingComponent implements OnInit {
   }
 
   booking(){
+    this.validateTourBooking = new ValidationTourBookingModel
     if (!this.isCheck) {
       this.resTourBooking.nameCustomer = this.resTourBooking.nameContact
     }

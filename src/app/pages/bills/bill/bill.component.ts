@@ -2,11 +2,13 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { TourBookingModel} from "../../../models/tourBooking.model";
 import { StatusBooking} from "../../../enums/enum";
 import { ScheduleModel } from "../../../models/schedule.model";
+import { PaymentModel } from "../../../models/payment.model";
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { ConfigService } from "../../../services_API/config.service";
 import { ScheduleService } from "../../../services_API/schedule.service";
 import { TourBookingService } from "../../../services_API/tourBooking.service";
 import { NotificationService } from "../../../services_API/notification.service";
+import { PaymentService } from "../../../services_API/payment.service";
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationModel } from "../../../models/authentication.model";
 import { StatusNotification } from "../../../enums/enum";
@@ -23,14 +25,21 @@ export class BillComponent implements OnInit {
   response: ResponseModel
   resTourBooking: TourBookingModel
   resSchedule: ScheduleModel
+  resPayment: PaymentModel[]
   resAthentication: AuthenticationModel
   public myAngularxQrCode: string = null;
   @ViewChild('cancelTour') cancelTour: ElementRef;
+  @ViewChild('sendEmail') sendEmail: ElementRef;
+  email: string
+  emailValid: string
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder, private tourBookingService: TourBookingService,private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
-  url = this.configService.apiUrl
+  constructor(private paymentService: PaymentService, private formBuilder: FormBuilder, private tourBookingService: TourBookingService,private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
+  isPaymentChange: boolean
   ngOnInit(): void {
+    this.paymentService.views().then(res => {this.resPayment = res
+    console.log(this.resPayment);
+    })
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
     this.aFormGroup = this.formBuilder.group({
@@ -78,7 +87,18 @@ export class BillComponent implements OnInit {
   handleExpire(){
     this.isRecapcha = false
   }
-
+  paymentChange(){
+    var payment = this.resPayment.filter(payment => payment.idPayment == this.resTourBooking.payment.idPayment)[0]
+    this.resTourBooking.payment = Object.assign({}, payment)
+  }
+  savePayment(){
+    if (this.isPaymentChange) {
+      this.isPaymentChange = false
+    }
+    else{
+      this.isPaymentChange = true
+    }
+  }
   handleSuccess(e: any){
     if (e) {
       this.isRecapcha = true
@@ -102,4 +122,44 @@ export class BillComponent implements OnInit {
     }
   }
 
+
+  send(){
+    this.emailValid = null
+    if (this.email) {
+      // this.tourBookingService.cancel(this.resTourBooking.idTourBooking).then(res => {
+      //   this.response = res
+      //   this.notificationService.handleAlertObj(this.response.notification)
+      //     if (this.response.notification.type == StatusNotification.Success) {
+      //       this.cancelTour.nativeElement.click()
+      //       this.captchaElem.resetCaptcha();
+      //       this.isRecapcha = false
+      //       location.reload()
+      //     }
+      //   }, error => {
+      //     var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      //     this.notificationService.handleAlert(message, StatusNotification.Error)
+      // })
+    }
+    else{
+      this.emailValid = "Bạn cần phải nhập email !"
+    }
+  }
+
+  payment(){
+    if (this.isRecapcha) {
+      this.tourBookingService.cancel(this.resTourBooking.idTourBooking).then(res => {
+        this.response = res
+        this.notificationService.handleAlertObj(this.response.notification)
+          if (this.response.notification.type == StatusNotification.Success) {
+            this.cancelTour.nativeElement.click()
+            this.captchaElem.resetCaptcha();
+            this.isRecapcha = false
+            location.reload()
+          }
+        }, error => {
+          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+          this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+  }
 }

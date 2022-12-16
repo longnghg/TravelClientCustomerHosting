@@ -69,7 +69,28 @@
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
-               <p class="col-8" style="color: #2d4271;">{{resTourBooking.payment.namePayment}}</p>
+              <div class="row col-8" *ngIf="!isPaymentChange">
+                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button class="btn btn-primary ml-3" (click)="savePayment()">{{isPaymentChange?'Lưu':'Đổi phương thức thanh toán'}}</button></p>
+              </div>
+              <div class="row col-8 mb-3"  *ngIf="isPaymentChange">
+                <div class="col-5">
+                    <ng-select
+                      [items]="resPayment"
+                      [(ngModel)]="resTourBooking.payment.idPayment"
+                      placeholder="Chọn điểm đi..."
+                      bindLabel="namePayment"
+                      bindValue="idPayment"
+                      [clearable]="false"
+                      [searchable]="false"
+                      name="payment"
+                      id="payment"
+                      (change)="paymentChange()">
+                    </ng-select>
+                </div>
+                <div class="col-7">
+                  <button class="btn btn-primary" style="margin-top: -0.1rem" (click)="savePayment()">{{isPaymentChange?'Lưu':'Đổi phương thức thanh toán'}}</button>
+                </div>
+              </div>
             </div>
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Tình trạng</label>
@@ -151,6 +172,11 @@
                   [width]="300"
                 ></qrcode>
                 </div>
+                <div class="row mt-3" *ngIf="resTourBooking.status == 1 && resTourBooking.payment.idPayment != 1">
+                  <button class="btn btn-info" style="color: white;"(click)="payment()">
+                    Thanh toán lại
+                  </button>
+                </div>
                 <div class="row mt-3" *ngIf="resTourBooking.status == 1 || resTourBooking.status == 2">
                   <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelTour">
                     Hủy tour
@@ -159,9 +185,14 @@
               </div>
             </div>
           </div>
+          <div class="row mt-2" >
+            <a href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#sendEmail" style="margin-left: -0.5rem;">Gửi lại thông tin hóa đơn qua email.</a>
+          </div>
         </div>
       </div>
+
     </div>
+
   </div>
 </div>
 
@@ -220,7 +251,28 @@
           ngbPopover="Quý khách cần vượt Capcha !"
           >Xác nhận</button>
         </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
 
+
+<div class="modal fade" id="sendEmail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="sendEmailLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="sendEmailLabel">Gửi Email</h1>
+        <button #sendEmail type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" >
+        <label for="exampleFormControlInput1" class="form-label">Email
+          <span class="text-danger" style="font-weight: bolder;">* {{this.emailValid? this.emailValid : ''}}</span>
+        </label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="email" placeholder="name@example.com">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-success" (click)="send()">Gửi</button>
       </div>
     </div>
   </div>
