@@ -43,6 +43,8 @@ export class TourListComponent implements OnInit {
   btnNext: boolean = true
   resScheduleFilter: SearchScheduleFilter
   kwRoute:string
+  imgNew = "assets/images/icons/new.png"
+  dateNow: any
   @ViewChild('toTop') toTop: ElementRef;
   ngOnInit(): void {
     var split =[]
@@ -58,6 +60,8 @@ export class TourListComponent implements OnInit {
      this.isBack = true
     }
 
+    var date = Date.now()
+    this.dateNow = new Date(date).getTime()
   }
 
   ngOnChanges(): void {
@@ -87,6 +91,10 @@ export class TourListComponent implements OnInit {
           else{
             schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
           }
+
+          var createDate = new Date(schedule.tour.createDate)
+
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
       }
       this.calTotalResult()
@@ -109,12 +117,16 @@ export class TourListComponent implements OnInit {
         arr = []
         this.resSchedule.forEach(schedule => {
 
+          var createDate = new Date(schedule.tour.createDate)
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
+
           if (schedule.isHoliday) {
             schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
           }
           else{
             schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
           }
+
           if (this.resScheduleFilter) {
             if (this.resScheduleFilter.kwPriceFrom > 0 && this.resScheduleFilter.kwPriceTo > 0) {
               if (this.resScheduleFilter.kwPriceFrom >= schedule.pricePromotion) {

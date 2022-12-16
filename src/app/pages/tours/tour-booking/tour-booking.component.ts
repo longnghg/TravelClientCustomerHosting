@@ -56,6 +56,7 @@ export class TourBookingComponent implements OnInit {
   totalPriceNotVoucher: number
   totalPriceVoucher: number
   lengthVoucher: any
+  imgVoucher = "assets/images/icons/voucher.PNG"
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   ngOnInit() {

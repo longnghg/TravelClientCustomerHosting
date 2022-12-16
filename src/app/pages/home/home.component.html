@@ -207,13 +207,24 @@
     <div class="row" style="width: 1500px;  margin-left: -5%" *ngIf="resScheduleFalshSale">
       <ng-container *ngFor="let schedule of resScheduleFalshSale; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf=" i < 3">
-          <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img style="z-index: 1; position: absolute" [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img [src]="imgNew" *ngIf="dateNow < schedule.tour.createDateAfter30Day" style="width: 4rem;height: 3rem; margin-left: 25.5rem;margin-top: -1rem;; z-index: 2; position: absolute">
+
           <div class="card-body" style="height: 350px;">
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
-            <div class="stars mb-4" >
-              <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
-              <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
-          </div>
+            <ng-container *ngIf="dateNow > schedule.tour.createDateAfter30Day; else elseTemplate">
+              <div class="stars mb-4" >
+                <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+                <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+             </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div style="margin-top: 1rem;">
+                <br>
+              </div>
+            </ng-template>
+
+
             <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
             <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
             <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
@@ -288,13 +299,22 @@
     <div class="row" style="width: 1500px; margin-left: -5%" *ngIf="resTour">
       <ng-container  *ngFor="let tour of resTour; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf="i < 3 && tour.schedules.length > 1">
-          <img  [src]="tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
+          <img style="z-index: 1; position: absolute" [src]="tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',tour.schedules[0].idSchedule,tour.schedules[0].alias]" class="card-img-top">
+          <img [src]="imgNew" *ngIf="dateNow < tour.createDateAfter30Day" style="width: 4rem;height: 3rem; margin-left: 25.5rem;margin-top: -1rem;; z-index: 2; position: absolute">
           <div class="card-body" style="height: 330px;">
             <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{tour.nameTour}}<span *ngIf="tour.schedules[0].isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
-            <div class="stars mb-4" >
-              <i class="fa-solid fa-star text-warning" *ngFor='let star of tour.rating | forNumber'></i>
-              <i class="fa-solid fa-star" *ngFor='let star of 10 - tour.rating | forNumber'></i>
-            </div>
+            <ng-container *ngIf="dateNow > tour.createDateAfter30Day; else elseTemplate">
+              <div class="stars mb-4" >
+                <i class="fa-solid fa-star text-warning" *ngFor='let star of tour.rating | forNumber'></i>
+                <i class="fa-solid fa-star" *ngFor='let star of 10 - tour.rating | forNumber'></i>
+              </div>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <div style="margin-top: 1rem;">
+                <br>
+              </div>
+            </ng-template>
+
             <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{tour.schedules[0].departureDate| formatFromUnixTimestampToFullDateView}}</h6>
             <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{tour.schedules[0].idSchedule}}</p>
             <h6 class="card-subtitle mb-2 text-muted">{{tour.schedules[0].description}}</h6>
@@ -349,13 +369,23 @@
     <div class="row" style="width: 1500px;  margin-left: -5%" *ngIf="resSchedule">
       <ng-container *ngFor="let schedule of resSchedule; let i=index">
         <div class="card mr-5 mb-4 card-shadow" style="width: 30%; padding: 0;" *ngIf="schedule.promotionId == 1 && i < 3">
-          <img  [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img style="z-index: 1; position: absolute" [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;" [routerLink]="['','tour-detail',schedule.idSchedule,schedule.alias]" class="card-img-top">
+          <img [src]="imgNew" *ngIf="dateNow < schedule.tour.createDateAfter30Day" style="width: 4rem;height: 3rem; margin-left: 25.5rem;margin-top: -1rem;; z-index: 2; position: absolute">
+
           <div class="card-body" style="height: 330px;">
-            <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
-            <div class="stars mb-2" >
-              <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
-              <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
-          </div>
+            <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span> </h5>
+            <ng-container *ngIf="dateNow > schedule.tour.createDateAfter30Day; else createDateTemplate">
+              <div class="stars mb-2">
+                <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+                <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+              </div>
+            </ng-container>
+            <ng-template #createDateTemplate>
+              <div style="margin-top: 1rem;">
+                <br>
+              </div>
+            </ng-template>
+
             <h6 class="card-subtitle mb-2 text-muted" >Ngày đi {{schedule.departureDate| formatFromUnixTimestampToFullDateView}}</h6>
             <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
             <h6 class="card-subtitle mb-2 text-muted">{{schedule.description}}</h6>
@@ -397,7 +427,9 @@
             </div>
             <div class="col-7" style="padding-top: 80px; font-size: 22px;">
               <h3 class="card-title" style="font-weight: bolder; color: #2d4271; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-bottom: 20px; border-bottom: 1px solid; position: relative; top: -55px;">{{schedule.nameTour}}  <span *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h3>
-              <div class="stars mb-2"  style=" top: -45px; position: relative;" >
+              <img [src]="imgNew" *ngIf="dateNow < schedule.tour.createDateAfter30Day"  style="width: 4rem;height: 3rem; margin-left: 49.5rem;margin-top: -10rem;; z-index: 2; position: absolute">
+
+              <div class="stars mb-2" *ngIf="dateNow > schedule.tour.createDateAfter30Day"  style=" top: -45px; position: relative;" >
                 <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
                 <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
             </div>

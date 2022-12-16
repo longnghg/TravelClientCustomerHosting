@@ -16,6 +16,7 @@ export class TourModel{
   // idReview: string
   isDelete: boolean = false
   isActive: boolean = true
+  createDateAfter30Day: number
   tourDetail: TourDetailModel = new TourDetailModel()
   schedules: ScheduleModel[]
 }

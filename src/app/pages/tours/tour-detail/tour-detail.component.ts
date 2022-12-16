@@ -43,6 +43,9 @@ export class TourDetailComponent implements OnInit {
   weatherResponse: any
   validateComment: ValidationCommentModel = new ValidationCommentModel
   validateCommentText:  ValidationCommentTextModel = new  ValidationCommentTextModel
+  createDateAfter30Day: any
+  dateNow: any
+  imgNew = "assets/images/icons/new.png"
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
@@ -61,6 +64,9 @@ export class TourDetailComponent implements OnInit {
     document.documentElement.scrollTop = 0;
     this.init(this.activatedRoute.snapshot.paramMap.get('id1'))
     this.initScheduleRelated(this.activatedRoute.snapshot.paramMap.get('id1'))
+
+    var date = Date.now()
+    this.dateNow = new Date(date).getTime()
   }
 
  init(idSchedule: string){
@@ -71,6 +77,10 @@ export class TourDetailComponent implements OnInit {
 
         this.resSchedule = this.response.content
         console.log(this.resSchedule);
+        if(this.resSchedule){
+          var createDate = new Date(this.resSchedule.tour.createDate)
+          this.createDateAfter30Day = new Date(this.resSchedule.tour.createDate).setDate(createDate.getDate() + 30);
+        }
         this.initWeather()
 
         if (this.resSchedule.promotions.idPromotion != 1) {

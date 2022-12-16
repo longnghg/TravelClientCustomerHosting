@@ -63,6 +63,9 @@ export class HomeComponent implements OnInit {
   resGroup: GroupMessage = new GroupMessage
   dataSend: Message = new Message
   cardFocus: boolean
+  imgNew = "assets/images/icons/new.png"
+  createDateAfter30Day: any
+  dateNow: any
   @ViewChild('slide') slide: ElementRef;
   @ViewChild('toTop') toTop: ElementRef;
   @ViewChild('card') card: ElementRef
@@ -101,6 +104,9 @@ export class HomeComponent implements OnInit {
     this.initTour()
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     //console.error(this.resTourBooking);
+
+    var date = Date.now()
+    this.dateNow = new Date(date).getTime()
 
     if (this.resTourBooking) {
       this.isBack = true
@@ -203,7 +209,7 @@ export class HomeComponent implements OnInit {
 
   initFlashSale() {
     this.scheduleService.getsScheduleFlashSale(this.pageIndex, this.pageSize).then(res => {
-      
+
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resScheduleFalshSale = this.response.content
@@ -219,6 +225,9 @@ export class HomeComponent implements OnInit {
           schedule.outOfTime = Math.abs(days)
 
           schedule.countdownConfig = this.countDownTime(schedule.outOfTime)
+          var createDate = new Date(schedule.tour.createDate)
+
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
 
       }
@@ -232,10 +241,15 @@ export class HomeComponent implements OnInit {
     this.scheduleService.getsSchedule(this.pageIndex, this.pageSize).then(res => {
       console.log("scheudle re");
       console.log(res);
-      
+
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
+        this.resSchedule.forEach(schedule => {
+          var createDate = new Date(schedule.tour.createDate)
+
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
+        });
         // this.cd.markForCheck()
         // setTimeout(() => {
         //   this.cd.detach()
@@ -261,6 +275,10 @@ export class HomeComponent implements OnInit {
           else {
             schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion / 100)
           }
+
+          var createDate = new Date(schedule.tour.createDate)
+
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
         // this.cd.markForCheck()
         // setTimeout(() => {
@@ -279,6 +297,7 @@ export class HomeComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTour = this.response.content
+        console.log(this.resTour);
 
         this.resTour.forEach(tour => {
           tour.schedules.forEach(schedule => {
@@ -290,6 +309,9 @@ export class HomeComponent implements OnInit {
                 schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value / 100)
               }
             }
+            var createDate = new Date(tour.createDate)
+
+            tour.createDateAfter30Day = new Date(tour.createDate).setDate(createDate.getDate() + 30);
           })
           tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
         });

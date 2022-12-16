@@ -42,10 +42,17 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
-          <i class="fa-solid fa-star text-warning" *ngFor='let star of resSchedule.tour.rating | forNumber'></i>
-          <i class="fa-solid fa-star" *ngFor='let star of 10 - resSchedule.tour.rating | forNumber'></i>
-        </div>
+        <ng-container *ngIf="dateNow > createDateAfter30Day; else elseTemplate">
+          <div class="col">
+            <i class="fa-solid fa-star text-warning" *ngFor='let star of resSchedule.tour.rating | forNumber'></i>
+            <i class="fa-solid fa-star" *ngFor='let star of 10 - resSchedule.tour.rating | forNumber'></i>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <img [src]="imgNew"  style="width: 4rem;height: 3rem; margin-left: 17rem;margin-top: -4rem;; z-index: 2; position: absolute">
+        </ng-template>
+
+
       </div>
     </div>
     <div class="col-5 row">
@@ -103,7 +110,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col-12">
           <img [src]="imgDetail[3]" class="img-fluid"
             style="border-radius:10px; object-fit:fill; width: 95%; height: 16.5rem;" alt="">
         </div>

@@ -31,13 +31,13 @@ export class VouchersHistoryComponent implements OnInit {
   btnNext: boolean = true
   totalResult: number
   totalVoucher: any
+  imgVoucher = "assets/images/icons/voucher.PNG"
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
 
     private configService: ConfigService, private router:Router) { }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-
     this.init(this.auth.id)
   }
   dateChange(property: any) {
