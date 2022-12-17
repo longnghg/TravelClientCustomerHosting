@@ -37,6 +37,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CommentComponent } from 'src/app/pages/comment/comment/comment.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { VouchersHistoryComponent } from 'src/app/pages/voucher/vouchers-history/vouchers-history.component';
+import { BingMapsAPILoader } from "src/assets/ts/BingMapsApiLoader";
 @NgModule({
   imports: [
     CommonModule,
@@ -73,7 +74,7 @@ import { VouchersHistoryComponent } from 'src/app/pages/voucher/vouchers-history
     CommentComponent,
     VouchersHistoryComponent
   ],
-  providers: [NavbarComponent],
+  providers: [NavbarComponent, BingMapsAPILoader],
 
 })
 

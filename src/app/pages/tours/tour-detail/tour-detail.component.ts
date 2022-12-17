@@ -19,7 +19,9 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NewsService } from 'src/app/services_API/new.service';
-
+import { DatumModel } from 'src/app/models/location.model';
+import "bingmaps";
+import { BingMapsAPILoader } from "src/assets/ts/BingMapsApiLoader";
 @Component({
   selector: 'app-tour-detail',
   templateUrl: './tour-detail.component.html',
@@ -52,16 +54,30 @@ export class TourDetailComponent implements OnInit {
   fromLang: string = "vi"
   toLang: string = "en"
   translateText: string = ""
+  resDatum: DatumModel
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
     private imageService: ImageService,
     private timelineService: TimelineService,
     private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService, private newService: NewsService,
-    config: NgbRatingConfig) { config.readonly = true;}
+    config: NgbRatingConfig,private loader: BingMapsAPILoader) { config.readonly = true;}
   url = this.configService.apiUrl
 
   public Editor = ClassicEditor;
+
+  protected initMap(lat:number, lon:number) {
+    const options: Microsoft.Maps.IMapLoadOptions = {
+      center: new Microsoft.Maps.Location(lat, lon),
+      zoom:30,
+      showBreadcrumb:true,
+      supportedMapTypes: [Microsoft.Maps.MapTypeId.mercator]  ,
+      credentials:
+        "AurdciAAYASX5yphI9uZpd8We8kuWNrzLMOoxXNaaUJokJMi1BbNsDy3NJLjzIOR"
+    };
+
+    const map = new Microsoft.Maps.Map(document.getElementById("map"), options);
+  }
 
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
@@ -75,6 +91,9 @@ export class TourDetailComponent implements OnInit {
     this.dateNow = new Date(date).getTime()
   }
 
+  displayMap(lat:number, lon:number){
+    this.loader.load("bingAPIReady").then(() => this.initMap(lat, lon));
+  }
  init(idSchedule: string){
     this.scheduleService.getsSchedulebyIdSchedule(idSchedule).then(res => {
       this.response = res
@@ -87,7 +106,7 @@ export class TourDetailComponent implements OnInit {
           this.createDateAfter30Day = new Date(this.resSchedule.tour.createDate).setDate(createDate.getDate() + 30);
         }
         this.initWeather()
-
+        this.mapLocation(this.resSchedule.tour.toPlace)
         if (this.resSchedule.promotions.idPromotion != 1) {
           if (this.resSchedule.isHoliday) {
             this.resSchedule.pricePromotion = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * this.resSchedule.promotions.value /100)
@@ -181,6 +200,21 @@ export class TourDetailComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
+
+  mapLocation(locationString: string){
+    this.newService.mapLocation(locationString).subscribe(res => {
+      this.response = res
+
+      if (this.response.notification.type == StatusNotification.Success) {
+        this.resDatum = this.response.content
+        this.displayMap(this.resDatum.latitude, this.resDatum.longitude)
+      }
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
+
   scheduleChange(departureDate: any){
     var tour = this.resSchedule.tour
     this.resSchedules.forEach(schedule => {

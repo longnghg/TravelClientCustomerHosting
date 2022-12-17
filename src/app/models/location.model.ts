@@ -13,3 +13,13 @@ export class LocationModel{
 
   total?: number = 0
 }
+
+export class DatumModel{
+  latitude : number
+  longitude : number
+  type : string
+  name : string
+  number : string
+  postal_code : string
+  country_code : string
+}

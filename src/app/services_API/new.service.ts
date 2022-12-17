@@ -18,4 +18,9 @@ translateLanguage(cmtText: any, fromLang: any, toLang: any)
       return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/news/translate-language?input="+cmtText+"&fromLang="+fromLang+"&toLang="+toLang);
   }
 
+mapLocation(locationString: any)
+  {
+      return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/news/map-location?locationString="+locationString);
+  }
+
 }

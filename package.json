@@ -30,6 +30,7 @@
     "@ngx-loading-bar/http-client": "^6.0.2",
     "@ngx-loading-bar/router": "^6.0.2",
     "angularx-qrcode": "^14.0.0",
+    "bingmaps": "^2.0.3",
     "bootstrap": "^5.2.2",
     "i": "^0.3.7",
     "jquery": "^3.6.1",
