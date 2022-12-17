@@ -70,7 +70,7 @@
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
               <div class="row col-8" *ngIf="!isPaymentChange">
-                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button class="btn btn-primary ml-3" (click)="savePayment()">{{isPaymentChange?'Lưu':'Đổi phương thức thanh toán'}}</button></p>
+                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button *ngIf="resTourBooking.status != 3" class="btn btn-primary ml-3" (click)="savePayment()">Đổi phương thức thanh toán</button></p>
               </div>
               <div class="row col-8 mb-3"  *ngIf="isPaymentChange">
                 <div class="col-5">
@@ -173,7 +173,7 @@
                 ></qrcode>
                 </div>
                 <div class="row mt-3" *ngIf="resTourBooking.status == 1 && resTourBooking.payment.idPayment != 1">
-                  <button class="btn btn-info" style="color: white;"(click)="payment()">
+                  <button class="btn btn-info" style="color: white;" data-bs-toggle="modal" data-bs-target="#pay">
                     Thanh toán lại
                   </button>
                 </div>
@@ -273,6 +273,179 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
         <button type="button" class="btn btn-success" (click)="send()">Gửi</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="pay" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="payLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width: 185%; margin-left: -10rem;">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="payLabel">Xác nhận</h1>
+        <button #pay type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <ng-container *ngIf="resTourBooking.payment.idPayment != 2; else elseCard">
+        <div class="modal-body" style="margin-top: -3rem;">
+          <h4  style="margin-left: 5px; margin-top: 50px; font-weight: bold; color: #2d4271">Điều khoản bắt buộc khi đăng ký online</h4>
+          <div class="card" >
+            <div class="card-body" style="height: 300px; overflow-y: auto;">
+              NỘI DUNG ĐỌC, HIỂU VÀ ĐỒNG Ý TRƯỚC KHI ĐĂNG KÝ ONLINE CHƯƠNG TRÌNH DU LỊCH TRONG NƯỚC
+
+              Tôi đã hiểu rõ và đồng ý với các nội dung liên quan đến chương trình tour trong giai đoạn bình thường mới và điều kiện bán tour như sau:
+
+              1. Trường hợp tour di chuyển bằng xe/tàu hỏa/tàu thủy thì Khách phải đảm bảo đã hoàn thành tiêm 02 mũi vắc xin và có giấy xác nhận tiêm chủng (mũi thứ 02 từ 14 ngày trở lên và không quá 12 tháng) hoặc F0 đã khỏi bệnh COVID-19 trong vòng 06 tháng có giấy xác nhận của bệnh viện tính đến thời điểm đi du lịch. Theo chính sách của cơ quan nhà nước, địa phương nơi điểm đi, điểm đến, các điều kiện trên có thể thay đổi tùy từng thời điểm cụ thể và TravelRover sẽ thông báo cho Khách hàng để bổ sung theo yêu cầu.
+
+              2. Trẻ em (đi cùng ba mẹ) phải xét nghiệm COVID-19 và có giấy xác nhận âm tính của cơ sở Y tế trước ngày khởi hành 24h (chi phí xét nghiệm tự túc).
+
+              3. Thông tin kiểm soát dịch bệnh tại các địa phương sẽ thay đổi và TravelRover sẽ cập nhật phương án phòng chống dịch thường xuyên đến khách hàng (nếu có).
+
+              4. Khách hàng sẽ phối hợp cùng TravelRover thực hiện đúng theo hướng dẫn phòng chống dịch hoặc các biện pháp cách ly theo chỉ đạo từ địa phương - nếu có với chi phí tự túc.
+
+              I. GIÁ VÉ DU LỊCH
+
+              Giá vé du lịch được tính theo tiền Đồng (Việt Nam - VNĐ). Trường hợp khách thanh toán bằng USD sẽ được quy đổi ra VNĐ theo tỉ giá của ngân hàng Đầu Tư và Phát Triển Việt Nam - Chi nhánh TP.HCM tại thời điểm thanh toán.
+
+              Giá vé chỉ bao gồm những khoản được liệt kê một cách rõ ràng trong phần “Bao gồm” trong các chương trình du lịch. TravelRover không có nghĩa vụ thanh toán bất cứ chi phí nào không nằm trong phần “Bao gồm”.
+
+              II. GIÁ DÀNH CHO TRẺ EM
+
+              - Trẻ em dưới 5 tuổi:  không thu phí dịch vụ, bố mẹ tự lo cho bé và thanh toán các chi phí phát sinh (đối với các dịch vụ tính phí theo chiều cao…). Hai người lớn chỉ được kèm 1 trẻ em dưới 5 tuổi, trẻ em thứ 2 sẽ đóng phí theo qui định dành cho độ tuổi từ 5 đến dưới 12 tuổi và phụ thu phòng đơn. Vé máy bay, tàu hỏa, phương tiện vận chuyển công cộng mua vé theo qui định của các đơn vị vận chuyển (nếu có)
+
+              - Trẻ em từ 5 tuổi đến dưới 12 tuổi:  50% giá tour người lớn đối với tuyến xe, 75% giá tour người lớn đối với tuyến có vé máy bay (không có chế độ giường riêng). Hai người lớn chỉ được kèm 1 trẻ em từ 5 - dưới 12 tuổi, em thứ hai trở lên phải mua 1 suất giường đơn.
+
+              - Trẻ em từ 12 tuổi trở lên: mua một vé như người lớn.
+
+              III. THANH TOÁN
+
+              Khi thanh toán, Quý khách vui lòng cung cấp đầy đủ thông tin và đặt cọc ít nhất 50% tổng số tiền tour để giữ chỗ, số tiền còn lại Quý khách sẽ thanh toán trước ngày khởi hành 05 ngày làm việc (tour ngày thường) và trước 10 ngày làm việc (tour dịp Lễ, Tết)”.
+
+              Thanh toán bằng tiền mặt hoặc chuyển khoản tới tài khoản ngân hàng của TravelRover.
+
+              Tên Tài Khoản : Công ty CP Du lịch và Tiếp thị GTVT Việt Nam – TravelRover
+              Tên tài khoản viết tắt : TravelRover
+              Số Tài khoản : 007 100 115 1480
+              Ngân hàng : Vietcombank – CN Tp.HCM
+
+              Việc thanh toán được xem là hoàn tất khi TravelRover nhận được đủ tiền vé du lịch trước lúc khởi hành hoặc theo hợp đồng thỏa thuận giữa hai bên. Bất kỳ sự thanh toán chậm trễ dẫn đến việc hủy dịch vụ không thuộc trách nhiệm của TravelRover.
+
+              Khách hàng có nhu cầu xuất hóa đơn, vui lòng cung cấp thông tin xuất hóa đơn ngay tại thời điểm đăng ký. TravelRover có trách nhiệm xuất hóa đơn cho khách hàng trong vòng 07 ngày sau khi tour kết thúc.
+
+              Khi thực hiện việc chuyển khoản, Quý khách vui lòng ghi rõ tên họ, số điện thoại và nội dung chuyển khoản cho chương trình du lịch cụ thể đã được Quý khách chọn đăng ký.
+
+              Sau khi thực hiện việc chuyển khoản, Quý khách vui lòng gửi ủy nhiệm chi về Công ty TravelRover theo địa chỉ email sales@TravelRover.com và liên hệ với nhân viên phụ trách tuyến để nhận được Vé du lịch chính thức từ Công ty TravelRover.
+
+              *Lưu ý: Quý khách vui lòng điền đầy đủ thông tin theo yêu cầu khi đăng ký tour qua mạng bán travel.com.vn và chịu trách nhiệm về tính chính xác của những thông tin đã cung cấp. TravelRover sẽ sử dụng những thông tin này để cung cấp cho các đối tác dịch vụ và tiến hành các thủ tục cần thiết cho chuyến đi. Nếu có sự khác biệt giữa thông tin mà Quý khách cung cấp so với thực tế dẫn đến việc phải điều chỉnh thì Quý khách vui lòng thanh toán các khoản chi phí phát sinh (nếu có).
+
+              IV. HỦY VÉ VÀ PHÍ HỦY VÉ DU LỊCH
+
+              1. Trường hợp bị hủy bỏ do TravelRover:
+
+              Nếu TravelRover không thực hiện được chuyến du lịch, TravelRover phải báo ngay cho khách hàng biết và thanh toán lại cho khách hàng toàn bộ số tiền khách hàng đã đóng trong vòng 3 ngày kể từ lúc việc thông báo hủy chuyến du lịch bằng tiền mặt hoặc chuyển khoản.
+
+              2. Trường hợp bị hủy bỏ do khách hàng:
+
+              Sau khi đóng tiền, nếu Quý khách muốn chuyển/hủy tour xin vui lòng mang Vé Du Lịch đến văn phòng đăng ký tour để làm thủ tục chuyển/hủy tour và chịu mất phí theo quy định của TravelRover. Không giải quyết các trường hợp liên hệ chuyển/hủy tour qua điện thoại.
+
+              • Đối với ngày thường:
+
+              - Được chuyển sang các tuyến du lịch khác trước ngày khởi  hành 20 ngày : Không mất chi phí.
+              - Hủy hoặc chuyển sang các chuyến du lịch khác ngay sau khi đăng ký đến từ 15 - 19 ngày trước ngày khởi hành: Chi phí chuyển/hủy tour: 50% tiền cọc tour.
+
+              • Đối với ngày lễ, Tết:
+
+              - Được chuyển sang các tuyến du lịch khác trước ngày khởi  hành 30 ngày : Không mất chi phí.
+              - Hủy hoặc chuyển sang các chuyến du lịch khác ngay sau khi đăng ký đến từ 25 - 29 ngày trước ngày khởi hành: Chi phí chuyển/hủy tour: 50% tiền cọc tour.
+
+              * Các tour ngày lễ, Tết là các tour có thời gian diễn ra rơi vào một trong các ngày lễ, Tết theo quy định.
+
+              * Thời gian hủy tour được tính cho ngày làm việc, không tính Thứ 7, Chủ Nhật và các ngày lễ, Tết.
+
+              * Khách hàng hủy Vé du lịch trong thời điểm ngày thường và lễ Tết theo đúng những quy định trên, trong trường hợp khách thanh toán trực tuyến, nếu hủy Vé du lịch khách hàng sẽ chịu toàn bộ phí ngân hàng cho việc thanh toán tiền Vé du lịch. Việc hoàn trả tiền cho khách sẽ được TravelRover thực hiện ngay sau khi ngân hàng thông báo tiền đã vào tài khoản của TravelRover.
+
+              3. Trường hợp bất khả kháng:
+
+              Nếu chương trình du lịch bị hủy bỏ hoặc thay đổi bởi một trong hai bên vì một lý do bất khả kháng (hỏa hoạn, thời tiết, tai nạn, thiên tai, chiến tranh, dịch bệnh, hoãn, dời, hủy chuyến hoặc thay đổi khác của các phương tiện vận chuyển công cộng hoặc các sự kiến bất khả kháng khác theo quy định pháp luật…), thì hai bên sẽ không chịu bất kỳ nghĩa vụ bồi hoàn các tổn thất đã xảy ra và không chịu bất kỳ trách nhiệm pháp lý nào. Tuy nhiên mỗi bên có trách nhiệm cố gắng tối đa để giúp đỡ bên bị thiệt hại nhằm giảm thiểu các tổn thất gây ra vì lý do bất khả kháng. Thời gian hoàn tiền dịch vụ do hủy tour vì trường hợp bất khả kháng sẽ được hoàn tất trong vòng 60 – 90 ngày phụ thuộc điều kiện các đối tác cung ứng dịch vụ.
+
+              4. Thay đổi lộ trình:
+
+              Tùy theo tình hình thực tế, TravelRover giữ quyền thay đổi lộ trình, sắp xếp lại thứ tự các điểm tham quan hoặc hủy bỏ chuyến đi du lịch bất cứ lúc nào mà TravelRover thấy cần thiết vì sự thuận tiện hoặc an toàn cho khách hàng.
+
+              V. NHỮNG YÊU CẦU ĐẶC BIỆT TRONG CHUYẾN DU LỊCH
+
+              Các yêu cầu đặc biệt của Quý khách phải được báo trước cho TravelRover ngay tại thời điểm đăng ký. TravelRover sẽ cố gắng đáp ứng những yêu cầu này trong khả năng của mình song sẽ không chịu trách nhiệm về bất kỳ sự từ chối cung cấp dịch vụ từ phía các nhà vận chuyển, khách sạn, nhà hàng và các nhà cung cấp dịch vụ độc lập khác.
+
+              VI. KHÁCH SẠN
+
+              Khách sạn được cung cấp trên cơ sở những phòng có hai giường đơn (TWN) hoặc một giường đôi (DBL) tùy theo cơ cấu phòng của các khách sạn. Khách sạn do TravelRover đặt cho các chương trình tham quan có tiêu chuẩn tương ứng với các mức giá vé mà khách chọn khi đăng ký đi du lịch. Nếu cần thiết thay đổi về bất kỳ lý do nào, khách sạn thay thế sẽ tương đương với tiêu chuẩn của khách sạn ban đầu và sẽ được báo cho du khách trước khi khởi hành. Những yêu cầu đặc biệt của khách hàng nếu thông báo trước cho TravelRover sẽ được đáp ứng tùy theo khả năng cung cấp của khách sạn và khách hàng phải trả thêm tiền đối với các yêu cầu này (nếu có). TravelRover có quyền không đáp ứng những yêu cầu này nếu khách sạn từ chối cung cấp dịch vụ. Thời gian nhận phòng theo qui định tại các khách sạn là sau 14:00 và phải trả phòng trước 12:00. Đối với các trường hợp khách lưu trú tại hệ thống khách sạn/Resort 5 sao (Vinpearl, FLC, Grand Ho Tram Strip…) tuân thủ theo điều kiện hủy phạt của khách sạn/Resort cho từng thời điểm.
+
+              VII. VẬN CHUYỂN
+
+              Phương tiện vận chuyển tùy thuộc theo từng chương trình du lịch.
+
+              Với chương trình đi bằng xe: xe máy lạnh (4, 7, 15, 25, 35, 45 chỗ) sẽ được TravelRover sắp xếp tùy theo số lượng khách từng đoàn, phục vụ suốt chương trình tham quan.
+
+              Với chương trình đi bằng xe lửa - máy bay - tàu cánh ngầm (phương tiện vận chuyển công cộng), trong một số chương trình các nhà cung cấp dịch vụ có thể thay đổi giờ khởi hành mà không báo trước, việc thay đổi này sẽ được TravelRover thông báo cho khách hàng nếu thời gian cho phép.
+
+              TravelRover không chịu trách nhiệm bồi hoàn và trách nhiệm pháp lý với những thiệt hại về vật chất lẫn tinh thần do việc chậm trễ, thay đổi giờ giấc khởi hành của các phương tiện vận chuyển công cộng hoặc sự chậm trễ do chính hành khách gây ra. TravelRover chỉ thực hiện hành vi giúp đỡ để giảm bớt tổn thất cho hành khách.
+
+              VIII. HÀNH LÝ
+
+              Hành lý gọn nhẹ, với các chương trình sử dụng dịch vụ hàng không, hành lý miễn cước sẽ do các hãng hàng không qui định. TravelRover không chịu trách nhiệm về sự thất lạc, hư hỏng hành lý hoặc bất kỳ vật dụng gì của du khách trong suốt chuyến đi, du khách tự bảo quản hành lý của mình. Nếu khách hàng bị mất hay thất lạc hành lý thì TravelRover sẽ giúp hành khách liên lạc và khai báo với các bộ phận liên quan truy tìm hành lý bị mất hay thất lạc. Việc bồi thường hành lý bị mất hay thất lạc sẽ theo qui định của các đơn vị cung cấp dịch vụ hoặc các đơn vị bảo hiểm (nếu có).
+
+              IX. BẢO HIỂM DU LỊCH
+
+              Giá dịch vụ du lịch trọn gói đã bao gồm bảo hiểm du lịch trong nước với mức đền bù cao nhất là 120.000.000 VNĐ/khách Việt Nam/vụ cho nhân mạng và 12.000.000 VNĐ/khách Việt Nam/vụ cho hành lý.
+
+              Điều kiện, điều khoản bảo hiểm: Theo quy tắc bảo hiểm khách du lịch trong nước QĐ số: 001321/2006 – BM/BHCN.
+
+              Lưu ý: Vé du lịch cùng các văn bản kèm theo (biên nhận tour, chương trình tour) được xem như là bộ Hợp đồng lữ hành có giá trị ràng buộc với các bên và được lập thành 2 bản, mỗi bên giữ một bản, có giá trị pháp lý như nhau. Do tính chất tour dành cho khách lẻ (cá nhân / nhóm gia đình) nên khách hàng (người đăng ký và người đi cùng nhóm) được coi là chấp thuận toàn bộ nội dung trong Vé du lịch và các văn bản kèm theo kể từ thời điểm đặt cọc, không phụ thuộc vào việc khách hàng có ký tên trên Vé du lịch, biên nhận tour hay chương trình tour hay không.
+
+              Trong quá trình thực hiện, nếu xảy ra tranh chấp sẽ được giải quyết trên cơ sở thương lượng trong thời hạn 30 ngày kể từ ngày một trong hai bên đưa tranh chấp ra thương lượng. Hết thời hạn này nếu tranh chấp không được giải quyết hoặc một trong hai bên không đồng ý với kết quả thương lượng thì có quyền đưa tranh chấp ra giải quyết tại Tòa án thẩm quyền.
+            </div>
+          </div>
+          <div class="form-check mt-3" style="margin-left: 15px;">
+            <input class="form-check-input"  style=" cursor: pointer;" type="checkbox" id="flexCheckDefault2" (change)="isPayment ? isPayment = false : isPayment = true">
+            <label class="form-check-label"  style=" cursor: pointer;" for="flexCheckDefault2">
+              <h5 class="fg-dark">Tôi đồng ý với các điều kiện trên</h5>
+            </label>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #elseCard>
+        <div class="modal-body" style="margin-top: -1rem;">
+          <h6 class="card-subtitle mb-2" style="margin-top: 20px">
+            Quý khách sau khi thực hiện việc chuyển khoản vui lòng gửi email đến
+            <span style="font-weight: bold; color: #2d4271">contactcenter@TravelRover.com</span><br> hoặc gọi tổng đài
+            <span style="font-weight: bold; color: #2d4271">19001839</span> để được xác nhận từ công ty chúng tôi.
+            <br><br>
+            Tên Tài Khoản : Công ty CP Du lịch và Tiếp thị GTVT Việt Nam – TravelRover
+            <br>
+            Tên tài khoản viết tắt : TravelRover
+            <br>
+            Số Tài khoản : <span style="font-weight: bold; color: #2d4271">007 100 115 1480</span>
+            <br>
+            Ngân hàng : Vietcombank – CN Tp.HCM</h6>
+        </div>
+      </ng-template>
+
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{resTourBooking.payment.idPayment != 2? 'Không':'Đóng'}}</button>
+        <ng-container *ngIf="resTourBooking.payment.idPayment != 2">
+          <ng-container *ngIf="!isPayment; else elsePay">
+            <button type="button" class="btn btn-success" placement="top"
+            ngbPopover="Quý khách cần chọn Điều khoản đăng ký online !">Thanh toán</button>
+          </ng-container>
+          <ng-template #elsePay>
+            <button type="button" class="btn btn-success" (click)="payment()">Thanh toán</button>
+          </ng-template>
+        </ng-container>
+
+
       </div>
     </div>
   </div>

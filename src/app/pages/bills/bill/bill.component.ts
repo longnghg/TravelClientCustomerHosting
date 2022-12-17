@@ -11,9 +11,9 @@ import { NotificationService } from "../../../services_API/notification.service"
 import { PaymentService } from "../../../services_API/payment.service";
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationModel } from "../../../models/authentication.model";
-import { StatusNotification } from "../../../enums/enum";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ReCaptcha2Component } from 'ngx-captcha';
+import { StatusNotification, PaymentMethod, RoleTitle } from "../../../enums/enum";
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
@@ -32,9 +32,15 @@ export class BillComponent implements OnInit {
   @ViewChild('sendEmail') sendEmail: ElementRef;
   email: string
   emailValid: string
+  pay: {
+    status: number,
+    url: string,
+    debugId: string
+  }
   isRecapcha: boolean
   protected aFormGroup: FormGroup;
-  constructor(private paymentService: PaymentService, private formBuilder: FormBuilder, private tourBookingService: TourBookingService,private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
+  isPayment: boolean
+  constructor(private paymentService: PaymentService, private formBuilder: FormBuilder, private tourBookingService: TourBookingService, private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
   isPaymentChange: boolean
   ngOnInit(): void {
     this.paymentService.views().then(res => {this.resPayment = res
@@ -94,10 +100,16 @@ export class BillComponent implements OnInit {
   savePayment(){
     if (this.isPaymentChange) {
       this.isPaymentChange = false
+      this.tourBookingService.changePayment(this.resTourBooking.idTourBooking, this.resTourBooking.payment.idPayment).then(res => {
+        if (res) {
+          this.notificationService.handleAlert("Thay đổi phương thức thành công !", StatusNotification.Success)
+        }
+      })
     }
     else{
       this.isPaymentChange = true
     }
+
   }
   handleSuccess(e: any){
     if (e) {
@@ -146,19 +158,28 @@ export class BillComponent implements OnInit {
   }
 
   payment(){
-    if (this.isRecapcha) {
-      this.tourBookingService.cancel(this.resTourBooking.idTourBooking).then(res => {
-        this.response = res
-        this.notificationService.handleAlertObj(this.response.notification)
-          if (this.response.notification.type == StatusNotification.Success) {
-            this.cancelTour.nativeElement.click()
-            this.captchaElem.resetCaptcha();
-            this.isRecapcha = false
-            location.reload()
+    if (this.resTourBooking.payment.idPayment == PaymentMethod.Paypal) {
+      this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
+        this.pay = res
+          if (!res.debugId) {
+            this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
+            location.assign(this.pay.url)
           }
-        }, error => {
-          var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-          this.notificationService.handleAlert(message, StatusNotification.Error)
+          else{
+            this.notificationService.handleAlert("Hệ thống thanh toán đang có vấn đề, xin vui lòng thử lại sau !", StatusNotification.Error)
+          }
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+    else if(this.resTourBooking.payment.idPayment == PaymentMethod.Vnpay){
+      this.tourBookingService.vnpay(this.resTourBooking.idTourBooking).then(res => {
+          this.pay = res
+          location.assign(this.pay.url)
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
   }

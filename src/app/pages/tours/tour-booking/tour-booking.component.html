@@ -372,6 +372,41 @@
               </div>
               <hr color="black">
               <div style="position: relative">
+                <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 25px;">Giá vé</h5>
+              </div>
+              <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion">
+                <div class="mb-1" style="position: relative; left: 60%;">
+                  <span  class="ml-2 badge badge-danger" style="font-size: 14px;">Giá đã áp dụng khuyến mãi</span>
+                </div>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resSchedule.priceAdultPromotion| formatPriceVi}}₫</h5>
+                </div>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resSchedule.priceChildPromotion | formatPriceVi}}₫</h5>
+                </div>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resSchedule.priceBabyPromotion | formatPriceVi}}₫</h5>
+                </div>
+               </ng-container>
+               <ng-template #elsePromotion>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{(resSchedule.isHoliday ? resSchedule.priceAdultHoliday:resSchedule.priceAdult | formatPriceVi)}}₫</h5>
+                </div>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Trẻ em</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{(resSchedule.isHoliday ? resSchedule.priceChildHoliday:resSchedule.priceChild) | formatPriceVi}}₫</h5>
+                </div>
+                <div style="position: relative">
+                  <h5 class="card-title" style="color: #2d4271;">Trẻ nhỏ</h5>
+                  <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{(resSchedule.isHoliday ? resSchedule.priceBabyHoliday:resSchedule.priceBaby) | formatPriceVi}}₫</h5>
+                </div>
+               </ng-template>
+              <hr color="black">
+              <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 100px;">Hành khách: {{totalPeople()}}</h5>
                 <div class=" text-muted" style="position: absolute;top: 0; right: 0;">
                   {{resTourBooking.adult}} người lớn
@@ -383,7 +418,7 @@
                   0 em bé -->
                 </div>
               </div>
-             <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion">
+             <ng-container *ngIf="resSchedule.promotions.idPromotion != 1; else elsePromotion2">
               <div class="mb-1" style="position: relative; left: 60%;">
                 <span  class="ml-2 badge badge-danger" style="font-size: 14px;">Giá đã áp dụng khuyến mãi</span>
               </div>
@@ -400,7 +435,7 @@
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.baby > 0 ? resTourBooking.baby + ' x ' + (resSchedule.priceBabyPromotion | formatPriceVi) :'0'}}₫</h5>
               </div>
              </ng-container>
-             <ng-template #elsePromotion>
+             <ng-template #elsePromotion2>
               <div style="position: relative">
                 <h5 class="card-title" style="color: #2d4271;">Người lớn</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">{{resTourBooking.adult}} x {{(resSchedule.isHoliday ? resSchedule.priceAdultHoliday:resSchedule.priceAdult)| formatPriceVi}}₫</h5>
@@ -465,7 +500,6 @@
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold;">Tổng cộng</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: red; font-weight: bold; ">{{totalPrice() | formatPriceVi}}₫</h5>
               </div>
-
               <div class="row">
                 <ng-container *ngIf="!isPayment && activePane == 1; else elseTemplate">
                   <button class="btn btn-danger mt-5" style="font-weight: bold;" placement="top"

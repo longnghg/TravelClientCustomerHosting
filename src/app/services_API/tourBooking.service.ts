@@ -46,4 +46,9 @@ export class TourBookingService{
   cusSearchBookingNo(bookingNo: string){
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cus-search-bookingNo?bookingNo="+ bookingNo);
   }
+
+  changePayment(idTourBooking: string, idPayment: number)
+{
+  return this.http.get<boolean>( this.configService.apiUrl + "/api/TourBooking/payment-changed?idTourBooking="+idTourBooking+"&idPayment="+idPayment).toPromise();
+}
 }
