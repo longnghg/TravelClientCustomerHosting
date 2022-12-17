@@ -18,6 +18,7 @@ import { Daily } from "../../../models/weather.model";
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NewsService } from 'src/app/services_API/new.service';
 
 @Component({
   selector: 'app-tour-detail',
@@ -46,12 +47,17 @@ export class TourDetailComponent implements OnInit {
   createDateAfter30Day: any
   dateNow: any
   imgNew = "assets/images/icons/new.png"
+  commentText: string = ""
+  language = this.configService.listLanguage()
+  fromLang: string = "vi"
+  toLang: string = "en"
+  translateText: string = ""
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
     private imageService: ImageService,
     private timelineService: TimelineService,
-    private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService,
+    private activatedRoute: ActivatedRoute, private router: Router, private commentService: CommentService, private newService: NewsService,
     config: NgbRatingConfig) { config.readonly = true;}
   url = this.configService.apiUrl
 
@@ -165,6 +171,9 @@ export class TourDetailComponent implements OnInit {
               schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion /100)
             }
           }
+
+          var createDate = new Date(schedule.tour.createDate)
+          schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
       }
     }, error => {
@@ -282,6 +291,10 @@ export class TourDetailComponent implements OnInit {
     this.idComment = idComment
   }
 
+  getCmtText(cmtText: string){
+    this.commentText = cmtText
+  }
+
   deleteComment(){
     this.commentService.delete(this.idComment, this.auth.id).subscribe(res =>{
       this.response = res
@@ -293,6 +306,28 @@ export class TourDetailComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  repeatLang(){
+    var from = this.fromLang
+    var to = this.toLang
+
+    this.fromLang = to
+    this.toLang = from
+  }
+
+  changeLaguage(){
+
+    if(this.fromLang != null && this.toLang != null){
+      this.newService.translateLanguage(this.commentText, this.fromLang, this.toLang).subscribe(res =>{
+        this.response = res
+        this.translateText = this.response.content
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+
   }
 
 }

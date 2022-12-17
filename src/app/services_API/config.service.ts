@@ -32,7 +32,7 @@ export class ConfigService{
 
     if (status == 401){
         console.log("vo trong status 401");
-        
+
         message = "Hết hạn đăng nhập !"
       //  document.location.assign(this.clientUrl +'/login');
     }
@@ -374,6 +374,18 @@ export class ConfigService{
     var formattedDate = year + '-' + month + '-' + day;
     return formattedDate
    }
+
+   listLanguage(){
+    var listlanguage = [
+      {id: "vi", name: "Vietnamese"},
+      {id: "en", name: "English"},
+      {id: "fr", name: "French"},
+      {id: "ko", name: "Korean"},
+      {id: "it", name: "Italian"}
+    ]
+
+    return listlanguage
+  }
 }
 
 
