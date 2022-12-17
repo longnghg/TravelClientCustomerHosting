@@ -12,7 +12,7 @@ export class TourBookingService{
 
   gets()
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/list-tourbooking");
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/list-tourbooking");
   }
 
    getsHistory(idCustomer: any)
@@ -22,17 +22,17 @@ export class TourBookingService{
 
   getTourBooking(idTourBooking: any)
   {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/tour-booking-by-id?idTourBooking="+ idTourBooking);
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/tour-booking-by-id?idTourBooking="+ idTourBooking);
   }
 
   async create(data: any)
   {
-    return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/create-tourBooking", data).toPromise();
+    return await this.http.post<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/create-tourBooking", data).toPromise();
   }
 
   async cancel(idTourBooking: any)
   {
-    return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking, {}).toPromise();
+    return await this.http.put<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking, {}).toPromise();
   }
 
   async paypal(idTourBooking: string){
@@ -44,11 +44,11 @@ export class TourBookingService{
   }
 
   cusSearchBookingNo(bookingNo: string){
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/TourBooking/cus-search-bookingNo?bookingNo="+ bookingNo);
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/cus-search-bookingNo?bookingNo="+ bookingNo);
   }
 
   changePayment(idTourBooking: string, idPayment: number)
 {
-  return this.http.get<boolean>( this.configService.apiUrl + "/api/TourBooking/payment-changed?idTourBooking="+idTourBooking+"&idPayment="+idPayment).toPromise();
+  return this.http.get<boolean>( this.configService.apiTourBookingUrl + "/api/TourBooking/payment-changed?idTourBooking="+idTourBooking+"&idPayment="+idPayment).toPromise();
 }
 }

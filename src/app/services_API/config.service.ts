@@ -9,6 +9,7 @@ export class ConfigService{
 
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
+  public apiTourBookingUrl = "https://localhost:5001";
   public clientUrl = this.document.location.origin
   signalR(){
     return this.hubConnectionBuilder = new HubConnectionBuilder()

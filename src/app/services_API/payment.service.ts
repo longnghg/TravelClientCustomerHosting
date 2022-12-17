@@ -15,7 +15,7 @@ resPayment: PaymentModel[]
 async views()
 {
   var value = <any>await new Promise<any>(resolve => {
-    this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/list-payment?pageIndex="+1+"&pageSize="+100).subscribe(res => {
+    this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/Payment/list-payment?pageIndex="+1+"&pageSize="+100).subscribe(res => {
       this.response = res
       this.resPayment =  this.response.content
       resolve(this.resPayment);
@@ -28,12 +28,13 @@ async views()
 }
 gets()
 {
-    return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/list-payment");
+    return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/Payment/list-payment");
 }
 
 create(data: any)
 {
-  return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Payment/create-payment", data);
+  return this.http.post<ResponseModel>( this.configService.apiTourBookingUrl + "/api/Payment/create-payment", data);
 }
+
 
 }
