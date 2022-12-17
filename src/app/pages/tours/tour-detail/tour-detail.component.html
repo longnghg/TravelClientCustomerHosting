@@ -248,13 +248,23 @@
           <div class="card mb-4 card-shadow" style="width: 100%; padding: 0;" *ngIf="i < 4">
             <img [src]="schedule.tour.thumbnail" height="300px" style="cursor: pointer;"
               (click)="goto(schedule.idSchedule, schedule.alias)" class="card-img-top">
+              <img [src]="imgNew" *ngIf="dateNow < schedule.tour.createDateAfter30Day" style="width: 4rem;height: 3rem; margin-left: 20.5rem;margin-top: -1rem;; z-index: 2; position: absolute">
             <div class="card-body" style="height: 330px;">
               <h5 class="card-title" style="font-weight: bolder; color: #2d4271;">{{schedule.tour.nameTour}} <span
                   *ngIf="schedule.isHoliday" class="ml-2 badge badge-danger">Ngày lễ</span></h5>
-              <div class="stars mb-2">
-                <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
-                <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
-              </div>
+              <ng-container *ngIf="dateNow > schedule.tour.createDateAfter30Day; else elseTemplate">
+                <div class="stars mb-2">
+                  <i class="fa-solid fa-star text-warning" *ngFor='let star of schedule.tour.rating | forNumber'></i>
+                  <i class="fa-solid fa-star" *ngFor='let star of 10 - schedule.tour.rating | forNumber'></i>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div style="margin-top: 1.2rem;">
+                  <br>
+                </div>
+              </ng-template>
+
+
               <h6 class="card-subtitle mb-2 text-muted">Ngày đi {{schedule.departureDate|
                 formatFromUnixTimestampToFullDateView}}</h6>
               <p class="card-text">Mã tour: <i class="fa-solid fa-ticket"></i> {{schedule.idSchedule}}</p>
@@ -351,6 +361,11 @@
 
               <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
                 formatFromUnixTimestampToFullDateTimeView}}</p>
+
+                <button data-bs-toggle="modal" data-bs-target="#translateModal"
+                style="position:absolute; top: 5.9rem;right: 0.4rem;"
+               class="btn text-primary" (click)="getCmtText(item.commentText);changeLaguage()"><i class="fa-solid fa-language"></i> Nhấn vào để phiên dịch</button>
+
             </div>
             <ckeditor style="color: #2d4271;" [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
             <hr>
@@ -374,7 +389,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h4 class="modal-title fs-5">Bạn có muốn xóa bình luận này không</h4>
+        <h4 class="modal-title fs-5">Bạn có muốn xóa bình luận này không ?</h4>
         <h1></h1>
       </div>
       <div class="modal-footer">
@@ -385,3 +400,60 @@
   </div>
 </div>
 
+
+<div class="modal fade" style="z-index: 9999;" id="translateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="translateModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel"><i class="fa-solid fa-language"></i> Phiên dịch</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 4rem;height: 3rem;"></button>
+      </div>
+      <div class="modal-body">
+        <fieldset>
+          <legend>Phiên dịch</legend>
+
+          <div class="row">
+            <div class="col-5">
+              <ng-select [items]="language"
+                bindLabel="name"
+                bindValue="id"
+                name="id"
+                id="id"
+                (change)="changeLaguage()"
+                [(ngModel)]="fromLang"
+                [searchable]="false"
+                [clearable]="false"
+                >
+              </ng-select>
+            </div>
+            <div class="col-2">
+              <button class="btn" style="margin-left: 1.6rem; height: 2.2rem;border-radius: 50%;background-color: aliceblue;" (click)="repeatLang(); changeLaguage()"><i class="fa-solid fa-repeat"></i></button>
+            </div>
+            <div class="col-5">
+              <ng-select [items]="language"
+                bindLabel="name"
+                bindValue="id"
+                name="id"
+                id="id"
+                (change)="changeLaguage()"
+                [(ngModel)]="toLang"
+                [searchable]="false"
+                [clearable]="false"
+                >
+              </ng-select>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2rem;">
+            <div class="col-6">
+              <ckeditor  style="color: #2d4271;" [editor]="Editor" [(ngModel)]="commentText" data="" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
+            </div>
+            <div class="col-6">
+              <ckeditor  style="color: #2d4271;" [editor]="Editor" [(ngModel)]="translateText" data="Bản dịch" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
