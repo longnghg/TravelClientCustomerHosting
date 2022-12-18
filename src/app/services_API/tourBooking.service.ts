@@ -36,11 +36,11 @@ export class TourBookingService{
   }
 
   async paypal(idTourBooking: string){
-    return await this.http.get<any>( this.configService.apiUrl + "/api/Pay/checkout-paypal?idTourBooking="+idTourBooking).toPromise();;
+    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-paypal?idTourBooking="+idTourBooking).toPromise();;
   }
 
   async vnpay(idTourBooking: string){
-    return await this.http.get<any>( this.configService.apiUrl + "/api/Pay/checkout-vnpay?idTourBooking="+idTourBooking).toPromise();;
+    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-vnpay?idTourBooking="+idTourBooking).toPromise();;
   }
 
   cusSearchBookingNo(bookingNo: string){
