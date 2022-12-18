@@ -97,6 +97,9 @@ export class HomeComponent implements OnInit {
   auth: AuthenticationModel
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    if (!this.auth) {
+      this.auth = JSON.parse(localStorage.getItem("authGuess"))
+    }
     this.provinceService.views().then(res => { this.resProvince = res })
     this.initFlashSale()
     this.initSchedulePromotion()
@@ -457,6 +460,7 @@ export class HomeComponent implements OnInit {
     if (this.dataSend.content) {
       this.notificationService.reply(this.dataSend).then(res => {
         this.response = res
+
         if (this.response.notification.type == StatusNotification.Success) {
           this.configService.callChatSignalR(this.response.content)
           this.dataSend = new Message

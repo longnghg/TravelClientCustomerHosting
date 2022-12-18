@@ -17,10 +17,14 @@ export class ConfigService{
   response: ResponseModel
   auth: AuthenticationModel
   signalR(){
+    console.log(localStorage.getItem("authGuess"));
+    console.log(localStorage.getItem("token"));
+
     return this.hubConnectionBuilder = new HubConnectionBuilder()
    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
    {
-       accessTokenFactory: () => localStorage.getItem("token")
+       accessTokenFactory: () => localStorage.getItem("token")?localStorage.getItem("token"):JSON.parse(localStorage.getItem("authGuess")).token
+
    })
    .withAutomaticReconnect()
    .build();

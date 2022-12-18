@@ -60,14 +60,14 @@ export class LoginComponent implements OnInit {
     }
     this.googleAuthSDK();
   }
- 
+
   refreshToken(token:string,refToken:string){
     this.resToken.accessToken = token;
     this.resToken.refreshToken = refToken;
     this.authenticationService.login(this.resToken).subscribe(res=>{
        console.log("refreshtoken");
        console.log(res);
-       
+
     })
 
   }
@@ -175,15 +175,13 @@ export class LoginComponent implements OnInit {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success)
           {
-            
-            this.resAthentication = this.response.content
-            console.log(this.resAthentication);
 
+            this.resAthentication = this.response.content
             localStorage.setItem("token", this.resAthentication.token)
             localStorage.setItem("refreshToken", this.resAthentication.refToken)
             localStorage.setItem("idUser", this.resAthentication.id)
             localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
-            
+
 
 
                 // connect to signalR

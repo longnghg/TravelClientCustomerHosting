@@ -45,5 +45,15 @@ export class AppComponent {
         localStorage.setItem("tokenDefault", this.auth.token)
       });
     }
+
+
+    var authGuess = localStorage.getItem("authGuess")
+    console.warn(authGuess);
+
+    if (!authGuess) {
+      this.authenticationService.generateTokenGuess().subscribe(res => {
+        localStorage.setItem("authGuess", JSON.stringify(res))
+      });
+    }
   }
 }

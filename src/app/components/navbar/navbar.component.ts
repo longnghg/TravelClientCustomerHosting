@@ -27,12 +27,10 @@ export class NavbarComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute, private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if(this.auth){
-      this.hubConnectionBuilder = this.configService.signalR()
-      this.hubConnectionBuilder.start().then(function(){
-        console.info("SignalR listening!");
-      });
-    }
+    this.hubConnectionBuilder = this.configService.signalR()
+    this.hubConnectionBuilder.start().then(function(){
+      console.info("SignalR listening!");
+    });
   }
 
   ngOnInit() {
@@ -84,6 +82,8 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("currentUser")
       localStorage.removeItem("idUser")
       localStorage.removeItem("token")
+      localStorage.removeItem("authGuess")
+      localStorage.removeItem("tokenDefault")
       sessionStorage.clear()
       this.auth = null
       // location.assign(this.configService.clientUrl + "/home")

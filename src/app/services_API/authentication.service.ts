@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { ConfigService } from "./config.service";
 import { ResponseModel } from "../models/responsiveModels/response.model";
 import { TokenModel } from "../models/tokenModel.model";
-
+import { AuthenticationModel } from "../models/authentication.model";
 @Injectable({
     providedIn: 'root'
 })
@@ -36,9 +36,13 @@ export class AuthenticationService{
   block(email: string){
     return this.http.put<ResponseModel>(this.configService.apiUrl + "/api/Authentication/block-customer?email="+email, {});
   }
-   generateRefreshToken(data:any){
-    return   this.http.post(this.configService.apiUrl + "/api/Authentication/refresh-token",data);
+
+  generateRefreshToken(data:any){
+    return  this.http.post(this.configService.apiUrl + "/api/Authentication/refresh-token",data);
   }
 
+  generateTokenGuess(){
+    return  this.http.get<AuthenticationModel>(this.configService.apiUrl + "/api/Authentication/token-guess");
+}
 
 }
