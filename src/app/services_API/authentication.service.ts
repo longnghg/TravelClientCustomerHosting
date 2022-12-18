@@ -15,6 +15,11 @@ export class AuthenticationService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
   }
 
+  loginDefault(data: any)
+  {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", data);
+  }
+
   logOut(cusId: string)
   {
       return  this.http.get<ResponseModel>(this.configService.apiUrl + "/api/Authentication/logout-customer?idCus="+cusId);

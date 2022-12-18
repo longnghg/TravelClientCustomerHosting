@@ -2,14 +2,21 @@ import { Injectable, Injector } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { ConfigService } from "./config.service";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private inject : Injector) {
+  constructor(private inject : Injector, private configService : ConfigService) {
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-     const token = localStorage.getItem('token');
+     var token = "";
     let authReq = req;
-
+    var url = req.url.split("/")
+    if (url[4] == "Customer" || url[4] == "TourBooking" || url[4] == "Pay") {
+      token = localStorage.getItem('token');
+    }
+    else{
+      token = localStorage.getItem('tokenDefault');
+    }
 
     authReq = this.AddTokenHeader(req,token);
 
@@ -26,7 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // if (!token) {
     //   return next.handle(req);
     // }
-    
+
     // const req1 = req.clone({
     //   headers: req.headers.set('Authorization', `Bearer ${token}`),
     // });
@@ -35,7 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   HandleRefreshToken(request: HttpRequest<any>, next: HttpHandler){
     const token = localStorage.getItem("token"); // you probably want to store it in localStorage or something
-    const refToken = localStorage.getItem("refreshToken"); 
+    const refToken = localStorage.getItem("refreshToken");
     let input = {
       "accessToken": token,
   "refreshToken": refToken
@@ -43,7 +50,7 @@ export class AuthInterceptor implements HttpInterceptor {
     let authService = this.inject.get(AuthenticationService);
     return  ( authService.generateRefreshToken(input)).pipe(
       switchMap((data:any) => {
-        
+
         if(data.success){
           var tokenNew= data.data.token;
           var refTokenNew = data.data.refToken;
@@ -74,11 +81,11 @@ export class AuthInterceptor implements HttpInterceptor {
   //   })
   // }
   SaveToken(token: string, refToken: string){
-     
-      localStorage.setItem("refreshToken",refToken); 
+
+      localStorage.setItem("refreshToken",refToken);
 
       localStorage.setItem('token',token);
-      
+
   }
 
 }

@@ -1,16 +1,21 @@
 import { Injectable, Inject, PipeTransform, Pipe } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import { AuthenticationService } from "../services_API/authentication.service";
+import { ResponseModel } from "../models/responsiveModels/response.model";
+import { AuthenticationModel } from "../models/authentication.model";
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
-
+  authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
   public apiUrl = "https://localhost:44394";
   public apiTourBookingUrl = "https://localhost:5001";
   public clientUrl = this.document.location.origin
+  response: ResponseModel
+  auth: AuthenticationModel
   signalR(){
     return this.hubConnectionBuilder = new HubConnectionBuilder()
    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
@@ -28,14 +33,19 @@ export class ConfigService{
     this.hubConnectionBuilder.invoke('SendNotyf',roleId)
   }
   error(status: any, message: any){
-    console.log('Statu 1s:  '  + status);
+    console.log('Status:  '  + status);
     console.log('Message: '  + message);
 
     if (status == 401){
-        console.log("vo trong status 401");
-
-        message = "Hết hạn đăng nhập !"
-      //  document.location.assign(this.clientUrl +'/login');
+      var input={
+        email: "default@gmail.com",
+        password: "123"
+      }
+      this.authenticationService.loginDefault(input).subscribe(res => {
+        this.response = res
+        this.auth = this.response.content
+        localStorage.setItem("tokenDefault", this.auth.token)
+      });
     }
     else if (status == 200) {
         message = message;
