@@ -84,7 +84,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Tài khoản của bạn bị khóa tới <span class="text-danger" style="font-weight: 700;" *ngIf="timeBlock">{{timeBlock | formatFromUnixTimestampToFullDateTimeView}}</span>
+        <ng-container *ngIf="!timeBlock; else elseTimeBLock">
+          Tài khoản của bạn bị khóa <span class="text-danger" style="font-weight: 700;">vĩnh viễn</span>
+        </ng-container>
+        <ng-template #elseTimeBLock>
+          Tài khoản của bạn bị khóa tới <span class="text-danger" style="font-weight: 700;">{{timeBlock | formatFromUnixTimestampToFullDateTimeView}}</span>
+        </ng-template>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

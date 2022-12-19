@@ -31,6 +31,10 @@ export class NavbarComponent implements OnInit {
     this.hubConnectionBuilder.start().then(function(){
       console.info("SignalR listening!");
     });
+
+    this.hubConnectionBuilder.on('BlockUser', (result: any) => {
+      this.logOut()
+    })
   }
 
   ngOnInit() {

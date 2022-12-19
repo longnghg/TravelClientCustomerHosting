@@ -66,8 +66,6 @@ export class LoginComponent implements OnInit {
     this.resToken.refreshToken = refToken;
     this.authenticationService.login(this.resToken).subscribe(res=>{
        console.log("refreshtoken");
-       console.log(res);
-
     })
 
   }
@@ -164,7 +162,6 @@ export class LoginComponent implements OnInit {
           this.response = res
           if(this.response.notification.type == StatusNotification.Success)
           {
-
             this.auth = this.response.content
             localStorage.setItem("token", this.auth.token)
             localStorage.setItem("refreshToken", this.auth.refToken)
