@@ -71,7 +71,9 @@ export class TourDetailComponent implements OnInit {
       center: new Microsoft.Maps.Location(lat, lon),
       zoom:30,
       showBreadcrumb:true,
+      mapTypeId: Microsoft.Maps.MapTypeId.aerial,
       supportedMapTypes: [Microsoft.Maps.MapTypeId.mercator]  ,
+      showLocateMeButton: true,
       credentials:
         "AurdciAAYASX5yphI9uZpd8We8kuWNrzLMOoxXNaaUJokJMi1BbNsDy3NJLjzIOR"
     };
