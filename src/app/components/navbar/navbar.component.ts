@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
   adas = "asdasd"
   hubConnectionBuilder: any
   auth: AuthenticationModel = new AuthenticationModel()
-  constructor(private activatedRoute:ActivatedRoute, private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
+  constructor(private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     this.hubConnectionBuilder = this.configService.signalR()
@@ -82,11 +82,11 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("currentUser")
       localStorage.removeItem("idUser")
       localStorage.removeItem("token")
-      localStorage.removeItem("authGuess")
+      localStorage.removeItem("authGuest")
       localStorage.removeItem("tokenDefault")
       sessionStorage.clear()
       this.auth = null
-      // location.assign(this.configService.clientUrl + "/home")
+      location.reload()
     }, error => {
       var message = this.configService.error(error.status, error.error != null?error.error.text:"");
       this.notificationService.handleAlert(message, StatusNotification.Error)

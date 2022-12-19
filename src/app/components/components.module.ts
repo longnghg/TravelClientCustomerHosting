@@ -10,6 +10,7 @@ import { SidebarComponent } from '../components/sidebar/sidebar.component';
 import { ProfileComponent } from '../pages/profile/profile.component';
 import { SidebarModule } from '@coreui/angular';
 import { FilterComponent } from './filter/filter.component';
+
 @NgModule({
   imports: [
     CommonModule,

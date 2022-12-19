@@ -13,9 +13,13 @@ export class AuthInterceptor implements HttpInterceptor {
     var url = req.url.split("/")
     if (url[4] == "Customer" || url[4] == "TourBooking" || url[4] == "Pay") {
       token = localStorage.getItem('token');
+      // console.error(req);
+      // console.error(token);
     }
     else{
       token = localStorage.getItem('tokenDefault');
+      // console.warn(req);
+      // console.warn(token);
     }
 
     authReq = this.AddTokenHeader(req,token);

@@ -11,27 +11,7 @@ export class AppComponent {
   response: ResponseModel
   auth: AuthenticationModel
   title = 'TravelRover';
-  constructor( private authenticationService: AuthenticationService){}
-  ngOnInit(): void {
-    this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if(this.auth){
-      var startDay = new Date();
-      var endDay = new Date(this.auth.dateTime)
-
-      var millisBetween = startDay.getTime() - endDay.getTime();
-
-      var days = millisBetween / (1000 * 3600 * 24);
-
-      if (Math.round(Math.abs(days)) == 1) {
-        this.authenticationService.logOut(this.auth.id).subscribe(res =>{
-          localStorage.removeItem("currentUser")
-          localStorage.removeItem("idUser")
-          localStorage.removeItem("token")
-          sessionStorage.clear()
-        })
-      }
-    }
-
+  constructor( private authenticationService: AuthenticationService){
     var token = localStorage.getItem("tokenDefault")
 
     if (!token) {
@@ -39,7 +19,7 @@ export class AppComponent {
         email: "default@gmail.com",
         password: "123"
       }
-      this.authenticationService.loginDefault(input).subscribe(res => {
+      this.authenticationService.loginDefault(input).then(res => {
         this.response = res
         this.auth = this.response.content
         localStorage.setItem("tokenDefault", this.auth.token)
@@ -47,13 +27,33 @@ export class AppComponent {
     }
 
 
-    var authGuess = localStorage.getItem("authGuess")
-    console.warn(authGuess);
-
-    if (!authGuess) {
-      this.authenticationService.generateTokenGuess().subscribe(res => {
-        localStorage.setItem("authGuess", JSON.stringify(res))
+    var authGuest = localStorage.getItem("authGuest")
+    if (!authGuest) {
+      this.authenticationService.generateTokenGuess().then(res => {
+        localStorage.setItem("authGuest", JSON.stringify(res))
       });
     }
+  }
+  ngOnInit(): void {
+    // this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    // if(this.auth){
+    //   var startDay = new Date();
+    //   var endDay = new Date(this.auth.dateTime)
+
+    //   var millisBetween = startDay.getTime() - endDay.getTime();
+
+    //   var days = millisBetween / (1000 * 3600 * 24);
+
+    //   if (Math.round(Math.abs(days)) == 1) {
+    //     this.authenticationService.logOut(this.auth.id).subscribe(res =>{
+    //       localStorage.removeItem("currentUser")
+    //       localStorage.removeItem("idUser")
+    //       localStorage.removeItem("token")
+    //       sessionStorage.clear()
+    //     })
+    //   }
+    // }
+
+
   }
 }

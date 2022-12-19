@@ -15,9 +15,9 @@ export class AuthenticationService{
       return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-customer", data);
   }
 
-  loginDefault(data: any)
+  async loginDefault(data: any)
   {
-      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", data);
+      return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Authentication/login-employee", data).toPromise();
   }
 
   logOut(cusId: string)
@@ -41,8 +41,8 @@ export class AuthenticationService{
     return  this.http.post(this.configService.apiUrl + "/api/Authentication/refresh-token",data);
   }
 
-  generateTokenGuess(){
-    return  this.http.get<AuthenticationModel>(this.configService.apiUrl + "/api/Authentication/token-guess");
+  async generateTokenGuess(){
+    return await this.http.get<AuthenticationModel>(this.configService.apiUrl + "/api/Authentication/token-guess").toPromise();
 }
 
 }

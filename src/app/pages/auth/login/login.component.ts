@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('loginRef', {static: true }) loginElement!: ElementRef;
   @ViewChild('modalBlock') modalBlock: ElementRef;
 
-  resAthentication: AuthenticationModel
+  auth: AuthenticationModel
   validateAuth: ValidationLoginModel = new ValidationLoginModel;
   resCustomer: CustomerModel = new CustomerModel
   resToken: TokenModel = new TokenModel
@@ -94,18 +94,16 @@ export class LoginComponent implements OnInit {
 
             if(this.response.notification.type == StatusNotification.Success)
             {
-              this.resAthentication = this.response.content
-              localStorage.setItem("token", this.resAthentication.token)
-              localStorage.setItem("refreshToken", this.resAthentication.refToken)
-              localStorage.setItem("idUser", this.resAthentication.id)
-              localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+              this.auth = this.response.content
+              localStorage.setItem("token", this.auth.token)
+              localStorage.setItem("refreshToken", this.auth.refToken)
+              localStorage.setItem("idUser", this.auth.id)
+              localStorage.setItem("currentUser", JSON.stringify(this.auth))
 
-                // connect to signalR
-                // this.connectSignalR();
-
+              this.updateGuestMess();
               var tourBooking = localStorage.getItem("tourBooking_null")
               if (tourBooking) {
-                localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+                localStorage.setItem("tourBooking_" + this.auth.id, tourBooking)
                 localStorage.removeItem("tourBooking_null")
               }
               this.notificationService.handleAlertObj(res.notification)
@@ -154,16 +152,7 @@ export class LoginComponent implements OnInit {
       }
 
   }
-  // connectSignalR(){
-  //   this.hubConnectionBuilder = this.configService.signIR()
-  //   this.hubConnectionBuilder.start().then(function(){
-  //       console.log("Successfully connect");
-  //   });
 
-  //   this.hubConnectionBuilder.on('Message', (result: any) => {
-  //     console.log("Nhan dc tin heiu");
-  //   })
-  // }
   googleLogin(){
     this.auth2.attachClickHandler(this.loginElement.nativeElement, {},
       (googleAuthUser:any) => {
@@ -176,19 +165,16 @@ export class LoginComponent implements OnInit {
           if(this.response.notification.type == StatusNotification.Success)
           {
 
-            this.resAthentication = this.response.content
-            localStorage.setItem("token", this.resAthentication.token)
-            localStorage.setItem("refreshToken", this.resAthentication.refToken)
-            localStorage.setItem("idUser", this.resAthentication.id)
-            localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
+            this.auth = this.response.content
+            localStorage.setItem("token", this.auth.token)
+            localStorage.setItem("refreshToken", this.auth.refToken)
+            localStorage.setItem("idUser", this.auth.id)
+            localStorage.setItem("currentUser", JSON.stringify(this.auth))
+            this.updateGuestMess();
 
-
-
-                // connect to signalR
-                // this.connectSignalR();
             var tourBooking = localStorage.getItem("tourBooking_null")
             if (tourBooking) {
-              localStorage.setItem("tourBooking_" + this.resAthentication.id, tourBooking)
+              localStorage.setItem("tourBooking_" + this.auth.id, tourBooking)
               localStorage.removeItem("tourBooking_null")
             }
             this.notificationService.handleAlertObj(res.notification)
@@ -218,7 +204,6 @@ export class LoginComponent implements OnInit {
                 if (this.response.notification.type == StatusNotification.Error) {
                   localStorage.setItem("MY3t/ez6Q0yEwHMr0/Cy/Q=="+this.resCustomer.email,(new Date(new Date().getTime() +30*60000).getTime()).toString())
                 }
-
                 this.countLoginFail = 0
               })
             }
@@ -236,6 +221,11 @@ export class LoginComponent implements OnInit {
         })
       });
 
+  }
+
+  updateGuestMess(){
+    var idGuest = JSON.parse(localStorage.getItem("authGuest")).id
+    this.notificationService.UpdateGuestMessenger(this.auth.id, idGuest).then(res => {})
   }
 
     googleAuthSDK() {

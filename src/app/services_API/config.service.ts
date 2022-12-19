@@ -17,13 +17,10 @@ export class ConfigService{
   response: ResponseModel
   auth: AuthenticationModel
   signalR(){
-    console.log(localStorage.getItem("authGuess"));
-    console.log(localStorage.getItem("token"));
-
     return this.hubConnectionBuilder = new HubConnectionBuilder()
    .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
    {
-       accessTokenFactory: () => localStorage.getItem("token")?localStorage.getItem("token"):JSON.parse(localStorage.getItem("authGuess")).token
+       accessTokenFactory: () => localStorage.getItem("token")?localStorage.getItem("token"):JSON.parse(localStorage.getItem("authGuest")).token
 
    })
    .withAutomaticReconnect()
@@ -45,7 +42,7 @@ export class ConfigService{
         email: "default@gmail.com",
         password: "123"
       }
-      this.authenticationService.loginDefault(input).subscribe(res => {
+      this.authenticationService.loginDefault(input).then(res => {
         this.response = res
         this.auth = this.response.content
         localStorage.setItem("tokenDefault", this.auth.token)

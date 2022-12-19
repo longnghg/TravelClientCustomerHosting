@@ -72,4 +72,9 @@ export class NotificationService{
     {
       return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Chat/check-seen-messenger-cus?idCus="+idCus+"&idSp="+idSp, {}).toPromise();
     }
+
+    async UpdateGuestMessenger(idCus: string, idGuest: string)
+    {
+      return await this.http.put<ResponseModel>( this.configService.apiUrl + "/api/Chat/update-guest-messenger?idCus="+idCus+"&idGuest="+idGuest, {}).toPromise();
+    }
 }

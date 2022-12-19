@@ -98,16 +98,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
     if (!this.auth) {
-      this.auth = JSON.parse(localStorage.getItem("authGuess"))
+      this.auth = JSON.parse(localStorage.getItem("authGuest"))
     }
     this.provinceService.views().then(res => { this.resProvince = res })
-    this.initFlashSale()
-    this.initSchedulePromotion()
-    this.initSchedule()
-    this.initTour()
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
-    //console.error(this.resTourBooking);
-
     var date = Date.now()
     this.dateNow = new Date(date).getTime()
 
@@ -118,18 +112,15 @@ export class HomeComponent implements OnInit {
     //   this.prev()
     // }, 4000)
 
-    this._bannerService.GetBannerAll().subscribe(res => {
-      this.response = res
-      this.resListImage = this.response.content
-
-    }, error => {
-      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
-      this.notificationService.handleAlert(message, StatusNotification.Error)
-    })
-    if(this.auth){
-      this.initChat()
-      this.loadMessageSignalR()
-    }
+   setTimeout(() => {
+    this.initFlashSale()
+    this.initSchedulePromotion()
+    this.initSchedule()
+    this.initTour()
+    this.initBanner()
+    this.initChat()
+    this.loadMessageSignalR()
+   }, 100);
   }
   ngDoCheck(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -139,6 +130,7 @@ export class HomeComponent implements OnInit {
     else{
       this.isBack = false
     }
+
   }
   ngAfterViewChecked(): void {
     if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
@@ -175,21 +167,7 @@ export class HomeComponent implements OnInit {
         this.initChat();
       })
   }
-  GuimailA(){
-    console.log("ban vua nhan tin voi A" + this.messA);
 
-    this.configService.callChatSignalR("B07A87D7-C378-4E6C-9AF8-447A3EE852B1");
-  }
-  GuimailB(){
-    console.log("ban vua nhan tin voi B" + this.messB);
-
-    this.configService.callChatSignalR("2DAFA092-7D3A-4DA8-1BDC-08DAD9EF2389");
-  }
-  GuimailC(){
-    console.log("ban vua nhan tin voi C" + this.messC);
-
-    this.configService.callChatSignalR("CC368B02-2582-4994-8E7A-AEB9863DF3DC");
-  }
   backTourBooking() {
     this.isBack = false
     this.router.navigate(['', 'tour-booking', this.resTourBooking.scheduleId, this.resTourBooking.alias]);
@@ -210,6 +188,16 @@ export class HomeComponent implements OnInit {
     this.slide.nativeElement.prepend(lists[lists.length - 1]);
   }
 
+  initBanner(){
+    this._bannerService.GetBannerAll().subscribe(res => {
+      this.response = res
+      this.resListImage = this.response.content
+
+    }, error => {
+      var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
+      this.notificationService.handleAlert(message, StatusNotification.Error)
+    })
+  }
   initFlashSale() {
     this.scheduleService.getsScheduleFlashSale(this.pageIndex, this.pageSize).then(res => {
 
@@ -242,9 +230,6 @@ export class HomeComponent implements OnInit {
 
   initSchedule() {
     this.scheduleService.getsSchedule(this.pageIndex, this.pageSize).then(res => {
-      console.log("scheudle re");
-      console.log(res);
-
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resSchedule = this.response.content
@@ -253,11 +238,6 @@ export class HomeComponent implements OnInit {
 
           schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
-        // this.cd.markForCheck()
-        // setTimeout(() => {
-        //   this.cd.detach()
-        // }, 100);
-
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -283,11 +263,6 @@ export class HomeComponent implements OnInit {
 
           schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
         });
-        // this.cd.markForCheck()
-        // setTimeout(() => {
-        //   this.cd.detach()
-        // }, 100);
-
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -300,8 +275,6 @@ export class HomeComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTour = this.response.content
-        console.log(this.resTour);
-
         this.resTour.forEach(tour => {
           tour.schedules.forEach(schedule => {
             if (schedule.promotions.idPromotion != 1) {
@@ -318,11 +291,6 @@ export class HomeComponent implements OnInit {
           })
           tour.schedules.unshift(Object.assign({}, tour.schedules[0]))
         });
-        // this.cd.markForCheck()
-        // setTimeout(() => {
-        //   this.cd.detach()
-        // }, 100);
-
       }
     }, error => {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
@@ -424,10 +392,12 @@ export class HomeComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resMess = this.response.content
+        console.log(  this.resMess);
+
         if (this.resMess) {
           this.resGroup.totalNew = 0
           this.resMess.forEach(item =>{
-            if (!item.isSeen) {
+            if (!item.isSeen && item.receiverId == this.auth.id) {
               this.resGroup.totalNew += 1
             }
           })
@@ -482,6 +452,8 @@ export class HomeComponent implements OnInit {
   }
 
   closeMess(){
+    console.log(1);
+
     this.cardFocus = false
     this.mess.nativeElement.style.display = "block"
     this.mess.nativeElement.setAttribute("class","mess card-mess-open")
