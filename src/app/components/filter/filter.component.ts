@@ -48,8 +48,17 @@ export class FilterComponent implements OnInit {
   promotionFormat(){
     if(this.promotion.nativeElement.checked){
       this.resScheduleFilter.kwPromotion = 2
+      this.resScheduleFilter.kwIsHoliday = false
     }
     else{
+      this.resScheduleFilter.kwPromotion = 1
+    }
+    this.searchFilter()
+  }
+
+  isHolidayFormat(){
+    if(this.resScheduleFilter.kwIsHoliday == true){
+      this.promotion.nativeElement.checked = false
       this.resScheduleFilter.kwPromotion = 1
     }
     this.searchFilter()

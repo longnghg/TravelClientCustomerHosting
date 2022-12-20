@@ -110,7 +110,7 @@
       <label class="form-check-label" for="promotion">Khuyến mãi</label>
     </div>
     <div class="form-check form-switch">
-      <input class="form-check-input" [disabled]="resScheduleFilter.kwIsAllOption" (change)="searchFilter()" [(ngModel)]="resScheduleFilter.kwIsHoliday" type="checkbox" role="switch" id="slot" checked>
+      <input class="form-check-input" [disabled]="resScheduleFilter.kwIsAllOption" (change)="isHolidayFormat()" [(ngModel)]="resScheduleFilter.kwIsHoliday" type="checkbox" role="switch" id="slot" checked>
       <label class="form-check-label" for="slot">Ngày lễ</label>
     </div>
   </div>

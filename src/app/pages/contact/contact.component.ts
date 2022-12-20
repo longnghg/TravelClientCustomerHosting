@@ -21,7 +21,7 @@ export class ContactComponent implements OnInit {
   @Output() parentType = new EventEmitter<any>()
   auth: AuthenticationModel  = new AuthenticationModel
   data: any
-  img = "https://res.cloudinary.com/ddv2idi9d/image/upload/v1670764405/Upload/Ve/abbb_perh4n.jpg"
+  img = "assets/images/icons/bannerVoucher.jpg"
   isloading: boolean = false
 
   constructor(private voucherService: VoucherService, private notificationService: NotificationService,
