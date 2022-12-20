@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
     this.initBanner()
     this.initChat()
     this.loadMessageSignalR()
-   }, 100);
+   }, 500);
   }
   ngDoCheck(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -223,6 +223,8 @@ export class HomeComponent implements OnInit {
 
       }
     }, error => {
+      console.log(error);
+
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })

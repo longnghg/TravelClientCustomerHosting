@@ -7,6 +7,7 @@ export class AuthenticationModel{
   phone: string = ""
   image: string = ""
   email: string = ""
+  dateExpired: string
   dateTime: string
 }
 

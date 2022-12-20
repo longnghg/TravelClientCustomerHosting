@@ -87,6 +87,7 @@ export class NavbarComponent implements OnInit {
       localStorage.removeItem("idUser")
       localStorage.removeItem("token")
       localStorage.removeItem("authGuest")
+      localStorage.removeItem("authDefault")
       localStorage.removeItem("tokenDefault")
       sessionStorage.clear()
       this.auth = null

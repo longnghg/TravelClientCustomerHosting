@@ -10,11 +10,17 @@ import { ResponseModel } from "./models/responsiveModels/response.model";
 export class AppComponent {
   response: ResponseModel
   auth: AuthenticationModel
+  authDefault: AuthenticationModel
   title = 'TravelRover';
   constructor( private authenticationService: AuthenticationService){
-    var token = localStorage.getItem("tokenDefault")
+   this.authDefault = JSON.parse(localStorage.getItem("authDefault"))
+   console.log(this.authDefault);
+    if (this.authDefault) {
+      var dateNow = new Date().getTime()
+      var dateExpired = new Date(this.authDefault.dateExpired).getTime()
+    }
 
-    if (!token) {
+    if (!this.authDefault || dateExpired < dateNow) {
       var input={
         email: "default@gmail.com",
         password: "123"
@@ -22,6 +28,7 @@ export class AppComponent {
       this.authenticationService.loginDefault(input).then(res => {
         this.response = res
         this.auth = this.response.content
+        localStorage.setItem("authDefault", JSON.stringify(this.auth))
         localStorage.setItem("tokenDefault", this.auth.token)
       });
     }
