@@ -275,6 +275,8 @@ export class HomeComponent implements OnInit {
   initTour() {
     this.tourService.getsTourByRating(this.pageIndex, this.pageSize).then(res => {
       this.response = res
+      console.log(res);
+
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTour = this.response.content
         this.resTour.forEach(tour => {
