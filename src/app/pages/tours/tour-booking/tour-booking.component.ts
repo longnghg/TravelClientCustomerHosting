@@ -416,8 +416,6 @@ export class TourBookingComponent implements OnInit {
 
   applyVoucher(voucher: any){
     this.resVoucher = voucher
-    console.log(this.resVoucher);
-
     setTimeout(() => {
       this.closeModal.nativeElement.click()
     }, 100);

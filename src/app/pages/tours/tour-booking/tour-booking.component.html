@@ -600,7 +600,7 @@
       <div class="modal-body">
         <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 26rem;">
           <p>Bạn chỉ có thể chọn 1 <span *ngIf="resVouchers" style="margin-left: 11rem;font-weight: bold;">Tổng cộng: {{lengthVoucher}}</span></p>
-          <ng-container *ngIf="resVouchers; else voucherTemplate">
+          <ng-container *ngIf="resVouchers && lengthVoucher > 0; else voucherTemplate">
             <ng-container *ngFor="let voucher of resVouchers; let i=index">
               <div class="row" style="height: 16rem;margin-left: 0rem;">
                 <div class="card2" >
@@ -629,7 +629,6 @@
                 <hr color="black">
               </div>
             </ng-container>
-            <p>* Đã hiển thị tất cả voucher thuộc kho Voucher của bạn.</p>
           </ng-container>
           <ng-template #voucherTemplate>
             <img [src]="imgVoucher" alt="" style="width: 23rem;height: 19rem;margin-left: 3.5rem;">
