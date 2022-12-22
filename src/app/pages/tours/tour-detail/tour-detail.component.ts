@@ -6,7 +6,7 @@ import { CommentService } from 'src/app/services_API/comment.service';
 import { ResponseModel } from "../../../models/responsiveModels/response.model";
 import { NotificationService } from "../../../services_API/notification.service";
 import { ConfigService } from "../../../services_API/config.service";
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { ActivatedRoute, Router, NavigationStart, Data } from '@angular/router';
 import { StatusNotification } from "../../../enums/enum";
 import { AuthenticationModel } from 'src/app/models/authentication.model';
 import { getLocaleDateFormat } from '@angular/common';
@@ -37,7 +37,8 @@ export class TourDetailComponent implements OnInit {
   resComment: CommentModel []
   lengthComment: any
   resCmt: CommentModel = new CommentModel
-  resImage: ImageModel[]
+  resImages: ImageModel[]
+  imageModal: any
   imgDetail: any[] = []
   response: ResponseModel
   auth: AuthenticationModel
@@ -55,6 +56,7 @@ export class TourDetailComponent implements OnInit {
   toLang: string = "en"
   translateText: string = ""
   resDatum: DatumModel
+  
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
@@ -265,9 +267,9 @@ export class TourDetailComponent implements OnInit {
       this.response = res
       if(this.response.notification.type == StatusNotification.Success)
       {
-        this.resImage = this.response.content
+        this.resImages = this.response.content
 
-        this.resImage.forEach(image => {
+        this.resImages.forEach(image => {
           if (image.filePath) {
             this.imgDetail.push(image.filePath)
           }
@@ -364,6 +366,10 @@ export class TourDetailComponent implements OnInit {
       })
     }
 
+  }
+
+  getDataImage(image: any){
+    this.imageModal = image
   }
 
 }
