@@ -27,7 +27,8 @@
                 <div class="col-8"><ngb-rating  [(rate)]="currentRate" style="font-size: 3rem; color: orange"> </ngb-rating></div>
                 <div class="col-4"><pre style="margin-top: 1.5rem; font-size: 1rem;">Rate: <b>{{currentRate}}</b></pre></div>
               </div>
-
+              <span class="text-danger" style="font-weight: bolder;">{{this.validateComment.commentText ? this.validateComment.commentText : ''}}</span>
+              <span class="text-danger" style="font-weight: bolder;">{{this.validateCommentText.commentText ? this.validateCommentText.commentText : ''}}</span>
               <div class="ckeditorContainer">
                 <ckeditor [(ngModel)]="resCmt.commentText" #editor [editor]="Editor" data="" [config]="{toolbar: []}"></ckeditor>
               </div>
@@ -45,8 +46,9 @@
             </button>
           </ng-container>
           <ng-template #elseTemplate>
-            <button (click)="createComment()" type="button" class="btn btn-primary" style="margin-right: 1rem;">Gửi</button>
-          <button type="button" (click)="clear()" class="btn btn-danger" data-bs-dismiss="modal" style="margin-right: 3rem;">Đóng</button>
+            <button type="button" (click)="clear()" class="btn btn-danger" data-bs-dismiss="modal" style="margin-right: 1rem;">Đóng</button>
+            <button (click)="createComment()" type="button" class="btn btn-primary" style="margin-right: 3rem;">Gửi</button>
+        
           </ng-template>
 
         </div>

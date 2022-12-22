@@ -49,30 +49,33 @@ export class CommentComponent implements OnInit {
     var idCustomer = localStorage.getItem("idUser")
     this.validateComment = new ValidationCommentModel
     this.validateComment = this.configService.validateComment(this.resCmt, this.validateComment)
-
+    this.validateCommentText = new ValidationCommentTextModel
+    this.validateCommentText = this.configService.validateCommentText(this.resCmt, this.validateCommentText)
+    
     if(this.validateComment.total == 0 ){
-      this.validateCommentText = this.configService.validateCommentText(this.resCmt, this.validateCommentText)
-      this.resCmt.idSchedule = this.idSchedule
-      this.resCmt.idCustomer = idCustomer
-      this.resCmt.idTourBooking = this.idTourBooking
-      this.resCmt.rating = this.currentRate
-      this.isloading = true
-      this.commentService.create(this.resCmt).subscribe(res =>{
-        this.response = res
-        this.notificationService.handleAlertObj(res.notification)
-        if(this.response.notification.type == StatusNotification.Success)
-        {
-		      this.resCmt = Object.assign({}, new CommentModel)
-          this.validateComment = new ValidationCommentModel
-          this.editorComponent.editorInstance.setData("")
-          setTimeout(() => {
-            this.closeModal.nativeElement.click()
-          }, 100);
-        }
-          }, error => {
-            var message = this.configService.error(error.status, error.error != null?error.error.text:"");
-            this.notificationService.handleAlert(message, StatusNotification.Error)
-      })
+      if(this.validateCommentText.total == 0){
+        this.resCmt.idSchedule = this.idSchedule
+        this.resCmt.idCustomer = idCustomer
+        this.resCmt.idTourBooking = this.idTourBooking
+        this.resCmt.rating = this.currentRate
+        this.isloading = true
+        this.commentService.create(this.resCmt).subscribe(res =>{
+          this.response = res
+          this.notificationService.handleAlertObj(res.notification)
+          if(this.response.notification.type == StatusNotification.Success)
+          {
+            this.resCmt = Object.assign({}, new CommentModel)
+            this.validateComment = new ValidationCommentModel
+            this.editorComponent.editorInstance.setData("")
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
+          }
+            }, error => {
+              var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+              this.notificationService.handleAlert(message, StatusNotification.Error)
+        })
+      }
     }
   }
 }

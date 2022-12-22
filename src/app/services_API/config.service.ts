@@ -11,8 +11,8 @@ export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
   authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://localhost:44394";
-  public apiTourBookingUrl = "https://localhost:5001";
+  public apiUrl = "https://travelapiweb.azurewebsites.net";
+  public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   response: ResponseModel
   auth: AuthenticationModel
@@ -93,22 +93,30 @@ export class ConfigService{
   }
 
   validateCommentText(data:any, model: any){
-    var words = [ 'lolz', 'lone','đmm','Đmm','dmm','Dmm','cl','clm','clmm','clgt','Clgt','đéo', 'Đéo','Đụ','đụ','Bitch','bitch','Fuck','ncc','đỉ','Đĩ','đĩ','Lồn','lồn','lỏ','cc','khủng khiếp']
+    model.total = 0
+    var words = [ 'lolz', 'lone','đmm','Đmm','dmm','Dmm','cl','clm','clmm','clgt','Clgt','đéo', 'Đéo','Đụ','đụ','Bitch',
+    'bitch','Fuck','ncc','đỉ','Đĩ','đĩ','Lồn','lồn','lỏ','cc','khủng khiếp','quải vl', 'lõ dái']
 
     var split = [""]
-    split = data.commentText.split(" ")
-    var text = ""
-    split.forEach(element => {
-      if (words.indexOf(element) >= 0) {
-        text += "*** "
-      }
-      else{
-        text += element + " "
-      }
-      data.commentText = text
-    });
-
-
+    //  split = data.commentText.split(" ")
+    // var text = ""
+    // split.forEach(element => {
+    //   if (words.indexOf(element) >= 0) {
+    //     text += "*** "
+    //   }
+    //   else{
+    //     text += element + " "
+    //   }
+    //   data.commentText = text
+    // });
+    words.forEach(word => 
+      data.commentText.replace(/ /g, '').toLowerCase()
+        .includes(word.replace(/ /g, '').toLowerCase()) ? split.push(word) : null)
+    
+    if(split.length > 1){
+      model.commentText = "Xin lỗi vì sự bất tiện này, mong bạn không bình luận có các từ ngữ tiêu cực !"
+      model.total += 1
+    }
     return model
 
   }
