@@ -51,6 +51,7 @@ export class VouchersHistoryComponent implements OnInit {
       if(this.response.notification.type == StatusNotification.Success){
         this.resVouchers = this.response.content
         this.totalVoucher = this.resVouchers.length
+        
         this.calTotalResult()
         this.calStartEnd()
       }
@@ -137,7 +138,7 @@ export class VouchersHistoryComponent implements OnInit {
   }
 
   apllyVoucher(){
-    var kw = "from=" + '' + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
+    var kw = "from=" + 'Hồ Chí Minh' + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
     this.router.navigate(['', 'tour', kw]);
   }
 }

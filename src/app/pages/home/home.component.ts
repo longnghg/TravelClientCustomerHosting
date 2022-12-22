@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
   scheduleIndex: number = 0
   response: ResponseModel
   isBack: boolean = false
-  kwFrom: any = "TP Hồ Chí Minh"
+  kwFrom: any = "Hồ Chí Minh"
   kwTo: any = null
   kwDepartureDate: any = ""
   kwReturnDate: any = ""

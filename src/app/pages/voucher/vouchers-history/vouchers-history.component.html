@@ -5,7 +5,7 @@
       </div>
     </div>
     <div class="row" style="width:100vw" >
-      <ng-container *ngIf="resVouchers; else elseTemplate">
+      <ng-container *ngIf="resVouchers && totalVoucher != 0; else elseTemplate">
         <div class="col-sm-4" *ngFor="let voucher of resVouchers; let i=index">
           <ng-container *ngIf="voucher.rowNum >= start && voucher.rowNum <= end">
             <div class="card2" >
