@@ -56,7 +56,7 @@ export class TourDetailComponent implements OnInit {
   toLang: string = "en"
   translateText: string = ""
   resDatum: DatumModel
-  
+
   constructor(private scheduleService: ScheduleService,
     private notificationService: NotificationService,
     private configService: ConfigService,
@@ -372,6 +372,12 @@ export class TourDetailComponent implements OnInit {
     this.imageModal = image
   }
 
+  seeMoreRelated(){
+    if(this.resSchedule){
+      var kw = "from=" + this.resSchedule.departurePlace + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
+      this.router.navigate(['', 'tour', kw]);
+    }
+  }
 }
 
 

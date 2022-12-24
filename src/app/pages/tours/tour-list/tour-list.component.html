@@ -10,7 +10,7 @@
          <h2 class="section-title text-center">Danh sách tour du lịch {{to}} khởi hành từ {{from}}</h2>
        </ng-container>
        <ng-template #elsefrom>
-         <h2 class="section-title text-center">Danh sách tour du lịch khởi hành từ {{from}}</h2>
+         <h2 class="section-title text-center">Danh sách tour du lịch khởi hành <span *ngIf="from">từ</span> {{from}}</h2>
        </ng-template>
 
        <div class="row mb-4">
