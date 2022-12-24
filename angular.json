@@ -30,7 +30,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@ckeditor/ckeditor5-angular/ckeditor.component.d.ts",
+              "node_modules/@types/ckeditor__ckeditor5-utils/src/version.d.ts"
+            ]
           },
           "configurations": {
             "production": {
