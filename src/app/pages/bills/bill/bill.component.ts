@@ -159,7 +159,7 @@ export class BillComponent implements OnInit {
 
   payment(){
     if (this.resTourBooking.payment.idPayment == PaymentMethod.Paypal) {
-      this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
+      this.tourBookingService.paypal(this.resTourBooking.idTourBooking, this.resAthentication.id).then(res => {
         this.pay = res
           if (!res.debugId) {
             this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
@@ -174,7 +174,7 @@ export class BillComponent implements OnInit {
       })
     }
     else if(this.resTourBooking.payment.idPayment == PaymentMethod.Vnpay){
-      this.tourBookingService.vnpay(this.resTourBooking.idTourBooking).then(res => {
+      this.tourBookingService.vnpay(this.resTourBooking.idTourBooking, this.resAthentication.id).then(res => {
           this.pay = res
           location.assign(this.pay.url)
       }, error => {

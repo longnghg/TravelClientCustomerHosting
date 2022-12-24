@@ -15,7 +15,7 @@ export class TourBookingService{
     return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/list-tourbooking");
   }
 
-   getsHistory(idCustomer: any)
+  getsHistory(idCustomer: any)
   {
     return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/customer/list-history-booking-bycustomer?idCustomer="+ idCustomer);
   }
@@ -35,12 +35,12 @@ export class TourBookingService{
     return await this.http.put<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/cancel-booking?idTourBooking="+ idTourBooking, {}).toPromise();
   }
 
-  async paypal(idTourBooking: string){
-    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-paypal?idTourBooking="+idTourBooking).toPromise();;
+  async paypal(idTourBooking: string, idCustomer: string){
+    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-paypal?idTourBooking="+idTourBooking+"&idCustomer="+idCustomer).toPromise();;
   }
 
-  async vnpay(idTourBooking: string){
-    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-vnpay?idTourBooking="+idTourBooking).toPromise();;
+  async vnpay(idTourBooking: string, idCustomer: string){
+    return await this.http.get<any>( this.configService.apiTourBookingUrl + "/api/Pay/checkout-vnpay?idTourBooking="+idTourBooking+"&idCustomer="+idCustomer).toPromise();;
   }
 
   cusSearchBookingNo(bookingNo: string){

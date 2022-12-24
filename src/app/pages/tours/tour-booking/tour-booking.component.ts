@@ -320,7 +320,7 @@ export class TourBookingComponent implements OnInit {
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking.idTourBooking = this.response.content
         if (this.resTourBooking.paymentId == PaymentMethod.Paypal) {
-          this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
+          this.tourBookingService.paypal(this.resTourBooking.idTourBooking, this.idCustomer).then(res => {
             this.pay = res
             if (!res.debugId) {
               this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
@@ -346,7 +346,7 @@ export class TourBookingComponent implements OnInit {
           })
         }
         else  if (this.resTourBooking.paymentId == PaymentMethod.Vnpay){
-          this.tourBookingService.vnpay(this.resTourBooking.idTourBooking).then(res => {
+          this.tourBookingService.vnpay(this.resTourBooking.idTourBooking, this.idCustomer).then(res => {
             this.pay = res
             this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
             document.body.removeAttribute("style")
