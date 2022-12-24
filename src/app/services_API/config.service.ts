@@ -11,7 +11,7 @@ export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
   authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://travelapiweb.azurewebsites.net";
+  public apiUrl = "https://rovermanagerservice.azurewebsites.net";
   public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   response: ResponseModel
@@ -109,10 +109,10 @@ export class ConfigService{
     //   }
     //   data.commentText = text
     // });
-    words.forEach(word => 
+    words.forEach(word =>
       data.commentText.replace(/ /g, '').toLowerCase()
         .includes(word.replace(/ /g, '').toLowerCase()) ? split.push(word) : null)
-    
+
     if(split.length > 1){
       model.commentText = "Xin lỗi vì sự bất tiện này, mong bạn không bình luận có các từ ngữ tiêu cực !"
       model.total += 1
