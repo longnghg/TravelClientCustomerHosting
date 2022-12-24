@@ -7,7 +7,7 @@
       <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu " style="    font-size: 30px; font-weight: bolder; position: absolute; top: 30px; left: 30%; right: 30%; width: 100%;">
         <li *ngFor="let info of listTitles; let i=index" [class]="info.class"><a class="nav-color" href="#" routerLinkActive="active" (isActiveChange)="this.onRouterLinkActive($event, i)" [routerLink]="[info.path]">{{info.title}}</a></li>
         <li class="has-children">
-          <a class="nav-color" href="#">Dropdown</a>
+          <a class="nav-color" href="#">Dropdown1</a>
           <ul class="dropdown">
             <li><a href="elements.html">Elements</a></li>
             <li><a href="#">Menu One</a></li>
