@@ -57,6 +57,8 @@ export class TourBookingComponent implements OnInit {
   totalPriceVoucher: number
   lengthVoucher: any
   imgVoucher = "assets/images/icons/voucher.PNG"
+  threedaySchedule: any
+  dateNow: any
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   ngOnInit() {
@@ -74,7 +76,8 @@ export class TourBookingComponent implements OnInit {
     if (this.idCustomer) {
       this.initVoucher(this.idCustomer)
     }
-
+    var date = Date.now()
+    this.dateNow = new Date(date).getTime()
   }
 
   init(idSchedule: string){
@@ -96,6 +99,8 @@ export class TourBookingComponent implements OnInit {
               this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
             }
           }
+          var endDate = new Date(this.resSchedule.endDate)
+          this.threedaySchedule = new Date(this.resSchedule.endDate).setDate(endDate.getDate() - 3)
         }
 
         if (this.resSchedule.alias != this.resTourBooking.alias) {

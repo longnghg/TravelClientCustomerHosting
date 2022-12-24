@@ -454,8 +454,8 @@
                 <h5 class="card-title" style="color: #2d4271;">Em bé</h5>
                 <h5 class="card-title" style="position: absolute;top: 0; right: 0; color: #2d4271; font-weight: bold;">0₫</h5>
               </div> -->
-              <hr color="black" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1">
-              <div style="position: relative" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1">
+              <hr color="black" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1 &&  dateNow < threedaySchedule">
+              <div style="position: relative" *ngIf="idCustomer && resSchedule.promotions.idPromotion == 1 && dateNow < threedaySchedule">
                 <h5 class="card-title" style="color: #2d4271; font-weight: bold; height: 80px;">Voucher</h5>
                 <div class=" text-muted" style="position: absolute;top: 0; right: 0;">
                   <button class="btn text-primary" data-bs-toggle="modal" data-bs-target="#voucherModalToggle" style="margin-top: -0.4rem; margin-right: -0.8rem;">Chọn mã voucher</button>
