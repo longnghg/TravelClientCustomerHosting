@@ -11,14 +11,15 @@ export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
   authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://rovermanagerservice.azurewebsites.net";
-  public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
+  public apiUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiTourBookingUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiUrlSignR = "https://rovermanagerservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   response: ResponseModel
   auth: AuthenticationModel
   signalR(){
     return this.hubConnectionBuilder = new HubConnectionBuilder()
-   .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+   .configureLogging(LogLevel.Information).withUrl(`${this.apiUrlSignR}/travelhub`,
    {
        accessTokenFactory: () => localStorage.getItem("token")?localStorage.getItem("token"):JSON.parse(localStorage.getItem("authGuest")).token
 
