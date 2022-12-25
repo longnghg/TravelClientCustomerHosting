@@ -480,5 +480,20 @@ export class HomeComponent implements OnInit {
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
   }
+
+  seeMoreCommon(){
+    var kw = "common"
+    this.router.navigate(['', 'tour', kw]);
+  }
+
+  seeMoreRating(){
+    var kw = "from=" + 'Hồ Chí Minh' + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
+    this.router.navigate(['', 'tour', kw]);
+  }
+
+  seeMorePromotion(){
+    var kw = "promotion"
+    this.router.navigate(['', 'tour', kw]);
+  }
 }
 

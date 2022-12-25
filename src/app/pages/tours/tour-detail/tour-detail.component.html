@@ -266,15 +266,15 @@
         <div class="row" style="overflow-y: auto; overflow-x: hidden; height: 40rem;">
           <div *ngFor="let item of resComment" class="media mt-3"
             style="width: 94rem; background-color: #EFF5F5; border-radius: 0.375rem; position: relative;">
-  
+
             <ng-container *ngIf="auth">
               <button data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getData(item.idComment)"
               *ngIf="auth.id == item.idCustomer" style="position:absolute; top: 13px; right: 20px;"
               class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
             </ng-container>
-  
-  
-  
+
+
+
             <div class="media-left media-top" style="border-radius: 0.375rem;  margin-top: 1rem; margin-left: 1rem;">
               <img class="img-circle img-sm media-object" alt="Profile Picture" style="width:60px"
                 src="https://bootdey.com/img/Content/avatar/avatar2.png">
@@ -290,14 +290,14 @@
                     </ngb-rating>
                   </div>
                 </div>
-  
+
                 <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> - From Mobile - {{item.commentTime |
                   formatFromUnixTimestampToFullDateTimeView}}</p>
-  
+
                   <button data-bs-toggle="modal" data-bs-target="#translateModal"
                   style="position:absolute; top: 5.9rem;right: 0.4rem;"
                  class="btn text-primary" (click)="getCmtText(item.commentText);changeLaguage()"><i class="fa-solid fa-language"></i> Nhấn vào để phiên dịch</button>
-  
+
               </div>
               <ckeditor style="color: #2d4271;" [editor]="Editor" data="{{item.commentText}}" [disabled]="true" [config]="{toolbar: []}"></ckeditor>
               <hr>
@@ -311,7 +311,7 @@
     </fieldset>
     <hr>
   </div>
-  
+
 </div>
 
 <div class="untree_co-section">
@@ -382,7 +382,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 92%;" *ngIf="resScheduleRelate.length >= 4">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMoreRelated()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>

@@ -43,6 +43,8 @@ export class CommentComponent implements OnInit {
 
   clear(){
     this.editorComponent.editorInstance.setData("")
+    this.validateCommentText = new ValidationCommentTextModel
+    this.validateComment = new ValidationCommentModel
   }
 
   createComment(){
@@ -51,7 +53,7 @@ export class CommentComponent implements OnInit {
     this.validateComment = this.configService.validateComment(this.resCmt, this.validateComment)
     this.validateCommentText = new ValidationCommentTextModel
     this.validateCommentText = this.configService.validateCommentText(this.resCmt, this.validateCommentText)
-    
+
     if(this.validateComment.total == 0 ){
       if(this.validateCommentText.total == 0){
         this.resCmt.idSchedule = this.idSchedule

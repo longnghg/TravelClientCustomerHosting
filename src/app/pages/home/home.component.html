@@ -241,9 +241,9 @@
           </div>
         </div>
       </ng-container>
-      <div style="margin-left: 88%;" *ngIf="resScheduleFalshSale.length >= 3">
+      <!-- <div style="margin-left: 88%;" *ngIf="resScheduleFalshSale.length >= 3">
         <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -353,7 +353,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 88%;" *ngIf="resTour.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMoreRating()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>
@@ -402,7 +402,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 88%;" *ngIf="resSchedule.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMoreCommon()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>
@@ -462,7 +462,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 96.1%;" *ngIf="resSchedulePromotion.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMorePromotion()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>

@@ -49,17 +49,19 @@ export class TourListComponent implements OnInit {
   ngOnInit(): void {
     var split =[]
     this.kwRoute = this.activatedRoute.snapshot.paramMap.get('id')
-    split =  this.kwRoute.split("&")
-    this.from = split[0].replace("from=", "")
-    this.to = split[1].replace("to=", "")
+    if (this.kwRoute != "common" && this.kwRoute != "promotion") {
+      split =  this.kwRoute.split("&")
+      this.from = split[0].replace("from=", "")
+      this.to = split[1].replace("to=", "")
 
-    this.init(this.activatedRoute.snapshot.paramMap.get('id'))
+      this.init(this.activatedRoute.snapshot.paramMap.get('id'))
+    }
 
     this.resTourBooking= JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     if (this.resTourBooking) {
      this.isBack = true
     }
-
+    this.backToTop()
     var date = Date.now()
     this.dateNow = new Date(date).getTime()
   }
@@ -169,6 +171,8 @@ export class TourListComponent implements OnInit {
     console.warn(value);
 
     this.resScheduleFilter = value;
+    this.from = this.resScheduleFilter.kwFrom
+    this.to = this.resScheduleFilter.kwTo
     if(this.resScheduleFilter){
       this.initFilter(this.resScheduleFilter)
     }
