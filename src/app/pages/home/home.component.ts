@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
     this.initBanner()
     this.initChat()
     this.loadMessageSignalR()
-   }, 500);
+   }, 1000);
   }
   ngDoCheck(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))

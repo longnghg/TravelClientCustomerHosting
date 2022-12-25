@@ -14,7 +14,6 @@ export class AppComponent {
   title = 'TravelRover';
   constructor( private authenticationService: AuthenticationService){
    this.authDefault = JSON.parse(localStorage.getItem("authDefault"))
-   console.log(this.authDefault);
     if (this.authDefault) {
       var dateNow = new Date().getTime()
       var dateExpired = new Date(this.authDefault.dateExpired).getTime()
