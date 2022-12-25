@@ -71,6 +71,9 @@ export class TourBookingComponent implements OnInit {
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
     this.init(this.resTourBooking.scheduleId)
+    this.paymentService.views().then(response => {
+      this.resPayment = response
+    })
     if (this.idCustomer) {
       this.initVoucher(this.idCustomer)
     }
@@ -126,11 +129,11 @@ export class TourBookingComponent implements OnInit {
 
   onTabChange($event: number) {
     this.activePane = $event;
-    if (this.activePane == 1) {
-      this.paymentService.views().then(response => {
-        this.resPayment = response
-      })
-    }
+    // if (this.activePane == 1) {
+    //   this.paymentService.views().then(response => {
+    //     this.resPayment = response
+    //   })
+    // }
     // console.log('onTabChange', $event);
   }
 
@@ -367,8 +370,7 @@ export class TourBookingComponent implements OnInit {
         }
         else{
           this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
-          setTimeout(() => {
-            document.body.removeAttribute("style")
+          document.body.removeAttribute("style")
             document.getElementById("fade-load").removeAttribute("class")
             document.getElementById("bg-load").removeAttribute("style")
             this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
@@ -379,7 +381,6 @@ export class TourBookingComponent implements OnInit {
             this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
             this.isRecapcha = false
             this.closeModal.nativeElement.click()
-          }, 5000);
         }
       }
       else{
