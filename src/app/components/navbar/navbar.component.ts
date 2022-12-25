@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   public location: Location;
   response: ResponseModel
   @ViewChild('nav') nav: ElementRef;
-  adas = "asdasd"
   hubConnectionBuilder: any
   auth: AuthenticationModel = new AuthenticationModel()
   constructor(private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
@@ -44,7 +43,7 @@ export class NavbarComponent implements OnInit {
   ngAfterViewChecked(): void {
     if (this.router.routerState.snapshot.url == "/home"){
       this.nav.nativeElement.style.marginBottom = "-10%"
-      this.nav.nativeElement.style.backgroundColor = ""
+      this.nav.nativeElement.setAttribute("class", "site-nav")
       // if(document.body.scrollTop > 50 || document.documentElement.scrollTop > 50 ){
       //   this.nav.nativeElement.style.backgroundColor = "#6998AB"
       // }
@@ -54,9 +53,8 @@ export class NavbarComponent implements OnInit {
     }
     else{
       this.nav.nativeElement.style.marginBottom = "2%"
-      this.nav.nativeElement.style.backgroundColor = "#6998AB"
+      this.nav.nativeElement.setAttribute("class","site-nav bg-gradient-cus")
     }
-
   }
 
   // loadListenSignalR(){

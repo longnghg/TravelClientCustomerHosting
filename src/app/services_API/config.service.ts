@@ -11,14 +11,15 @@ export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
   authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://travelapiweb.azurewebsites.net";
-  public apiTourBookingUrl = "https://roverbookingservice.azurewebsites.net";
+  public apiUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiTourBookingUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiUrlSignR = "https://rovermanagerservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   response: ResponseModel
   auth: AuthenticationModel
   signalR(){
     return this.hubConnectionBuilder = new HubConnectionBuilder()
-   .configureLogging(LogLevel.Information).withUrl(`${this.apiUrl}/travelhub`,
+   .configureLogging(LogLevel.Information).withUrl(`${this.apiUrlSignR}/travelhub`,
    {
        accessTokenFactory: () => localStorage.getItem("token")?localStorage.getItem("token"):JSON.parse(localStorage.getItem("authGuest")).token
 
@@ -109,10 +110,10 @@ export class ConfigService{
     //   }
     //   data.commentText = text
     // });
-    words.forEach(word => 
+    words.forEach(word =>
       data.commentText.replace(/ /g, '').toLowerCase()
         .includes(word.replace(/ /g, '').toLowerCase()) ? split.push(word) : null)
-    
+
     if(split.length > 1){
       model.commentText = "Xin lỗi vì sự bất tiện này, mong bạn không bình luận có các từ ngữ tiêu cực !"
       model.total += 1
@@ -356,9 +357,6 @@ export class ConfigService{
    validateOtp(data: any, model: any, isOtp: boolean){
     model.total = 0
     var timePresent = Date.now()
-    console.log(timePresent);
-    console.log(data);
-
     var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     if (isOtp) {

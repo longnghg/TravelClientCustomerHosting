@@ -49,12 +49,13 @@ async searchSchedule(kw: any)
     return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule?"+kw).toPromise();
 }
 
-async searchSheduleFilter(data: any){
+async searchSheduleFilter(data: any)
+{
     return await this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Schedule/cus-search-schedule-filter", data).toPromise();
 }
 
 async weather(location: string)
-  {
-    return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/News/weather-forecast?location="+location).toPromise();
-  }
+{
+  return await this.http.get<ResponseModel>( this.configService.apiUrl + "/api/News/weather-forecast?location="+location).toPromise();
+}
 }

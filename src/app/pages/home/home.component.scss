@@ -319,32 +319,25 @@ h1{
 }
 .card-send {
   color: white;
-  max-width: 40rem;
+  max-width: 13rem;
   word-wrap: break-word;
-  height: 50px;
   background: rgb(73, 146, 241);
   border-radius: 40px;
   position: absolute;
   right: 0;
-  padding: 1rem;
-  padding-bottom: 2.5rem;
+  padding: 1rem 1rem;
 }
 
 .card-receive {
   color: white;
-  padding: 1rem;
-  padding-bottom: 2.5rem;
-  max-width: 40rem;
+  padding: 1rem 1rem;
+  max-width: 13rem;
   word-wrap: break-word;
-  height: 50px;
   background: cadetblue;
   border-radius: 40px;
   position: absolute;
   left: 0;
 }
-
-
-
 
 .searchbar {
   font-size: 14px;

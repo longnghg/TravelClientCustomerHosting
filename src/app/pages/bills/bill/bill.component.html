@@ -70,7 +70,7 @@
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
               <div class="row col-8" *ngIf="!isPaymentChange">
-                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button *ngIf="resTourBooking.status != 3" class="btn btn-primary ml-3" (click)="savePayment()">Đổi phương thức thanh toán</button></p>
+                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button *ngIf="resTourBooking.status == 4 || resTourBooking.status == 2 || resTourBooking.status == 5 || resTourBooking.status == 3" class="btn btn-primary ml-3" (click)="savePayment()">Đổi phương thức thanh toán</button></p>
               </div>
               <div class="row col-8 mb-3"  *ngIf="isPaymentChange">
                 <div class="col-5">
@@ -185,8 +185,8 @@
               </div>
             </div>
           </div>
-          <div class="row mt-2" >
-            <a href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#sendEmail" style="margin-left: -0.5rem;">Gửi lại thông tin hóa đơn qua email.</a>
+          <div class="row mt-2" *ngIf="resTourBooking.status == 2 || resTourBooking.status == 5 || resTourBooking.status == 3" >
+            <a href="javascript:void(0)" data-bs-toggle="modal" (click)="reset()" data-bs-target="#sendEmail" style="margin-left: -0.5rem;">Gửi lại thông tin hóa đơn qua email.</a>
           </div>
         </div>
       </div>
@@ -262,7 +262,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="sendEmailLabel">Gửi Email</h1>
-        <button #sendEmail type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" >
         <label for="exampleFormControlInput1" class="form-label">Email
@@ -271,8 +271,16 @@
         <input type="email" class="form-control" id="exampleFormControlInput1" [(ngModel)]="email" placeholder="name@example.com">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-        <button type="button" class="btn btn-success" (click)="send()">Gửi</button>
+        <ng-container *ngIf="isloading; else elseTemplate">
+          <button class="btn btn-outline-info" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Đang gửi...
+          </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+        <button type="button" class="btn btn-success" (click)="SendToBill()">Gửi</button>
+        </ng-template>
       </div>
     </div>
   </div>

@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
     this.initBanner()
     this.initChat()
     this.loadMessageSignalR()
-   }, 500);
+   }, 1000);
   }
   ngDoCheck(): void {
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
@@ -396,8 +396,6 @@ export class HomeComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resMess = this.response.content
-        console.log(  this.resMess);
-
         if (this.resMess) {
           this.resGroup.totalNew = 0
           this.resMess.forEach(item =>{
@@ -416,9 +414,13 @@ export class HomeComponent implements OnInit {
             if (!this.resGroup.isSeen) {
               this.updateIsSeen()
             }
+
             setTimeout(() => {
+              for (let index = 0; index <  this.resMess.length; index++) {
+                document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+5) + "px")
+              }
               document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-            }, 200);
+            }, 0.1);
           }
         }
       }
@@ -479,6 +481,21 @@ export class HomeComponent implements OnInit {
       var message = this.configService.error(error.status, error.error != null ? error.error.text : "");
       this.notificationService.handleAlert(message, StatusNotification.Error)
     })
+  }
+
+  seeMoreCommon(){
+    var kw = "common"
+    this.router.navigate(['', 'tour', kw]);
+  }
+
+  seeMoreRating(){
+    var kw = "from=" + 'Hồ Chí Minh' + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
+    this.router.navigate(['', 'tour', kw]);
+  }
+
+  seeMorePromotion(){
+    var kw = "promotion"
+    this.router.navigate(['', 'tour', kw]);
   }
 }
 

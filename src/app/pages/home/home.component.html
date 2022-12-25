@@ -241,9 +241,9 @@
           </div>
         </div>
       </ng-container>
-      <div style="margin-left: 88%;" *ngIf="resScheduleFalshSale.length >= 3">
+      <!-- <div style="margin-left: 88%;" *ngIf="resScheduleFalshSale.length >= 3">
         <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -353,7 +353,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 88%;" *ngIf="resTour.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMoreRating()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>
@@ -402,7 +402,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 88%;" *ngIf="resSchedule.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMoreCommon()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>
@@ -462,7 +462,7 @@
         </div>
       </ng-container>
       <div style="margin-left: 96.1%;" *ngIf="resSchedulePromotion.length >= 3">
-        <button class="btn btn-outline-primary"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
+        <button class="btn btn-outline-primary" (click)="seeMorePromotion()"><i class="fa-solid fa-arrow-right"></i> Xem thêm</button>
       </div>
     </div>
   </div>
@@ -606,22 +606,19 @@
     <div *ngIf="cardFocus" class="body-mess" id="mess">
       <ng-container *ngFor="let item of resMess; let i=index">
         <ng-container *ngIf="item.senderId == auth.id; else elseSend">
-            <div class="row mr-2">
+            <div class="row mr-2 chat-container">
                 <div class="col">
-                    <div class="card-send">{{item.content}}</div>
+                    <div class="card-send chat-content">{{item.content}}</div>
                 </div>
             </div>
         </ng-container>
         <ng-template #elseSend>
-            <div class="row ml-2">
+            <div class="row ml-2 chat-container">
                 <div class="col">
-                    <div class="card-receive">{{item.content}}</div>
+                    <div class="card-receive chat-content">{{item.content}}</div>
                 </div>
             </div>
         </ng-template>
-
-
-        <div  class="row" style="margin: 2rem;"> <div class="col"></div></div>
     </ng-container>
     </div>
     <div class="footer-mess row">
@@ -631,7 +628,7 @@
                 <div class="searchbar-center">
                     <div class="searchbar-input-spacer"></div>
 
-                    <input type="text" class="searchbar-input" [(ngModel)]="dataSend.content" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn">
+                    <input type="text" class="searchbar-input" (keyup.enter)="reply()" [(ngModel)]="dataSend.content" maxlength="2048" name="q" autocapitalize="off" autocomplete="off" title="Search" role="combobox" placeholder="Nhập tin nhắn">
                 </div>
             </div>
 

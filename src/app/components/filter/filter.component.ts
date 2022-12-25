@@ -17,6 +17,7 @@ export class FilterComponent implements OnInit {
   resScheduleFilter:  SearchScheduleFilter  = new SearchScheduleFilter
   kwPriceFromToSmall: any
   value: number = 100;
+  kwIsAllOption: any
   constructor(private provinceService: ProvinceService,) { }
   formatLabel(value: number) {
     if (value >= 1000) {
@@ -32,19 +33,41 @@ export class FilterComponent implements OnInit {
 
   ngOnChanges(): void {
      if (this.resScheduleFilter) {
-      var split = []
-      split =  this.kwRoute.split("&")
-      this.resScheduleFilter.kwFrom = split[0].replace("from=", "")
-      this.resScheduleFilter.kwTo = split[1].replace("to=", "")
-      if (!this.resScheduleFilter.kwTo) {
-        this.resScheduleFilter.kwTo = null
+      if (this.kwRoute == "common") {
+          this.resScheduleFilter.kwIsAllOption = false
+          this.resScheduleFilter.kwPromotion = 1
+          this.resScheduleFilter.kwIsHoliday = false
+          this.searchFilter()
       }
-      this.resScheduleFilter.kwDepartureDate = split[2].replace("departureDate=", "")
-      this.resScheduleFilter.kwReturnDate = split[3].replace("returnDate=", "")
-     }
+      else if(this.kwRoute == "promotion"){
+        this.resScheduleFilter.kwIsAllOption = false
+          this.resScheduleFilter.kwPromotion = 2
+          this.resScheduleFilter.kwIsHoliday = false
+          this.searchFilter()
+      }
+      else{
+        var split = []
+        split =  this.kwRoute.split("&")
+        this.resScheduleFilter.kwFrom = split[0].replace("from=", "")
+        if (!this.resScheduleFilter.kwFrom) {
+          this.resScheduleFilter.kwFrom = null
+        }
+        this.resScheduleFilter.kwTo = split[1].replace("to=", "")
+        if (!this.resScheduleFilter.kwTo) {
+          this.resScheduleFilter.kwTo = null
+        }
+        this.resScheduleFilter.kwDepartureDate = split[2].replace("departureDate=", "")
+        this.resScheduleFilter.kwReturnDate = split[3].replace("returnDate=", "")
+      }
 
+    }
   }
 
+  ngAfterViewInit(): void {
+    if(this.kwRoute == "promotion"){
+      this.promotion.nativeElement.checked = true
+    }
+  }
   promotionFormat(){
     if(this.promotion.nativeElement.checked){
       this.resScheduleFilter.kwPromotion = 2

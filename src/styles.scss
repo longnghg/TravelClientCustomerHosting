@@ -107,11 +107,15 @@ fieldset{
 
 
 .bg-gradient-cus{
-  background: linear-gradient(-45deg, #209077, #1ae28a 100%) !important;
+  background: #000046 !important;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #1CB5E0, #000046) !important;  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #1CB5E0, #000046) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
  }
 
  .bg-gradient-logo{
-  background: linear-gradient(-45deg, #1ae28a, #209077 100%) !important;
+  background: #000046 !important;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #1CB5E0, #000046) !important;  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #1CB5E0, #000046) !important; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
  }
 
 

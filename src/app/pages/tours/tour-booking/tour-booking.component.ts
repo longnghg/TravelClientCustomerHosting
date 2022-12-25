@@ -57,6 +57,8 @@ export class TourBookingComponent implements OnInit {
   totalPriceVoucher: number
   lengthVoucher: any
   imgVoucher = "assets/images/icons/voucher.PNG"
+  threedaySchedule: any
+  dateNow: any
   protected aFormGroup: FormGroup;
   constructor(private formBuilder: FormBuilder, private scheduleService: ScheduleService, private router: Router, private activatedRoute: ActivatedRoute, private paymentService: PaymentService, private notificationService: NotificationService, private configService: ConfigService, public tourBookingService: TourBookingService, private voucherService: VoucherService) {}
   ngOnInit() {
@@ -77,7 +79,8 @@ export class TourBookingComponent implements OnInit {
     if (this.idCustomer) {
       this.initVoucher(this.idCustomer)
     }
-
+    var date = Date.now()
+    this.dateNow = new Date(date).getTime()
   }
 
   init(idSchedule: string){
@@ -99,6 +102,8 @@ export class TourBookingComponent implements OnInit {
               this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
             }
           }
+          var endDate = new Date(this.resSchedule.endDate)
+          this.threedaySchedule = new Date(this.resSchedule.endDate).setDate(endDate.getDate() - 3)
         }
 
         if (this.resSchedule.alias != this.resTourBooking.alias) {
@@ -196,6 +201,26 @@ export class TourBookingComponent implements OnInit {
     return this.resTourBooking.adult + this.resTourBooking.child + this.resTourBooking.baby
   }
 
+  formatPrice(priceInput: any){
+    var price = Number(priceInput).toLocaleString('en-GB');
+    var formatNumber = price.toString()
+    var arPrice = formatNumber.split(",")
+    var replaceNumberEnd = arPrice[arPrice.length - 1]
+    var lengthArPrice = arPrice.length
+    var a = []
+    replaceNumberEnd = "000"
+    for(let i = 0; i <lengthArPrice; i++){
+      if(i == lengthArPrice - 1){
+        arPrice[i] = replaceNumberEnd
+      }
+      a.push(arPrice[i])
+    }
+    var priceEnd = a.join()
+    var withoutCommas = Number(priceEnd.replace(/,/g, ''));
+    return withoutCommas
+  }
+
+
   totalPrice(){
     if (this.resSchedule.promotions.idPromotion != 1) {
       this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.priceBabyPromotion)
@@ -209,6 +234,8 @@ export class TourBookingComponent implements OnInit {
         if(this.resVoucher){
           this.totalPriceNotVoucher = this.resTourBooking.totalPrice
           this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
+
+          this.resTourBooking.totalPrice = this.formatPrice(this.resTourBooking.totalPrice)
         }
       }
     }
@@ -323,7 +350,7 @@ export class TourBookingComponent implements OnInit {
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking.idTourBooking = this.response.content
         if (this.resTourBooking.paymentId == PaymentMethod.Paypal) {
-          this.tourBookingService.paypal(this.resTourBooking.idTourBooking).then(res => {
+          this.tourBookingService.paypal(this.resTourBooking.idTourBooking, this.idCustomer).then(res => {
             this.pay = res
             if (!res.debugId) {
               this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
@@ -349,7 +376,7 @@ export class TourBookingComponent implements OnInit {
           })
         }
         else  if (this.resTourBooking.paymentId == PaymentMethod.Vnpay){
-          this.tourBookingService.vnpay(this.resTourBooking.idTourBooking).then(res => {
+          this.tourBookingService.vnpay(this.resTourBooking.idTourBooking, this.idCustomer).then(res => {
             this.pay = res
             this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
             document.body.removeAttribute("style")
