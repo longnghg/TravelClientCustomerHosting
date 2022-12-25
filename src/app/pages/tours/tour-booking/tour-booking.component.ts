@@ -198,6 +198,26 @@ export class TourBookingComponent implements OnInit {
     return this.resTourBooking.adult + this.resTourBooking.child + this.resTourBooking.baby
   }
 
+  formatPrice(priceInput: any){
+    var price = Number(priceInput).toLocaleString('en-GB');
+    var formatNumber = price.toString()
+    var arPrice = formatNumber.split(",")
+    var replaceNumberEnd = arPrice[arPrice.length - 1]
+    var lengthArPrice = arPrice.length
+    var a = []
+    replaceNumberEnd = "000"
+    for(let i = 0; i <lengthArPrice; i++){
+      if(i == lengthArPrice - 1){
+        arPrice[i] = replaceNumberEnd
+      }
+      a.push(arPrice[i])
+    }
+    var priceEnd = a.join()
+    var withoutCommas = Number(priceEnd.replace(/,/g, ''));
+    return withoutCommas
+  }
+
+
   totalPrice(){
     if (this.resSchedule.promotions.idPromotion != 1) {
       this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.priceBabyPromotion)
@@ -211,6 +231,8 @@ export class TourBookingComponent implements OnInit {
         if(this.resVoucher){
           this.totalPriceNotVoucher = this.resTourBooking.totalPrice
           this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
+
+          this.resTourBooking.totalPrice = this.formatPrice(this.resTourBooking.totalPrice)
         }
       }
     }
