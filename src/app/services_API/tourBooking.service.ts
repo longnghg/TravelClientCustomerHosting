@@ -51,4 +51,8 @@ export class TourBookingService{
 {
   return this.http.get<boolean>( this.configService.apiTourBookingUrl + "/api/TourBooking/payment-changed?idTourBooking="+idTourBooking+"&idPayment="+idPayment).toPromise();
 }
+ SendToBill(pincode : string,nameCustomer :string ,tourId :string,idTourBooking:string ,departureDate :any ,returnDate :any , email:string)
+{
+  return this.http.get<ResponseModel>( this.configService.apiTourBookingUrl + "/api/TourBooking/send-bill?pincode="+pincode+"&nameCustomer="+nameCustomer+"&tourId="+tourId+"&idTourBooking="+idTourBooking+"&departTureday="+departureDate+"&returnDate="+returnDate+"&email="+email);
+}
 }

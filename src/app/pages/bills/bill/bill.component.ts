@@ -30,7 +30,8 @@ export class BillComponent implements OnInit {
   public myAngularxQrCode: string = null;
   @ViewChild('cancelTour') cancelTour: ElementRef;
   @ViewChild('sendEmail') sendEmail: ElementRef;
-  email: string
+  @ViewChild('closeModal') closeModal: ElementRef
+  email: string = ""
   emailValid: string
   pay: {
     status: number,
@@ -38,6 +39,7 @@ export class BillComponent implements OnInit {
     debugId: string
   }
   isRecapcha: boolean
+  isloading: boolean = false
   protected aFormGroup: FormGroup;
   isPayment: boolean
   constructor(private paymentService: PaymentService, private formBuilder: FormBuilder, private tourBookingService: TourBookingService, private notificationService: NotificationService, private scheduleService: ScheduleService, private activatedRoute: ActivatedRoute, private configService: ConfigService) { }
@@ -63,12 +65,12 @@ export class BillComponent implements OnInit {
     this.init(idTourBooking)
   }
 
+
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
-        this.resTourBooking = this.response.content
-
+        this.resTourBooking = this.response.content;
         if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
           var date = new Date().getTime()
           if (this.resTourBooking.lastDate < date) {
@@ -89,6 +91,8 @@ export class BillComponent implements OnInit {
     this.isRecapcha = false
     this.notificationService.handleAlert('Lỗi capcha !', StatusNotification.Error)
   }
+
+
 
   handleExpire(){
     this.isRecapcha = false
@@ -133,7 +137,31 @@ export class BillComponent implements OnInit {
       })
     }
   }
+  SendToBill(){
+    if(this.resTourBooking.status == 3){
+      this.isloading = true
+      this.tourBookingService.SendToBill(this.resTourBooking.pincode ,this.resTourBooking.nameCustomer, this.resTourBooking.schedule.tourId , this.resTourBooking.idTourBooking, this.resTourBooking.schedule.departureDate , this.resTourBooking.schedule.returnDate, this.email
+        ).subscribe(res => {
+        this.response = res
+        if (this.response.notification.type == StatusNotification.Success) {
+            setTimeout(() => {
+              this.closeModal.nativeElement.click()
+            }, 100);
 
+            this.email = ""
+        }
+        this.isloading = false
+
+      }, error => {
+        var message = this.configService.error(error.status, error.error != null?error.error.text:"");
+        this.notificationService.handleAlert(message, StatusNotification.Error)
+      })
+    }
+    else{
+      this.notificationService.handleAlert("Bạn chưa thanh toán, xin vui lòng thử lại sau !", StatusNotification.Warning)
+    }
+
+  }
 
   send(){
     this.emailValid = null
@@ -182,5 +210,9 @@ export class BillComponent implements OnInit {
         this.notificationService.handleAlert(message, StatusNotification.Error)
       })
     }
+  }
+
+  reset(){
+    this.email = null
   }
 }
