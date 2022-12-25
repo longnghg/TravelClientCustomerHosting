@@ -113,16 +113,16 @@ export class TourDetailComponent implements OnInit {
         this.mapLocation(this.resSchedule.tour.toPlace)
         if (this.resSchedule.promotions.idPromotion != 1) {
           if (this.resSchedule.isHoliday) {
-            this.resSchedule.pricePromotion = this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * this.resSchedule.promotions.value /100)
-            this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdultHoliday - (this.resSchedule.priceAdultHoliday * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceChildPromotion = this.resSchedule.priceChildHoliday - (this.resSchedule.priceChildHoliday * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBabyHoliday - (this.resSchedule.priceBabyHoliday * this.resSchedule.promotions.value /100)
+            this.resSchedule.pricePromotion = this.formatPrice(this.resSchedule.finalPriceHoliday - (this.resSchedule.finalPriceHoliday * this.resSchedule.promotions.value /100))
+            this.resSchedule.priceAdultPromotion = this.formatPrice(this.resSchedule.priceAdultHoliday - (this.resSchedule.priceAdultHoliday * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceChildPromotion = this.formatPrice(this.resSchedule.priceChildHoliday - (this.resSchedule.priceChildHoliday * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceBabyPromotion = this.formatPrice(this.resSchedule.priceBabyHoliday - (this.resSchedule.priceBabyHoliday * this.resSchedule.promotions.value /100))
           }
           else{
-            this.resSchedule.pricePromotion = this.resSchedule.finalPrice - (this.resSchedule.finalPrice * this.resSchedule.promotions.value /100)
-            this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdult - (this.resSchedule.priceAdult * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceChildPromotion = this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
+            this.resSchedule.pricePromotion = this.formatPrice(this.resSchedule.finalPrice - (this.resSchedule.finalPrice * this.resSchedule.promotions.value /100))
+            this.resSchedule.priceAdultPromotion = this.formatPrice(this.resSchedule.priceAdult - (this.resSchedule.priceAdult * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceChildPromotion = this.formatPrice(this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceBabyPromotion =this.formatPrice(this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100))
           }
 
         }
@@ -135,10 +135,10 @@ export class TourDetailComponent implements OnInit {
             this.resSchedules.forEach(schedule => {
              if (schedule.promotions.idPromotion != 1) {
               if (schedule.isHoliday) {
-                schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.resSchedule.promotions.value /100)
+                schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.resSchedule.promotions.value /100))
               }
               else{
-                schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * this.resSchedule.promotions.value /100)
+                schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * this.resSchedule.promotions.value /100))
               }
              }
             });
@@ -188,10 +188,10 @@ export class TourDetailComponent implements OnInit {
           if (schedule.promotionId != 1) {
             if (schedule.isHoliday) {
 
-              schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion /100)
+              schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion /100))
             }
             else{
-              schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion /100)
+              schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion /100))
             }
           }
 
@@ -377,6 +377,24 @@ export class TourDetailComponent implements OnInit {
       var kw = "from=" + this.resSchedule.departurePlace + "&to=" + '' + "&departureDate=" + '' + "&returnDate=" + ''
       this.router.navigate(['', 'tour', kw]);
     }
+  }
+  formatPrice(priceInput: any){
+    var price = Number(priceInput).toLocaleString('en-GB');
+    var formatNumber = price.toString()
+    var arPrice = formatNumber.split(",")
+    var replaceNumberEnd = arPrice[arPrice.length - 1]
+    var lengthArPrice = arPrice.length
+    var a = []
+    replaceNumberEnd = "000"
+    for(let i = 0; i <lengthArPrice; i++){
+      if(i == lengthArPrice - 1){
+        arPrice[i] = replaceNumberEnd
+      }
+      a.push(arPrice[i])
+    }
+    var priceEnd = a.join()
+    var withoutCommas = Number(priceEnd.replace(/,/g, ''));
+    return withoutCommas
   }
 }
 
