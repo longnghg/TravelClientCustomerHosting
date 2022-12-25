@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     authReq = this.AddTokenHeader(req,token);
-    authReq.headers.append("Access-Control-Allow-Origin", "*");
+    authReq.headers.append("Access-Control-Allow-Origin", "https://kingtravelrover.web.app");
     authReq.headers.append('Access-Control-Allow-Credentials', 'true')
     return next.handle(authReq).pipe(
       catchError(errorData =>{
