@@ -396,8 +396,6 @@ export class HomeComponent implements OnInit {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resMess = this.response.content
-        console.log(  this.resMess);
-
         if (this.resMess) {
           this.resGroup.totalNew = 0
           this.resMess.forEach(item =>{
@@ -416,9 +414,13 @@ export class HomeComponent implements OnInit {
             if (!this.resGroup.isSeen) {
               this.updateIsSeen()
             }
+
             setTimeout(() => {
+              for (let index = 0; index <  this.resMess.length; index++) {
+                document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+5) + "px")
+              }
               document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-            }, 200);
+            }, 0.1);
           }
         }
       }

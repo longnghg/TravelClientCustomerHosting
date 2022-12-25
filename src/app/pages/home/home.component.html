@@ -606,22 +606,19 @@
     <div *ngIf="cardFocus" class="body-mess" id="mess">
       <ng-container *ngFor="let item of resMess; let i=index">
         <ng-container *ngIf="item.senderId == auth.id; else elseSend">
-            <div class="row mr-2">
+            <div class="row mr-2 chat-container">
                 <div class="col">
-                    <div class="card-send">{{item.content}}</div>
+                    <div class="card-send chat-content">{{item.content}}</div>
                 </div>
             </div>
         </ng-container>
         <ng-template #elseSend>
-            <div class="row ml-2">
+            <div class="row ml-2 chat-container">
                 <div class="col">
-                    <div class="card-receive">{{item.content}}</div>
+                    <div class="card-receive chat-content">{{item.content}}</div>
                 </div>
             </div>
         </ng-template>
-
-
-        <div  class="row" style="margin: 2rem;"> <div class="col"></div></div>
     </ng-container>
     </div>
     <div class="footer-mess row">
