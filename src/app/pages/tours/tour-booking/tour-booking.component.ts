@@ -23,7 +23,7 @@ const FILTER_PAG_REGEX = /[^0-9]/g;
   styleUrls: ['./tour-booking.component.scss']
 })
 export class TourBookingComponent implements OnInit {
-  public readonly siteKey = '6LeLW6UjAAAAANzVQfi3Me0R6HmUYILO-qtsECFE';
+  public readonly siteKey = '6Lc_K-YiAAAAANf7vCWU19G-psPfDiWFgV-r6RTc';
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
   @ViewChild('recapchaModal') recapchaModal: ElementRef;
   @ViewChild('closeModal') closeModal: ElementRef;

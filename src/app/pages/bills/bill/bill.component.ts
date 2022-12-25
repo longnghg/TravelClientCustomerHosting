@@ -20,7 +20,7 @@ import { StatusNotification, PaymentMethod, RoleTitle } from "../../../enums/enu
   styleUrls: ['./bill.component.scss']
 })
 export class BillComponent implements OnInit {
-  public readonly siteKey = '6LeLW6UjAAAAANzVQfi3Me0R6HmUYILO-qtsECFE';
+  public readonly siteKey = '6Lc_K-YiAAAAANf7vCWU19G-psPfDiWFgV-r6RTc';
   @ViewChild('captchaElem', { static: false }) captchaElem: ReCaptcha2Component;
   response: ResponseModel
   resTourBooking: TourBookingModel
