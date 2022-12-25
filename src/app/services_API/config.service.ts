@@ -11,8 +11,8 @@ export class ConfigService{
   constructor(@Inject(DOCUMENT) private document: Document){}
   authenticationService: AuthenticationService
   private hubConnectionBuilder: HubConnection
-  public apiUrl = "https://gatewayapitravelrover.azurewebsites.net";
-  public apiTourBookingUrl = "https://gatewayapitravelrover.azurewebsites.net";
+  public apiUrl = "http://gatewayapitravelrover.azurewebsites.net";
+  public apiTourBookingUrl = "http://gatewayapitravelrover.azurewebsites.net";
   public apiUrlSignR = "https://rovermanagerservice.azurewebsites.net";
   public clientUrl = this.document.location.origin
   response: ResponseModel
