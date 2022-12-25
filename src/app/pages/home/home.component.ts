@@ -96,10 +96,7 @@ export class HomeComponent implements OnInit {
 
   auth: AuthenticationModel
   ngOnInit(): void {
-    this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if (!this.auth) {
-      this.auth = JSON.parse(localStorage.getItem("authGuest"))
-    }
+
     this.provinceService.views().then(res => { this.resProvince = res })
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     var date = Date.now()
@@ -113,6 +110,10 @@ export class HomeComponent implements OnInit {
     // }, 4000)
 
    setTimeout(() => {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    if (!this.auth) {
+      this.auth = JSON.parse(localStorage.getItem("authGuest"))
+    }
     this.initFlashSale()
     this.initSchedulePromotion()
     this.initSchedule()
@@ -420,7 +421,7 @@ export class HomeComponent implements OnInit {
                 document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+5) + "px")
               }
               document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-            }, 0.1);
+            }, 1);
           }
         }
       }
@@ -458,8 +459,6 @@ export class HomeComponent implements OnInit {
   }
 
   closeMess(){
-    console.log(1);
-
     this.cardFocus = false
     this.mess.nativeElement.style.display = "block"
     this.mess.nativeElement.setAttribute("class","mess card-mess-open")

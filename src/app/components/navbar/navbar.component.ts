@@ -26,14 +26,16 @@ export class NavbarComponent implements OnInit {
   constructor(private notificationService:NotificationService, private authenticationService:AuthenticationService, private configService:ConfigService, location: Location,  private element: ElementRef, private router: Router) {
     this.location = location;
     this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    this.hubConnectionBuilder = this.configService.signalR()
-    this.hubConnectionBuilder.start().then(function(){
-      console.info("SignalR listening!");
-    });
+    setTimeout(() => {
+      this.hubConnectionBuilder = this.configService.signalR()
+      this.hubConnectionBuilder.start().then(function(){
+        console.info("SignalR listening!");
+      });
 
-    this.hubConnectionBuilder.on('BlockUser', (result: any) => {
-      this.logOut()
-    })
+      this.hubConnectionBuilder.on('BlockUser', (result: any) => {
+        this.logOut()
+      })
+    }, 1000);
   }
 
   ngOnInit() {
