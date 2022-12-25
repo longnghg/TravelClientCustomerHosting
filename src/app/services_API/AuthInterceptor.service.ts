@@ -23,7 +23,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     authReq = this.AddTokenHeader(req,token);
-
+    authReq.headers.append("Access-Control-Allow-Origin", "*");
+    authReq.headers.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     return next.handle(authReq).pipe(
       catchError(errorData =>{
         if(errorData.status === 401){

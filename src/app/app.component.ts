@@ -24,6 +24,7 @@ export class AppComponent {
         email: "default@gmail.com",
         password: "123"
       }
+
       this.authenticationService.loginDefault(input).then(res => {
         this.response = res
         this.auth = this.response.content
