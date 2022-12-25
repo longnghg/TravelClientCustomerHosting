@@ -36,6 +36,17 @@
                        [activeTabPaneIdx]="activePane">
           <c-tab-pane class="p-3">
             <div class="mb-5">
+              <form [formGroup]="aFormGroup">
+                <ngx-recaptcha2 #captchaElem
+                  [siteKey]="siteKey"
+                  (error)="handleError()"
+                  (success)="handleSuccess($event)"
+                  [useGlobalDomain]="false"
+                  [theme]="'light'"
+                  [type]="'image'"
+                  formControlName="recaptcha">
+                </ngx-recaptcha2>
+              </form>
               <h1 style="margin-bottom: 70px; font-weight: bold; color: #2d4271">Nhập thông tin</h1>
               <h4  style="position: relative;top: -20px; color: #2d4271; font-weight: 600;">Thông tin liên lạc</h4>
               <div class="container" style="border-radius: 20px; background-color: whitesmoke; padding: 20px 20px 20px 20px;">
