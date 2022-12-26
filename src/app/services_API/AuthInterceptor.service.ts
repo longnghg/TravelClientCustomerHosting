@@ -10,8 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
      var token = "";
     let authReq = req;
-    var url = req.url.split("/")
-    if (url[4] == "Customer" || url[4] == "TourBooking" || url[4] == "Pay") {
+    if (req.url.includes("Customer") || req.url.includes("TourBooking") || req.url.includes("Pay")) {
       token = localStorage.getItem('token');
       // console.error(req);
       // console.error(token);

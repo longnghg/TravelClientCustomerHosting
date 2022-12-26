@@ -88,10 +88,10 @@ export class TourListComponent implements OnInit {
         this.resSchedule = this.response.content
         this.resSchedule.forEach(schedule => {
           if (schedule.isHoliday) {
-            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100))
           }
           else{
-            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100))
           }
 
           var createDate = new Date(schedule.tour.createDate)
@@ -123,10 +123,10 @@ export class TourListComponent implements OnInit {
           schedule.tour.createDateAfter30Day = new Date(schedule.tour.createDate).setDate(createDate.getDate() + 30);
 
           if (schedule.isHoliday) {
-            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value /100))
           }
           else{
-            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value /100))
           }
 
           if (this.resScheduleFilter) {
@@ -271,5 +271,24 @@ export class TourListComponent implements OnInit {
   removeTourBooking(){
     localStorage.removeItem("tourBooking_" + localStorage.getItem("idUser"))
     this.isBack = false
+  }
+
+  formatPrice(priceInput: any){
+    var price = Number(priceInput).toLocaleString('en-GB');
+    var formatNumber = price.toString()
+    var arPrice = formatNumber.split(",")
+    var replaceNumberEnd = arPrice[arPrice.length - 1]
+    var lengthArPrice = arPrice.length
+    var a = []
+    replaceNumberEnd = "000"
+    for(let i = 0; i <lengthArPrice; i++){
+      if(i == lengthArPrice - 1){
+        arPrice[i] = replaceNumberEnd
+      }
+      a.push(arPrice[i])
+    }
+    var priceEnd = a.join()
+    var withoutCommas = Number(priceEnd.replace(/,/g, ''));
+    return withoutCommas
   }
 }

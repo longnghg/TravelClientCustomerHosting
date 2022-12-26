@@ -78,7 +78,7 @@
 <!-- Modal -->
 <div class="modal fade" id="timeBlock" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="timeBlockLabel" aria-hidden="true" >
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content" style="width: 33rem;">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="timeBlockLabel">Thông báo</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -90,7 +90,8 @@
         <ng-template #elseTimeBLock>
           Tài khoản của bạn bị khóa tới <span class="text-danger" style="font-weight: 700;">{{timeBlock | formatFromUnixTimestampToFullDateTimeView}}</span>
         </ng-template>
-
+          <br>
+          Liên hệ <span class="text-danger" style="font-weight: 700;">19001839</span> hoặc <span class="text-danger" style="font-weight: 700;">info@travelrover.com</span> để biết thêm chi tiết !
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

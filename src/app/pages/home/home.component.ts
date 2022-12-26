@@ -96,10 +96,7 @@ export class HomeComponent implements OnInit {
 
   auth: AuthenticationModel
   ngOnInit(): void {
-    this.auth = JSON.parse(localStorage.getItem("currentUser"))
-    if (!this.auth) {
-      this.auth = JSON.parse(localStorage.getItem("authGuest"))
-    }
+
     this.provinceService.views().then(res => { this.resProvince = res })
     this.resTourBooking = JSON.parse(localStorage.getItem("tourBooking_" + localStorage.getItem("idUser")))
     var date = Date.now()
@@ -113,6 +110,10 @@ export class HomeComponent implements OnInit {
     // }, 4000)
 
    setTimeout(() => {
+    this.auth = JSON.parse(localStorage.getItem("currentUser"))
+    if (!this.auth) {
+      this.auth = JSON.parse(localStorage.getItem("authGuest"))
+    }
     this.initFlashSale()
     this.initSchedulePromotion()
     this.initSchedule()
@@ -207,10 +208,10 @@ export class HomeComponent implements OnInit {
 
         this.resScheduleFalshSale.forEach(schedule => {
           if (schedule.isHoliday) {
-            schedule.priceFlashSale = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.valueFalshSale / 100)
+            schedule.priceFlashSale = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * this.valueFalshSale / 100))
           }
           else {
-            schedule.priceFlashSale = schedule.finalPrice - (schedule.finalPrice * this.valueFalshSale / 100)
+            schedule.priceFlashSale = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * this.valueFalshSale / 100))
           }
           var days = (schedule.endDate - new Date().getTime()) / (1000 * 3600 * 24);
           schedule.outOfTime = Math.abs(days)
@@ -255,10 +256,10 @@ export class HomeComponent implements OnInit {
         this.resSchedulePromotion.forEach(schedule => {
 
           if (schedule.isHoliday) {
-            schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion / 100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.valuePromotion / 100))
           }
           else {
-            schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion / 100)
+            schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * schedule.valuePromotion / 100))
           }
 
           var createDate = new Date(schedule.tour.createDate)
@@ -283,10 +284,10 @@ export class HomeComponent implements OnInit {
           tour.schedules.forEach(schedule => {
             if (schedule.promotions.idPromotion != 1) {
               if (schedule.isHoliday) {
-                schedule.pricePromotion = schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value / 100)
+                schedule.pricePromotion = this.formatPrice(schedule.finalPriceHoliday - (schedule.finalPriceHoliday * schedule.promotions.value / 100))
               }
               else {
-                schedule.pricePromotion = schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value / 100)
+                schedule.pricePromotion = this.formatPrice(schedule.finalPrice - (schedule.finalPrice * schedule.promotions.value / 100))
               }
             }
             var createDate = new Date(tour.createDate)
@@ -420,7 +421,7 @@ export class HomeComponent implements OnInit {
                 document.getElementsByClassName("chat-container")[index].setAttribute("style", "height: " + (document.getElementsByClassName("chat-content")[index].clientHeight+5) + "px")
               }
               document.getElementById("mess").scrollTop = document.getElementById("mess").scrollHeight
-            }, 0.1);
+            }, 1);
           }
         }
       }
@@ -458,8 +459,6 @@ export class HomeComponent implements OnInit {
   }
 
   closeMess(){
-    console.log(1);
-
     this.cardFocus = false
     this.mess.nativeElement.style.display = "block"
     this.mess.nativeElement.setAttribute("class","mess card-mess-open")
@@ -496,6 +495,25 @@ export class HomeComponent implements OnInit {
   seeMorePromotion(){
     var kw = "promotion"
     this.router.navigate(['', 'tour', kw]);
+  }
+
+  formatPrice(priceInput: any){
+    var price = Number(priceInput).toLocaleString('en-GB');
+    var formatNumber = price.toString()
+    var arPrice = formatNumber.split(",")
+    var replaceNumberEnd = arPrice[arPrice.length - 1]
+    var lengthArPrice = arPrice.length
+    var a = []
+    replaceNumberEnd = "000"
+    for(let i = 0; i <lengthArPrice; i++){
+      if(i == lengthArPrice - 1){
+        arPrice[i] = replaceNumberEnd
+      }
+      a.push(arPrice[i])
+    }
+    var priceEnd = a.join()
+    var withoutCommas = Number(priceEnd.replace(/,/g, ''));
+    return withoutCommas
   }
 }
 

@@ -73,6 +73,9 @@ export class TourBookingComponent implements OnInit {
     this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
 
     this.init(this.resTourBooking.scheduleId)
+    this.paymentService.views().then(response => {
+      this.resPayment = response
+    })
     if (this.idCustomer) {
       this.initVoucher(this.idCustomer)
     }
@@ -89,14 +92,14 @@ export class TourBookingComponent implements OnInit {
         if (this.resSchedule) {
           if (this.resSchedule.promotions.idPromotion != 1) {
             if (this.resSchedule.isHoliday) {
-              this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdultHoliday - (this.resSchedule.priceAdultHoliday * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceChildPromotion = this.resSchedule.priceChildHoliday - (this.resSchedule.priceChildHoliday * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBabyHoliday - (this.resSchedule.priceBabyHoliday * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceAdultPromotion = this.formatPrice(this.resSchedule.priceAdultHoliday - (this.resSchedule.priceAdultHoliday * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceChildPromotion = this.formatPrice(this.resSchedule.priceChildHoliday - (this.resSchedule.priceChildHoliday * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceBabyPromotion = this.formatPrice(this.resSchedule.priceBabyHoliday - (this.resSchedule.priceBabyHoliday * this.resSchedule.promotions.value /100))
             }
             else{
-              this.resSchedule.priceAdultPromotion = this.resSchedule.priceAdult - (this.resSchedule.priceAdult * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceChildPromotion = this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100)
-              this.resSchedule.priceBabyPromotion = this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100)
+              this.resSchedule.priceAdultPromotion = this.formatPrice(this.resSchedule.priceAdult - (this.resSchedule.priceAdult * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceChildPromotion = this.formatPrice(this.resSchedule.priceChild - (this.resSchedule.priceChild * this.resSchedule.promotions.value /100))
+              this.resSchedule.priceBabyPromotion = this.formatPrice(this.resSchedule.priceBaby - (this.resSchedule.priceBaby * this.resSchedule.promotions.value /100))
             }
           }
           var endDate = new Date(this.resSchedule.endDate)
@@ -131,11 +134,11 @@ export class TourBookingComponent implements OnInit {
 
   onTabChange($event: number) {
     this.activePane = $event;
-    if (this.activePane == 1) {
-      this.paymentService.views().then(response => {
-        this.resPayment = response
-      })
-    }
+    // if (this.activePane == 1) {
+    //   this.paymentService.views().then(response => {
+    //     this.resPayment = response
+    //   })
+    // }
     // console.log('onTabChange', $event);
   }
 
@@ -220,14 +223,15 @@ export class TourBookingComponent implements OnInit {
 
   totalPrice(){
     if (this.resSchedule.promotions.idPromotion != 1) {
-      this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.priceBabyPromotion)
+      this.resTourBooking.totalPrice = this.formatPrice((this.resTourBooking.adult * this.resSchedule.priceAdultPromotion) + (this.resTourBooking.child * this.resSchedule.priceChildPromotion) + (this.resTourBooking.baby * this.resSchedule.priceBabyPromotion))
+
     }
     else{
       if (this.resSchedule.isHoliday) {
-        this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday)
+        this.resTourBooking.totalPrice = this.formatPrice((this.resTourBooking.adult * this.resSchedule.priceAdultHoliday) + (this.resTourBooking.child * this.resSchedule.priceChildHoliday) + (this.resTourBooking.baby * this.resSchedule.priceBabyHoliday))
       }
       else{
-        this.resTourBooking.totalPrice = (this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby)
+        this.resTourBooking.totalPrice = this.formatPrice((this.resTourBooking.adult * this.resSchedule.priceAdult) + (this.resTourBooking.child * this.resSchedule.priceChild) + (this.resTourBooking.baby * this.resSchedule.priceBaby))
         if(this.resVoucher){
           this.totalPriceNotVoucher = this.resTourBooking.totalPrice
           this.resTourBooking.totalPrice = this.totalPriceNotVoucher * ((100 - this.resVoucher.value)/100)
@@ -394,8 +398,7 @@ export class TourBookingComponent implements OnInit {
         }
         else{
           this.configService.callNotyfSignalR(RoleTitle.TourBookingManager.toString())
-          setTimeout(() => {
-            document.body.removeAttribute("style")
+          document.body.removeAttribute("style")
             document.getElementById("fade-load").removeAttribute("class")
             document.getElementById("bg-load").removeAttribute("style")
             this.router.navigate(['','bill', this.resTourBooking.idTourBooking]);
@@ -406,7 +409,6 @@ export class TourBookingComponent implements OnInit {
             this.resTourBooking.alias = this.activatedRoute.snapshot.paramMap.get('id2')
             this.isRecapcha = false
             this.closeModal.nativeElement.click()
-          }, 5000);
         }
       }
       else{
