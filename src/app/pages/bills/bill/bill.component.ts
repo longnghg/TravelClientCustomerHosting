@@ -64,19 +64,22 @@ export class BillComponent implements OnInit {
      this.myAngularxQrCode = this.configService.clientUrl + "/bill/"+ idTourBooking;
     this.init(idTourBooking)
   }
-
+  ngDoCheck(): void {
+    if (this.resTourBooking) {
+      if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
+        var date = new Date().getTime()
+        if (this.resTourBooking.lastDate < date) {
+          this.resTourBooking.status = 4
+        }
+      }
+    }
+  }
 
   init(idTourBooking: string){
     this.tourBookingService.getTourBooking(idTourBooking).subscribe(res => {
       this.response = res
       if (this.response.notification.type == StatusNotification.Success) {
         this.resTourBooking = this.response.content;
-        if (this.resTourBooking.status == 1 || this.resTourBooking.status == 2) {
-          var date = new Date().getTime()
-          if (this.resTourBooking.lastDate < date) {
-            this.resTourBooking.status = 4
-          }
-        }
       }
       else{
         // location.assign(this.configService.clientUrl + "/page404")

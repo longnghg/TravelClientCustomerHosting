@@ -70,7 +70,7 @@
             <div class="row">
               <label class="form-label col-4" style="font-weight: 600;">Hình thức đăng ký</label>
               <div class="row col-8" *ngIf="!isPaymentChange">
-                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button *ngIf="resTourBooking.status == 4 || resTourBooking.status == 2 || resTourBooking.status == 5 || resTourBooking.status == 3" class="btn btn-primary ml-3" (click)="savePayment()">Đổi phương thức thanh toán</button></p>
+                <p  class="col-12" style="color: #2d4271;">{{resTourBooking.payment.namePayment}} <button *ngIf="resTourBooking.status == 1" class="btn btn-primary ml-3" (click)="savePayment()">Đổi phương thức thanh toán</button></p>
               </div>
               <div class="row col-8 mb-3"  *ngIf="isPaymentChange">
                 <div class="col-5">
